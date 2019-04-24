@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <!-- v15530 -->
+
+  <title>iCal sync &ndash; BookingSync</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="CxkbAlRBMVJvBBPpJaPsZoW06Wzq3rW+OdNxqofLCAW8WpBHwyK6M56l+gRcLBggUGhQqCbZRvDImtUz5ywhCA==" />
+  <meta name="description" content="In this article  Export the BookingSync calendar in iCal Synchronize your calendar with a channel Synchronize your calendar with your..." /><meta property="og:image" content="https://theme.zdassets.com/theme_assets/2225153/7bc45cf29e2846688e91bb28b029d9d7a9ea44d8.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="BookingSync" />
+<meta property="og:title" content="iCal sync" />
+<meta property="og:description" content="In this article
+
+Export the BookingSync calendar in iCal
+Synchronize your calendar with a channel
+Synchronize your calendar with your &quot;Google Calendar&quot;
+Synchronize your calendar with your..." />
+<meta property="og:url" content="http://manual.bookingsync.com/hc/en-us/articles/360005264914-iCal-sync" />
+<link rel="canonical" href="https://manual.bookingsync.com/hc/en-us/articles/360005264914-iCal-sync" />
+<link rel="alternate" hreflang="en" href="https://manual.bookingsync.com/hc/en-us/articles/360005264914-iCal-sync" />
+<link rel="alternate" hreflang="fr" href="https://manual.bookingsync.com/hc/fr-fr/articles/360005264914-Synchro-iCal" />
+
+  <!-- Entypo pictograms by Daniel Bruce — www.entypo.com -->
+  <link rel="stylesheet" media="all" href="//static.zdassets.com/hc/assets/application-a02dee4125b91fec66c03c0a564857bf.css" id="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="//p14.zdassets.com/hc/theming_assets/2225153/360000165894/style.css?digest=360099331073" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="//theme.zdassets.com/theme_assets/2225153/da850e1eeafb975ad1c03fb32b7d52c8d56d8015.png" />
+
+  <!--[if lt IE 9]>
+  <script>
+    //Enable HTML5 elements for <IE9
+    'abbr article aside audio bdi canvas data datalist details dialog \
+    figcaption figure footer header hgroup main mark meter nav output \
+    progress section summary template time video'.replace(/\w+/g,function(n){document.createElement(n)});
+  </script>
+<![endif]-->
+
+  <script src="//static.zdassets.com/hc/assets/jquery-b60ddb79ff2563b75442a6bac88b00b5.js"></script>
+  
+  
+  
+
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<link href="//fonts.googleapis.com/css?family=Open+Sans:100,300,400italic,400,700"
+        rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//cdn.bookingsync.io/libs/clearbox/1.2.4/css/clearbox.css">
+<script src="https://assets.zendesk.com/assets/apps/conditional_fields/latest/helpcenter.js"></script>
+<script>var cfaRules = [{"fieldType":"tagger","field":360001713913,"value":"airbnb-alternative-new-connection","select":[360004320114],"formId":360000022473,"requireds":[360004320114]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-alternative-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-alternative-sync-issue","select":[360004320114,360006636054,360006648874,360006507453,360006505993,360005720594],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-official-new-connection","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-official-question","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-official-sync-issue-booking","select":[360005720594,360006636054,360006505993,360006507453,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-official-sync-issue-listing","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"airbnb-official-sync-issue-rates","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"booking.com-new-connection","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"booking.com-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"booking.com-sync-issue","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"bookingpal-new-connection","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"bookingpal-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"bookingpal-sync-issue","select":[360006505993,360005720594,360006636054,360006648874,360004320114,360006507453],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"canadastays-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"canadastays-sync-issue","select":[360006507453,360004320114,360006648874,360006636054,360005720594,360006505993],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-bookings-issue","select":[360004320114,360006505993,360006507453,360005720594,360006636054],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-bookings-question","select":[360006505993,360006636054,360005720594,360006507453,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-fees-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-fees-question","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-payment-gateway","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-question","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-rates-base-rate","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-rates-periods-seasons","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-rates-question","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"core-rentals-issue","select":[360004320114],"formId":360000022473,"requireds":[360004320114]},{"fieldType":"tagger","field":360001713913,"value":"core-rentals-question","select":[360004320114],"formId":360000022473,"requireds":[360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking","select":[360005720594,360004320114,360006507453,360006505993,360006636054],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-airbnb-alternative","select":[360005720594,360006505993,360006507453,360004320114,360006636054],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-airbnb-official","select":[360005720594,360004320114,360006507453,360006505993,360006636054,360006648874],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-booking.com","select":[360006505993,360005720594,360006636054,360006648874,360004320114,360006507453],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-bookingpal","select":[360006505993,360006636054,360006648874,360004320114,360006507453,360005720594],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-homeaway","select":[360004320114,360006505993,360006507453,360006648874,360006636054,360005720594],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-misterbnb","select":[360006505993,360006636054,360005720594,360006648874,360004320114,360006507453],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-rentalsunited","select":[360006505993,360006636054,360006648874,360004320114,360006507453,360005720594],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"double-booking-tripadvisor","select":[360006505993,360006636054,360006648874,360004320114,360006507453,360005720594],"formId":360000022473,"requireds":[360005720594,360006636054,360004320114]},{"fieldType":"tagger","field":360001713913,"value":"homeaway-new-connection","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"homeaway-question","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"homeaway-sync-issue","select":[360005720594,360006636054,360006648874,360006505993,360004320114,360006507453],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"misterbnb-new-connection","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"misterbnb-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"misterbnb-sync-issue","select":[360006648874,360005720594,360006636054,360004320114,360006507453,360006505993],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"notifications-new-notification","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"notifications-not-sent","select":[360004320114,360006636054,360005720594,360006507453,360006505993],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"notifications-question","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"notifications-update-notification","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"onlyapartments-question","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"onlyapartments-sync-issue","select":[360006507453,360004320114,360006648874,360006636054,360005720594,360006505993],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"outswitch-question","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"outswitch-sync-issue","select":[360006507453,360004320114,360006648874,360006636054,360005720594,360006505993],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"owners-access","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"owners-calendar-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"owners-question","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"owners-transactions-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"pricing-beyondpricing-sync-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"pricing-outswitch-sync-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"pricing-pricelabs-sync-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"pricing-wheelhouse-sync-issue","select":[360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"rentalsunited-new-connection","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"rentalsunited-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"rentalsunited-sync-issue","select":[360006505993,360005720594,360006636054,360006648874,360004320114,360006507453],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"tripadvisor-new-connection","select":[360006648874,360004320114],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"tripadvisor-question","select":[360004320114,360006648874],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"tripadvisor-sync-issue","select":[360006505993,360005720594,360006636054,360006648874,360004320114,360006507453],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"website-display-issue","select":[360006700414,360004320114],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-down","select":[360006700414],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-guest-cant-book","select":[360006700414,360004320114,360006636054,360006505993,360006507453],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-new-design","select":[360006700414],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"website-question","select":[360006700414],"formId":360000022473,"requireds":[]},{"fieldType":"tagger","field":360001713913,"value":"website-sync-issue-availability","select":[360006700414,360004320114],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-sync-issue-other","select":[360006700414,360004320114],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-sync-issue-rates","select":[360006700414,360004320114],"formId":360000022473,"requireds":[360006700414]},{"fieldType":"tagger","field":360001713913,"value":"website-sync-issue-rentals","select":[360004320114,360006700414],"formId":360000022473,"requireds":[360006700414]}];</script>
+
+  <script type="text/javascript" src="//p14.zdassets.com/hc/theming_assets/2225153/360000165894/script.js?digest=360099331073"></script>
+</head>
+<body class="">
+  
+  
+
+
+  
+
+
+  <section class="container">
+  <section class="innerContainer p-b-0">
+    <div class="nav-wrapper">
+  		<nav class="user-nav" id="user-nav">
+  		  
+  		  <a class="submit-a-request" href="/hc/en-us/requests/new">Submit a request</a>
+      </nav>
+    	  <a class="login" data-auth-action="signin" role="button" href="/hc/en-us/signin?return_to=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync&amp;locale=en-us">Sign in</a>
+
+    </div>
+  </section>
+</section>
+
+
+  <main role="main">
+    <section class="container">
+  <section class="innerContainer p-b-0">
+    <section class="jumbotronCommon">
+  		<div class="jumbotronCommon__logo">
+  		  <a href="/" title="BookingSync">
+  		    <img src="//cdn.bookingsync.io/libs/clearbox/1.1.0/assets/images/bookingsync.svg" width="178" height="22" alt="BookingSync">
+  		  </a>
+  		</div>
+
+  		<div class="jumbotron jumbotronCommon__block pattern">
+      	<div class="fulltextSearch">
+		  	  <i class="icon icon__search"></i>
+      	  <form role="search" class="jumbotron__input jumbotron__input--search js-fulltext-search" data-search="" action="/hc/en-us/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="category" id="category" value="360000704514" />
+<input type="search" name="query" id="query" placeholder="Search" aria-label="Search" /></form>
+		  	</div>
+  		</div>
+		</section>
+	
+    <ol class="breadcrumbs">
+  
+    <li title="BookingSync">
+      
+        <a href="/hc/en-us">BookingSync</a>
+      
+    </li>
+  
+    <li title="General Information">
+      
+        <a href="/hc/en-us/categories/360000704514-General-Information">General Information</a>
+      
+    </li>
+  
+    <li title="Channel &amp; sync overview">
+      
+        <a href="/hc/en-us/sections/360001586293-Channel-sync-overview">Channel &amp; sync overview</a>
+      
+    </li>
+  
+</ol>
+
+      
+	  <div class="p-y-3">
+      <div class="article-container" id="article-container">
+        <section class="article-sidebar">
+          <section class="section-articles collapsible-sidebar">
+            <h3 class="collapsible-sidebar-title sidenav-title">Articles in this section</h3>
+            <ul>
+              
+                <li>
+                  <a href="/hc/en-us/articles/360005264254-Channels-Synchronization" class="sidenav-item ">Channels &amp; Synchronization</a>
+                </li>
+              
+                <li>
+                  <a href="/hc/en-us/articles/360005324093-Available-channels" class="sidenav-item ">Available channels</a>
+                </li>
+              
+                <li>
+                  <a href="/hc/en-us/articles/360005264914-iCal-sync" class="sidenav-item current-article">iCal sync</a>
+                </li>
+              
+            </ul>
+            
+          </section>
+        </section>
+    
+        <article class="article">
+          <header class="article-header">
+            <h1 title="iCal sync" class="article-title">
+              iCal sync
+              
+            </h1>
+    
+            <div class="article-author">
+              <div class="avatar article-avatar">
+                
+                  <span class="icon-agent"></span>
+                
+                <img src="https://manual.bookingsync.com/system/photos/3601/8347/4454/38007938_10215470705258269_7729534565370298368_n__1_.jpg" alt="Avatar" class="user-avatar"/>
+              </div>
+              <div class="article-meta">
+                
+                  Alek
+                
+    
+                <ul class="meta-group">
+                  
+                    <li class="meta-data"><time datetime="2019-01-07T09:38:00Z" title="2019-01-07T09:38:00Z" data-datetime="relative">January 07, 2019 09:38</time></li>
+                    <li class="meta-data">Updated</li>
+                  
+                </ul>
+              </div>
+            </div>
+            <a class="article-subscribe" title="Opens a sign-in dialog" rel="nofollow" role="button" data-auth-action="signin" aria-selected="false" href="/hc/en-us/articles/360005264914-iCal-sync/subscription">Follow</a>
+          </header>
+    
+          <section class="article-info">
+            <div class="article-content">
+              <div class="article-body contentCommon"><h2>In this article</h2>
+<ul>
+<li><a href="#export">Export the BookingSync calendar in iCal</a></li>
+<li><a href="#channel">Synchronize your calendar with a channel</a></li>
+<li><a href="#google">Synchronize your calendar with your "Google Calendar"</a></li>
+<li><a href="#mac">Synchronize your calendar with your iOS calendar (mac)</a></li>
+<li><a href="#ios">Synchronize your calendar with your iOS calendar app (iPhones, iPads and iPods Touch)</a></li>
+<li><a href="#details">Synchronize your calendar including client details with iOS calendar app (iPhones, iPads and iPods Touch</a></li>
+<li><a href="#booking">Synchronize your calendar including booking details<br> </a></li>
+<li><a href="#no_import">Why we don't recommend 2 way synchronization with iCal</a></li>
+</ul>
+<h2 id="export">Export the BookingSync calendar in iCal </h2>
+<h3>Step 1</h3>
+<p>Go to the <strong> Bookings </strong>section and click on the<strong> Calendar </strong>(view) icon.</p>
+<p><img src="http://share.bookingsync.com/1I3p2C1a0N2G/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2013.37.15.png"></p>
+<h3>Step 2</h3>
+<p>Click the <strong> Share </strong>link at the bottom right.</p>
+<p><img src="https://d3vv6lp55qjaqc.cloudfront.net/items/3f253i3t3Q1J3U2N0v06/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2013.40.30.png?v=fa11b041"></p>
+<h3>Step 3</h3>
+<p><strong>Scroll down</strong> to see the link and copy it.</p>
+<p><img src="http://share.bookingsync.com/3F3K1s1C1o1S/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2013.48.08.png"></p>
+<h3>Step 4 (optional)</h3>
+<p>Paste your iCal link into your browser to download the file on your computer.</p>
+<p><em>Note: The iCal link from your BookingSync Calendar can also be found in <strong>Settings &gt; Exports<br> </strong></em></p>
+<p><img src="https://d3vv6lp55qjaqc.cloudfront.net/items/3y0v2l432c3d411K0C1A/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2013.50.57.png?v=6021873c"></p>
+<h2> </h2>
+<h2 id="channel">Connect to a channel</h2>
+<p>If there is no application to connect BookingSync to the channel you like, you can still use iCal to sync your calendar <strong>FROM BookingSync TO the channel</strong>.</p>
+<p>Note that this connection is only 1-way and not instant. The synchronisation can take <strong>up to 6 hours</strong> to happen. <strong>Tentative is not shown as blocked with iCal sync.</strong></p>
+<p>For the channels connected through iCal, we highly recommend <strong>not to use instant booking</strong> as the risk of double bookings would be very strong.</p>
+<p>Each channel has it's own way of importing an external calendar. We've listed below a few. Please refer to your channel support to get this information.</p>
+<h3>HomeAway</h3>
+<ol>
+<li>Log in to your account.</li>
+<li>Click<strong> Calendar</strong>.</li>
+<li>Select the correct property.</li>
+<li>Click the<strong> Import/Export Calendar</strong> icon.</li>
+<li>Click <strong>Import Calendar</strong>.</li>
+<li>Give the calendar a name.</li>
+<li>Select a color to represent the calendar.</li>
+<li>Paste the calendar link you just copied.</li>
+<li>Select whether the calendar will block availability.</li>
+<li>Click <strong>Import Calendar</strong>.</li>
+</ol>
+<p>The calendar is updated every hour.</p>
+<h3>TripAdvidor</h3>
+<blockquote>Source <a href="https://rentalsupport.tripadvisor.com/articles/FAQ/noc-How-does-calendar-sync-work">https://rentalsupport.tripadvisor.com/articles/FAQ/noc-How-does-calendar-sync-work</a></blockquote>
+<ol>
+<li>Go to <a href="https://rentals.tripadvisor.com/calendar">Calendar</a>:</li>
+<li>Click <strong>Connect a calendar </strong>(or<strong> Manage my calendar </strong>if you’ve got at least one connected calendar already)</li>
+<li>Select the type of calendar you want to import</li>
+<li>Paste the web link of this calendar</li>
+<li>Give the imported calendar a name</li>
+<li>Click<strong> Connect</strong></li>
+</ol>
+<h2 id="google">Synchronize your calendar with your "Google Calendar"</h2>
+<blockquote>Source <a href="https://support.google.com/calendar/answer/37118?hl=en">https://support.google.com/calendar/answer/37118?hl=en</a></blockquote>
+<p>After you've exported your events, you can import them into Google Calendar.</p>
+<ol>
+<li>Open <a href="https://calendar.google.com/">Google Calendar</a> on a computer. <em>Note: You can only import from a computer, not a phone or tablet.</em></li>
+<li>In the top right, click Settings<img title="Settings" src="https://storage.googleapis.com/support-kms-prod/2B5EC13DE82F73AA4D37FE6864A59C73B29D" alt="Settings" height="18">.</li>
+<li>Open the<strong> Calendars</strong> tab.</li>
+<li>Click <strong>Import calendars</strong> between the "My calendars" and "Other Calendars" sections.</li>
+<li>Click <strong>Choose File</strong> and select the file you exported. The file should end in "ics" or "csv"</li>
+<li>Choose which calendar to add the imported events to. By default, events will be imported into your primary calendar.</li>
+<li>Click <strong>Import</strong>.</li>
+</ol>
+<p>If you're using a ZIP file, find it on your computer and open it. You'll see ICS files for each of your calendars. Take the individual files out of the ZIP file, and import each ICS file individually.</p>
+<p><strong>Note:</strong> Repeating events might not show up that way if you import them from a CSV file, but they'll be on your calendar as a series of one-time events.</p>
+<h2 id="mac">Synchronize your calendar with your iOS calendar (mac)</h2>
+<p> </p>
+<blockquote>Source <a href="https://support.apple.com/kb/PH11523">https://support.apple.com/kb/PH11523</a></blockquote>
+<p>To subscribe to a calendar from a link on the Internet or an email you received, click the link. If you do this, you can skip step 1, and the calendar’s web address is filled out for you in step 2.</p>
+<ol>
+<li>Choose File &gt; New Calendar Subscription.</li>
+<li>Enter the calendar’s web address, then click Subscribe.</li>
+<li>Enter a name for the calendar in the Name field, then click the adjacent pop-up menu and choose a color.</li>
+<li>Click the Location pop-up menu, then choose an account for the subscription.
+<p>If you choose your iCloud account, the calendar is available on all your computers and devices that are set up with iCloud.</p>
+<p>If you choose On My Mac, the calendar is saved on your computer.</p>
+</li>
+<li>To get the calendar’s event attachments or alerts, deselect the appropriate Remove checkboxes.</li>
+<li>Click the Auto-refresh pop-up menu, then choose how often to update the calendar.</li>
+<li>To prevent alerts from appearing for this calendar, select Ignore alerts.</li>
+<li>Click OK.
+<p>To make changes later, click the name of the calendar, then choose Edit &gt; Get Info.</p>
+</li>
+</ol>
+<blockquote>Note that  <strong>tentative is not shown as blocked with iCal sync.</strong></blockquote>
+<h2 id="ios">Synchronize your calendar with your iOS calendar apps (iPhone, iPad, iPod touch)</h2>
+<p>After exporting your BookingSync calendar in iCal, you can subscribe to it from your iOs calendar app to get the regular updates.</p>
+<ol>
+<li>On your device navigate to<strong> Settings &gt;</strong><strong> Calendars</strong>.</li>
+<li>Select<strong> Add Account</strong></li>
+<li>Choose<strong> Other</strong></li>
+<li>Go to<strong> Add Subscribed Calendar</strong></li>
+<li>Paste the<strong> iCal </strong>link and go<strong> Next</strong></li>
+<li><strong>Save</strong></li>
+</ol>
+<blockquote>Note that <strong>tentative is not shown as blocked with iCal sync.</strong></blockquote>
+<h2> </h2>
+<h2 id="details">Synchronize your calendar including client details with iOS calendar app (iPhone, iPad and iPod Touch)</h2>
+<ol>
+<li>Go in your<strong> Profile</strong> page<br> <br> <img src="https://d3vv6lp55qjaqc.cloudfront.net/items/0f3g3R1C1n2s2t3e442W/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2015.04.11.png?v=5d40b2b0"></li>
+<li>Scroll down to the <strong>Authentication token</strong> section</li>
+<li>Copy the<strong> Authentication token</strong><br> <br> <img src="https://d3vv6lp55qjaqc.cloudfront.net/items/1a2W2z2L093J1E2r090Q/Capture%20d%E2%80%99e%CC%81cran%202016-10-22%20a%CC%80%2015.06.23.png?v=240b7bbb"><br> <br> <em><strong>Note:</strong> The Authentication Token works like a password so you should keep it safe just as you do with your email and password.<br> You can always reset it and generate a new one if needed... </em></li>
+<li>Create a new note from the Notes application of your iPhone and paste the Authentication Token</li>
+<li>Update the following URL, with your BookingSync Account ID (to replace MY_ACCOUNT_ID) and Authentication token (to replace MY_AUTH_TOKEN) previously copied
+<pre>"https://www.bookingsync.com/en/bookings.ics?account_id=MY_ACCOUNT_ID&amp;auth_token=MY_AUTH_TOKEN"
+	</pre>
+</li>
+<li>Copy the complete URL</li>
+<li>Follow the steps described in the <a href="#ios">Synchronize your calendar with your iOS calendar app (iPhones, iPads and iPods Touch)</a> section to sucsbribe to this calendar</li>
+</ol>
+<blockquote>Note that <strong>tentative is not shown as blocked with iCal sync.</strong></blockquote>
+<h2 id="booking">Synchronize your calendar including booking details</h2>
+<p>Our iCal includes more details about your bookings.</p>
+<ol>
+<li>This is the link (you need to replace 3 values described on step 2):
+<pre>"https://www.bookingsync.com/en/rentals/RENTAL_ID/bookings.ics?fullday=1&amp;auth_token=AUTH_TOKEN&amp;account_id=ACCOUNT_ID"</pre>
+</li>
+<li>You now need to replace with the right values from your account:</li>
+</ol>
+<ul>
+<li><strong>RENTAL_ID: </strong>you will find the rental ID in Rentals &gt; hover your mouse over the name of your rental and you’ll see on the lower part of your screen an URL. The last digits belong to your rental ID</li>
+<li><strong>AUTH_TOKEN: </strong>you will find this value in Manage Account &gt; Profile &gt; Authentication token</li>
+<li><strong>ACCOUNT_ID:</strong> you will find your account ID in Rentals &gt; hover your mouse over the name of your rental and you’ll see on the lower part of your screen an URL. The first digits belong to your account ID</li>
+</ul>
+<p>Bare in mind you’ll have to follow these steps for every single rental you’d like to sync with iCal.</p>
+<p><img src="https://e31c93b4e618ab489354-db4284899b817bc76acff0cd2163cbf8.ssl.cf5.rackcdn.com/system/redactor_assets/pictures/1071/iCal2.jpg"></p>
+<h2 id="no_import">Why we don't recommend 2 way synchronization with iCal</h2>
+<p>At BookingSync we make the software so that <strong>no double bookings can ever happen</strong>. That's why we don't do 2 way synchronization with iCal (particularly import iCal into BookingSync).<br> <br> We technically can, but this would lead to potential double bookings. Here is a step-by-step example of the problem if we were to do so: <br> <br> a) Let's say you receive a booking on some of the portals where you've listed your property on a channel which is not connected to BookingSync, apart from an iCal import. As the iCal import is not instant (nor reliable), the booking might be updated 1 hour after it has been confirmed on the channel. <br> b) In the meantime, you receive a confirmed booking from another source to book a similar date with instant booking (Airbnb, Booking.com, ..) <br> c) As the calendar is "still free", the second booking is created. and you are now with <strong>a double booking situation</strong>...<br> <br> As you can see, this solution can make advertising portals "connected" in both ways, but none would be considered as your calendar of reference. So there would be no way to accept instant booking with it, but also you would need another system to handle your business reservations. <br> <br> <strong>With BookingSync, double bookings should never happen. You just have to follow a certain process. It’s proven to work and to be reliable.</strong><br> <br> It is that simple:</p>
+<ol>
+<li>You receive a booking request</li>
+<li>You update one calendar (BookingSync calendar)</li>
+<li>You accept the booking on the portal</li>
+<li>BookingSync synchronizers do the rest – updating the calendars on all BookingSync supported portals where you have listed your property</li>
+</ol>
+<p><br> <strong>Please note, new reservations should be entered first in BookingSync before they can be confirmed on other sites.</strong></p></div>
+    
+              <div class="article-attachments">
+                <ul class="attachments">
+                  
+                </ul>
+              </div>
+            </div>
+          </section>
+    
+          <footer>
+            <div class="article-footer">
+              <div class="article-share"><ul class="share">
+  <li><a href="https://www.facebook.com/share.php?title=iCal+sync&u=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync" class="share-facebook">Facebook</a></li>
+  <li><a href="https://twitter.com/share?lang=en&text=iCal+sync&url=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync" class="share-twitter">Twitter</a></li>
+  <li><a href="https://www.linkedin.com/shareArticle?mini=true&source=BookingSync&title=iCal+sync&url=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync" class="share-linkedin">LinkedIn</a></li>
+  <li><a href="https://plus.google.com/share?hl=en-us&url=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync" class="share-googleplus">Google+</a></li>
+</ul>
+</div>
+              
+            </div>
+            
+              <div class="article-votes">
+                <span class="article-votes-question">Was this article helpful?</span>
+                <div class="article-votes-controls" role='radiogroup'>
+                  <a role="radio" rel="nofollow" class="btn btn--outlineBlue article-vote article-vote-up" title="Yes" aria-selected="false" data-helper="vote" data-item="article" data-type="up" data-id="360005264914" data-upvote-count="3" data-vote-count="4" data-vote-sum="2" data-vote-url="/hc/en-us/articles/360005264914/vote" data-value="null" data-label="3 out of 4 found this helpful" data-selected-class="null" href="#"></a>
+                  <a role="radio" rel="nofollow" class="btn btn--outlineBlue article-vote article-vote-down" title="No" aria-selected="false" data-helper="vote" data-item="article" data-type="down" data-id="360005264914" data-upvote-count="3" data-vote-count="4" data-vote-sum="2" data-vote-url="/hc/en-us/articles/360005264914/vote" data-value="null" data-label="3 out of 4 found this helpful" data-selected-class="null" href="#"></a>
+                </div>
+                <small class="article-votes-count">
+                  <span class="article-vote-label" data-helper="vote" data-item="article" data-type="label" data-id="360005264914" data-upvote-count="3" data-vote-count="4" data-vote-sum="2" data-vote-url="/hc/en-us/articles/360005264914/vote" data-value="null" data-label="3 out of 4 found this helpful">3 out of 4 found this helpful</span>
+                </small>
+              </div>
+            
+    
+            <div class="article-more-questions">
+              Have more questions? <a href="/hc/en-us/requests/new">Submit a request</a>
+            </div>
+            <div class="article-return-to-top">
+              <a href="#article-container">Return to top<span class="icon-arrow-up"></span></a>
+            </div>
+          </footer>
+    
+          <section class="article-relatives">
+            <div data-recent-articles></div>
+            
+  <section class="related-articles">
+    <h3>Related articles</h3>
+    <ul>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCH5j%2FNFTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGwrCBJm%2FNFTADoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSI9L2hjL2VuLXVzL2FydGljbGVzLzM2MDAwNTI2NDI1NC1DaGFubmVscy1TeW5jaHJvbml6YXRpb24GOwhUOglyYW5raQY%3D--74d4b96cc643b9aea5a052f0c0224f56f49a2803" rel="nofollow">Channels &amp; Synchronization</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCD1N%2FdFTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGwrCBJm%2FNFTADoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSI3L2hjL2VuLXVzL2FydGljbGVzLzM2MDAwNTMyNDA5My1BdmFpbGFibGUtY2hhbm5lbHMGOwhUOglyYW5raQc%3D--bf74a05222bdcdfe2fefab8f19c5d6ddc6ff3d34" rel="nofollow">Available channels</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCFVwJtJTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGwrCBJm%2FNFTADoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJbL2hjL2VuLXVzL2FydGljbGVzLzM2MDAwODAyMDA1My1Ib3ctdG8tY29ubmVjdC1teS1ib29raW5nLWNvbS1saXN0aW5ncy10by1Cb29raW5nU3luYy0GOwhUOglyYW5raQg%3D--133948fc9d88f637862afc2d205e7b5bd3537999" rel="nofollow">How to connect my booking.com listings to BookingSync?</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCBrVUtJTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGwrCBJm%2FNFTADoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJIL2hjL2VuLXVzL2FydGljbGVzLzM2MDAxMDkyOTQzNC1Ib3ctdG8tY29ubmVjdC15b3VyLXBheW1lbnQtZ2F0ZXdheQY7CFQ6CXJhbmtpCQ%3D%3D--1b4f6ef3753089d87acdc3091e98982bc4306605" rel="nofollow">How to connect your payment gateway</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCLVN%2FdFTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGwrCBJm%2FNFTADoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJXL2hjL2VuLXVzL2FydGljbGVzLzM2MDAwNTMyNDIxMy1NdXN0LWtub3ctYmVmb3JlLXRoZS1jb25uZWN0aW9uLXdpdGgtT2ZmaWNpYWwtc3luYwY7CFQ6CXJhbmtpCg%3D%3D--a3600824ba6fbea40df2775bb66e651029cc8347" rel="nofollow">Must know before the connection with Official sync</a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+          </section>
+          <div class="article-comments" id="article-comments">
+            <section class="comments">
+              <header class="comment-overview">
+                <h3 class="comment-heading">
+                  Comments
+                </h3>
+                <p class="comment-callout">0 comments</p>
+                
+              </header>
+    
+              <ul id="comments" class="comment-list">
+                
+              </ul>
+    
+              
+    
+              
+    
+              <p class="comment-callout">Please <a data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fmanual.bookingsync.com%2Fhc%2Fen-us%2Farticles%2F360005264914-iCal-sync">sign in</a> to leave a comment.</p>
+            </section>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+<a href="#" class="scroll"><i class="icon icon-arrow-up"></i></a>
+
+  </main>
+
+  <div class="container">
+	<div class="innerContainer p-b-0 p-t-3">
+		<footer class="block bg--darkGray footer m-b-0">
+		  <div class="footer__content p-b-1">
+		
+		    <div class="footer__main">
+		      <div class="row">
+		        <div class="col-xs-12 col-md-6">
+		          <ul class="footer__list">
+		            <li class="footer__navTitle">BookingSync</li>
+		            <li class="row">
+		              <ul class="footer__list col-xs-6">
+		                
+		                  <li class="footer__navItem col-xs-12">
+		                    <a class="footer__link" href="https://www.bookingsync.com/en/website-builder">Website Builder</a>
+		                  </li>
+		                
+		                  <li class="footer__navItem col-xs-12">
+		                    <a class="footer__link" href="https://www.bookingsync.com/en/channel-manager">Channel Manager</a>
+		                  </li>
+		                
+		                  <li class="footer__navItem col-xs-12">
+		                    <a class="footer__link" href="https://www.bookingsync.com/en/payments">Payments Management</a>
+		                  </li>
+		                
+		                  <li class="footer__navItem col-xs-12">
+		                    <a class="footer__link" href="https://www.bookingsync.com/en/notifications">Automated Notifications</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/customer-centric">Customer Centric</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/owners">Owners Access</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/remarketing">Remarketing</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/app-center">App Center</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="http://developer.bookingsync.com">Developer API</a>
+                      </li>
+                    
+                  </ul>
+                  <ul class="footer__list col-xs-6">
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="http://blog.bookingsync.com">Blog</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/pricing">Pricing</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/customers">Customers</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/about-us">About Us</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/security">Security</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/careers">Careers</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://www.bookingsync.com/en/press">Press &amp; Media</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="https://manual.bookingsync.com">Support Center</a>
+                      </li>
+                    
+                      <li class="footer__navItem col-xs-12">
+                        <a class="footer__link" href="mailto:support@bookingsync.com">Ask our support team</a>
+                      </li>
+                    
+                  </ul>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="col-xs-12 col-md-6" itemscope="" itemtype="http://schema.org/Organization">
+              <link itemprop="url" href="https://www.bookingsync.com">
+              <ul class="footer__list">
+                <li class="footer__navTitle">Social</li>
+                  <ul class="footer__list row">
+                    <li class="col-xs-4">
+                      <a class="socialIcon" itemprop="sameAs" href="https://www.facebook.com/bookingsync">
+                        <div class="socialIcon__imgWrap">
+                          <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/facebook_f_i.png" height="39" width="39">
+                      </div>
+  
+                      <span class="socialIcon__title">Facebook</span>
+                      <span class="socialIcon__meta">2934 likes</span>
+                    </a>
+                  </li>
+                  <li class="col-xs-4">
+                    <a class="socialIcon" itemprop="sameAs" href="https://www.linkedin.com/company/bookingsync/">
+                      <div class="socialIcon__imgWrap">
+                        <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/linkedin_f_i.png" height="39" width="39">
+                      </div>
+  
+                      <span class="socialIcon__title">LinkedIn</span>
+                      <span class="socialIcon__meta">328 followers</span>
+                    </a>
+                  </li>
+                  <li class="col-xs-4">
+                    <a class="socialIcon" itemprop="sameAs" href="https://twitter.com/bookingsync">
+                      <div class="socialIcon__imgWrap">
+                        <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/twitter_f_i.png" height="36" width="44">
+                      </div>
+  
+                      <span class="socialIcon__title">Twitter</span>
+                      <span class="socialIcon__meta">1931 followers</span>
+                    </a>
+                  </li>
+                  <li class="col-xs-4">
+                    <a class="socialIcon" itemprop="sameAs" href="https://www.youtube.com/bookingsync">
+                      <div class="socialIcon__imgWrap">
+                        <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/youtube_f_i.png" height="44" width="40">
+                      </div>
+    
+                      <span class="socialIcon__title">Youtube</span>
+                      <span class="socialIcon__meta">136 subscribers</span>
+                    </a>
+                  </li>
+                  <li class="col-xs-4">
+                    <a class="socialIcon" itemprop="sameAs" href="https://www.instagram.com/bookingsync">
+                      <div class="socialIcon__imgWrap">
+                        <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/instagram_f_i.png" height="44" width="40">
+                      </div>
+    
+                      <span class="socialIcon__title">Instagram</span>
+                      <span class="socialIcon__meta">1350 followers</span>
+                    </a>
+                  </li>
+                </ul>
+              </ul>
+            </div>
+          </div>
+        </div>
+    
+        <ul class="footer__subNav row">
+          <li class="col-xs-12 col-md-3">
+            <a href="/" title="BookingSync" class="p-x-0">
+              <img src="//cdn.bookingsync.io/libs/clearbox/1.2.4/assets/images/bookingsync-white.svg" width="178" height="22" alt="BookingSync" class="img--responsive">
+            </a>
+          </li>
+          <li class="col-xs-12 col-md-2">
+            <a class="footer__link" href="https://www.bookingsync.com/en/terms-of-service"><small>Terms of Service</small></a>
+          </li>
+          <li class="col-xs-12 col-md-2">
+            <a class="footer__link" href="https://www.bookingsync.com/en/privacy-policy"><small>Privacy Policy</small></a>
+          </li>
+          <li class="col-xs-12 col-md-2">
+            <a class="footer__link" href="https://www.bookingsync.com/en/imprint"><small>Legal Mentions</small></a>
+          </li>
+          <li class="col-xs-12 col-md-3">
+            
+	            <ul class="langSwitcher">
+          		   
+          		     <li>
+                     <a href="/hc/change_language/fr-fr?return_to=%2Fhc%2Ffr-fr%2Farticles%2F360005264914-Synchro-iCal" dir="ltr" rel="nofollow" role="menuitem">Français (France)</a>
+                   </li>
+          		   
+            	</ul>
+          	
+          </li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</div>
+<script src="//cdn.bookingsync.io/libs/clearbox/1.2.4/js/clearbox.min.js"></script>
+
+
+
+  <!-- / -->
+
+  <script type="text/javascript" src="//static.zdassets.com/hc/assets/locales/en-us-3187ace6f2a1038a0cf6ed1c41a12d68.js"></script>
+  <script src="https://bookingsync.zendesk.com/auth/v2/host.js" data-brand-id="360000165894" data-return-to="https://manual.bookingsync.com/hc/en-us/articles/360005264914-iCal-sync" data-theme="hc" data-locale="en-us" data-auth-origin="360000165894,true,true"></script>
+  
+
+  <script type="text/javascript">
+  /*
+
+    Greetings sourcecode lurker!
+
+    This is for internal Zendesk and legacy usage,
+    we don't support or guarantee any of these values
+    so please don't build stuff on top of them.
+
+  */
+
+  HelpCenter = {};
+  HelpCenter.account = {"subdomain":"bookingsync","environment":"production","name":"BookingSync"};
+  HelpCenter.user = {"identifier":"da39a3ee5e6b4b0d3255bfef95601890afd80709","email":null,"name":null,"role":"anonymous","avatar_url":"https://assets.zendesk.com/hc/assets/default_avatar.png","is_admin":false,"organizations":[],"groups":[]};
+  HelpCenter.internal = {"asset_url":"//static.zdassets.com/hc/assets/","web_widget_asset_composer_url":"https://static.zdassets.com/ekr/snippet.js","current_session":{"locale":"en-us","csrf_token":"5mh0HByLhoSpKnsJHwdOJNB7GQVL9XpqzanuGjcc6u5RK/9Zi+gN5ViLkuRmiLpiBaegwYfyiSQ84EqDV/vD4w==","shared_csrf_token":null},"settings":{"zopim_enabled":false,"spam_filter_enabled":false},"current_record_id":"360005264914","current_record_url":"/hc/en-us/articles/360005264914-iCal-sync","current_record_title":"iCal sync","search_results_count":null,"current_text_direction":"ltr","current_brand_url":"https://bookingsync.zendesk.com","current_host_mapping":"manual.bookingsync.com","current_path":"/hc/en-us/articles/360005264914-iCal-sync","authentication_domain":"https://bookingsync.zendesk.com","show_autocomplete_breadcrumbs":true,"rollbar_config":{"enabled":true,"endpoint":"https://rollbar-us.zendesk.com/api/1/item/","accessToken":"731a5a953e9a4b7ab6cac9623f50c732","captureUncaught":true,"captureUnhandledRejections":true,"payload":{"environment":"production","client":{"javascript":{"source_map_enabled":true,"code_version":"b9e08c5afdc972908f2b61b941b2b7db310b717f","guess_uncaught_frames":true}}}},"user_info_changing_enabled":false,"has_user_profiles_enabled":false,"has_anonymous_kb_voting":true,"has_professional_upsell":false,"has_multi_language_help_center":true,"mobile_device":false,"mobile_site_enabled":false,"show_at_mentions":false,"has_copied_content":false,"embeddables_config":{"embeddables_web_widget":false,"embeddables_connect_ipms":false},"base_domain":"zendesk.com","answer_bot_subdomain":"static","plans_url":"https://manual.bookingsync.com/hc/admin/plan?locale=en-us","manage_content_url":"https://manual.bookingsync.com/hc/en-us","arrange_content_url":"https://manual.bookingsync.com/hc/admin/arrange_contents?locale=en-us","general_settings_url":"https://manual.bookingsync.com/hc/admin/general_settings?locale=en-us","user_segments_url":"https://bookingsync.zendesk.com/knowledge/user_segments?brand_id=360000165894","import_articles_url":"https://manual.bookingsync.com/hc/admin/import_articles?locale=en-us","has_community_enabled":false,"has_internal_sections":true,"has_answer_bot_web_form_enabled":false,"billing_url":"/access/return_to?return_to=https://bookingsync.zendesk.com/agent/admin/subscription","has_answer_bot":true,"has_block_answer_bot_embeddable":false,"answer_bot_management_url":"https://manual.bookingsync.com/hc/admin/answer_bot?locale=en-us","is_account_owner":false,"has_theming_templates":true,"theming_center_url":"https://manual.bookingsync.com/theming","theming_cookie_key":"hc-da39a3ee5e6b4b0d3255bfef95601890afd80709-preview","is_preview":false,"has_guide_user_segments_search":true,"has_alternate_templates":false,"has_guide_arrange_articles":true,"arrange_articles_url":"https://bookingsync.zendesk.com/knowledge/arrange?brand_id=360000165894","article_verification_url":"https://bookingsync.zendesk.com/knowledge/verification?brand_id=360000165894","has_article_verification":false,"has_guide_language_settings":false,"guide_language_settings_url":"https://manual.bookingsync.com/hc/admin/language_settings?locale=en-us","has_requests_filter_cleanup":true};
+</script>
+
+  <script src="//static.zdassets.com/hc/assets/hc_enduser-f5bfb1852b1b7d1b8370988be7efb279.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+  var Tracker = {};
+
+  Tracker.track = function(eventName, data) {
+    var url = "https://manual.bookingsync.com/hc/tracking/events?locale=en-us";
+
+    var payload = {
+      "event": eventName,
+      "data": data,
+      "referrer": document.referrer
+    };
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    xhr.send(JSON.stringify(payload));
+  };
+
+    Tracker.track("article_viewed", "BAh7CDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoPYXJ0aWNsZV9pZGwrCBJm/NFTADoKX21ldGF7CzoPYWNjb3VudF9pZGkDAfQhOhNoZWxwX2NlbnRlcl9pZGwrCKGUrNFTADoNYnJhbmRfaWRsKwgGmK7RUwA6DHVzZXJfaWQwOg51c2VyX3JvbGVJIg5hbm9ueW1vdXMGOwZUOwBJIgplbi11cwY7BlQ=--f7030b7837f0121ef9883ebe24c96c9017496646");
+})();
+
+  </script>
+</body>
+</html>

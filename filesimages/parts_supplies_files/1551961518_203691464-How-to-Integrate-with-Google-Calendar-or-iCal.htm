@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <!-- v15530 -->
+
+  <title>How to Integrate with Google Calendar or iCal &ndash; Rezdy Help Center</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="mNxINO4CauvHSAj4zxcnMbNZJN86i5Drc+Qm2zhd40q8fGg2JBHOn/uljmA+YUKr4QmV6s4cUqhYuC/ZTBSArg==" />
+  <meta name="description" content="Overview Rezdy provides one-way integration with iCal-compatible calendars, including Google Calendar, Apple iCal, Microsoft Outlook,..." /><meta property="og:image" content="https://theme.zdassets.com/theme_assets/96803/870c49001b5f427637cb0092e24b057184a11daf.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Rezdy Help Center" />
+<meta property="og:title" content="How to Integrate with Google Calendar or iCal" />
+<meta property="og:description" content="Overview
+Rezdy provides one-way integration with iCal-compatible calendars, including Google Calendar, Apple iCal, Microsoft Outlook, etc.
+
+ 
+
+How to get your calendar feed URL
+Please Note: The Cal..." />
+<meta property="og:url" content="http://support.rezdy.com/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal" />
+<link rel="canonical" href="https://support.rezdy.com/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal" />
+<link rel="alternate" hreflang="en" href="https://support.rezdy.com/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal" />
+
+  <!-- Entypo pictograms by Daniel Bruce — www.entypo.com -->
+  <link rel="stylesheet" media="all" href="//static.zdassets.com/hc/assets/application-a02dee4125b91fec66c03c0a564857bf.css" id="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="//p19.zdassets.com/hc/theming_assets/96803/157794/style.css?digest=360204144133" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="//theme.zdassets.com/theme_assets/96803/d3f9d5c96a0b7b230ff64b75071f8cd1697c184f.ico" />
+
+  <!--[if lt IE 9]>
+  <script>
+    //Enable HTML5 elements for <IE9
+    'abbr article aside audio bdi canvas data datalist details dialog \
+    figcaption figure footer header hgroup main mark meter nav output \
+    progress section summary template time video'.replace(/\w+/g,function(n){document.createElement(n)});
+  </script>
+<![endif]-->
+
+  <script src="//static.zdassets.com/hc/assets/jquery-b60ddb79ff2563b75442a6bac88b00b5.js"></script>
+  <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-23621084-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+  
+  
+
+  <!-- add code here that should appear in the document head -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.typekit.net/czy5pzd.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PXLWKD";;
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TS32S5');</script>
+<!-- End Google Tag Manager -->
+  <script type="text/javascript" src="//p19.zdassets.com/hc/theming_assets/96803/157794/script.js?digest=360204144133"></script>
+</head>
+<body class="community-enabled">
+  
+  
+
+
+  
+
+
+  <header class="header">
+
+  <div class="logo">
+    <a href="https://rezdy.com/">
+      <img src="//theme.zdassets.com/theme_assets/96803/870c49001b5f427637cb0092e24b057184a11daf.png" alt="Logo">
+    </a>
+    &nbsp;&nbsp;&nbsp;<a href="https://support.rezdy.com/hc/" style="color:black;">Help Center</a>
+  </div>
+  <div class="nav-wrapper">
+          <a class="login" data-auth-action="signin" role="button" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464-How-to-Integrate-with-Google-Calendar-or-iCal&amp;locale=en-us">Sign in</a>
+
+
+    <span class="icon-menu"></span>
+<nav class="user-nav" id="user-nav">
+  				
+            <a href="https://support.rezdy.com/hc/en-us/requests/new" class="btn-yellow"><span>Create a support ticket</span></a>
+      
+
+    </nav>
+    
+  </div>
+</header>
+
+
+  <main role="main">
+    <html>
+  <head>
+    <style>
+html {
+  scroll-behavior: smooth;
+}
+
+</style>
+  
+  </head>
+
+<div class="container-divider"></div>
+<div class="container">
+  <nav class="sub-nav">
+    <ol class="breadcrumbs">
+  
+    <li title="Rezdy Help Center">
+      
+        <a href="/hc/en-us">Rezdy Help Center</a>
+      
+    </li>
+  
+    <li title="Setup Guides For Suppliers">
+      
+        <a href="/hc/en-us/categories/200238204-Setup-Guides-For-Suppliers">Setup Guides For Suppliers</a>
+      
+    </li>
+  
+    <li title="Integrations">
+      
+        <a href="/hc/en-us/sections/200696954-Integrations">Integrations</a>
+      
+    </li>
+  
+</ol>
+
+    <form role="search" class="search" data-search="" action="/hc/en-us/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="category" id="category" value="200238204" />
+<input type="search" name="query" id="query" placeholder="Search" aria-label="Search" />
+<input type="submit" name="commit" value="Search" /></form>
+    <script>
+ $('form.search input[type="submit"]').val('SEARCH');
+ </script>
+  </nav>
+
+  <div class="article-container" id="article-container">
+    
+
+    <article class="article">
+      <header class="article-header">
+        <h1 title="How to Integrate with Google Calendar or iCal" class="article-title">
+          How to Integrate with Google Calendar or iCal
+          
+        </h1>
+
+        <div class="article-author">
+          <div class="avatar article-avatar">
+            
+              <span class="icon-agent"></span>
+            
+            <img src="https://support.rezdy.com/system/photos/0003/9464/1748/profile_image_144986487_96803.jpg" alt="Avatar" class="user-avatar"/>
+          </div>
+          <div class="article-meta">
+            <a href="/hc/en-us/profiles/144986487-Hugo-Sterin">
+              Hugo Sterin
+            </a>
+
+            <div class="article-updated meta-data">Updated <time datetime="2018-12-18T05:04:20Z" title="2018-12-18T05:04:20Z" data-datetime="relative">December 18, 2018 05:04</time></div>
+          </div>
+        </div>
+        <a class="article-subscribe" title="Opens a sign-in dialog" rel="nofollow" role="button" data-auth-action="signin" aria-selected="false" href="/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal/subscription">Follow</a>
+      
+      </header>
+
+      <section class="article-info">
+        <div class="article-content">
+          <body data-spy="scroll" data-target=".scrollspy" data-offset="120" id="bottom-div">
+          <div class="article-body" id="body_article">
+          
+            <h3>Overview</h3>
+<p>Rezdy provides one-way integration with iCal-compatible calendars, including Google Calendar, Apple iCal, Microsoft Outlook, etc.</p>
+<center>
+<div class="fnd-acc-exp-adv"> </div>
+</center><hr />
+<h3>How to get your calendar feed URL</h3>
+<p><strong>Please Note</strong>: The Calendar will only synchronize CONFIRMED and PENDING Orders for the past 7 days and next 60 days.</p>
+<ol>
+<li>Click <strong>Integrations</strong></li>
+<li>Click <strong>Third Party Apps</strong></li>
+<li>Click <strong>View Details for Calendar Feed</strong></li>
+</ol>
+<p><img src="/hc//article_attachments/360001240868/289677df5e161f99f97c582b3d5d0f4fcf75549a1806095a65d46a5aeabf562a.png" /></p>
+<p> </p>
+<ul>
+<li>Copy/Paste the URL provided by Rezdy into your calendar software:</li>
+</ul>
+<p> </p>
+<p><img src="/hc/en-us/article_attachments/203622698/2015-10-26_15h09_42.png" /></p>
+<p> </p>
+<hr />
+<h3>Google Calendar Instructions</h3>
+<ul>
+<li>Click the down-arrow next to Other calendars</li>
+<li>Click + </li>
+</ul>
+<p><img src="/hc/article_attachments/360018073794/Add_calendar.gif" /></p>
+<ul>
+<li>Paste the URL provided by Rezdy in the field provided</li>
+<li>Click the Add Calendar button. The calendar will appear in the Other Calendars section of the calendar list to the left.</li>
+</ul>
+<p><img src="/attachments/token/qb7jqw3tfn9bmcp/?name=Rezdy+-+Calendar.png" /></p>
+<p><strong>Please Note</strong>: Google Calendar is refreshed "Every few hours". Therefore, new bookings will not be instantly visible. Google does not provide a manual refresh option.</p>
+<hr />
+<h3>Apple iCal Instructions (iPad &amp; iPhone)</h3>
+<ol>
+<li>Click Settings</li>
+<li>Click Mail, Contacts, Calendars</li>
+<li>Under Accounts, click Add Account</li>
+<li>Click Other</li>
+<li>Click Add Subscribed Calendar</li>
+<li>In the Server box, enter the Rezdy Calendar Feed URL</li>
+<li>Click Next</li>
+<li>Adjust the Description as required, click Save</li>
+</ol>
+<p>Ensure you have correctly configured the Fetch New Data settings in order for your Calendar to be updated regularly on your device.</p>
+<hr />
+<h3>Apple Calendar Instructions</h3>
+<ol>
+<li>Open the Calendar program</li>
+<li>From the File menu select New Calendar Subscription</li>
+<li>Paste the URL provided by Rezdy then click Subscribe</li>
+<li>Change the name and color (optional) and update the Auto-refresh frequency to Every day (important!), then click OK</li>
+<li>The events should now appear in your calendar</li>
+</ol>
+<hr />
+<h3>Microsoft Outlook 2007 Instructions</h3>
+<p>To subscribe to an iCalendar feed using Outlook:</p>
+<ol>
+<li>From Tools menu select Account Settings</li>
+<li>Click on the Internet Calendars tab</li>
+<li>Click the New button</li>
+<li>Paste the URL provided by Rezdy then click Add</li>
+<li>In the Subscription Options dialog box, you can optionally rename the calendar.  Make sure the box is checked in the Update Limit section.</li>
+</ol>
+            
+          </div>
+            
+<script>
+$(document).ready(function(){
+    $("p:contains(Please Note)").css("background-color", "#fbf2d0",).css("padding", "10px").css("margin", "0 0 10px 0");
+});
+</script>
+          <div class="article-attachments">
+            <ul class="attachments">
+              
+            </ul>
+          </div>
+        </div>
+      </section>
+      
+    
+
+      <footer>
+
+  
+        <script>
+$('.article-body h3').each(function(id) {
+   $(this).attr('id', 'section-' + id);
+});
+</script>
+    
+    <script>
+       $(function() {
+    var list = $('#box-anchors');
+
+    $(".article-body h3").each(function() {
+        $(list).append('<li><a href="#' + this.id + '">' +  $(this).text() + '</a></li>');
+    });
+});
+        </script>
+       <script type="text/javascript">
+      $("h1[title^=Recently]").addClass("recently_released");
+         $("h1[title^=New]").addClass("recently_released");
+         $("h1[title^=Xmas]").addClass("recently_released");
+    </script>   
+        
+        <div class="article-footer">
+          <div class="article-share"><ul class="share">
+  <li><a href="https://www.facebook.com/share.php?title=How+to+Integrate+with+Google+Calendar+or+iCal&u=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464-How-to-Integrate-with-Google-Calendar-or-iCal" class="share-facebook">Facebook</a></li>
+  <li><a href="https://twitter.com/share?lang=en&text=How+to+Integrate+with+Google+Calendar+or+iCal&url=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464-How-to-Integrate-with-Google-Calendar-or-iCal" class="share-twitter">Twitter</a></li>
+  <li><a href="https://www.linkedin.com/shareArticle?mini=true&source=Rezdy+Help+Center&title=How+to+Integrate+with+Google+Calendar+or+iCal&url=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464-How-to-Integrate-with-Google-Calendar-or-iCal" class="share-linkedin">LinkedIn</a></li>
+  <li><a href="https://plus.google.com/share?hl=en-us&url=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464-How-to-Integrate-with-Google-Calendar-or-iCal" class="share-googleplus">Google+</a></li>
+</ul>
+</div>
+          
+            <a href="#article-comments" class="article-comment-count">
+              <span class="icon-comments"></span>
+              9
+            </a>
+          
+        </div>
+        
+        
+      
+        <div class="article-more-questions">
+          Have more questions? <a href="/hc/en-us/requests/new">Submit a request</a>
+        </div>
+        <div class="article-return-to-top">
+          <a href="#article-container">Return to top<span class="icon-arrow-up"></span></a>
+        </div>
+      </footer>
+<hr>
+      <section class="article-relatives">
+        
+        <!--<div data-recent-articles></div> This was removed as causing white space to be created on right side when pushing related articles out of container. -->
+        
+  <section class="related-articles">
+    <h3>Related articles</h3>
+    <ul>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGkEdhckDDoYcmVmZXJyZXJfYXJ0aWNsZV9pZGkEyBUkDDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJdL2hjL2VuLXVzL2FydGljbGVzLzIwMzY5MTg5NC1Ib3ctdG8tYWRkLVJlemR5LXRvLXlvdXItR29vZ2xlLUFwcGxlLW9yLU1pY3Jvc29mdC1jYWxlbmRhcgY7CFQ6CXJhbmtpBg%3D%3D--603e51d68181da338cb88acabe232375d4e37487" rel="nofollow">How to add Rezdy to your Google, Apple, or Microsoft calendar</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGkEMBckDDoYcmVmZXJyZXJfYXJ0aWNsZV9pZGkEyBUkDDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJEL2hjL2VuLXVzL2FydGljbGVzLzIwMzY5MTgyNC1Ib3ctdG8tY29ubmVjdC1SZXpkeS13aXRoLUZhY2Vib29rBjsIVDoJcmFua2kH--e853dc11702edd67fda2920bfb20e5f2d9fb51e5" rel="nofollow">How to connect Rezdy with Facebook</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGkEEICTDDoYcmVmZXJyZXJfYXJ0aWNsZV9pZGkEyBUkDDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSI%2BL2hjL2VuLXVzL2FydGljbGVzLzIxMDk5MzE2OC1Ib3ctdG8tY29ubmVjdC13aXRoLUV4cGVkaWEtBjsIVDoJcmFua2kI--9242e781b8ff7cb96ae97b17ac6016238376a1ba" rel="nofollow">How to connect with Expedia  </a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGkEKhMkDDoYcmVmZXJyZXJfYXJ0aWNsZV9pZGkEyBUkDDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJCL2hjL2VuLXVzL2FydGljbGVzLzIwMzY5MDc5NC1Ib3ctdG8tcnVuLWEtc2FsZXMtb3JkZXJzLXJlcG9ydAY7CFQ6CXJhbmtpCQ%3D%3D--8164749268ce8331319a33d547271b9b6dc85974" rel="nofollow">How to run a sales - orders report</a>
+        </li>
+      
+        <li>
+          <a href="/hc/en-us/related/click?data=BAh7CjobZGVzdGluYXRpb25fYXJ0aWNsZV9pZGwrCMJ9ddJTADoYcmVmZXJyZXJfYXJ0aWNsZV9pZGkEyBUkDDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoIdXJsSSJWL2hjL2VuLXVzL2FydGljbGVzLzM2MDAxMzIwMDgzNC1HZXR0aW5nLVN0YXJ0ZWQtSW50ZWdyYXRpbmctUmV6ZHktb24tWW91ci1XZWJzaXRlBjsIVDoJcmFua2kK--5eee03ae3d594318d2e8a9ec298b16106d9c8f5a" rel="nofollow">Getting Started: Integrating Rezdy on Your Website</a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+      </section>
+      <div class="article-comments" id="article-comments">
+        <section class="comments">
+          <header class="comment-overview">
+            <h3 class="comment-heading">
+              Comments
+            </h3>
+            <p class="comment-callout">9 comments</p>
+            
+              <div class="dropdown comment-sorter">
+                <a class="dropdown-toggle">Sort by</a>
+                <span class="dropdown-menu" role="menu">
+                  
+                    <a aria-selected="true" href="/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal?sort_by=created_at" role="menuitem">Date</a>
+                  
+                    <a aria-selected="false" href="/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal?sort_by=votes" role="menuitem">Votes</a>
+                  
+                </span>
+              </div>
+            
+          </header>
+
+          <ul id="comments" class="comment-list">
+            
+              <li id="comment_201058774" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://support.rezdy.com/system/photos/0004/0610/7807/profile_image_403981764_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Luke Talbot-Male">
+                          <a href="/hc/en-us/profiles/403981764-Luke-Talbot-Male">
+                            Luke Talbot-Male
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-05-29T10:53:04Z" title="2014-05-29T10:53:04Z" data-datetime="calendar">May 29, 2014 10:53</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi there, some of my tours are going into the incorrect dates in this calendar app, but not all of them.  Cant understand why.  Can you help.</p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058774"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058774"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058774">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201058784" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                          <span class="icon-agent"></span>
+                        
+                        <img src="https://support.rezdy.com/system/photos/0003/9547/7748/profile_image_74784537_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Simon">
+                          <a href="/hc/en-us/profiles/74784537-Simon">
+                            Simon
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-05-29T11:06:38Z" title="2014-05-29T11:06:38Z" data-datetime="calendar">May 29, 2014 11:06</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi Luke, </p>
+
+<p>We can certainly help. Could you please give me the product IDs that work and the ones that don't? I you prefer some privacy to resolve this matter, the best is to create a support ticket. </p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058784"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058784"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058784">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201058794" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://support.rezdy.com/system/photos/0004/0610/7807/profile_image_403981764_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Luke Talbot-Male">
+                          <a href="/hc/en-us/profiles/403981764-Luke-Talbot-Male">
+                            Luke Talbot-Male
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-05-29T21:28:06Z" title="2014-05-29T21:28:06Z" data-datetime="calendar">May 29, 2014 21:28</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>LTSMIPL</p>
+
+<p>M2W</p>
+
+<p>They are fine within Rezdy calendar - but not when it is pushed to my Google Apps calendar.  They end up in the google calendar the day before they are operating.</p>
+
+<p>SCHOOLSURFMI is fine and working well.</p>
+
+<p>Thanks</p>
+
+<p> </p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058794"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058794"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058794">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201058804" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://secure.gravatar.com/avatar/50d9f7f21a7b838f0d4b7c8d98c2ca64?default=https%3A%2F%2Fassets.zendesk.com%2Fhc%2Fassets%2Fdefault_avatar.png&amp;r=g" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Skyline Perth">
+                          <a href="/hc/en-us/profiles/233073659-Skyline-Perth">
+                            Skyline Perth
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-05-30T01:45:55Z" title="2014-05-30T01:45:55Z" data-datetime="calendar">May 30, 2014 01:45</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi Luke, I had the same issue some time ago, check your regional settings. You might have to adjust those around.</p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058804"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058804"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058804">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201058814" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://support.rezdy.com/system/photos/0004/0610/7807/profile_image_403981764_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Luke Talbot-Male">
+                          <a href="/hc/en-us/profiles/403981764-Luke-Talbot-Male">
+                            Luke Talbot-Male
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-05-30T01:51:43Z" title="2014-05-30T01:51:43Z" data-datetime="calendar">May 30, 2014 01:51</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Thanks Brett, this seems all correct and it is only for 2 products and the moment - not all of them so it is strange.  They are 1 day out.  Will wait and see the response.</p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058814"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058814"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058814">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201058824" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://secure.gravatar.com/avatar/772b605e029b2a008341d7dd594243b7?default=https%3A%2F%2Fassets.zendesk.com%2Fhc%2Fassets%2Fdefault_avatar.png&amp;r=g" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Tracey Evans">
+                          <a href="/hc/en-us/profiles/470942990-Tracey-Evans">
+                            Tracey Evans
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2014-08-05T02:53:32Z" title="2014-08-05T02:53:32Z" data-datetime="calendar">August 05, 2014 02:53</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi</p>
+
+<p>Do you have instructions for Outlook 2010?</p>
+
+<p>Thanks</p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058824"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201058824"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201058824">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201297714" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://support.rezdy.com/system/photos/9569/6600/profile_image_337060164_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Giles Dobson">
+                          <a href="/hc/en-us/profiles/337060164-Giles-Dobson">
+                            Giles Dobson
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2015-04-14T17:31:29Z" title="2015-04-14T17:31:29Z" data-datetime="calendar">April 14, 2015 17:31</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi </p>
+
+<p>We would like to be able to see all scheduled cruises in Google Calendar rather than only the ones which have PAX booked. Is this possible?</p>
+
+<p>Giles<br>
+Oxford River Cruises </p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201297714"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201297714"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201297714">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_201520974" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://support.rezdy.com/system/photos/0001/0462/4544/profile_image_455154830_96803.jpg" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Bali Diving">
+                          <a href="/hc/en-us/profiles/455154830-Bali-Diving">
+                            Bali Diving
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2015-07-13T05:06:13Z" title="2015-07-13T05:06:13Z" data-datetime="calendar">July 13, 2015 05:06</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>Hi</p>
+
+<p>Agree with Giles. I need calendar that shows everything, not only confirmed booking.</p>
+
+<p>Thanks</p>
+</section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201520974"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F201520974"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/201520974">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li id="comment_205642908" class="comment">
+                <div class="comment-wrapper">
+                  <div class="comment-info">
+                    <div class="comment-author">
+                      <div class="avatar comment-avatar">
+                        
+                        <img src="https://secure.gravatar.com/avatar/6636a2dd872578fe8650596e1f6ba011?default=https%3A%2F%2Fassets.zendesk.com%2Fhc%2Fassets%2Fdefault_avatar.png&amp;r=g" alt="Avatar" class="user-avatar"/>
+                      </div>
+                      <div class="comment-meta">
+                        <span title="Scott Grinter">
+                          <a href="/hc/en-us/profiles/4716904318-Scott-Grinter">
+                            Scott Grinter
+                          </a>
+                        </span>
+
+                        <span class="comment-published">
+                          <time datetime="2016-06-24T02:14:02Z" title="2016-06-24T02:14:02Z" data-datetime="calendar">June 24, 2016 02:14</time>
+                          
+                        </span>
+                      </div>
+                      <div class="comment-labels">
+                        
+                        
+                      </div>
+                    </div>
+
+                    <section class="comment-body"><p>One more vote for Giles suggestion. Would be great to see scheduled sessions not just those with bookings.
+<br /> Be nice to prevent a clash before a customer has booked.
+<br />Thanks for all the great features.
+</p></section>
+                  </div>
+
+                  <div class="comment-actions-container">
+                    <div class="comment-vote vote" role='radiogroup'>
+                      <a role="radio" rel="nofollow" class="vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F205642908"></a>
+                      <span class="vote-sum">0</span>
+                      <a role="radio" rel="nofollow" class="vote-down" title="No" aria-selected="false" data-auth-action="signin" href="/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.rezdy.com%2Fhc%2Fen-us%2Farticles%2F203691464%2Fcomments%2F205642908"></a>
+                    </div>
+                    <div class="comment-actions actions">
+                      
+  <span class="dropdown">
+    <span class="dropdown-toggle"></span>
+    <span class="dropdown-menu" role="menu">
+      
+      
+      
+      <a role="menuitem" rel="nofollow" data-action="show-permalink" href="https://support.rezdy.com/hc/en-us/articles/203691464/comments/205642908">Permalink</a>
+      
+    </span>
+  </span>
+
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+          </ul>
+
+          
+
+          
+
+          <p class="comment-callout">Article is closed for comments.</p>
+        </section>
+      </div>
+    </article>
+     
+  <section id="article-right-bar" class="article-sidebar">
+    <script type="text/javascript">
+      if ($("h1").hasClass("recently_released")) {
+   document.getElementById('article-right-bar').innerHTML = '<section class="section-articles collapsible-sidebar"><h3 class="collapsible-sidebar-title sidenav-title">Articles in this section</h3><ul><li><a href="/hc/en-us/articles/203691584-How-to-setup-Google-Analytics-cross-domain-conversion-tracking" class="sidenav-item ">How to setup Google Analytics &amp; cross-domain conversion tracking</a></li><li><a href="/hc/en-us/articles/203691824-How-to-connect-Rezdy-with-Facebook" class="sidenav-item ">How to connect Rezdy with Facebook</a></li><li><a href="/hc/en-us/articles/218032187-How-to-connect-Rezdy-with-TripAdvisor-Review-Express" class="sidenav-item ">How to connect Rezdy with TripAdvisor Review Express</a></li><li><a href="/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal" class="sidenav-item current-article">How to Integrate with Google Calendar or iCal</a></li><li><a href="/hc/en-us/articles/203691484-How-to-setup-conversion-tracking" class="sidenav-item ">How to setup conversion tracking</a></li><li><a href="/hc/en-us/articles/217564968-How-to-connect-Rezdy-with-Smartwaiver" class="sidenav-item ">How to connect Rezdy with Smartwaiver</a></li><li><a href="/hc/en-us/articles/203691604-How-to-connect-Rezdy-with-Xero" class="sidenav-item ">How to connect Rezdy with Xero</a></li><li><a href="/hc/en-us/articles/203691894-How-to-add-Rezdy-to-your-Google-Apple-or-Microsoft-calendar" class="sidenav-item ">How to add Rezdy to your Google, Apple, or Microsoft calendar</a></li><li><a href="/hc/en-us/articles/203691554-How-to-connect-Rezdy-with-Zapier" class="sidenav-item ">How to connect Rezdy with Zapier</a></li><li><a href="/hc/en-us/articles/203691514-How-to-connect-Rezdy-with-Zapier-and-Mailchimp" class="sidenav-item ">How to connect Rezdy with Zapier and Mailchimp</a></li></ul><a href="/hc/en-us/sections/200696954-Integrations" class="article-sidebar-item">See more</a><section class="section master"><h3>Master Rezdy</h3><p>Get personal training from a Rezdy Product Specialist</p><a role="button" class="button-large" style="margin-top:10px;" href="https://www.rezdy.com/training/" target="_blank">Book Now</a><div class="master-image"></div></section>';
+     }
+      else
+{
+    document.getElementById('article-right-bar').innerHTML = '<div class="col-md-3"><nav class="scrollspy"><ul id="box-anchors" class="nav hidden-xs hidden-sm side-nav" data-spy="affix" data-offset-top="100" data-offset-bottom="900"><h4>Article Navigation</h4></ul></nav></div>';
+}
+      </script>
+      
+    </section>
+      
+    </body>
+  </html>
+
+  </main>
+
+  
+<div class="footer">
+  
+ 
+  <div>
+  
+  <div class="container"> 
+    
+    <div class="row sm-flex-center" style="padding-left:30px;">
+      <a href="https://www.rezdy.com"><img style="width:60px; height:60px; margin:0px 0 0px 0;" src="https://www.rezdy.com/wp-content/themes/rezdy/img/rezdy-logo-white-icon.svg"></a> 
+   </div>
+  </div>
+  <br>
+  <div class="container footer-inner">
+    <div class="row">
+
+
+        <ul class="blocks">
+          <li><h3>Call United States</h3></li>
+          <li><p><a href="tel:+1 415 655 1633">+1 415 655 1633</a></p></li>
+          <li><h3>Call Australia</h3></li>
+          <li><p><a href="tel:+61 2 8244 3060">+61 2 8244 3060</a></p></li>
+        </ul>
+
+
+        <ul class="blocks">
+        <li><h3>Inspire</h3></li>
+          <li><a href="https://www.rezdy.com/reviews/">Success Stories</a>/<li>
+          <li><a href="https://www.rezdy.com/resources/">Industry Resources</a></li>
+          <li><a href="https://app.rezdy.com/marketplace?_ga=2.107254849.23587290.1537849231-208133976.1537920192">Marketplace</a></li>
+        </ul>
+
+
+        <ul class="blocks">
+        <li><h3>Help</h3></li>
+          <li><a href="http://support.rezdy.com/hc">Help Center</a></li>
+          <li><a href="https://www.rezdy.com/contact-us/">Contact Us</a></li>
+          <li><a href="https://www.rezdy.com/academy/">Training Academy</a></li>
+          <li><a href="https://www.rezdy.com/frequently-asked-questions/">FAQs</a></li>
+        </ul>
+
+
+
+        <ul class="blocks">
+          <li><h3>Inform</h3></li>
+          <li><a href="https://www.rezdy.com/about/">About</a></li>
+          <li><a href="https://www.rezdy.com/careers/">Careers</a></li>
+          <li><a href="http://www.rezdy.com/legal">Legal</a></li>
+          <li><a href="https://www.rezdy.com/media-centre/">Media</a></li>
+        </ul>
+
+    </div>
+    
+  </div>
+  
+  <div class="container"> 
+
+    <div class="row-fluid clearfix copyright"> 
+      <div class="col-xs-6" style="padding-left:30px"> 
+        <p style="color:#ffffff;">© 2018 Copyright Rezdy </p> 
+        <br>
+        <br>
+     </div> 
+
+      </div> 
+    </div>
+  </div>
+
+</div>
+   
+
+
+  <!-- / -->
+
+  <script type="text/javascript" src="//static.zdassets.com/hc/assets/locales/en-us-3187ace6f2a1038a0cf6ed1c41a12d68.js"></script>
+  <script src="https://rezdy.zendesk.com/auth/v2/host.js" data-brand-id="157794" data-return-to="https://support.rezdy.com/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal" data-theme="hc" data-locale="en-us" data-auth-origin="157794,true,true"></script>
+  <script type="text/javascript" src="https://p19.zdassets.com/assets/zendesk_pci_hc.v4.js"></script>
+
+  <script type="text/javascript">
+  /*
+
+    Greetings sourcecode lurker!
+
+    This is for internal Zendesk and legacy usage,
+    we don't support or guarantee any of these values
+    so please don't build stuff on top of them.
+
+  */
+
+  HelpCenter = {};
+  HelpCenter.account = {"subdomain":"rezdy","environment":"production","name":"Rezdy Help Center"};
+  HelpCenter.user = {"identifier":"da39a3ee5e6b4b0d3255bfef95601890afd80709","email":null,"name":null,"role":"anonymous","avatar_url":"https://assets.zendesk.com/hc/assets/default_avatar.png","is_admin":false,"organizations":[],"groups":[]};
+  HelpCenter.internal = {"asset_url":"//static.zdassets.com/hc/assets/","web_widget_asset_composer_url":"https://static.zdassets.com/ekr/snippet.js","current_session":{"locale":"en-us","csrf_token":"Yr48QZfysJIAzkTc3/NBYXcNQDcqWmQjMHp2m+JUqwFGHhxDXeEU5jwjwkQuhST7JV3xAt7NpmAbJn+Zlh3I5Q==","shared_csrf_token":null},"settings":{"zopim_enabled":true,"spam_filter_enabled":true},"current_record_id":"203691464","current_record_url":"/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal","current_record_title":"How to Integrate with Google Calendar or iCal","search_results_count":null,"current_text_direction":"ltr","current_brand_url":"https://rezdy.zendesk.com","current_host_mapping":"support.rezdy.com","current_path":"/hc/en-us/articles/203691464-How-to-Integrate-with-Google-Calendar-or-iCal","authentication_domain":"https://rezdy.zendesk.com","show_autocomplete_breadcrumbs":true,"rollbar_config":{"enabled":true,"endpoint":"https://rollbar-us.zendesk.com/api/1/item/","accessToken":"731a5a953e9a4b7ab6cac9623f50c732","captureUncaught":true,"captureUnhandledRejections":true,"payload":{"environment":"production","client":{"javascript":{"source_map_enabled":true,"code_version":"b9e08c5afdc972908f2b61b941b2b7db310b717f","guess_uncaught_frames":true}}}},"user_info_changing_enabled":false,"has_user_profiles_enabled":true,"has_anonymous_kb_voting":false,"has_professional_upsell":false,"has_multi_language_help_center":true,"mobile_device":false,"mobile_site_enabled":false,"show_at_mentions":false,"has_copied_content":true,"embeddables_config":{"embeddables_web_widget":false,"embeddables_connect_ipms":false},"base_domain":"zendesk.com","answer_bot_subdomain":"static","plans_url":"https://support.rezdy.com/hc/admin/plan?locale=en-us","manage_content_url":"https://support.rezdy.com/hc/en-us","arrange_content_url":"https://support.rezdy.com/hc/admin/arrange_contents?locale=en-us","general_settings_url":"https://support.rezdy.com/hc/admin/general_settings?locale=en-us","user_segments_url":"https://rezdy.zendesk.com/knowledge/user_segments?brand_id=157794","import_articles_url":"https://support.rezdy.com/hc/admin/import_articles?locale=en-us","has_community_enabled":true,"has_internal_sections":true,"has_answer_bot_web_form_enabled":false,"billing_url":"/access/return_to?return_to=https://rezdy.zendesk.com/agent/admin/subscription","has_answer_bot":true,"has_block_answer_bot_embeddable":false,"answer_bot_management_url":"https://support.rezdy.com/hc/admin/answer_bot?locale=en-us","is_account_owner":false,"has_theming_templates":true,"theming_center_url":"https://support.rezdy.com/theming","theming_cookie_key":"hc-da39a3ee5e6b4b0d3255bfef95601890afd80709-preview","is_preview":false,"has_guide_user_segments_search":true,"has_alternate_templates":false,"has_guide_arrange_articles":true,"arrange_articles_url":"https://rezdy.zendesk.com/knowledge/arrange?brand_id=157794","article_verification_url":"https://rezdy.zendesk.com/knowledge/verification?brand_id=157794","has_article_verification":false,"has_guide_language_settings":false,"guide_language_settings_url":"https://support.rezdy.com/hc/admin/language_settings?locale=en-us","has_requests_filter_cleanup":true};
+</script>
+
+  <script src="//static.zdassets.com/hc/assets/hc_enduser-f5bfb1852b1b7d1b8370988be7efb279.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+  var Tracker = {};
+
+  Tracker.track = function(eventName, data) {
+    var url = "https://support.rezdy.com/hc/tracking/events?locale=en-us";
+
+    var payload = {
+      "event": eventName,
+      "data": data,
+      "referrer": document.referrer
+    };
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    xhr.send(JSON.stringify(payload));
+  };
+
+    Tracker.track("article_viewed", "BAh7CDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoPYXJ0aWNsZV9pZGkEyBUkDDoKX21ldGF7CzoPYWNjb3VudF9pZGkDI3oBOhNoZWxwX2NlbnRlcl9pZGkEG9PrCzoNYnJhbmRfaWRpA2JoAjoMdXNlcl9pZDA6DnVzZXJfcm9sZUkiDmFub255bW91cwY7BlQ7AEkiCmVuLXVzBjsGVA==--ac68101bd5bb15efd4bcc7d29b9a03613577a08e");
+})();
+
+  </script>
+</body>
+</html>

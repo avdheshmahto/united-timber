@@ -1,0 +1,22 @@
+*, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+
+.content {
+    margin: 0;
+    padding: 0;
+}
+
+.content h1 {
+    margin: 0;
+    padding: 10px;
+    background: #333333;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.content p {
+    padding: 10px;
+}
