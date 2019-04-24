@@ -16,6 +16,7 @@ public function fetchlocationrack_ab()
 
 	$location= array('id' =>$_GET['id']);
 	$this->load->view('fetchlocationracks',$location);
+	//$this->load->view('fetchlocationracks',$location);
 
 }	
 
