@@ -207,7 +207,7 @@ function LocationTable()
 {
 		//echo "table";
 		$data=$this->manageItemJoinfun();
-		$this->load->view("locationRack/LocationTable",$data);
+		$this->load->view("rack/LocationTable",$data);
 }
 
 }

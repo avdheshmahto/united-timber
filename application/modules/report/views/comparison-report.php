@@ -58,62 +58,23 @@ $getFac=$fac->row(); ?>
 </div> 
 </form>
 </div>
-
-<!-- <div class="row">
-<div class="col-sm-12">
-<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-<div class="html5buttons">
-<div class="dt-buttons">
-<a href="<?=base_url();?>report/Report/excel_productBincard?<?='temp_id='.$_GET['temp_id'].'&p_name='.'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.$_GET['filter']?>" class="btn btn-sm" >Excel</a>
-
-</div>
-</div>
-
-<div class="dataTables_length" id="DataTables_Table_0_length">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show<label>
-<select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/productBincard?<?='temp_id='.$_GET['temp_id'].'&p_name='.$_GET['p_name'].'&type_of_spare='.$_GET['type_of_spare'].'&sp_name='.$_GET['sp_name'].'&quantity='.$_GET['quantity'].'&grn_no='.$_GET['grn_no'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
-		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
-		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
-		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
-		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
-		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
-</select>
-entries</label>
-<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -5px;margin-left: 12px;float: right;">
-Showing <?=$dataConfig['page']+1;?> to 
-<?php
-	$m=$dataConfig['page']==0?$dataConfig['perPage']:$dataConfig['page']+$dataConfig['perPage'];
-	echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
-?> of <?=$dataConfig['total'];?> entries
-</div>
-</div>
-<div id="DataTables_Table_0_filter" class="dataTables_filter">
-<label>Search:
-<input type="text" id="searchTerm"  class="search_box form-control input-sm" onkeyup="doSearch()"  placeholder="What you looking for?">
-</label>
-</div>
-</div>
-	 
-</div>
-</div> -->
-
+                                                                                            
 <div class="panel-body">
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
 <thead>
 <tr>
 
-		<th>Particulars</th>
-		<th>April</th>
-		<th>May</th>
+	<th>Particulars</th>
+	<th>April</th>
+	<th>May</th>
     <th>June</th>
     <th>July</th>
     <th>August</th>
     <th>September</th>
     <th>October</th>
-		<th>November</th>
-		<th>December</th>
+	<th>November</th>
+	<th>December</th>
     <th>January</th>
     <th>February</th>
     <th>March</th>
@@ -123,532 +84,112 @@ Showing <?=$dataConfig['page']+1;?> to
 <tbody id="getDataTable" >
 <?php
 
-$query=("select * from tbl_software_cost_log L,tbl_category C where L.section_id=C.id GROUP BY L.section_id ");
+$query=("select * from tbl_software_cost_log  GROUP BY main_section ");
 $result=$this->db->query($query)->result();
 //echo date('m');
 foreach($result as $fetch) { ?>
 
 <tr class="gradeC record">
-
-    <th><?php 
-    if($fetch->inside_cat == 0){
-      $sec=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $getSec=$sec->row(); ?>
-    <a target="_blank" href="<?=base_url('report/Report/comparison_details_report?id=')?><?=$fetch->section_id?>"> <?php echo $getSec->name;?> </a> <?php
-    }else{
-      $sec=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-      $getSec=$sec->row();
     
-      $sxc=$this->db->query("select * from tbl_category where id='$getSec->inside_cat'");
-      $getSxc=$sxc->row(); ?>
-      <a target="_blank" href="<?=base_url('report/Report/comparison_details_report?id=')?><?=$fetch->section_id?>"><?php echo $getSxc->name; ?> </a> <?php
-      
-    }     
-    ?>      
-    </th>
-
     <th>
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id='$fetch->section_id' "); 
-   
-    $getAprilData=$april->row();
-    echo $getAprilData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id IN ($sec_id) "); 
-   
-    $getAprilData=$april->row();
-    echo $getAprilData->totalamt;  
-    
-    } ?>
-    
-    </th>
-   
-    <th>      
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id='$fetch->section_id' "); 
-   
-    $getMayData=$may->row();
-    echo $getMayData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id IN ($sec_id) "); 
-   
-    $getMayData=$may->row();
-    echo $getMayData->totalamt;  
-    
-    } ?>
-    
+        <?php $sec=$this->db->query("select * from tbl_category where id='$fetch->main_section'");
+        $getSec=$sec->row(); ?>
+        <a target="_blank" href="<?=base_url('report/Report/comparison_details_report?id=')?><?=$fetch->main_section?>"> <?php echo $getSec->name;?> </a>
     </th>
     
     <th>
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id='$fetch->section_id' "); 
-   
-    $getJuneData=$june->row();
-    echo $getJuneData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id IN ($sec_id) "); 
-   
-    $getJuneData=$june->row();
-    echo $getJuneData->totalamt;  
-    
-    } ?>
-    
-
-    </th>
-
-
-    <th>
-
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id='$fetch->section_id' "); 
-   
-    $getJulyData=$july->row();
-    echo $getJulyData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id IN ($sec_id) "); 
-   
-    $getJulyData=$july->row();
-    echo $getJulyData->totalamt;  
-    
-    } ?>
-              
-    </th>
-
-    <th>
-      
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id='$fetch->section_id' "); 
-   
-    $getAugustData=$august->row();
-    echo $getAugustData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id IN ($sec_id) "); 
-   
-    $getAugustData=$august->row();
-    echo $getAugustData->totalamt;  
-    
-    } ?>
-              
+        <?php $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND main_section='$fetch->main_section' "); 
+        $getAprilData=$april->row();
+        echo $getAprilData->totalamt; 
+        ?>
     </th>
     
     <th>
-    
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id='$fetch->section_id' "); 
-   
-    $getSeptemberData=$september->row();
-    echo $getSeptemberData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id IN ($sec_id) "); 
-   
-    $getSeptemberData=$september->row();
-    echo $getSeptemberData->totalamt;  
-    
-    } ?>
-    
-    </th>
-    
-
-    <th>
-    
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id='$fetch->section_id' "); 
-   
-    $getOctoberData=$october->row();
-    echo $getOctoberData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id IN ($sec_id) "); 
-   
-    $getOctoberData=$october->row();
-    echo $getOctoberData->totalamt;  
-    
-    } ?>
-    
-    </th>
-
-
-    <th>    
-
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id='$fetch->section_id' "); 
-   
-    $getNovemberData=$novermber->row();
-    echo $getNovemberData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id IN ($sec_id) "); 
-   
-    $getNovemberData=$novermber->row();
-    echo $getNovemberData->totalamt;  
-    
-    } ?>
-                  
+        <?php
+        $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND main_section='$fetch->main_section' "); 
+        $getMayData=$may->row();
+        echo $getMayData->totalamt;
+        ?>
     </th>
 
     <th>
-            
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id='$fetch->section_id' "); 
-   
-    $getDecemberData=$december->row();
-    echo $getDecemberData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id IN ($sec_id) "); 
-   
-    $getDecemberData=$december->row();
-    echo $getDecemberData->totalamt;  
-    
-    } ?>
-                  
+        <?php
+        $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND main_section='$fetch->main_section'");    
+        $getJuneData=$june->row();
+        echo $getJuneData->totalamt;
+        ?>
     </th>
 
-    <th>        
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id='$fetch->section_id' "); 
-   
-    $getJanuaryData=$january->row();
-    echo $getJanuaryData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id IN ($sec_id) "); 
-   
-    $getJanuaryData=$january->row();
-    echo $getJanuaryData->totalamt;  
-    
-    } ?>
-    
-    </th>
-    
     <th>
-            
-    <?php 
-
-    if($fetch->inside_cat == 0){
-      $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id='$fetch->section_id' "); 
-   
-    $getFebruaryData=$february->row();
-    echo $getFebruaryData->totalamt;
-
-    }else{
-
-
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
-
-      array_push($s_id,$value->inside_cat);
-      
-    }
-
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id IN ($sec_id) "); 
-   
-    $getFebruaryData=$february->row();
-    echo $getFebruaryData->totalamt;  
-    
-    } ?>
-    
+        <?php
+        $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND main_section='$fetch->main_section' "); 
+        $getJulyData=$july->row();
+        echo $getJulyData->totalamt;
+        ?>
     </th>
-    
+
     <th>
+        <?php
+        $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND main_section='$fetch->main_section' "); 
+        $getAugustData=$august->row();
+        echo $getAugustData->totalamt;
+        ?>
+    </th>
 
-    <?php 
+    <th>
+        <?php
+        $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND main_section='$fetch->main_section' "); 
+        $getSeptemberData=$september->row();
+        echo $getSeptemberData->totalamt;
+        ?>
+    </th>
 
-    if($fetch->inside_cat == 0){
-      $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id='$fetch->section_id' "); 
-   
-    $getMarchData=$march->row();
-    echo $getMarchData->totalamt;
+    <th>
+        <?php
+        $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND main_section='$fetch->main_section' "); 
+        $getOctoberData=$october->row();
+        echo $getOctoberData->totalamt;
+        ?>
+    </th>
 
-    }else{
+    <th>
+        <?php
+        $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND main_section='$fetch->main_section' "); 
+        $getNovemberData=$novermber->row();
+        echo $getNovemberData->totalamt;
+        ?>
+    </th>
 
+    <th>
+        <?php
+        $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND main_section='$fetch->main_section' "); 
+        $getDecemberData=$december->row();
+        echo $getDecemberData->totalamt;
+        ?>
+    </th>
 
-    $chkCtg=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
-    $count=$chkCtg->result_array();
-    $s_id=array();
-    foreach ($chkCtg->result() as $value) {
+    <th>
+        <?php
+        $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND main_section='$fetch->main_section'");    
+        $getJanuaryData=$january->row();
+        echo $getJanuaryData->totalamt;
+        ?>
+    </th>
 
-      array_push($s_id,$value->inside_cat);
-      
-    }
+    <th>
+        <?php
+        $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND main_section='$fetch->main_section' ");   
+        $getFebruaryData=$february->row();
+        echo $getFebruaryData->totalamt;
+        ?>
+    </th>
 
-    if(sizeof($count) > 0)
-    {
-      $sec_id=implode(',', $s_id);
-      $sec_id=$sec_id.",".$fetch->section_id;
-    }
-    else
-    {
-      $sec_id='99999999';
-    }
-
-    //echo $sec_id;
-    $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id IN ($sec_id) "); 
-   
-    $getMarchData=$march->row();
-    echo $getMarchData->totalamt;  
-    
-    } ?>
-                  
+    <th>
+        <?php
+        $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND main_section='$fetch->main_section' "); 
+        $getMarchData=$march->row();
+        echo $getMarchData->totalamt;
+        ?>
     </th>
 
 </tr>

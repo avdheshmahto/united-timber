@@ -177,7 +177,7 @@ public function LocationRackData()
 {
 					
 	$locationrack=$this->manageItemJoinfun();
-	$this->load->view('locationRack/get_manage_location_rack',$locationrack);
+	$this->load->view('rack/get_manage_location_rack',$locationrack);
 
 }
 

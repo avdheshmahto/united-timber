@@ -111,7 +111,7 @@ $getFac=$fac->row(); ?>
 
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Date </label> 
-<div class="col-sm-3">
+<div class="col-sm-4">
 <div class="input-group">
 <input type="text" class="form-control reportrange" name="date_range" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width:100%" value="<?=$_GET['date_range'];?>">
 <span class="input-group-addon">

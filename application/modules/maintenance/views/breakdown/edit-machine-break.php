@@ -11,6 +11,7 @@ $ID=$_GET['ID'];
 <h4 class="modal-title">Update Schedule</h4>
 <?php } ?>
 <div id="resultareabreak" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div id="resultareabreakhours" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body overflow">
 <?php
@@ -54,7 +55,7 @@ $fetch_aat=$ItemQuery->row();
 </div> 
 <label class="col-sm-2 control-label">*Work Order Status:</label> 
 <div class="col-sm-4"> 
-<select name="wostatus" required class="form-control" id="wostatus"  <?=$type=='view'?'disabled':''?> style="width:100%;">
+<select name="wostatus" required class="form-control" id="wostatus"  <?=$type=='view'?'disabled':''?> style="width:100%;" onchange="checkBreakdownHours(this.value);">
 	<option value="" >----Select----</option>
 	<?php 
 		$sqlunit=$this->db->query("select * from tbl_master_data where param_id='29'");
@@ -118,7 +119,7 @@ $fetch_aat=$ItemQuery->row();
 
 <div class="modal-footer">
 <?php if($type != "view"){ ?>
-<input type="button" class="btn btn-sm" data-dismiss="modal1" value="Save"  onclick="editData()">
+<input type="button" class="btn btn-sm" id="saveButton" data-dismiss="modal1" value="Save"  onclick="editData()">
 <?php } ?>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>

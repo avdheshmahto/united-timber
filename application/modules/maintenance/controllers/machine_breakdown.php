@@ -1004,8 +1004,8 @@ public function ajax_getBreakdownHours()
 public function chek_breakdown_hours()
 {
 	$wids=$this->input->post('wid');
-	$data=$this->db->query("select * from tbl_machine_breakdown where workorder_id='$wids' ")->result_array();
-	if(size($data) > 0){
+	$data=$this->db->query("select * from tbl_machine_breakdown where workorder_id='$wids' AND start_time !='' AND end_time !='' ")->result_array();
+	if(sizeof($data) > 0){
 		echo 1;
 	}else{
 		echo 0;

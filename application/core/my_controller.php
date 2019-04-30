@@ -1222,12 +1222,24 @@ public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,
 	//echo $crdtTm=date('Y-m-d G:i:s');
 	$dtTime = date('Y-m-d G:i:s');
 
+		$sec=$this->db->query("select * from tbl_category where id='$section_id'");
+		$getSec=$sec->row();
+
+		if($getSec->inside_cat == 0)
+		{
+			$main_section=$section_id;
+		}
+		else
+		{
+			$main_section=$getSec->inside_cat;	
+		}
 
 		$data=array(
 			
 			'log_id'       => $log_id,
 			'log_type'     => $log_type,
 			'section_id'   => $section_id,
+			'main_section' => $main_section,
 			'machine_id'   => $machine_id,
 			'workorder_id' => $workorder_id,
 			'total_spent'  => $total_spent,

@@ -170,7 +170,7 @@ public function insert_item()
 		{
 	 	    //print_r($data);
 		    // echo "id=".$id;die;
-		    $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
+		    //$this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
 		    //print_r($qtyy);
 		    $a=sizeof($qtyy);
 		    for($i=0; $i<$a; $i++){
@@ -181,12 +181,12 @@ public function insert_item()
 			   	$logloc;$lograck;$logqty;
             	$Querylog = "select quantity,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";            
 				$selectQuery1=$this->db->query($Querylog);
-			    $num= $selectQuery1->num_rows();
+			    $num = $selectQuery1->num_rows();
 
 			 	if($num > 0)
 			    {	
                 
-				$Querylog = "select quantity,loc,rack_id,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND supp_name='$supp_name' AND type='opening stock'";
+				$Querylog = "select quantity,loc,rack_id,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";
 				$resultlog=$this->db->query($Querylog)->result();
 				//print_r($resultlog);
 				if($resultlog != "")

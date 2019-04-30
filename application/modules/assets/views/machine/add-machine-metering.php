@@ -39,7 +39,7 @@ $machinelist=$machinQ->row();
 </th>
 
 <th>
-<select name="unittt" required class="select2 form-control" id="unittt" style="width:100%;">
+<select name="unittt" required class="form-control" id="unittt" style="width:100%;" disabled="">
 <option value="" >----Select----</option>
 <?php 
 $sqlunit=$this->db->query("select * from tbl_master_data where param_id = '28' and status='A'");

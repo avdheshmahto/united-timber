@@ -106,7 +106,7 @@ if($this->input->get('entries')!=""){
 </div> 
 <label class="col-sm-2 control-label">*Work Order Status:</label> 
 <div class="col-sm-4"> 
- <select name="wostatus" required class="select2 form-control" id="wostatus" style="width:100%;" onchange="checkBreakdownHours(this.value)">
+ <select name="wostatus" required class="select2 form-control" id="wostatus" style="width:100%;">
 			<option value="" >----Select----</option>
 			<?php 
 				$sqlunit=$this->db->query("select * from tbl_master_data where param_id='29'");
@@ -167,7 +167,7 @@ if($this->input->get('entries')!=""){
 </div>
 
 <div class="modal-footer">
-<button type="button" onclick="saveData()" id="saveButton" class="btn btn-sm wo_save"  >Save</button>
+<button type="button" onclick="saveData()"  class="btn btn-sm wo_save"  >Save</button>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>
 </div><!-- /.modal-content -->
@@ -635,15 +635,15 @@ function yourFunct(wkid,trid)
 
 </script>
 <script type="text/javascript">
-function checkBreakdownHours(wosts)
+function checkBreakdownHours(wostatus)
 {
 	var ur="<?=base_url();?>maintenance/machine_breakdown/chek_breakdown_hours";
 	var woid=$("#workorderid").val();
+	var wos=$("#wostatus").val();
+	 //alert(wostatus);
+	 //alert(woid);
 
-	// alert(ur);
-	// alert(wosts);
-
-	if(wosts==75 || wosts==75 )
+	if(wostatus==75 || wostatus==76 )
 	{
 		$.ajax({
 
@@ -654,11 +654,11 @@ function checkBreakdownHours(wosts)
 				{
 					//alert(data);
 					if(data==0){
-						$("#saveButton").prop("disabled",true);
-						$("#resultareabreak").html("Add Breakdown Hours First !");
+						$("#saveButton").attr("disabled",true);
+						$("#resultareabreakhours").html("Add Breakdown Hours First !");
 					}else{
-						$("#saveButton").prop("disabled",false);
-						$("#resultareabreak").html("");
+						$("#saveButton").attr("disabled",false);
+						$("#resultareabreakhours").html("");
 					}
 				}
 
@@ -666,5 +666,3 @@ function checkBreakdownHours(wosts)
 	}
 }
 </script>
-
-

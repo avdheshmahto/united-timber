@@ -2493,7 +2493,7 @@ $("#LocationRackFormEdit").validate({
       {
         
         ur="<?=base_url();?>locationRack/LocationRackData";
-                                                    
+
         $.ajax({
           url:ur,
           type:"POST",
