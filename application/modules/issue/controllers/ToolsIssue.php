@@ -111,7 +111,7 @@ function insert_tools_issue()
 
 		$total_spent=$qtyname[$i] * $prices[$i];
 
-		$this->add_software_cost_log($lastId,'Tools',$section,$machineid,'',$total_spent);
+		$this->add_software_cost_log($lastId,'Tools',$section,$machineid,'',$qtyname[$i],$prices[$i],$total_spent);
 
 		$this->software_stock_log_insert($lastId,'Tools Issue',$vendors[$i],$spareids[$i],$qtyname[$i],$prices[$i]);
 

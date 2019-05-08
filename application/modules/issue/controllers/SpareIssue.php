@@ -269,21 +269,26 @@ function insert_spare_issue_data()
 		for($i=0;$i<$rows;$i++)
 		{
 
-			$this->db->query("update tbl_spare_issue_dtl set qty= qty + $spare_qty[$i] where issue_id_hdr='$getIssue->issue_id' AND spare_id='$spareids' AND type='$via_types' AND location='$location_id[$i]' AND rack='$rack_id[$i]' AND vendor='$vendor_id[$i]' AND price='$purchase_price[$i]'");
+			if($spare_qty[$i] != '')
+			{
 
-			$this->db->query("insert into tbl_spare_issue_log set issue_id_hdr='$getIssue->issue_id',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+				$this->db->query("update tbl_spare_issue_dtl set qty= qty + $spare_qty[$i] where issue_id_hdr='$getIssue->issue_id' AND spare_id='$spareids' AND type='$via_types' AND location='$location_id[$i]' AND rack='$rack_id[$i]' AND vendor='$vendor_id[$i]' AND price='$purchase_price[$i]'");
 
-			$qty=$this->db->query("select SUM(qty) as totalqty from tbl_spare_issue_dtl where issue_id_hdr='$getIssue->issue_id' AND spare_id='$spareids'");
-			$getQty=$qty->row();
-			$this->db->query("update tbl_workorder_spare_dtl set issue_qty='$getQty->totalqty' where spare_hdr_id='$workorder_spare_id' AND spare_id='$spareids' ");
+				$this->db->query("insert into tbl_spare_issue_log set issue_id_hdr='$getIssue->issue_id',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
-			$total_spent=$spare_qty[$i] * $purchase_price[$i];
+				$qty=$this->db->query("select SUM(qty) as totalqty from tbl_spare_issue_dtl where issue_id_hdr='$getIssue->issue_id' AND spare_id='$spareids'");
+				$getQty=$qty->row();
+				$this->db->query("update tbl_workorder_spare_dtl set issue_qty='$getQty->totalqty' where spare_hdr_id='$workorder_spare_id' AND spare_id='$spareids' ");
 
-			$this->add_software_cost_log($getIssue->issue_id,'Spare',$section_id,$machine_id,$workordid,$total_spent);
+				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-			$this->software_stock_log_insert($getIssue->issue_id,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
+				$this->add_software_cost_log($getIssue->issue_id,'Spare',$section_id,$machine_id,$workordid,$spare_qty[$i],$purchase_price[$i],$total_spent);
 
-			$this->stock_refill_qty($spareids,$via_types,$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$spare_qty[$i]);
+				$this->software_stock_log_insert($getIssue->issue_id,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
+
+				$this->stock_refill_qty($spareids,$via_types,$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$spare_qty[$i]);
+
+			}			
 			
 		}
 
@@ -300,22 +305,27 @@ function insert_spare_issue_data()
 		for($i=0;$i<$rows;$i++)
 		{
 
-			$this->db->query("insert into tbl_spare_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+			if($spare_qty[$i] != '')
+			{
 
-			$this->db->query("insert into tbl_spare_issue_log set issue_id_hdr='$lastId',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+				$this->db->query("insert into tbl_spare_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
-			$qty=$this->db->query("select SUM(qty) as totalqty from tbl_spare_issue_dtl where issue_id_hdr='$lastId' AND spare_id='$spareids'");
-			$getQty=$qty->row();
-			$this->db->query("update tbl_workorder_spare_dtl set issue_qty='$getQty->totalqty' where spare_hdr_id='$workorder_spare_id' AND spare_id='$spareids' ");
+				$this->db->query("insert into tbl_spare_issue_log set issue_id_hdr='$lastId',spare_id='$spareids',type='$via_types',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$spare_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+
+				$qty=$this->db->query("select SUM(qty) as totalqty from tbl_spare_issue_dtl where issue_id_hdr='$lastId' AND spare_id='$spareids'");
+				$getQty=$qty->row();
+				$this->db->query("update tbl_workorder_spare_dtl set issue_qty='$getQty->totalqty' where spare_hdr_id='$workorder_spare_id' AND spare_id='$spareids' ");
 
 
-			$total_spent=$spare_qty[$i] * $purchase_price[$i];
+				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-			$this->add_software_cost_log($lastId,'Spare',$section_id,$machine_id,$workordid,$total_spent);
+				$this->add_software_cost_log($lastId,'Spare',$section_id,$machine_id,$workordid,$total_spent);
 
-			$this->software_stock_log_insert($lastId,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
-			
-			$this->stock_refill_qty($spareids,$via_types,$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$spare_qty[$i]);
+				$this->software_stock_log_insert($lastId,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
+				
+				$this->stock_refill_qty($spareids,$via_types,$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$spare_qty[$i]);
+
+			}
 			
 		}
 
