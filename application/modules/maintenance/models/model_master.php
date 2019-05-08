@@ -232,5 +232,76 @@ function categorySelectbox($parent = 0, $spacing = '', $user_tree_array = ''){
      }
 
 
+
+
+//************************************Add Labour Task**********************************
+
+
+function getLabourTask($last,$strat)
+{
+
+	$parts=$this->db->query("select * from tbl_workorder_labor_task where labor_type='S' ORDER BY id DESC LIMIT $strat,$last ");
+	return $result=$parts->result();
+
+}
+
+
+function filterLabourTask($perpage,$pages,$get)
+{
+ 	
+	$qry ="select * from tbl_workorder_labor_task where labor_type='S'";
+
+	if(sizeof($get) > 0)
+	{
+		
+		// if($get['code'] != "")
+		// 	$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+
+		// if($get['sp_name'] != "")
+		// {
+
+		// 	$unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
+		// 	$getUnit2   = $unitQuery2->row();
+		// 	$sr_no2     = $getUnit2->Product_id;
+			
+		// 	$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		// }
+	
+	}
+  
+  	$qry .= "  limit $pages,$perpage";
+   $data =  $this->db->query($qry)->result();
+  return $data;
+}
+
+
+function count_labourTask($tableName,$status = 0,$get)
+{
+
+    $qry ="select count(*) as countval from tbl_workorder_labor_task where labor_type='S'";
+    
+		if(sizeof($get) > 0)
+		{
+
+			// if($get['code'] != "")
+			// 	$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+			   
+			// if($get['sp_name'] != "")
+			// 	$qry .= " AND productname LIKE '%".$get['sp_name']."%'";
+			 
+	    }
+		 
+   	$query=$this->db->query($qry,array($status))->result_array();
+   return $query[0]['countval'];
+
+}
+
+
+
+
+
+
+
 }
 ?>
