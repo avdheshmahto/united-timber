@@ -282,7 +282,7 @@ function insert_spare_issue_data()
 
 				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-				$this->add_software_cost_log($getIssue->issue_id,'Spare',$section_id,$machine_id,$workordid,$spare_qty[$i],$purchase_price[$i],$total_spent);
+				$this->add_software_cost_log($getIssue->issue_id,'Spare',$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent);
 
 				$this->software_stock_log_insert($getIssue->issue_id,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
 
@@ -319,7 +319,7 @@ function insert_spare_issue_data()
 
 				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-				$this->add_software_cost_log($lastId,'Spare',$section_id,$machine_id,$workordid,$total_spent);
+				$this->add_software_cost_log($lastId,'Spare',$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent);
 
 				$this->software_stock_log_insert($lastId,'Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
 				

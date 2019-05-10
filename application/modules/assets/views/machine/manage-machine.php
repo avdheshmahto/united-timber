@@ -27,7 +27,7 @@ if($this->input->get('entries')!="")
 <!-- Main content -->
 <div class="main-content">
 
-<form class="form-horizontal" role="form"  enctype="multipart/form-data">			
+<form class="form-horizontal" role="form" >			
 <div id="editItem" class="modal fade modal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-contentitem" id="modal-contentitem">
@@ -109,6 +109,9 @@ foreach ($categorySelectbox as $key => $dt) { ?>
 
 <div class="modal-footer">
 <button type="button" id="saveButton" onclick="saveData()" class="btn btn-sm"  >Save</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>
 
@@ -119,13 +122,6 @@ foreach ($categorySelectbox as $key => $dt) { ?>
 </div>
 </ol>
 </form>	
-
-<?php if($this->session->flashdata('flash_msg')!='') { ?>
-<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-<strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-</div>	
-<?php } ?>		
 
 <div class="row">
 <div class="col-lg-12">
@@ -434,6 +430,10 @@ function saveData()
 	var m_type       = document.getElementById("m_type").value;
 	var m_unit       = document.getElementById("m_unit").value;
 
+	$("#saveload").css("display","inline-block");
+	$("#saveButton").attr("type","button");
+	$("#saveButton").css("display","none");
+
 	if(code=='')
 	{
 	  document.getElementById("codemsg").innerHTML = "Please Enter Code";
@@ -454,7 +454,12 @@ function saveData()
 	 document.getElementById("machine_des").value='';
 	 document.getElementById("capacity").value='';
 	 document.getElementById("m_type").value='';
-	 document.getElementById("m_unit").value='';   
+	 document.getElementById("m_unit").value=''; 
+
+	  $("#saveload").css("display","none");
+	  $("#saveButton").css("display","inline-block");
+	  $("#saveButton").attr("type","submit")
+
 	}, 1500 );	
 	
 	document.getElementById("loadData").innerHTML = xhttp.responseText;
@@ -473,6 +478,10 @@ function editData()
 	var m_type       = document.getElementById("editm_type").value;
 	var m_unit       = document.getElementById("m_unit").value;
 
+	$("#saveload").css("display","inline-block");
+	$("#editButton").attr("type","button");
+	$("#editButton").css("display","none");
+	
 	if(code=='')
 	{
 	  document.getElementById("codemsg").innerHTML = "Please Enter Code";
@@ -485,7 +494,12 @@ function editData()
 
 	document.getElementById("mssg100").innerHTML="Updated Successfully";
 	setTimeout(function(){
-	$("#editItem .close").click();	   	
+	$("#editItem .close").click();	
+
+	$("#saveload").css("display","none");
+	$("#editButton").css("display","inline-block");
+	$("#editButton").attr("type","submit")   	
+
 	},1000);
 	
 	document.getElementById("loadData").innerHTML = xhttp.responseText;
@@ -499,30 +513,30 @@ function editData()
 
 
 <script type="text/javascript">
-	function checkMachineCode(v)
+function checkMachineCode(v)
+{
+$.ajax({
+
+	url  : "<?=base_url()?>assets/machine/check_machine_code",
+	type : "POST",
+	data : {'id' : v},
+	success:function(data)
 	{
-		$.ajax({
-
-				url  : "<?=base_url()?>assets/machine/check_machine_code",
-				type : "POST",
-				data : {'id' : v},
-				success:function(data)
-				{
-					if(data == 1)
-					{
-						$("#codemsg").html("Code Aleready Exists");
-						$("#saveButton").attr("disabled",true);
-					}
-					else
-					{
-						$("#codemsg").html("");
-						$("#saveButton").removeAttr("disabled",false);	
-					}
-				}
-
-			  });
-
+		if(data == 1)
+		{
+			$("#codemsg").html("Code Aleready Exists");
+			$("#saveButton").attr("disabled",true);
+		}
+		else
+		{
+			$("#codemsg").html("");
+			$("#saveButton").removeAttr("disabled",false);	
+		}
 	}
+
+  });
+
+}
 
 </script>
 <script>

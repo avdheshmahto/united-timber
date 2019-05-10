@@ -167,6 +167,9 @@ foreach ($categorySelectbox as $key => $dt) { ?>
 <?php	if($edit==''){  ?>
 <a class="btn btn-sm" style1="padding:4px;"  submit_value = "save" id="target"> Save </a>
 <?php } ?>	
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" style="padding: 4px;">Cancel</button>
 </div>
 

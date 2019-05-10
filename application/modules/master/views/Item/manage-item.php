@@ -191,8 +191,20 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 </div>
 
 <div class="modal-footer" id="button">
+
 <input type="submit" class="btn btn-sm" id="saveItem" value="Save">
 <button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
+
+
+<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+<button type="submit" id="formsave" class="btn btn-primary">Save</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="54.63" height="40">
+</span> -->
+
 </div>
 </form>
 </div>
@@ -1062,7 +1074,7 @@ function deletevalfunc(ths)
 
 function subtype(v)
 {
-	if(v==110)
+	if(v==110 || v==113)
 	{
 		$("#sub_type").val("Consumable");
 	}
@@ -1078,7 +1090,7 @@ function subtype(v)
 
 function editsubtype(v)
 {
-	if(v==110)
+	if(v==110 || v==113)
 	{
 		$("#sub_type1").val("Consumable");
 	}

@@ -114,7 +114,7 @@ Showing <?=$dataConfig['page']+1;?> to
 		<th>Date</th>
 		<th>Vendor</th>
 		<th>Type</th>
-		<th>Type Id</th>
+		<!-- <th>Type Id</th> -->
 		<th colspan="2" class="text-center">Inwards</th>
 		<th colspan="2" class="text-center">Outwards</th>
 		<th colspan="2" class="text-center">Closing</th>
@@ -124,7 +124,7 @@ Showing <?=$dataConfig['page']+1;?> to
 		<th></th>
 		<th></th>
 		<th></th>
-		<th></th>
+		<!-- <th></th> -->
 		<th class="blank_right text-center">Quantity</th>
 		<th class="blank_left text-center">Price</th>
 		<th class="blank_right text-center">Quantity</th>
@@ -137,13 +137,13 @@ Showing <?=$dataConfig['page']+1;?> to
 <tbody id="getDataTable" >
 <?php 
 
-$prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['id']."' AND type='opening stock' "); 
+$prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['id']."' AND name_role='product opening stock' "); 
 $getPrd=$prd->row();
 
 ?>
 <tr>
 		<td><?php echo $getPrd->maker_date;?></td>
-		<th colspan="3" class="text-center"><?php echo $getPrd->type;?></th>
+		<th colspan="2" class="text-center"><?php echo $getPrd->type;?></th>
 		<!-- <th></th>
 		<th></th> -->
 		<td class="blank_right text-center"><?php echo $getPrd->totalQty; ?></td>
@@ -174,7 +174,7 @@ $vndr=$this->db->query("select * from tbl_contact_m where contact_id='$fetch->ve
 $getVndr=$vndr->row();
 echo $getVndr->first_name; ?></th>
 <th><?php echo $fetch->log_type; ?></th>
-<td><?php echo $fetch->log_id; ?></td>
+<!-- <td><?php echo $fetch->log_id; ?></td> -->
 
 <?php 
   if($fetch->log_type == 'Receipt' || $fetch->log_type == 'Return' || $fetch->log_type == 'Tools Return' ) { ?>
@@ -234,7 +234,7 @@ $sum6=$inPric;
 
 
 <tr>
-	<th colspan="4" class="text-center">Totals :</th>
+	<th colspan="3" class="text-center">Totals :</th>
 	<td class="blank_right text-center"><?php echo $sum1; ?></td>
 	<th class="blank_left text-center"><?php echo $sum2; ?></th>
 	<td class="blank_right text-center"><?php echo $sum3; ?></td>

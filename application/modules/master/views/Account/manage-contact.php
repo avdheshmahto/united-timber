@@ -130,6 +130,9 @@ foreach($stnm->result() as $stdata)
 </div>
 <div class="modal-footer button" >
 <input type="submit" class="btn btn-sm"  value="Save"  id="contactForm1"/>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button type="button" class="btn btn-secondary btn-sm" id="buttonnn" data-dismiss="modal">Cancel</button>
 </div>
 </form>

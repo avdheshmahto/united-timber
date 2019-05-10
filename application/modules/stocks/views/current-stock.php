@@ -66,9 +66,11 @@ Showing <?=$dataConfig['page']+1;?> to
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
 <thead>
-<tr>
+<tr>	
+		<th>Date</th>
 		<th>Parts And Supplies Name</th>
-		<th>Type</th>		
+		<th>Type</th>
+		<th>Sub-Type</th>		
 		<th>Location</th>
 		<th>Rack</th>
 		<th>Quantity</th>        
@@ -87,6 +89,9 @@ foreach($result as $fetch){
 $locaquery = $this->db->query("select * from tbl_product_stock where Product_id='".$fetch->product_id."'");
 $getlocate = $locaquery->row();
 
+$type=$this->db->query("select * from tbl_master_data where serial_number='$getlocate->type_of_spare'");
+$getType=$type->row();
+
 $vnd=$this->db->query("select * from tbl_contact_m where contact_id = '$fetch->supp_name' ");
 $getVnd=$vnd->row();
 
@@ -97,7 +102,9 @@ $main_rackQuery = $this->db->query("select * from tbl_location_rack where id='".
 $getmain_rack = $main_rackQuery->row();
 
 ?>
+<th><?php echo $fetch->maker_date ?> </th>
 <th><?php echo $getlocate->productname; ?></th>
+<th><?php echo $getType->keyvalue; ?></th>
 <th><?php echo $fetch->module_status; ?></th>
 <th><?php echo $getmain_loc->keyvalue; ?></th>
 <th><?php echo $getmain_rack->rack_name; ?></th>

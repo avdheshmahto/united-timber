@@ -75,9 +75,9 @@ display:block !important;
 <ul class="nav navbar-nav">
 
 
-<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Section <b class="caret"></b></a>
+<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/section_report">Section Report</a></li>
+<li><a href="<?=base_url();?>report/Report/section_report">Maintenance Report</a></li>
 </ul>
 </li>
 

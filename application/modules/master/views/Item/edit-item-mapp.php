@@ -241,8 +241,10 @@ $m++;
 
 <div class="modal-footer" id="button">
 <?php if($type != "view"){ ?>
-<input type="submit" class="btn btn-sm savebutton"  value="Save">
+<input type="submit" class="btn btn-sm" id="saveItem1" value="Save">
 <?php } ?>
-<!-- <a class="btn btn-sm" style="padding:4px;" editvalue=""  submit_value = "save" id="itemSave"> Save </a> -->
 <button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 </div>

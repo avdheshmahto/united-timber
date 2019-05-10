@@ -98,15 +98,15 @@ if($this->input->get('entries')!="")
           </tr>
           <tr>
             <th>Time Estimate(hours)</th>
-            <th><input type="text" name="time_estimate" class="form-control"></th>      
+            <th><input type="number" name="time_estimate" class="form-control"></th>      
             <th>Time Spent(hours)</th>
-            <th><input type="text" name="time_spent" class="form-control"></th>
+            <th><input type="number" name="time_spent" class="form-control"></th>
           </tr>
           <tr>
             <th>Cost Estimate</th>
-            <th><input type="text" name="cost_estimate" class="form-control"></th>      
+            <th><input type="number" name="cost_estimate" class="form-control"></th>      
             <th>Cost Spent</th>
-            <th><input type="text" name="cost_spent" class="form-control"></th>
+            <th><input type="number" name="cost_spent" class="form-control"></th>
           </tr>
           <tr>
             <th>*Task Description</th>

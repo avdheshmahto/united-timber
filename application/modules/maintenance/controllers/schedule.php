@@ -73,17 +73,17 @@ public function insert_scheduling_labor_tasks()
 
 	$data=array(
 				
-					'work_order_id'     	=> $brekdown_id,
-					'task_name'     		=> $task_name,
-					'task_type'         	=> $task_type,					
-					'start_date'   			=> $start_date,
-					'date_completed'   		=> $date_completed,
-					'time_estimate'   		=> $time_estimate,					
-					'time_spent'   		    => $time_spent,
-					'cost_estimate'			=> $cost_estimate,
-					'cost_spent'			=> $cost_spent,
-					'desc_name'   			=> $des_name,
-					'task_completion_notes' => $task_notes,
+					'work_order_id'     	=> $this->input->post('brekdown_id'),
+					'task_name'     		=> $this->input->post('task_name'),
+					'task_type'         	=> $this->input->post('task_type'),	
+					'start_date'   			=> $this->input->post('start_date'),
+					'date_completed'   		=> $this->input->post('date_completed'),
+					'time_estimate'   		=> $this->input->post('time_estimate'),
+					'time_spent'   		    => $this->input->post('time_spent'),
+					'cost_estimate'			=> $this->input->post('cost_estimate'),
+					'cost_spent'			=> $this->input->post('cost_spent'),
+					'desc_name'   			=> $this->input->post('des_name'),
+					'task_completion_notes' => $this->input->post('task_notes'),
 					'labor_type' 			=> 'SM',
 		
 				);
@@ -105,7 +105,7 @@ public function insert_scheduling_labor_tasks()
 	$this->Model_admin_login->insert_user($table_name,$dataall);
 	$lastId=$this->db->insert_id();
 
-	$this->add_software_cost_log($lastId,'Labour',$section_id,$machine_id,$brekdown_id,$cost_spent);
+	$this->add_software_cost_log($lastId,'Labour',$section_id,$machine_id,$brekdown_id,'','','',$cost_spent);
 
 	echo 1;
 }

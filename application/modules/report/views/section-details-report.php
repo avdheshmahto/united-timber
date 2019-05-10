@@ -19,13 +19,9 @@ $this->load->view("reportheader");
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
 <?php 
-$wo=$this->db->query("select * from tbl_work_order_maintain where id='".$_GET['id']."' ");
-$getWO=$wo->row();
-if($getWO->trigger_code != '') { ?>
-<h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo 'WO'.$getWO->id.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SM'.$getWO->trigger_code;?>)</h4>
-<?php } else { ?>
-<h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo 'WO'.$getWO->id; ?>) </h4>	
-<?php } ?>
+$wo=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
+$getWO=$wo->row(); ?>
+<h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo $getWO->name; ?>) </h4>	
 </div>
 
 <div class="panel-body">
@@ -38,13 +34,14 @@ if($getWO->trigger_code != '') { ?>
 <th></th>
 <th></th>	
 <th></th>	
-<th>Workorder Total Amount =</th>
-<th><input type="text" name="workorder_total" id="workorder_total" class="form-control" style="width: 100px;" readonly=""/></th>
+<th>Section Total Amount =</th>
+<th><input type="text" name="section_total" id="section_total" class="form-control" style="width: 100px;" readonly=""/></th>
 </tbody>
 </thead>
 
 <thead>
 <tr>
+
 	<th>S. No.</th>
 	<th>Date</th>
 	<th>Parts & Supplies Name</th>
@@ -59,54 +56,34 @@ if($getWO->trigger_code != '') { ?>
 
 <tbody id="getDataTable" >
 <?php
-
-	$issuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_id='".$_GET['id']."' ");
-	$count=$issuehdr->num_rows();
-
-	$ishdrid=array();
-	foreach ($issuehdr->result() as $value) 
-	{
-		array_push($ishdrid, $value->issue_id);		
-	}
-
-	if($count > 0)
-	{
-		$IssueIdHdr=implode(',', $ishdrid);
-	}
-	else
-	{
-		$IssueIdHdr='999999';
-	}
-
-$issuedtl=$this->db->query("select * from tbl_spare_issue_dtl where issue_id_hdr IN ($IssueIdHdr) ");
-$count=$issuedtl->num_rows();
+$sftcostlog=$this->db->query("select * from tbl_software_cost_log where section_id='".$_GET['id']."' AND log_type!='Labour' ");
+$count=$sftcostlog->num_rows();
 $z=1;
 $i=0;
-foreach($issuedtl->result() as $fetch_list) {
+foreach($sftcostlog->result() as $fetch_list) {
 ?>
 <tr class="gradeC record">
 <th><?php echo $z++; ?></th>	
-<th><?php echo $fetch_list->author_date ?></th>
+<th><?php echo $fetch_list->author_date; ?></th>
 <th>
 <?php
-	$prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->spare_id'");
+	$prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->product_id'");
 	$getPrd=$prd->row();
 	echo $getPrd->productname; ?>
 </th>
 <th><?=$getPrd->via_type?></th>
 <th><?php echo $fetch_list->price ;?></th>	 
 <th><?php echo $fetch_list->qty; ?></th>
-<th><?php echo $totalprice = $fetch_list->price * $fetch_list->qty?></th>
+<th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
 <?php 
-	
-	$laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['id']."' ");
-	$getCost=$laborCost->row();
+	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['id']."' ");
+	$getLbr=$lbr->row();
 
 	if($i == 0)
 	{ ?>
 		<th rowspan="<?=$count?>">
 		<div style="text-align: center;margin: <?php echo $count * 10;?>px 0px 0px 0px;">
-			<?php echo $cost=$getCost->totalcost; ?>
+			<?php echo $cost=$getLbr->labourcost; ?>
 		</div>	
 		</th>
 	<?php
@@ -156,7 +133,7 @@ $this->load->view("footer.php");
 <script type="text/javascript">
 
 var id1=document.getElementById("totalprice").value;
-document.getElementById("workorder_total").value = id1;
+document.getElementById("section_total").value = id1;
 
 </script>
 <script type="text/javascript" src="<?=base_url();?>/assets/daterangepicker/daterangepicker.js"></script>

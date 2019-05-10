@@ -247,6 +247,10 @@ $("#target").click(function(event){
     var submit_type = $('#target').attr("submit_value");
     var editId = $('#editvalue').val();
     
+    $("#saveload").css("display","inline-block");
+    $("#target").attr("type","button");
+    $("#target").css("display","none");
+
     if(name != "" && ctg != ""){
         $.ajax({
         type: "POST",
@@ -260,7 +264,10 @@ $("#target").click(function(event){
           $("#modal-1 .close").click();
           $("#resultarea").text(" "); 
           }, 1000);
-          $('#formId')[0].reset(); 
+          //$('#formId')[0].reset(); 
+          $("#saveload").css("display","none");
+          $("#target").css("display","inline-block");
+          $("#target").attr("type","submit");
         } 
         });
     }else if(name == ""){
@@ -528,8 +535,8 @@ function ajex_manageSpareListData(vendorid)
 $("#formlabortaskid").validate({
     rules: {
       task_type: "required", 
-      des_name: "required",
-      start_date: "required"
+      cost_estimate: "required",
+      cost_spent: "required"
       },
       submitHandler: function(form) {
         ur = "<?=base_url('maintenance/machine_breakdown/insert_breakdown_labor_tasks');?>";
@@ -1343,8 +1350,8 @@ function ajex_manageEditSpareSchedulingListData(vendorid)
 $("#formaddlabortaskschedulingid").validate({
     rules: {
       task_type: "required", 
-      des_name: "required",
-      start_date: "required"
+      cost_estimate: "required",
+      cost_spent: "required"
       },
       submitHandler: function(form) {
         ur = "<?=base_url('maintenance/schedule/insert_scheduling_labor_tasks');?>";
@@ -2154,6 +2161,10 @@ function addrowsIssue(){
        $('#purchase_price').val("");
        $('#qty_pallet').val("");
        $('#getQn').val("");
+
+       var i=1;
+       var c=$("#countRow").val();
+       $("#countRow").val(Number(c)+ Number(i));
     }
   }
 //===========
@@ -2207,11 +2218,16 @@ var sparename = e.options[e.selectedIndex].text;
 
 //document.getElementById("locationVal").value=strMake;
 	 $('#spare_nameid option:selected').remove();
-     $('#dataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="triggercodename[]" value="'+triggercodeid+'"><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+qnty_sp+'">'+qnty_sp+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td><td colspan="2"></td></tr>');
+     $('#dataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="triggercodename[]" value="'+triggercodeid+'"><input type ="hidden" id="sp" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+qnty_sp+'">'+qnty_sp+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td><td colspan="2"></td></tr>');
 
 
        $('#spare_nameid').val("");
        $('#qtyid').val("");
+       
+       var i=1;
+       var c=$("#countRow").val();
+       $("#countRow").val(Number(c)+ Number(i));
+
     }
   }
 
@@ -2349,13 +2365,8 @@ function editSparetrigger(ths) {
   
   $('#next_trigger_reading_meter').val(editVal.next_trigger_reading);
   
-  
-
-   
+     
 };
-
-
-
 
 
 //*******************************************************************************************************
@@ -2414,101 +2425,6 @@ $("#ItemFormMapp").validate({
       }
   });
 
-
-//----------------------------Location Rack Edit Form Popup Open----------------------------------
-
-$("#LocationRackFormEdit").validate({
-  
-  rules:
-  {
-    
-    location_rack_id:"required",
-    rack_name:"required"
-    /*testinput: {
-             required: function(){ runFunction(); 
-             }
-        }
-*/
-  },
-  submitHandler:function(form){
-    var formData=new FormData(form);
-
-    
-    ur="<?=base_url();?>locationRack/insert_location_rack";
-    
-    if(document.getElementById("Location_Validation").innerHTML=="")
-            {
-    $.ajax({
-          type:"POST",
-          url:ur,
-          data:formData,
-          success:function(data){
-
-            if(data == 1 || data == 2)
-            {
-
-              if(data==1)
-                {
-                    var msg="Data Added Successfully";
-
-           
-                }
-              else
-
-                {
-                  var msg="Data Edited Successfully";
-           
-                }
-              $("#operationarea").text(msg);
-              document.getElementById("Location_Validation").innerHTML="";
-              setTimeout(function(){
-              $("#editItem .close").click();
-              $("#operationarea").text("");
-              $("#LocationRackForm")[0].reset();
-
-              },500);
-          }
-            else
-            {
-              $("#operationarea").text(data);
-        
-            }
-            LocationRackTableEdit();
-          },
-            error: function(data){
-                    alert("error");
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-           
-            });
-  }
-          return false;
-        }
-      });      
-
-
-   function LocationRackTableEdit()
-      {
-        
-        ur="<?=base_url();?>locationRack/LocationRackData";
-
-        $.ajax({
-          url:ur,
-          type:"POST",
-          success:function(data){
-           
-            
-           $("#loadData").empty().append(data).fadeIn();
-            
-          }  
-        });
-
-      }
-
-
-//-------------------------------Location Rack Add Form Popup close--------------------------------
 
 </script>
 

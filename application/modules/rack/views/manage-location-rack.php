@@ -10,7 +10,7 @@ if($this->input->get('entries')!=""){
 <div class="main-content">
 <div class="panel-default">
 
-<form class="form-horizontal" role="form" method="post" id="LocationRackFormEdit" enctype="multipart/form-data">			
+<form class="form-horizontal" id="LocationRackFormEdit">			
 <div id="editItem" class="modal fade modal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-contentitem" id="modal-contentitem">
@@ -20,7 +20,8 @@ if($this->input->get('entries')!=""){
 </div>
 </form>
 
-<form class="form-horizontal" role="form" method="post" id="LocationRackForm" enctype="multipart/form-data"><ol class="breadcrumb breadcrumb-2"> 
+<form class="form-horizontal" id="LocationRackForm" >
+<ol class="breadcrumb breadcrumb-2"> 
 <li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
 <li><a href="#">Location</a></li> 
 <li class="active"><strong><a href="#">Add Location Rack</a></strong></li>
@@ -41,14 +42,7 @@ if($this->input->get('entries')!=""){
 <label class="col-sm-2 control-label">*Location Name:</label> 
 <div class="col-sm-4"> 
 <!-- <select style="display:none" name="location_id"  class="form-control" >
-<?php 
-	// $sqlloc=$this->db->query("select * from tbl_location");
-	// foreach ($sqlloc->result() as $fetchloc){
-?>
-<option value="<?php echo $fetchloc->id; ?>" <?php if($branchFetch->location_id==$fetchloc->id){ ?> selected <?php } ?>><?php echo $fetchloc->location_name; ?></option>
-<?php //} ?>	
-</select> -->
-
+</select> -->  
 <input type="hidden"  name="id" value="<?php echo $branchFetch->id; ?>" />
 <select name="location_rack_id" id="location_rack_id"  class="form-control ui fluid email search dropdown" onchange="Validatehide();validationfunc();" required>
 <option value="">----Select ----</option>
@@ -68,7 +62,10 @@ foreach ($sqlgroup->result() as $fetchgroup){
 </div>
 </div>
 
-<div class="modal-footer"><button type="submit" class="btn btn-sm" >Save</button>
+<div class="modal-footer"><button type="submit" id="racksave" class="btn btn-sm" >Save</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>
 </div><!-- /.modal-content -->
@@ -81,16 +78,6 @@ foreach ($sqlgroup->result() as $fetchgroup){
 </div>
 </ol>
 </form>	
-<?php
-if($this->session->flashdata('flash_msg')!='')
-{
-?>
-<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	<span aria-hidden="true">x</span></button>
-<strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-</div>	
-<?php }?>		
 		
 <div class="row">
 <div class="col-sm-12" id="listingData">
@@ -168,8 +155,6 @@ foreach($result as $fetch_list)
            -> where('serial_number',$fetch_list->location_rack_id)
            -> get('tbl_master_data');
 		  $compRow = $compQuery->row();
-
-
 ?>
 
 <th><?php echo $compRow->keyvalue;?></th>
@@ -178,11 +163,11 @@ foreach($result as $fetch_list)
 <th class="bs-example">
 <?php if($view!=''){ ?>
 
-<button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Location Rack"> <i class="fa fa-eye"></i> </button>
+<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Location Rack"> <i class="fa fa-eye"></i> </button>
 
 <?php } if($edit!=''){ ?>
 
-<button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Location Rack"><i class="icon-pencil"></i></button>
+<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Location Rack"><i class="icon-pencil"></i></button>
 
 <?php }
 $pri_col='id';
@@ -222,13 +207,12 @@ $table_name='tbl_location_rack';
 function getEditItem(v,button_type)
 {
 
-	 var pro=v;
-	 //alert(button_type);
-	 var xhttp = new XMLHttpRequest();
-	 xhttp.open("GET", "getLocationRackPage?ID="+pro+"&type="+button_type, false);
-	 xhttp.send();
-
-	 document.getElementById("modal-contentitem").innerHTML = xhttp.responseText;
+	var pro=v;
+	//alert(button_type);
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "getLocationRackPage?ID="+pro+"&type="+button_type, false);
+	xhttp.send();
+	document.getElementById("modal-contentitem").innerHTML = xhttp.responseText;
 
 } 		
  
@@ -236,12 +220,12 @@ function getEditItem(v,button_type)
 function editData()
 {
 	
-    var location_rack_id = document.getElementById("location_rack_id").value;
-    var id          	 = document.getElementById("id").value;
-    var rack_name    	 = document.getElementById("rack_name").value;
+  var location_rack_id = document.getElementById("location_rack_id").value;
+  var id          	 = document.getElementById("id").value;
+  var rack_name    	 = document.getElementById("rack_name").value;
   
  	var xhttp = new XMLHttpRequest();
-  	xhttp.open("GET", "insert_location_rack?id="+id+"&location_rack_id="+location_rack_id+"&rack_name="+rack_name, false);
+  	xhttp.open("GET", "<?=base_url()?>rack/insert_location_rack?id="+id+"&location_rack_id="+location_rack_id+"&rack_name="+rack_name, false);
  	xhttp.send();
 
 
@@ -309,26 +293,24 @@ function validationfunc()
               type:"POST",
               url:ur,
               data:valdata,
-              success:function(data){
-                 if(data==3)
-                    {
-                      document.getElementById("Location_Validation").innerHTML="Select Location....";
-                    }
-
-                 else if(data==1)
-                      {
-                        document.getElementById("Location_Validation").innerHTML="Rack on this location with same name already exists....";
-                        $('#LocationRackForm :input[type="submit"]').attr('disabled',true);
-                      }
-                  else if(data==0)
-                      {
-                        document.getElementById("Location_Validation").innerHTML=""; 
-                        $('#LocationRackForm :input[type="submit"]').attr('disabled',false);
-                      }
-              }
-
-
-    });
+              success:function(data)
+              {
+                if(data==3)
+                {
+                  document.getElementById("Location_Validation").innerHTML="Select Location....";
+                }
+                else if(data==1)
+                {
+                  document.getElementById("Location_Validation").innerHTML="Rack on this location with same name already exists....";
+                  $('#LocationRackForm :input[type="submit"]').attr('disabled',true);
+                }
+                else if(data==0)
+                {
+                  document.getElementById("Location_Validation").innerHTML=""; 
+                  $('#LocationRackForm :input[type="submit"]').attr('disabled',false);
+                }
+            }
+        });
 }
 
 

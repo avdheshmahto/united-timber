@@ -36,7 +36,7 @@ function product_spare_get($last,$start)
 function filterListproduct_spare($perpage,$pages,$get)
 {
  	
-	$qry ="select * from tbl_product_stock where status='A' and type='spare'";
+	$qry ="select * from tbl_product_serial where status='A' and type='spare'";
 
 	if(sizeof($get) > 0)
 	{

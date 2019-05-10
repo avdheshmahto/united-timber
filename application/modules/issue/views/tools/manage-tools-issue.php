@@ -29,7 +29,7 @@ if($this->input->get('entries')!="")
 <div class="panel-heading clearfix">
 <h4 class="panel-title">TOOLS ISSUE</h4>
 <div class="pull-right">
-<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#PartsIssuemodal" title="Add Tools Issue" >Add Tools Issue</button>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#PartsIssuemodal" title="Add Tools Issue" onclick="refreshData();">Add Tools Issue</button>
 </div>
 <!-- <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
@@ -142,11 +142,12 @@ if($this->input->get('entries')!="")
           </tr>
         </tbody>
         <tbody id="dataTable">
+          <input type="hidden" id="countRow">
         </tbody>
         <tr>
           <th colspan="6">&nbsp;</th>
           <th>
-          <input type="submit" id="Psubmitform" class="btn btn-sm savebutton pull-right" value="Save"> 
+          <input type="button" id="Psubmitform" class="btn btn-sm savebutton pull-right" value="Save" onclick="checkrows();"> 
           </th>
           <th>
           <button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button></th>            
@@ -212,6 +213,7 @@ Showing <?=$dataConfig['page']+1;?> to
   <th>Returned Qty</th>
   <th>Remaining Qty</th>
   <th>Status</th>
+  <th>Action</th>
  </tr>
 </thead>
 <tbody id = "getDataTable"> 
@@ -267,6 +269,13 @@ echo $getQty->totalqty; ?></th>
   }
 
 //echo $fetch_list->issue_status; ?></th>
+
+<th><?php 
+$pri_col='issue_id';
+$table_name='tbl_tools_issue_hdr';
+?>
+<button class="btn btn-default delbutton" id="<?php echo $fetch_list->issue_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
+</th>
 </tr>
 
 <?php $i++; } ?>
@@ -517,6 +526,34 @@ function via_type_func(v)
     }
     
     })
+}
+
+
+function checkrows()
+{
+
+  var count=$("#countRow").val();
+  if(count > 0)
+  {
+    //v.type=submit;
+    $('#Psubmitform').attr('type', 'submit');
+  }
+  else
+  {
+    //v.type=button;
+    $('#Psubmitform').attr('type', 'button');
+    alert("Nothing To Save ! Please Add Row !");
+  }
+
+}
+
+
+function refreshData()
+{
+
+  $("#dataTable").empty();
+  $("#countRow").val('');
+  
 }
 
 </script>

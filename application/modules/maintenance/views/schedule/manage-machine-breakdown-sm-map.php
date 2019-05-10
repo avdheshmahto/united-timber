@@ -111,7 +111,7 @@ $getType=$queryType->row();
 <ul class="nav nav-tabs">
 <li class="active"><a href="#labour" data-toggle="tab">Labour Tasks</a></li>
 <li><a href="#spare" data-toggle="tab">Parts & Supplies</a></li>
-<li><a href="#tools" data-toggle="tab">Tools</a></li>
+<!-- <li><a href="#tools" data-toggle="tab">Tools</a></li> -->
 <!-- <li><a href="#meterreading" data-toggle="tab">Meter Readings</a></li>
 <li><a href="#misccosts" data-toggle="tab">Misc Costs</a></li> -->
 <li><a href="#filesid" data-toggle="tab">Files</a></li>
@@ -132,6 +132,7 @@ $getType=$queryType->row();
 		<th>Hrs Spent</th>
 		<th>Cost Estimate</th>
 		<th>Cost Spent</th>
+		<th>Action</th>
 	</tr>
 </thead>
 <tbody>
@@ -151,7 +152,15 @@ $getTask=$task->row();
 <td><?=$fetch_list->time_estimate;?></td>
 <td><?=$fetch_list->time_spent;?></td>		
 <td><?=$fetch_list->cost_estimate;?></td>		
-<td><?=$fetch_list->cost_spent;?></td>		
+<td><?=$fetch_list->cost_spent;?></td>	
+<td><?php $pri_col='id';
+          $table_name='tbl_workorder_labor_task';
+ ?>
+<?php if($view!=''){ ?>
+		
+ <button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+<?php }?>
+</td>	
 </tr>
 <?php } ?>
 <tr class="gradeU">
@@ -159,6 +168,7 @@ $getTask=$task->row();
  <button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#addlabortaskschedulingid'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Labor Tasks"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
  
 </td>
+<td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -201,14 +211,23 @@ foreach($spareq->result() as $fetch_spares)
 	     
     <td><?php echo $fetch_spares->maker_date; ?></td>
     <td><?php echo $fetch_spares->work_order_status; ?></td>
-    <td><a  class="modalMapSpare" href='#viewschedulepartsid' onclick="viewscheduleparts('<?php echo $fetch_spares->spare_hdr_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Parts And Supplies"><i class="fa fa-eye"></i></a></td>
+    <td><a  class="modalMapSpare" href='#viewschedulepartsid' onclick="viewscheduleparts('<?php echo $fetch_spares->spare_hdr_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Parts And Supplies"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;
+
+    <?php $pri_col='spare_hdr_id';
+	$table_name='tbl_workorder_spare_hdr';
+	?>
+	<?php if($view!=''){ ?>
+
+	<button class="btn btn-default delbutton" id="<?php echo $fetch_spares->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+	<?php }?>	
+    </td>
 
 </tr>
 <?php } ?>
 <tr class="gradeU">
 <td>
-<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#schedulespareid'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
- 
+<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#schedulespareid'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare" onclick="refreshData();"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
+	
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -223,6 +242,7 @@ foreach($spareq->result() as $fetch_spares)
 
 </div>
 </div>
+
 <div class="tab-pane" id="tools">
 <div class="panel-body">
 <div class="table-responsive">
@@ -278,119 +298,7 @@ foreach($toolName->result() as $fetch_map_tool)
 
 </div>
 </div>
-<!-- ===================== manage meter readings ===================================== -->
-<!-- <div class="tab-pane" id="meterreading">
-<div class="panel-body">
-<div class="table-responsive">
-<table class="table table-striped table-bordered table-hover dataTables-example1" id="loadmeterreading" >
-<thead>
-<tr>
-<th>Date Submitted</th>
-<th>Last Reading</th>
-<th>Meter Units</th>
-</tr>
-</thead>
 
-<tbody>
-<?php 
-
-// $i=1;
-
-//  $sparemapName=$this->db->query("select * from tbl_work_order_meter_reading where  work_order_id = '".$_GET['id']."' and status = 'A' ");
-//   foreach($sparemapName->result() as $fetch_meter_reading)
-//   {
-
-//   $sqlunit=$this->db->query("select * from tbl_master_data where param_id = '28' and serial_number='$fetch_meter_reading->meter_unit'");
-//   $fetch_unit_list=$sqlunit->row();
-  
-?>
-
-    <tr class="gradeU record">
-       
-	    <td><?=$fetch_meter_reading->maker_date; ?></td>     
-		<td><?=$fetch_meter_reading->meter_reading; ?></td>
-		<td><?=$fetch_unit_list->keyvalue; ?></td>
-      
-    </tr>
-<?php //} ?>
-<tr class="gradeU">
-<td>
-<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#meterreadingid'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Meter Reading"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
- 
-</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-
-</tr>
-</tbody>
-</table>
-</div>
-
-</div>
-</div> -->
-
-<!-- ===================== Manage Misc Cost ===================================== -->
-<!-- <div class="tab-pane" id="misccosts">
-<div class="panel-body">
-<div class="table-responsive">
-<table class="table table-striped table-bordered table-hover dataTables-example1" id="loadmisc" >
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-<th>Est Quantity</th>
-<th>Est Unit Cost</th>
-<th>Est Total Cost</th>
-<th>Actual Quantity</th>
-<th>Actual Unit Cost</th>
-<th>Actual Total Cost</th>
-</tr>
-</thead>
-
-<tbody>
-<?php 
-
-// $i=1;
-
-// $miscName=$this->db->query("select * from tbl_work_order_misc_costs where work_order_id='".$_GET['id']."' and status='A'");
-//   foreach($miscName->result() as $fetch_misc)
-//   {
-   
-?>
-
-    <tr class="gradeU record">
-	    <td><?=$fetch_misc->type_name; ?></td>		     
-		<td><?=$fetch_misc->desc_name; ?></td>
-		<td><?=$fetch_misc->est_qty; ?></td>
-		<td><?=$fetch_misc->est_unit_cost; ?></td>
-		<td><?=$fetch_misc->est_total_cost; ?></td>
-		<td><?=$fetch_misc->act_qty; ?></td>
-		<td><?=$fetch_misc->act_unit_cost; ?></td>
-		<td><?=$fetch_misc->act_total_cost; ?></td>
-
-    </tr>
-<?php //} ?>
-<tr class="gradeU">
-<td>
-<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#misccostid'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Misc Costs"><img src="<?=base_url();?>assets/images/plus.png" /></button>  
-</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-
-</tbody>
-
-</table>
-</div>
-
-</div>
-</div> -->
-<!-- ============================================================================ -->
 
 <!-- ================================Start files================================== -->
 <div class="tab-pane" id="filesid">
@@ -411,10 +319,10 @@ foreach($toolName->result() as $fetch_map_tool)
 
 $i=1;
 
-	 $supplieraName=$this->db->query("select * from tbl_machine_files_uploads where module_type ='Schedule' AND file_log_id='".$_GET['id']."' and status = 'A' ");
-  foreach($supplieraName->result() as $fetch_list)
-  {
-   
+$supplieraName=$this->db->query("select * from tbl_machine_files_uploads where module_type ='Schedule' AND file_log_id='".$_GET['id']."' and status = 'A' ");
+foreach($supplieraName->result() as $fetch_list)
+{
+
   
 ?>
 
@@ -486,7 +394,7 @@ $i=1;
 		<div class="modal-contentMap" id="modal-contentMap">
 			<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Add Labor Tasks</h4>
+			<h4 class="modal-title" style="padding: 10px;">Add Labor Tasks</h4>
 			<div id="resultaddlabortaskssm" class="text-center " style="font-size: 15px;color: red;"></div> 
 			<form id="formaddlabortaskschedulingid" method="post">
 				<table class="table table-striped table-bordered table-hover" >
@@ -496,7 +404,7 @@ $i=1;
 					<tr class="gradeA">
 						<th>*Task Name</th>
 						<th>
-						<select name="task_name" id="task_name" class="form-control">
+						<select name="task_name" id="task_name" class="form-control" required="">
 							<option value="">---select---</option>
 							<?php 
 								$abx=$this->db->query("select * from tbl_master_data where param_id=33");
@@ -528,15 +436,15 @@ $i=1;
 					</tr>
 					<tr>
 						<th>Time Estimate(hours)</th>
-						<th><input type="text" name="time_estimate" class="form-control"></th>
+						<th><input type="number" name="time_estimate" class="form-control"></th>
 						<th>Time Spent(hours)</th>
-						<th><input name="time_spent" class="form-control"></th>						
+						<th><input type="number" name="time_spent" class="form-control"></th>						
 					</tr>
 					<tr>
 						<th>Cost Estimate</th>
-						<th><input type="text" name="cost_estimate" class="form-control"></th>			
+						<th><input type="number" name="cost_estimate" class="form-control"></th>			
 						<th>Cost Spent</th>
-						<th><input type="text" name="cost_spent" class="form-control"></th>
+						<th><input type="number" name="cost_spent" class="form-control"></th>
 					</tr>
 					<tr>
 						<th>*Description</th>
@@ -575,10 +483,10 @@ $i=1;
 					<tr class="gradeA">
 						<th>*Parts And Supplies Name</th>
 						<th>
-						<select name="spare_name" id="spare_nameid"  class="select2 form-control" onchange="via_type_func(this.value)">
+						<select name="spare_name" id="spare_nameid"  class="select2 form-control" onchange="via_type_func(this.value)" >
 							<option value="">---select---</option>
 							<?php 
-								$sqlunit=$this->db->query("select * from tbl_product_stock where via_type!='Tools' and status='A'");
+								$sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Spare' and status='A'");
 								foreach ($sqlunit->result() as $fetchunit){
 							?>
 							<option value="<?php echo $fetchunit->Product_id;?>"><?php echo $fetchunit->productname; ?></option>
@@ -588,7 +496,7 @@ $i=1;
 						</th>
 						
 						<th>*Quantity</th>
-						<th><input type="text" name="qtyname" id="qtyid" class="form-control"></th>
+						<th><input type="number" name="qtyname" id="qtyid" class="form-control" ></th>
 						<th style="width: 150px;">
 						<button  class="btn btn-default"  type="button" onclick="addrows()"><img src="<?=base_url();?>assets/images/plus.png" />
 						</button>
@@ -607,11 +515,12 @@ $i=1;
 
 					</tbody>
 					<tbody id="dataTable">
-							</tbody>						
+						<input type="hidden" id="countRow" value="">
+					</tbody>						
 					<tr>
 						<th colspan="4">&nbsp;</th>
 						<th>
-							<input type="submit" name="" class="btn btn-sm savebutton" value="Save">
+							<input type="button" id="saveSpare" class="btn btn-sm savebutton" value="Save" onclick="checkrows();">
 							<button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button>
 						</th>
 					</tr>
@@ -1003,5 +912,33 @@ function via_type_func(v)
  		
  		})
  }
+
+
+function checkrows()
+{
+
+	var count=$("#countRow").val();
+	if(count > 0)
+	{
+		//v.type=submit;
+		$('#saveSpare').attr('type', 'submit');
+	}
+	else
+	{
+		//v.type=button;
+		$('#saveSpare').attr('type', 'button');
+		alert("Nothing To Save ! Please Add Row !");
+	}
+
+}
+
+
+function refreshData()
+{
+
+	$("#dataTable").empty();
+	$("#countRow").val('');
+	
+}
 
 </script>

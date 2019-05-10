@@ -44,7 +44,7 @@ $this->load->view("reportheader");
 	            <ul id="tree2">
 	                <!-- <li> -->
 
-                  <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">UNITED TIMBER</a>
+                  <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">ALL SECTION</a>
                   </li>
 	                <ul>                    		
       				    <?php foreach ($categorySelectbox as $key => $dt) { ?>
@@ -72,7 +72,7 @@ $this->load->view("reportheader");
 <div class="col-lg-9">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">TOTAL MAINTENANCE REPORT <?php if($_GET['id']==0){ ?>( All Section ) <?php } else {?>(&nbsp;&nbsp;<?=$_GET['name'];?>&nbsp;&nbsp;)<?php }?></h4>
+<h4 class="panel-title">MAINTENANCE REPORT <?php if($_GET['id']==0){ ?>( All Section ) <?php } else {?>(&nbsp;&nbsp;<?=$_GET['name'];?>&nbsp;&nbsp;)<?php }?></h4>
 
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>

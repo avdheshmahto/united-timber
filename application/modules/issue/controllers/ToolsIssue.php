@@ -111,7 +111,7 @@ function insert_tools_issue()
 
 		$total_spent=$qtyname[$i] * $prices[$i];
 
-		$this->add_software_cost_log($lastId,'Tools',$section,$machineid,'',$qtyname[$i],$prices[$i],$total_spent);
+		$this->add_software_cost_log($lastId,'Tools',$section,$machineid,'',$spareids[$i],$qtyname[$i],$prices[$i],$total_spent);
 
 		$this->software_stock_log_insert($lastId,'Tools Issue',$vendors[$i],$spareids[$i],$qtyname[$i],$prices[$i]);
 
@@ -348,14 +348,19 @@ function insert_tools_return()
 		for($i=0;$i<$rows;$i++)
 		{
 
-			$this->db->query("update tbl_tools_return_dtl set qty=qty + $return_qty[$i] where return_id_hdr='$getReturn->return_id' AND spare_id='$product_id[$i]' AND type='$via_type[$i]' AND location='$location_id[$i]' AND rack='$rack_id[$i]' AND vendor='$vendor_id[$i]' AND price='$purchase_price[$i]'");
+			if($return_qty[$i] != '')
+			{
 
-			$this->db->query("insert into tbl_tools_return_log set return_id_hdr='$getReturn->return_id',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+				$this->db->query("update tbl_tools_return_dtl set qty=qty + $return_qty[$i] where return_id_hdr='$getReturn->return_id' AND spare_id='$product_id[$i]' AND type='$via_type[$i]' AND location='$location_id[$i]' AND rack='$rack_id[$i]' AND vendor='$vendor_id[$i]' AND price='$purchase_price[$i]'");
 
-			$this->software_stock_log_insert($getReturn->return_id,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
+				$this->db->query("insert into tbl_tools_return_log set return_id_hdr='$getReturn->return_id',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
-			$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
+				$this->software_stock_log_insert($getReturn->return_id,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
+
+				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
 		
+			}
+			
 		}
 			
 		echo $this->input->post('issue_id');
@@ -371,13 +376,17 @@ function insert_tools_return()
 		for($i=0;$i<$rows;$i++)
 		{	
 			
-			$this->db->query("insert into tbl_tools_return_dtl set return_id_hdr='$lastId',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+			if($return_qty[$i] != '')
+			{
 
-			$this->db->query("insert into tbl_tools_return_log set return_id_hdr='$lastId',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+				$this->db->query("insert into tbl_tools_return_dtl set return_id_hdr='$lastId',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
-			$this->software_stock_log_insert($lastId,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
-			
-			$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
+				$this->db->query("insert into tbl_tools_return_log set return_id_hdr='$lastId',spare_id='$product_id[$i]',type='$via_type[$i]',location='$location_id[$i]',rack='$rack_id[$i]',vendor='$vendor_id[$i]',price='$purchase_price[$i]',qty='$return_qty[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+
+				$this->software_stock_log_insert($lastId,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
+				
+				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
+			}
 			
 		}
 

@@ -22,7 +22,7 @@ $this->load->view("reportheader");
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">SPARE RETURN REPORT </h4>
+<h4 class="panel-title">STOCK RETURN REPORT </h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>

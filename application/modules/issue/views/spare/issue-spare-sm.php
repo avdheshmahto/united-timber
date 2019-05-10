@@ -94,7 +94,7 @@ $getVndr=$vndr->row();
    <input type="hidden" name="stk_qty[]" id="stk_qty<?php echo $z;?>" class="form-control" value="<?=$value->quantity?>"><?=$value->quantity?>
   </td>
   <td>
-    <input type="number" name="spare_qty[]" id="spare_qty<?php echo $z;?>" onkeyup="qtyfunc(this.id);" class="form-control" value="0">
+    <input type="number" name="spare_qty[]" id="spare_qty<?php echo $z;?>" onkeyup="qtyfunc(this.id);" class="form-control" value="">
   </td>    
 </tr>
 

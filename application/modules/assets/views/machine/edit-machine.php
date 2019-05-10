@@ -90,8 +90,11 @@ $ID=$_GET['ID'];
 
 
 <div class="modal-footer">
-<?php if($type != "view"){ ?>
-<input type="button" class="btn btn-sm" data-dismiss="modal1" value="Save"  onclick="editData()">
+<?php if($type != "view") { ?>
+<input type="button" class="btn btn-sm" id="editButton" value="Save"  onclick="editData()">
 <?php } ?>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>

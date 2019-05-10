@@ -12,8 +12,8 @@ if($this->input->get('entries')!="")
 <!-- Main content -->
 <div class="main-content">
 <div class="panel-default">
-<form class="form-horizontal"  id="Location_form" enctype="multipart/form-data">			
-			<ol class="breadcrumb breadcrumb-2"> 
+<form class="form-horizontal"  id="Location_form">			
+<ol class="breadcrumb breadcrumb-2"> 
 <li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
 <li><a href="#">Location</a></li> 
 <li class="active"><strong><a href="#">Add Location</a></strong></li>
@@ -32,7 +32,6 @@ if($this->input->get('entries')!="")
 <h4 class="modal-title"><div id="title" style="font-size: 14px;"></div></h4>
 </div>
 
-
 <div class="modal-body overflow-">
 <div class="form-group">
 <label class="col-sm-2 control-label">*Location Name:</label> 
@@ -45,6 +44,9 @@ if($this->input->get('entries')!="")
 </div>
 <div class="modal-footer">
 <button type="submit" class="btn btn-primary btn-sm save" id="locationSave">Save</button>
+<span id="saveload" style="display: none;">
+<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
+</span>
 <button  class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
 </div>
 
@@ -56,16 +58,6 @@ if($this->input->get('entries')!="")
 </div>
 </ol>
 </form>	
-<?php
-if($this->session->flashdata('flash_msg')!='')
-{
-?>
-<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-<strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-</div>	
-<?php }?>		
 		
 <div class="row">
 <div class="col-sm-12" id="listingData">
@@ -142,11 +134,11 @@ foreach($result as $fetch_list)  {
 <?php if($view!=''){ ?>
 
 
-<button class="btn btn-default modalEditItem" property="view" attr='<?php echo json_encode($fetch_list)?>' onclick="editlocation(this);" href='#editlocation' type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Main Location"> <i class="fa fa-eye"></i> </button>
+<button class="btn btn-default" property="view" attr='<?php echo json_encode($fetch_list)?>' onclick="editlocation(this);" href='#editlocation' type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Main Location"> <i class="fa fa-eye"></i> </button>
 
 <?php } if($edit!=''){ ?>
 
-<button class="btn btn-default modalEditItem" property="edit" attr='<?php echo json_encode($fetch_list)?>' onclick="editlocation(this);" href='#editlocation' type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Main Location"><i class="icon-pencil"></i></button>
+<button class="btn btn-default" property="edit" attr='<?php echo json_encode($fetch_list)?>' onclick="editlocation(this);" href='#editlocation' type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Main Location"><i class="icon-pencil"></i></button>
 
 <?php }
 $pri_col='serial_number';
@@ -273,22 +265,21 @@ function validationfunc()
               type:"POST",
               url:ur,
               data:valdata,
-              success:function(data){
+              success:function(data)
+              {
               
-                 if(data==1)
-                      {
-                       document.getElementById("Location_Validation").innerHTML="Location with same name already exists....";
-                       $('#Location_form :input[type="submit"]').attr('disabled',true);
-                      }
-                  else if(data==0)
-                      {
-                        document.getElementById("Location_Validation").innerHTML=""; 
-                        $('#Location_form :input[type="submit"]').attr('disabled',false);
-                        
-                      }
+                if(data==1)
+                {
+                   document.getElementById("Location_Validation").innerHTML="Location with same name already exists....";
+                   $('#Location_form :input[type="submit"]').attr('disabled',true);
+                }
+                else if(data==0)
+                {
+                  document.getElementById("Location_Validation").innerHTML=""; 
+                  $('#Location_form :input[type="submit"]').attr('disabled',false);          
+                }
               }
-
-    });
+        });
 }
 
    

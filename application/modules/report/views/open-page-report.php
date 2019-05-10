@@ -93,7 +93,7 @@ $this->load->view("reportheader");
 <div class="number">
 <div class="inner">1</div>
 </div>
-<p>Section Report</p>
+<p>Maintenance Report</p>
 </div>
 </a> </div>
 </div>

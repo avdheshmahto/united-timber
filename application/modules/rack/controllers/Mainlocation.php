@@ -172,34 +172,38 @@ public function getmainLocationPage()
 public function Insert_Location()
 {
 
-			//echo "hello insert_location";die;		
-			$pri_col="serial_number";
-			$table_name="tbl_master_data";
-			$id=$_POST['id'];
-			$location=array(
-				'param_id'=>('21'),
-				'keyvalue'=>$_POST["loc_name"],
-				'maker_id'=>$this->session->userdata('maker_id'),
-				'comp_id' => $this->session->userdata('comp_id'),
-				'divn_id' => $this->session->userdata('divn_id'),
-				'zone_id' => $this->session->userdata('zone_id'),
-				'brnh_id' => $this->session->userdata('brnh_id'),
-				'maker_id' => $this->session->userdata('user_id'),
-				'author_id' => $this->session->userdata('user_id'),
-				'maker_date'=> date('y-m-d'),
-				'author_date'=> date('y-m-d')
-			);
+		//echo "hello insert_location";die;		
+		$pri_col="serial_number";
+		$table_name="tbl_master_data";
+		$id=$_POST['id'];
 
-			if($id!='')
-				{
-					$this->model_main_location->update_user($table_name,$pri_col,$id,$location);
-					echo "1";
-				}	
-			else
-				{
-					$this->model_main_location->insert_user($table_name,$location);
-					echo "0";
-				}
+		$location=array(
+				
+					'param_id'    => ('21'),
+					'keyvalue'    => $_POST["loc_name"],
+					
+					'maker_id'    => $this->session->userdata('maker_id'),
+					'comp_id'     => $this->session->userdata('comp_id'),
+					'divn_id'     => $this->session->userdata('divn_id'),
+					'zone_id'     => $this->session->userdata('zone_id'),
+					'brnh_id'     => $this->session->userdata('brnh_id'),
+					'maker_id'    => $this->session->userdata('user_id'),
+					'author_id'   => $this->session->userdata('user_id'),
+					'maker_date'  => date('y-m-d'),
+					'author_date' => date('y-m-d')
+				
+				);
+
+		if($id !='')
+		{
+			$this->model_main_location->update_user($table_name,$pri_col,$id,$location);
+			echo "1";
+		}	
+		else
+		{
+			$this->model_main_location->insert_user($table_name,$location);
+			echo "0";
+		}
 
 }
 

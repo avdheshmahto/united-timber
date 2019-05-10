@@ -10,7 +10,7 @@ function master_data($last,$strat)
    //    $this->db->limit($strat, $last);  
    //    $query = $this->db->get();
 
-      $query=$this->db->query("select * from tbl_master_data where status='A' order by serial_number desc limit $strat,$last");
+      $query=$this->db->query("select * from tbl_master_data where status='A' AND param_id!='21' order by serial_number desc limit $strat,$last");
       
 	  return $result=$query->result();  
 }	
@@ -22,7 +22,7 @@ function countMasterData($tableName,$status,$get)
       // $this->db->order_by("serial_number","desc");
       // $this->db->limit($strat, $last);  
       //$query = $this->db->get();
-	  $qry = "select count(*) as countval from tbl_master_data where status='A'";
+	  $qry = "select count(*) as countval from tbl_master_data where status='A' AND param_id!='21'";
       	
 	  $query=$this->db->query($qry,array($status))->result_array();
 	  return $query[0]['countval'];

@@ -10,6 +10,9 @@ $("#contactForm").validate({
       submitHandler: function(e) {
         ur = "insert_contact";
         
+          $("#saveload").css("display","inline-block");
+          $("#contactForm1").attr("type","button");
+          $("#contactForm1").css("display","none");
             $.ajax({
                 type : "POST",
                 url  :  ur,
@@ -32,6 +35,11 @@ $("#contactForm").validate({
                       $("#resultareacontact").text(" "); 
                       $('#contactForm')[0].reset(); 
                       $("#contactForm").val("");
+                      
+                      $("#saveload").css("display","none");
+                      $("#contactForm1").css("display","inline-block");
+                      $("#contactForm1").attr("type","submit");
+                      
                     }, 1000);
                  }else{
                     $("#resultareacontact").text(data);
@@ -113,6 +121,11 @@ $("#ItemForm").validate({
       submitHandler: function(form) {
         ur = "insert_item";
         var formData = new FormData(form);
+
+          $("#saveload").css("display","inline-block");
+          $("#saveItem").attr("type","button");
+          $("#saveItem").css("display","none");
+
             $.ajax({
                 type : "POST",
                 url  :  ur, 
@@ -134,11 +147,15 @@ $("#ItemForm").validate({
                      setTimeout(function() {   //calls click event after a certain time
                        $("#modal-0 .close").click();
                        $("#resultareaspares").text(" "); 
-                       $('#ItemForm')[0].reset(); 
+                       //$('#ItemForm')[0].reset(); 
                        // $('#dataTable')[0].reset();
-                       // $('.tablejs').trigger("reset");
-                       
+                       // $('.tablejs').trigger("reset");                       
                        $("#Product_id").val("");
+
+                      $("#saveload").css("display","none");
+                      $("#saveItem").css("display","inline-block");
+                      $("#saveItem").attr("type","submit");
+
                     }, 1000);
                   }else{
                     $("#resultareaspares").text(data);
@@ -164,8 +181,14 @@ $("#ItemForm1").validate({
       item_name:"required"
     },
       submitHandler: function(form) {
+        
         ur = "insert_item";
         var formData = new FormData(form);
+
+          $("#saveload").css("display","inline-block");
+          $("#saveItem1").attr("type","button");
+          $("#saveItem1").css("display","none");
+
             $.ajax({
                 type : "POST",
                 url  :  ur, 
@@ -191,7 +214,10 @@ $("#ItemForm1").validate({
                      setTimeout(function() {   //calls click event after a certain time
                        $("#editItem .close").click();
                        $("#resultarea1").text(" "); 
-                       $('#ItemForm1')[0].reset(); 
+                       //$('#ItemForm1')[0].reset();
+                      $("#saveload").css("display","none");
+                      $("#saveItem1").css("display","inline-block");
+                      $("#saveItem1").attr("type","submit");
                        
                     }, 1000);
                   }else{
@@ -240,10 +266,14 @@ $("#Location_form").validate({
     var formData=new FormData(form);
     
     ur="Insert_Location";
-      
+    
+    $("#saveload").css("display","inline-block");
+    $("#locationSave").attr("type","button");
+    $("#locationSave").css("display","none");
+
     if(document.getElementById("Location_Validation").innerHTML=="")
     {
-      
+
     $.ajax({
           type:"POST",
           url:ur,
@@ -251,19 +281,22 @@ $("#Location_form").validate({
           success:function(data){
 
               if(data==0)
-                  {
-                    $("#success-message").text("Add Location Successfully!");
-                  }
+              {
+                $("#success-message").text("Add Location Successfully!");
+              }
               else if(data==1)
-                  {
-                    $("#success-message").text("Update Location Successfully!");
-                  }            
+              {
+                $("#success-message").text("Location Updated Successfully!");
+              }            
               document.getElementById("Location_Validation").innerHTML="";
               setTimeout(function(){
               $("#editlocation .close").click();
-              $("#success-message").text("");
-                   
-              $("#Location_Form")[0].reset();
+              $("#success-message").text("");                   
+              //$("#Location_Form")[0].reset();
+
+              $("#saveload").css("display","none");
+              $("#locationSave").css("display","inline-block");
+              $("#locationSave").attr("type","submit");
 
               },1000);
                       
@@ -286,6 +319,7 @@ $("#Location_form").validate({
 
 function LocationTable()
 {
+    
     ur="LocationTable";
     $.ajax({
           type:"POST",
@@ -297,6 +331,7 @@ function LocationTable()
 
 
     });
+
 }
 
 
@@ -310,39 +345,32 @@ function editlocation(th)
     
     $("#loc_det").val(editLOC.keyvalue);
     $("#id").val(editLOC.serial_number);
-     //$("#summernote").code(editVal.description);
-         //$("#optionsRadios").code(editVal.visibility);
+    //$("#summernote").code(editVal.description);
+    //$("#optionsRadios").code(editVal.visibility);
+    
     if(button_det=='view')
-        {
-          $("#title").html("View Location");
-            
+    {
+          $("#title").html("View Location");            
           $('#Location_form :input[type="text"]').attr('disabled',true);
-
           $('#Location_form :input[type="submit"]').attr('disabled',true);
-
-
           $("#closes").prop('disabled',false);
-
           $(".save").hide();
 
-        }
+    }
     else
-
     {
 
-      $("#title").html("Update Location");
-      
-      $('#Location_form :input[type="text"]').attr('disabled',false);
-
-      $('#Location_form :input[type="submit"]').attr('disabled',false);
-
-      $("#closes").attr('disabled',false);
-
-      $(".save").show();
+          $("#title").html("Update Location");      
+          $('#Location_form :input[type="text"]').attr('disabled',false);
+          $('#Location_form :input[type="submit"]').attr('disabled',false);
+          $("#closes").attr('disabled',false);
+          $(".save").show();
+    
     }
-  }
 
+}
 
+/*
 $(".addlocation").click(function()
 {
     
@@ -352,13 +380,13 @@ $(".addlocation").click(function()
     $(".save").show();
     document.getElementById("Location_Validation").innerHTML="";
 });
-
+*/
 
 //------------------------------------Location Rack starts------------------------------------
 
 
 $("#LocationRackForm").validate({
-  
+
   rules:
   {
     
@@ -370,9 +398,13 @@ $("#LocationRackForm").validate({
     var formData=new FormData(form);
     
     ur="insert_location_rack";
+    
+    $("#saveload").css("display","inline-block");
+    $("#racksave").attr("type","button");
+    $("#racksave").css("display","none");
    
     if(document.getElementById("Location_Validation").innerHTML=="")
-            {
+    {
     $.ajax({
           type:"POST",
           url:ur,
@@ -383,22 +415,24 @@ $("#LocationRackForm").validate({
             {
 
               if(data==1)
-                {
-                    var msg="Data Added Successfully";           
-                }
+              {
+                  var msg="Location Rack Added Successfully";           
+              }
               else
-                {
-                  var msg="Data Edited Successfully";           
-                }
+              {
+                var msg="Location Rack Updated Successfully";           
+              }
               $("#operationarea").text(msg);
               document.getElementById("Location_Validation").innerHTML="";
               setTimeout(function(){
               $("#modal-0 .close").click();
-              $("#operationarea").text("");
-        
+              $("#operationarea").text("");        
               document.getElementById("location_rack_id").options.length = 0;
+              //$("#LocationRackForm")[0].reset();
 
-            $("#LocationRackForm")[0].reset();
+              $("#saveload").css("display","none");
+              $("#racksave").css("display","inline-block");
+              $("#racksave").attr("type","submit");
 
                 },500);
             }
@@ -425,34 +459,128 @@ $("#LocationRackForm").validate({
 function LocationRackTable()
 {
         
-        ur="LocationRackData";
-
-        $.ajax({
-          url:ur,
-          type:"POST",
-          success:function(data){
-           
-            
-           $("#loadData").empty().append(data).fadeIn();
-            
-          }  
-        });
+    ur="LocationRackData";
+    $.ajax({
+      url:ur,
+      type:"POST",
+      success:function(data){                      
+       $("#loadData").empty().append(data).fadeIn();
+        
+      }  
+    });
 
 }
 
-$(".addlocationRack").click(function()
-{
-    
-    $("#location_rack_id").val("");
-    $("#rack_name").val("");
-    $(".ui fluid email search dropdown").val("");
-    //$("#id").val("");
-    $('#LocationRackForm :input[type="submit"]').attr('disabled',false);
-    $('#LocationRackFormEdit :input[type="submit"]').attr('disabled',false);
-   // $(".save").show();
-    document.getElementById("Location_Validation").innerHTML="";
 
-});
+//----------------------------Location Rack Edit Form Popup Open----------------------------------
+
+$("#LocationRackFormEdit").validate({
+
+  rules:
+  {
+    
+    location_rack_id:"required",
+    rack_name:"required"
+
+  },
+
+    submitHandler:function(form){
+    var formData=new FormData(form);
+    
+    ur="insert_location_rack";
+    
+    $("#saveload").css("display","inline-block");
+    $("#editracksave").attr("type","button");
+    $("#editracksave").css("display","none");
+
+    if(document.getElementById("Location_Validation").innerHTML=="")
+    {
+    $.ajax({
+          type:"POST",
+          url:ur,
+          data:formData,
+          success:function(data){
+
+            if(data == 1 || data == 2)
+            {
+
+              if(data==1)
+              {
+                var msg="Data Added Successfully";
+              }
+              else
+              {
+                var msg="Data Edited Successfully";
+              }
+              
+              $("#operationarea").text(msg);
+              document.getElementById("Location_Validation").innerHTML="";
+              setTimeout(function(){
+              $("#editItem .close").click();
+              $("#operationarea").text("");
+              //$("#LocationRackForm")[0].reset();
+
+              $("#saveload").css("display","none");
+              $("#editracksave").css("display","inline-block");
+              $("#editracksave").attr("type","submit");
+
+              },500);
+            }
+            else
+            {
+              $("#operationarea").text(data);        
+            }
+
+            LocationRackTableEdit();
+          },
+
+          error: function(data){
+                  alert("error");
+              },
+              cache: false,
+              contentType: false,
+              processData: false
+         
+          });
+      }
+      
+    return false;
+  }
+
+});      
+
+
+function LocationRackTableEdit()
+{
+  
+  ur="LocationRackDataEdit";
+
+  $.ajax({
+
+    url:ur,
+    type:"POST",
+    success:function(data)
+    {     
+      $("#loadData").empty().append(data).fadeIn();      
+    }  
+
+  });
+
+}
+
+
+//-------------------------------Location Rack Add Form Popup close--------------------------------
+
+// $(".addlocationRack").click(function()
+// {    
+//     $("#location_rack_id").val("");
+//     $("#rack_name").val("");
+//     $(".ui fluid email search dropdown").val("");
+//     $('#LocationRackForm :input[type="submit"]').attr('disabled',false);
+//     $('#LocationRackFormEdit :input[type="submit"]').attr('disabled',false);
+//     document.getElementById("Location_Validation").innerHTML="";
+
+// });
 
 
 //******************************************Tool Insert*********************************************
@@ -936,6 +1064,63 @@ function ajex_breadkDownHours(thsid){
       success: function(data){
         //alert(data);
         $("#loadHours").empty().append(data).fadeIn();
+        console.log(data);
+     }
+  });
+
+}
+
+///========================Section Labour Task====================================
+
+$("#SectionLabourTask").validate({
+    rules: {
+      facility: "required",
+      //groupName:"required"
+    },
+      submitHandler: function(e) {
+        ur = "insert_labour_task";
+        
+            $.ajax({
+                type : "POST",
+                url  :  ur,
+                //dataType : 'json', // Notice json here
+                data : $('#SectionLabourTask').serialize(), // serializes the form's elements.
+                success : function (data) {
+                  // console.log(data);  
+                  // alert(data); // show response from the php script.
+                 
+                    if(data == 1 || data == 2){
+
+                      if(data == 1)
+                        var msg = "Data Successfully Add !";
+                      else
+                        var msg = "Data Successfully Updated !";
+
+                      $("#resultarealabour").text(msg); 
+                      setTimeout(function() {   //calls click event after a certain time
+                      $("#LabouTaskModal .close").click();
+                      $("#resultarealabour").text(" "); 
+                      // $('#SectionLabourTask')[0].reset(); 
+                      // $("#SectionLabourTask").val("");
+                    }, 1000);
+                 }else{
+                    $("#resultarealabour").text(data);
+                 }
+                 ajex_getLabourTask();
+               }
+            });
+          return false;
+        //e.preventDefault();
+      }
+  });
+
+function ajex_getLabourTask(){
+  ur = "ajex_LabourTaskData";
+    $.ajax({
+      url: ur,
+      type: "POST",
+      success: function(data){
+        $("#listingData").empty().append(data).fadeIn();
         console.log(data);
      }
   });

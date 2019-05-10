@@ -51,14 +51,14 @@ if($this->input->get('entries')!="")
 <div class="modal-body overflow">
 
 <div class="form-group"> 
-<label class="col-sm-2 control-label">*Value Name:</label> 
+<label class="col-sm-2 control-label">*Key Name:</label> 
 <div class="col-sm-4"> 				
 		
 <input type="hidden" name="serial_number" value="" />
 <select name="param_id" class="select2 form-control" requried style="width:100%;">
 <option value="">----Select----</option>
 <?php 
-$comp_sql = $this->db->query("select * FROM tbl_master_data_mst where status='A'");
+$comp_sql = $this->db->query("select * FROM tbl_master_data_mst where status='A' AND param_id!='21'");
 
 foreach ($comp_sql->result() as $comp_fetch){
 ?>

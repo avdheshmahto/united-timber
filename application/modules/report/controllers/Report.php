@@ -550,6 +550,19 @@ function comparison_report()
 
 }
 
+function section_details()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('section-details-report');
+	}
+	else
+	{
+		redirect('index');
+	}
+}
+
 public function mangeWorkorderCost()
 {
     

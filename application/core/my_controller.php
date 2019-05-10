@@ -1211,7 +1211,7 @@ public function software_stock_log_insert($log_id,$log_type,$vendor_id,$product_
 }
 
 
-public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,$workorder_id,$qty,$price,$total_spent)
+public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,$workorder_id,$product_id,$qty,$price,$total_spent)
 {
 
 
@@ -1243,6 +1243,7 @@ public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,
 			'machine_id'   => $machine_id,
 			'workorder_id' => $workorder_id,
 
+			'product_id'   => $product_id,
 			'qty'		   => $qty,
 			'price'        => $price,
 			'total_spent'  => $total_spent,
