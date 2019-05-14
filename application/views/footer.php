@@ -2113,6 +2113,121 @@ $('.sparetable').empty();
 
 //*************************************************************************************************
 
+function addMultiReturn()
+{
+
+
+   var spareid  =  $('#spareName').val();
+
+    if(spareid=="")
+    {
+      alert("please Select Spare .");
+    }
+    else
+    {
+  
+    //alert();
+    var e = document.getElementById("spareName");
+    var sparename = e.options[e.selectedIndex].text;
+    
+    $('#spareName option:selected').remove();
+
+    var count=$('#cntVal').val();
+    var i;
+    for( i=0; i<count; i++)
+    {
+     
+     //alert(i);
+
+      var via_type =  $('#product_type'+i).val();
+      var price    =  $('#purchase_price'+i).val();
+      var is_qnty  =  $('#issue_qty'+i).val();
+
+      var loc    = $('#location_id'+i).val();
+      var locVal = $('#location'+i).val();
+
+      var rack    = $('#rack_id'+i).val();
+      var rackVal = $('#rack'+i).val();
+
+      var vendor    = $('#vendor_id'+i).val();
+      var vendorName = $('#vendor'+i).val();
+
+     if(is_qnty != '')
+     {
+      $('#getDataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="locs[]" value="'+loc+'">'+locVal+'</td><td><input type ="hidden" name="racks[]" value="'+rack+'">'+rackVal+'</td><td><input type ="hidden" name="vendors[]" value="'+vendor+'">'+vendorName+'</td><td><input type ="hidden" name="prices[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+is_qnty+'">'+is_qnty+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+      }
+    }
+
+   $('#getDataTablePage').empty();
+
+   var z=1;
+   var c=$("#countRow").val();
+   $("#countRow").val(Number(c)+ Number(z));
+   
+  }
+
+}
+
+
+function addMutiIssue(){
+
+
+   var section  =  $('#section').val();
+   var spareid  =  $('#spare_nameid').val();
+
+    if(section == '')
+    {
+      alert("please Select Section.");
+    }
+    else if(spareid=="")
+    {
+      alert("please Select Tools .");
+    }
+    else
+    {
+  
+    //alert();
+    var e = document.getElementById("spare_nameid");
+    var sparename = e.options[e.selectedIndex].text;
+    
+    $('#spare_nameid option:selected').remove();
+
+    var count=$('#cntVal').val();
+    var i;
+    for( i=0; i<count; i++)
+    {
+     
+     //alert(i);
+
+      var via_type =  $('#product_type'+i).val();
+      var price    =  $('#purchase_price'+i).val();
+      var is_qnty  =  $('#issue_qty'+i).val();
+
+      var loc    = $('#location_id'+i).val();
+      var locVal = $('#location'+i).val();
+
+      var rack    = $('#rack_id'+i).val();
+      var rackVal = $('#rack'+i).val();
+
+      var vendor    = $('#vendor_id'+i).val();
+      var vendorName = $('#vendor'+i).val();
+
+     if(is_qnty != '')
+     {
+      $('#dataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="section" value="'+section+'"><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="locs[]" value="'+loc+'">'+locVal+'</td><td><input type ="hidden" name="racks[]" value="'+rack+'">'+rackVal+'</td><td><input type ="hidden" name="vendors[]" value="'+vendor+'">'+vendorName+'</td><td><input type ="hidden" name="prices[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+is_qnty+'">'+is_qnty+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+      }
+    }
+
+   $('#dataTablePage').empty();
+
+   var z=1;
+   var c=$("#countRow").val();
+   $("#countRow").val(Number(c)+ Number(z));
+   
+  }
+}
+
+
 function addrowsIssue(){
 
 
@@ -2605,6 +2720,9 @@ function ajex_spare_Data()
 <link href="<?=base_url();?>assets/plugins/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="<?=base_url();?>assets/plugins/colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet">
 <link href="<?=base_url();?>assets/plugins/select2/css/select2.css" rel="stylesheet">
+
+<link href="<?=base_url();?>assets/chosen/chosen.css" rel="stylesheet">
+<script src="<?php echo base_url();?>assets/chosen/chosen.jquery.min.js"></script>
 
 <script src="<?php echo base_url();?>assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>

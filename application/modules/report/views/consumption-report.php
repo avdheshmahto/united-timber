@@ -126,11 +126,11 @@ Showing <?=$dataConfig['page']+1;?> to
 		<th></th>
 		<!-- <th></th> -->
 		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Price</th>
+		<th class="blank_left text-center">Amount</th>
 		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Price</th>
+		<th class="blank_left text-center">Amount</th>
 		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Price</th>
+		<th class="blank_left text-center">Amount</th>
         		
 </tr>
 </thead>
@@ -139,13 +139,14 @@ Showing <?=$dataConfig['page']+1;?> to
 
 $prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['id']."' AND name_role='product opening stock' "); 
 $getPrd=$prd->row();
-
+$vndr333=$this->db->query("select * from tbl_contact_m where contact_id='$getPrd->supp_name' ");
+$getVndr22=$vndr333->row();
 ?>
 <tr>
 		<td><?php echo $getPrd->maker_date;?></td>
-		<th colspan="2" class="text-center"><?php echo $getPrd->type;?></th>
-		<!-- <th></th>
-		<th></th> -->
+		<th><?php echo $getVndr22->first_name;?></th>
+		<th>Opening Stock<?php //echo $getPrd->type;?></th>
+		<!--<th></th> -->
 		<td class="blank_right text-center"><?php echo $getPrd->totalQty; ?></td>
 		<th class="blank_left text-center"><?php echo $getPrd->totalQty * $getPrd->purchase_price; ?></th>
 		<th colspan="2"></th>

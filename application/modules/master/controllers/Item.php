@@ -170,7 +170,7 @@ public function insert_item()
 		{
 	 	    //print_r($data);
 		    // echo "id=".$id;die;
-		    //$this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
+		    $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
 		    //print_r($qtyy);
 		    $a=sizeof($qtyy);
 		    for($i=0; $i<$a; $i++){

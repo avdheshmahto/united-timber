@@ -52,19 +52,38 @@ if($this->input->get('entries')!="")
     <form class="form-horizontal" role="form" id="ConsumIssueForm" method="post">
         <table class="table table-striped table-bordered table-hover">
           <tr class="gradeA">
-           <th colspan="2"><h4>*Section</h4> </th>
-            <th>
+            <h4><center>*Section
+             <!--  <select name="facilities" id="facilities" class="select2 form-control">
+              <option value="">---select---</option>
+              <?php 
+                // $sqltr=$this->db->query("select * from tbl_facilities where status='A'");
+                // foreach ($sqltr->result() as $fetchtr){
+              ?>
+              <option value="<?php echo $fetchtr->id;?>"><?php echo $fetchtr->fac_name; ?></option>
+                <?php //} ?>
+            </select> -->
             <select class="select2 form-control" name="section" id="section" required>
-            <option value="0" class="listClass">-------Select------</option>
+            <option value="0" class="listClass">----------------Select----------------</option>
             <?php
             foreach ($categorySelectbox as $key => $dt) { ?>
             <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
             <?php } ?>
             </select>
-          </th>
-          <th colspan="2"><h4>*Consumable Name</h4></th>
-          <th>
-            <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="viewConsumeableIssuePage(this.value);">
+          </center></h4>
+          </tr> 
+          <tr class="gradeA">
+            <th><div style1="width: 100px;">Consumable Name</div></th>
+            <th>Location</th>
+            <th>Rack</th>
+            <th>Vendor Name</th>
+            <th>Purchase Price</th>
+            <th>Qty In Stock</th>
+            <th>Enter Qty</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>
+              <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="via_type_func(this.value);">
               <option value="">---select---</option>
               <?php 
                 $sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Consumable' ");
@@ -72,45 +91,60 @@ if($this->input->get('entries')!="")
               ?>
               <option value="<?php echo $fetchunit->Product_id;?>"><?php echo $fetchunit->productname; ?></option>
                 <?php } ?>
-            </select>                        
-          </th>
-          </tr> 
-          <tr class="gradeA">
-            <th colspan="4">&nbsp;</th>
+            </select>
+            <input type="hidden" id="product_types" name="product_types">
+            </th>
+            <th><select name="location_id" id="location_rack_id" onchange="getRackFun(this.id);" class="form-control">
+            <option value="">----Select ----</option>
+            <?php
+            $bookingType=$this->db->query("select *from tbl_master_data  where param_id='21'");
+            foreach($bookingType->result() as $getBooking){
+            ?>
+            <option value="<?=$getBooking->serial_number;?>"><?=$getBooking->keyvalue;?></option>
+            <?php }?>
+            </select>
+            <p id="qty_pallet"></p>
+            </th>            
+            <th><select name="rack_id" class="form-control" id="rack_id" onchange="getQty(this.id);vendor_func(this.value);"   >
+            <option value="">----Select ----</option>
+            </select>
+            </th>        
+            <th>
+            <select name="vendor_id" id="vendor_id" class="form-control" onchange="price_func(this.value)">
+            <option value="">----Select ----</option>             
+            </select>
+            </th>
+            <th>
+              <select name="purchase_price" id="purchase_price" class="form-control">
+                <option value="">---Select---</option>
+              </select>
+            </th>
+            <th><p id="getQn" value=""></p></th>
+            <th><input type="number" name="qtyname" id="qtyid" onkeyup="checkQtyVal()" class="form-control"></th>
+            <th><button  class="btn btn-default"  type="button" onclick="addrowsIssue()"><img src="<?=base_url();?>assets/images/plus.png" />
+            </button>
+            </th>
           </tr>
-          <tbody>
           <tr class="gradeA">
-            <th>Location</th>
-            <th>Rack</th>
-            <th>Vendor Name</th>
-            <th>Purchase Price</th>
-            <th>Qty In Stock</th>
-            <th>Enter Qty</th>
-            <th>Action</th>
-          </tr>
-        </tbody>
-        <tbody id="dataTablePage">
-        </tbody>
-          <tr class="gradeA">
-            <th colspan="4">&nbsp;</th>
+            <th colspan="5">&nbsp;</th>
           </tr>
         <tbody>
           <tr class="gradeA">
-            <th>Consumable Name</th>
+            <th><div style1="width: 100px;">Consumable Name</div></th>
             <th>Location</th>
             <th>Rack</th>
             <th>Vendor Name</th>  
             <th>Purchase Price</th>          
-            <th>Issue Qnty</th>
+            <th>Quantity</th>
             <th>Action</th>
             <th></th>
           </tr>
         </tbody>
         <tbody id="dataTable">
-          <input type="text" id="countRow" style="display: none;">
+          <input type="hidden" id="countRow">
         </tbody>
         <tr>
-          <th colspan="5">&nbsp;</th>
+          <th colspan="6">&nbsp;</th>
           <th>
           <input type="button" id="Psubmitform" class="btn btn-sm savebutton pull-right" value="Save" onclick="checkrows();"> 
           </th>
@@ -490,21 +524,18 @@ function refreshData()
   $("#dataTable").empty();
   $("#dataTablePage").empty();
   $("#countRow").val('');
-  $("#section").val('').trigger('change');
-  $("#spare_nameid").val('').trigger('change');
-  $("#Psubmitform").removeAttr('disabled',false);
   
 }
 
 
-function viewConsumeableIssuePage(v)
+function viewToolsIssuePage(v)
 {
  
   //alert(x);
   var prod=v;
   var xhttp = new XMLHttpRequest();
  
-  xhttp.open("GET", "consumeable_issue_page?PID="+ prod, false);
+  xhttp.open("GET", "tools_issue_page?PID="+ prod, false);
   // xhttp.open("GET", "issue_spare_sm?ID="+pro, false);
   // alert(xhttp.open);
   xhttp.send();

@@ -11,14 +11,13 @@ function __construct()
 	$this->load->model('model_issue');	
 }     
 
-/*=================================Start ToolsIssue ================================*/
+/*============================Start ToolsIssue ========================*/
 
 function manage_tools_issue() 
 {
 
     if($this->session->userdata('is_logged_in'))
     {
-    	//$data['result'] = $this->model_issue->getPartsIssueData();
     	$data = $this->manageToolsJoinfun();
     	$this->load->view('tools/manage-tools-issue',$data);
 	}
@@ -32,42 +31,41 @@ function manage_tools_issue()
 public function manageToolsJoinfun()
 {
     
-		  $table_name='tbl_tools_issue_hdr';
-    	  $data['result'] = "";
-		  ////Pagination start ///
-		  $url   = site_url('/issue/ToolsIssue/manage_parts_issue?');
-		  $sgmnt = "4";
+	$table_name='tbl_tools_issue_hdr';
+	$data['result'] = "";
+	////Pagination start ///
+	$url   = site_url('/issue/ToolsIssue/manage_parts_issue?');
+	$sgmnt = "4";
 
-		  if($_GET['entries']!="")
-		  	$showEntries = $_GET['entries'];
-		  else
-		  	$showEntries = 10;
-		 
-		 
-		 $totalData   = $this->model_issue->count_allTools($table_name,'A',$this->input->get());
+	if($_GET['entries']!="")
+	$showEntries = $_GET['entries'];
+	else
+	$showEntries = 10;
 
-		  
-		  if($_GET['entries']!="" && $_GET['filter'] == ""){
-			 $url   = site_url('/issue/ToolsIssue/manage_parts_issue?entries='.$_GET['entries']);
-		  }elseif($_GET['filter'] != ""){
-		  	 $url   = site_url('/issue/ToolsIssue/manage_parts_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
-		  	 // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
-		  }
 
-		  $pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-          $data       = $this->user_function();
-	      //////Pagination end ///
- 		  $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
-		  $data['pagination']        = $this->pagination->create_links();
-		
-		  if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
-			$data['result']          = $this->model_issue->filterToolsList($pagination['per_page'],$pagination['page'],$this->input->get());
-		  else	
-			$data['result']          = $this->model_issue->getToolsIssueData($pagination['per_page'],$pagination['page']);
+	$totalData   = $this->model_issue->count_allTools($table_name,'A',$this->input->get());
 
-          // call permission fnctn
-		  $data['categorySelectbox'] = $this->model_issue->categorySelectbox();	
-	      return $data;
+
+	if($_GET['entries']!="" && $_GET['filter'] == ""){
+	$url   = site_url('/issue/ToolsIssue/manage_parts_issue?entries='.$_GET['entries']);
+	}elseif($_GET['filter'] != ""){
+	$url   = site_url('/issue/ToolsIssue/manage_parts_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
+	}
+
+	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+	$data       = $this->user_function();
+	//////Pagination end ///
+	$data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+	$data['pagination']        = $this->pagination->create_links();
+
+	if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
+	$data['result']          = $this->model_issue->filterToolsList($pagination['per_page'],$pagination['page'],$this->input->get());
+	else	
+	$data['result']          = $this->model_issue->getToolsIssueData($pagination['per_page'],$pagination['page']);
+
+	// call permission fnctn
+	$data['categorySelectbox'] = $this->model_issue->categorySelectbox();	
+	return $data;
 
 }
 
@@ -181,8 +179,8 @@ function return_parts()
 		$data['tid']  = $_GET['PTP'];
 		$data['sts']  = $_GET['STS'];
 		//print_r($data);die;
-
 		$this->load->view('tools/return-tools',$data);
+
 	}
 	else
 	{
@@ -190,19 +188,6 @@ function return_parts()
 	}
 }
 
-// function product_parts_issue()
-// {
-
-// 	if($this->session->userdata('is_logged_in'))
-//     {
-// 		$this->load->view('product-parts-issue');
-// 	}
-// 	else
-// 	{
-// 		redirect('index');
-// 	}
-
-// }
 
 function getRack()
 {
@@ -227,24 +212,16 @@ public function getPalletQty()
 	
 	if($numCnt>0)
 	{
-	foreach($qtySerial->result() as $getData){
-
+	foreach($qtySerial->result() as $getData)
+	{
+	
 	$queryLocation=$this->db->query("select * from tbl_location_rack where id='$getData->rack_id'");
 	$getLocation=$queryLocation->row();
 	$numCnt=$queryLocation->num_rows();
-	//echo $numCnt;
 	$sum=$getData->quantity;
 	$abc=$abc+$sum;
-	//echo "select * from tbl_product_serial where main_location_id='".$_GET['main_loc']."' and location_id='".$_GET['loc']."' and product_id='".$_GET['pri_id']."'";
-	//if($numCnt>0)
-	//{
 	echo "Rack Name Is:-".$getLocation->rack_name." and Qty is:-".$sum."<br>";
 
-	//}
-	//else
-	//{
-	//echo "No Record found";	
-	//}
 	}
 	echo "Total Quantity Is :-".$abc;
 	}
@@ -253,7 +230,6 @@ public function getPalletQty()
 	echo "No Record found";	
 	}
 
-	//$this->load->view('get-rack');
 }
 
 public function get_vendor_list()
@@ -319,7 +295,6 @@ public function check_product_type()
 
 
 
-//
 function insert_tools_return()
 {
 
@@ -408,8 +383,6 @@ public function stock_refill_qty_return($main_id,$type,$loc,$rack_id,$vendor_id,
 	//print_r($array);die;
 	$num = $query->num_rows();
 
-   //echo $num."aaa"; die;
-
 	if($num>0)
 	{
 	
@@ -426,12 +399,21 @@ public function stock_refill_qty_return($main_id,$type,$loc,$rack_id,$vendor_id,
 
 function ajex_returnToolsListData()
 {
-
 	$data['id']=$this->input->post('idval');
-	//print_r($data);die;
 	$this->load->view('tools/load-tools-return',$data);
 }
 
-/*==============================================================================================*/
+
+function tools_issue_page()
+{
+
+	$data['pid']=$_GET['PID'];
+	$this->load->view('tools/getToolsPage',$data);
+
+}
+
+
+/*======================================================================*/
+
 }
 ?>

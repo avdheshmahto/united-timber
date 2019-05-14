@@ -515,7 +515,7 @@ foreach($supplieraName->result() as $fetch_list)
 
 					</tbody>
 					<tbody id="dataTable">
-						<input type="hidden" id="countRow" value="">
+						<input type="text" id="countRow" value="" style="display: none;">
 					</tbody>						
 					<tr>
 						<th colspan="4">&nbsp;</th>

@@ -11,7 +11,7 @@ function __construct()
 	$this->load->model('model_issue');	
 }     
 
-/*=================================Start ToolsIssue ================================*/
+/*==================Start Consumeable Issue ================================*/
 
 function manage_consumable_issue() 
 {
@@ -31,42 +31,42 @@ function manage_consumable_issue()
 public function manageConsumJoinfun()
 {
     
-		  $table_name='tbl_consum_issue_hdr';
-    	  $data['result'] = "";
-		  ////Pagination start ///
-		  $url   = site_url('/issue/ConsumIssue/manage_consum_issue?');
-		  $sgmnt = "4";
+	$table_name='tbl_consum_issue_hdr';
+	$data['result'] = "";
+	////Pagination start ///
+	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?');
+	$sgmnt = "4";
 
-		  if($_GET['entries']!="")
-		  	$showEntries = $_GET['entries'];
-		  else
-		  	$showEntries = 10;
-		 
-		 
-		 $totalData   = $this->model_issue->count_allConsum($table_name,'A',$this->input->get());
+	if($_GET['entries']!="")
+	$showEntries = $_GET['entries'];
+	else
+	$showEntries = 10;
 
-		  
-		  if($_GET['entries']!="" && $_GET['filter'] == ""){
-			 $url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries']);
-		  }elseif($_GET['filter'] != ""){
-		  	 $url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
-		  	 // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
-		  }
 
-		  $pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-          $data       = $this->user_function();
-	      //////Pagination end ///
- 		  $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
-		  $data['pagination']        = $this->pagination->create_links();
-		
-		  if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
-			$data['result']          = $this->model_issue->filterConsumList($pagination['per_page'],$pagination['page'],$this->input->get());
-		  else	
-			$data['result']          = $this->model_issue->getConsumIssueData($pagination['per_page'],$pagination['page']);
+	$totalData   = $this->model_issue->count_allConsum($table_name,'A',$this->input->get());
 
-          // call permission fnctn
-		 $data['categorySelectbox'] = $this->model_issue->categorySelectbox();
-	      return $data;
+
+	if($_GET['entries']!="" && $_GET['filter'] == ""){
+	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries']);
+	}elseif($_GET['filter'] != ""){
+	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
+	// sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+	}
+
+	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+	$data       = $this->user_function();
+	//////Pagination end ///
+	$data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+	$data['pagination']        = $this->pagination->create_links();
+
+	if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
+	$data['result']          = $this->model_issue->filterConsumList($pagination['per_page'],$pagination['page'],$this->input->get());
+	else	
+	$data['result']          = $this->model_issue->getConsumIssueData($pagination['per_page'],$pagination['page']);
+
+	// call permission fnctn
+	$data['categorySelectbox'] = $this->model_issue->categorySelectbox();
+	return $data;
 
 }
 
@@ -135,14 +135,12 @@ public function stock_refill_qty($main_id,$type,$loc,$rack_id,$vendor_id,$purcha
 	//print_r($array);die;
 	$num = $query->num_rows();
 
-   //echo $num."aaa"; die;
-
 	if($num>0)
 	{
 	
 		$this->db->query("update tbl_product_serial set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
 		$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
-		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='tools issue',name_role='section tools issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
+		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='consumable issue',name_role='section consumable issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 		$this->db->query($sqlProdLoc1);
 	}
 
@@ -199,19 +197,10 @@ public function getPalletQty()
 	$queryLocation=$this->db->query("select * from tbl_location_rack where id='$getData->rack_id'");
 	$getLocation=$queryLocation->row();
 	$numCnt=$queryLocation->num_rows();
-	//echo $numCnt;
 	$sum=$getData->quantity;
 	$abc=$abc+$sum;
-	//echo "select * from tbl_product_serial where main_location_id='".$_GET['main_loc']."' and location_id='".$_GET['loc']."' and product_id='".$_GET['pri_id']."'";
-	//if($numCnt>0)
-	//{
 	echo "Rack Name Is:-".$getLocation->rack_name." and Qty is:-".$sum."<br>";
 
-	//}
-	//else
-	//{
-	//echo "No Record found";	
-	//}
 	}
 	echo "Total Quantity Is :-".$abc;
 	}
@@ -220,7 +209,6 @@ public function getPalletQty()
 	echo "No Record found";	
 	}
 
-	//$this->load->view('get-rack');
 }
 
 public function get_vendor_list()
@@ -228,8 +216,6 @@ public function get_vendor_list()
 	$prdct_id=$this->input->post('pid');
     $loct=$this->input->post('loc');
     $rackid=$this->input->post('rack');
-
-    //print_r($_POST);
 
 	$vndr=$this->db->query("select * from tbl_product_serial where product_id='$prdct_id' AND loc='$loct' AND rack_id='$rackid'");
 	//$getVndr=$vndr->result();
@@ -284,7 +270,12 @@ public function check_product_type()
 	echo $getProductRow->via_type;
 }
 
+public function consumeable_issue_page()
+{
+	$data['pid']=$_GET['PID'];
+	$this->load->view('consumable/getConsumeablePage',$data);
+}
 
-/*==============================================================================================*/
+/*=====================================================================*/
 }
 ?>

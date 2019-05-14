@@ -109,6 +109,17 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id="getDataTable" >
+
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <?php
 $yy=1;
 if(!empty($result)) {

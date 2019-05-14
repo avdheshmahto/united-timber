@@ -169,17 +169,16 @@ $getstate=$querystate->row();
 <tbody>
 <?php 
 
-$sparequery = $this->db->query("select * from tbl_product_serial_log where supp_name = '".$_GET['id']."' AND type='opening stock' ");
+$sparequery = $this->db->query("select * from tbl_product_stock where supp_name = '".$_GET['id']."' ");
 
 $i=1;
 foreach($sparequery->result() as $result1)
 {
-$prd=$this->db->query("select * from tbl_product_stock where Product_id='$result1->product_id'");		
-$getPrd=$prd->row();
+		
 ?>
 <tr>	
-	<td><?=$getPrd->productname;?></td>
-	<td><?=$result1->purchase_price;?></td>	
+	<td><?=$result1->productname;?></td>
+	<td><?=$result1->unitprice_purchase;?></td>	
 </tr>
 <?php  $i++;  }  ?>
 
@@ -262,7 +261,6 @@ foreach($machineQueryy->result() as $machine_qry){ ?>
 	<th>Purchase Price</th>
 	<th>Location</th>
 	<th>Rack</th>
-	<th>Quantity</th>
 
 </tr>
 </thead>
@@ -270,8 +268,25 @@ foreach($machineQueryy->result() as $machine_qry){ ?>
 
 <tbody>
 <?php 
+$supplieraName=$this->db->query("select * from tbl_spare_return_hdr where vendor_id='".$_GET['id']."'");
+$count2=$supplieraName->num_rows();
 
-$machineQueryy=$this->db->query("select * from tbl_product_serial_log where type !='opening stock' AND supp_name='".$_GET['id']."' ");
+$val2=array();
+foreach($supplieraName->result() as $getWosh)
+{
+  if($getWosh->rflhdrid != '')
+  array_push($val2,$getWosh->rflhdrid);
+}
+if($count2 > 0)
+{
+  $valXyz=implode(',',$val2);  
+}
+else
+{
+  $valXyz='99999999';
+}
+
+$machineQueryy=$this->db->query("select * from tbl_spare_return_dtl where refillhdr IN ($valXyz)");
 foreach($machineQueryy->result() as $fetch){ ?>
 
 <tr>
@@ -296,7 +311,6 @@ foreach($machineQueryy->result() as $fetch){ ?>
 	echo $getRack->rack_name;
 	?>
 	</td>
-	<td><?php echo $fetch->quantity; ?></td>
 </tr>
 <?php } ?>
 </tbody>
@@ -321,7 +335,6 @@ foreach($machineQueryy->result() as $fetch){ ?>
 	<th>Purchase Price</th>
 	<th>Location</th>
 	<th>Rack</th>
-	<th>Quantity</th>
 
 </tr>
 </thead>
@@ -329,8 +342,25 @@ foreach($machineQueryy->result() as $fetch){ ?>
 
 <tbody>
 <?php 
+$supplieraName=$this->db->query("select * from tbl_bin_card_hdr where vendor_id='".$_GET['id']."'");
+$count2=$supplieraName->num_rows();
 
-$machineQueryy=$this->db->query("select * from tbl_product_serial_log where type ='opening stock' AND supp_name='".$_GET['id']."' ");
+$val2=array();
+foreach($supplieraName->result() as $getWosh)
+{
+  if($getWosh->rflhdrid != '')
+  array_push($val2,$getWosh->rflhdrid);
+}
+if($count2 > 0)
+{
+  $valXyz=implode(',',$val2);  
+}
+else
+{
+  $valXyz='99999999';
+}
+
+$machineQueryy=$this->db->query("select * from tbl_bin_card_dtl where refillhdr IN ($valXyz)");
 foreach($machineQueryy->result() as $fetch){ ?>
 
 <tr>
@@ -355,7 +385,6 @@ foreach($machineQueryy->result() as $fetch){ ?>
 	echo $getRack->rack_name;
 	?>
 	</td>
-	<td><?php echo $fetch->quantity; ?></td>
 </tr>
 <?php } ?>
 </tbody>

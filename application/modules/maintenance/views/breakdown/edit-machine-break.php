@@ -97,8 +97,9 @@ $fetch_aat=$ItemQuery->row();
 
 <div class="form-group">
 <label class="col-sm-2 control-label">*Operator:</label> 
-<div class="col-sm-4"> 
-<select name="operator" id="operator" required class="select2 form-control" style="width:100%;" <?=$type=='view'?'disabled':''?>>
+<div class="col-sm-4">
+<input type="text" name="operator" id="operator" class="form-control" <?=$type=='view'?'disabled':''?> value="<?=$getBrk->operator_id?>"> 
+<!-- <select name="operator1" id="operator11" required class="select2 form-control" style="width:100%;" <?=$type=='view'?'disabled':''?>>
 		<option value="" >----Select----</option>
 		<?php 
 			$sqlunit3=$this->db->query("select * from tbl_contact_m where group_name=6 ");
@@ -106,7 +107,7 @@ $fetch_aat=$ItemQuery->row();
 		?>
 		<option value="<?php echo $fetchunit3->contact_id;?>" <?php if( $fetchunit3->contact_id == $getBrk->operator_id) { ?> selected <?php } ?> ><?php echo $fetchunit3->first_name; ?></option>
 		<?php } ?>
-</select>
+</select> -->
 </div>	
  <label class="col-sm-2 control-label">*Suggested Completion Date:</label> 
 <div class="col-sm-4"> 

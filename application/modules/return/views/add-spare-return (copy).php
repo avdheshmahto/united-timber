@@ -1,46 +1,35 @@
 <?php
 $this->load->view("header.php");
-$id=$_GET['id'];
-
-if($_GET['id']!='' or $_GET['view']!=''){
-	$query=$this->db->query("select * from tbl_spare_return_hdr where rflhdrid='$id' or rflhdrid='".$_GET['view']."'");	
-	$fetchq=$query->row();
-}
-
 ?>
-<form id="f1" name="f1" method="POST" action="updateSpareReturn" onSubmit="return checkKeyPressed(a)" enctype="multipart/form-data">
+<form id="f1" name="f1" method="POST" action="insertSpareReturn" onSubmit="return checkKeyPressed(a)">
 <!-- Main content -->
-<div class="main-content_ popup">
 
-<!-- Breadcrumb -->
+<!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=42epwf1jarbwose89sqt3dztyfu7961g4cs5xoib4kordvbd"></script>
+  <script>tinymce.init({ selector:'#tem' });</script> -->
+
+<div class="main-content">
 <?php if(@$_GET['popup'] == 'True') {} else {?>
 <ol class="breadcrumb breadcrumb-2"> 
-	<li><a class="btn btn-success" href="<?=base_url();?>master/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
-	<li><a class="btn btn-success" href="<?=base_url();?>StockRefillNew/manage_stock_refill">Manage Parts And Supplies Return </a></li> 
-	
+	<li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
+	<li><a href="#">Parts & Supplies Return</a></li> 
+	<li class="active"><strong><a href="#">Add Parts & Supplies Return</a></strong></li> 
+	<div class="pull-right">
+	<a class="btn btn-sm" href="<?=base_url();?>return/spareReturn/manage_spare_return">Manage Parts & Supplies Return</a>
+	</div>
 </ol>
 <?php }?>
+
 <div class="row">
 <div class="col-lg-12">
-<div class="panel panel-default">
-<div class="panel-heading clearfix">
-<?php if($_GET['view']!='') { ?> 
-	<h4 class="panel-title"><strong> View Parts & Supplies Return</strong></h4>
-	<?php } else{
-	?>
-	<h4 class="panel-title"><strong> Edit Parts & Supplies Return</strong></h4>
-	<?php } ?>
-	<ul class="panel-tool-options"> 
-		<li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-	</ul>
-</div>
+<div class="heading">
+<h4 class="panel-title"><strong>Add Parts & Supplies Return</strong></h4>
+							
 <div class="panel-body">
-<div class="table-responsive" style="margin-bottom:20px;">
-<table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover" style="margin-bottom:20px;">
 <tbody>
-<tr>
-<!-- <input type="hidden" name="id" value="<?=$_GET['id'];?>" /> -->
 
+<tr>
 <select name="bin_card_type" style="display:none;" class="form-control"  />
 <option value="">--Select--</option>
 <option value="Receipt">Receipt</option>
@@ -49,18 +38,17 @@ if($_GET['id']!='' or $_GET['view']!=''){
 
 <th>Vendor Name</th>
 <th>
-<select name="vendor_id" class="select2 form-control" style="width:100%;" required>
+<select name="vendor_id" id="vendor_id" class="form-control" required>
 <option value="">--Select--</option>
 <?php
-$vendorQuery=$this->db->query("select *from tbl_contact_m where status='A'");
+$vendorQuery=$this->db->query("select *from tbl_contact_m where status='A' and group_name = '5'");
 foreach($vendorQuery->result() as $getVendor){
 ?>
-<option value="<?=$getVendor->contact_id;?>" <?php if($getVendor->contact_id==$fetchq->vendor_id){ ?> selected="selected" <?php }?>><?=$getVendor->first_name;?></option>
+<option value="<?=$getVendor->contact_id;?>"><?=$getVendor->first_name;?></option>
 <?php }?>
 </select>
-</th>
 <th>Return Date</th>
-<th><input type="date" name="return_date" class="form-control" value="<?=$fetchq->return_date;?>" style="width:100%;" required  /></th>
+<th><input type="date" name="return_date" class="form-control"  /></th>
 <!-- <th>Type</th>
 <th>
 <select name="type" class="select2 form-control" id="type" style="width:100%;" >	
@@ -68,49 +56,48 @@ foreach($vendorQuery->result() as $getVendor){
 <?php
 $abc=$this->db->query("select distinct(via_type) from tbl_product_stock where status='A' ");
 foreach ($abc->result() as $value) { ?>
-<option value="<?=$value->via_type?>" <?php if($fetchq->type == $value->via_type) { ?> selected <?php } ?> ><?=$value->via_type?></option>
+<option value="<?=$value->via_type?>"><?=$value->via_type?></option>
 <?php } ?>
 </th> -->
 <th></th>
 <th></th>
-</tr>
-<tr>
-<th valign="top">P.O. NO.</th>
-<th><input type="number" name="po_no" class="form-control" value="<?=$fetchq->po_no;?>" required /></th>
-<th valign="top">P.O. Date</th>
-<th><input type="date" name="po_date" class="form-control" required value="<?=$fetchq->po_date;?>" /></th>
-<th valign="top">Remarks</th>
-<th><textarea name="remarks" class="form-control"><?=$fetchq->remarks;?></textarea></th>
+</th>
 </tr>
 
+<tr>
+<th>P.O. NO.</th>
+<th><input type="number" name="po_no" class="form-control" required /></th>
+<th>P.O. Date</th>
+<th><input type="date" name="po_date" class="form-control" required /></th>
+<th>Remarks</th>
+<th><textarea name="remarks" class="form-control"></textarea></th>
+</tr>
 </tbody>
-</table>
 </div>
 
-<div class="table-responsive" style="margin-bottom:20px;">
-<table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover" style="margin-bottom:20px;">
 <thead>
 <tr class="gradeA">
-<th>Parts And Supplies Name </th>
+<th>Parts & Supplies Name </th>
+<th>Type</th>
 <th>Qty in Stock</th>
 <th>Usages Unit</th>
 <th style="display:none;">Main Location</th>
 <th>Location</th>
 <th>Rack No.</th>
 <th>Purchase Price</th>
-<th>Quantity</th>
+<th>Enter Qty</th>
 <th>Action</th>
 </tr>
 </thead>
-
-<tbody>
+<tbody id="getDataTable">
 <tr class="gradeA">
 <th style="width:280px;">
 <div class="input-group"> 
 <div style="width:100%; height:28px;" >
-<input type="text" name="prd"  onkeyup="getdata()" class="form-control" onClick="getdata()" id="prd" style=" width:230px;"  placeholder=" Search Items..." tabindex="5" >
+<input type="text" name="prd[]"  onkeyup="getdata()" class="form-control" onkeypress="getdata()" onClick="getdata()" id="prd" style=" width:230px;"  placeholder=" Search Items..." />
  <input type="hidden"  name="pri_id" id='pri_id'  value="" style="width:80px;"  />
- <input type="hidden"  name="dtl_idd" id='dtl_idd'  value="" style="width:80px;"  />
 </div>
 
 </div>
@@ -122,23 +109,24 @@ $this->load->view('getproduct');
 ?>
 </div>
 </th>
-
-<th><input type="text" readonly="" id="quantity" class="form-control"></th>
-<th><input type="text" readonly="" id="usunit" class="form-control"> </th>
-
+<th><input type="text" readonly="" id="type" style="width:70px;" class="form-control"></th>
+<th><input type="text" readonly="" id="quantity" style="width:70px;" class="form-control"></th>
+<th><input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> </th>
 <th style="display:none;">
 <select  name="main_loc" id="main_loc" class="form-control"  style="width:70px;"/ >
 <?php
-$queryMainLocation=$this->db->query("select *from tbl_location where status='A'");
+ $queryMainLocation=$this->db->query("select *from tbl_location where status='A'");
 foreach($queryMainLocation->result() as $getMainLocation){
 ?>
 <option value="<?=$getMainLocation->id;?>"><?=$getMainLocation->location_name;?></option>
-<?php }?>
+<?php } ?>
 </select>
 </th>
 <th>
 <input type="hidden" id="locationVal" />
-<select name="loc" id="loc" onChange="getPallet(this.value,null);"  class="form-control" / >
+<select name="loc[]" id="loc" onChange="getPallet(this.value);" class="form-control" style="width:70px;"/>
+<!-- <p id="qty_pallet"></p> -->
+<option>--Select--</option>
 <?php
 $queryMainLocation=$this->db->query("select *from tbl_master_data where status='A' and param_id='21'");
 foreach($queryMainLocation->result() as $getMainLocation){
@@ -148,18 +136,22 @@ foreach($queryMainLocation->result() as $getMainLocation){
 </select>
 <p id="qty_pallet"></p>
 </th>
+
 <th>
 <input type="hidden" id="rackVal" />
-<select name="rack_id" id="rack_id" onChange="getrackQty1(this.value);" class="form-control"/ >
+<select name="rack_id[]" id="rack_id" onclick="getrackQty1(this.value);" onChange="validaterack(this);validatePrice();" class="form-control"   style="width:70px;"/ >
+<option>--Select--</option>
 <?php
-$queryMainLocation1=$this->db->query("select * from tbl_location_rack where status='A'");
+$queryMainLocation1=$this->db->query("select *from tbl_location_rack where status='A'");
 foreach($queryMainLocation1->result() as $getMainLocation1){
 ?>
-<option value="<?php echo $getMainLocation1->id;?>"><?=$getMainLocation1->rack_name;?></option>
-<?php }?>
+<option value="<?php echo $getMainLocation1->id;?>"><?=$getMainLocation1->rack_name;?>
+</option>
+<?php } ?>
 </select>
 </th>
 <th>
+<!-- <input type="number" step="any" id="price" min="1"  value="" class="form-control" > -->
 <select name="price" id="price" class="form-control" style="width:70px;"> 
 <option>--Select--</option>
 <?php 
@@ -169,18 +161,19 @@ foreach ($abc->result() as $value) { ?>
 <?php } ?>
 </select>
 </th>
-<th><input type="number" id="qn" min="1" class="form-control"></th>
+<th><input type="number" id="qn" min="1" style="width:70px;"   class="form-control"></th>
 <th><a href="#" onclick="adda();" class="btn btn-sm">Add</a></th>
+
 </tr>
 </tbody>
 </table>
 </div>
 
-<div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:1px solid #1ABC9C">
-<table id="invo" style="width:100%;  background:#1ABC9C; color:#FFFFFF;  height:70%;" title="Invoice"  >
+<div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:1px solid ">
+<table id="invo" style="width:100%;  background:#1ABC9C;  height:70%;" title="Invoice"  >
 <tr>
-<td style="width:1%;"> <div align="center"><u>Sl No</u>.</div></td>
-<td style="width:9%;"> <div align="center"><u>Parts And Supplies Name</u></div></td>
+<td style="width:1%;"><div align="center"><u>S. No.</u>.</div></td>
+<td style="width:9%;"><div align="center"><u>Parts & Supplies Name</u></div></td>
 <td style="width:3%;display:none;"> <div align="center"><u>Main Location</u></div></td>
 <td style="width:3%;"> <div align="center"><u>Location </u></div></td>
 <td style="width:3%;"> <div align="center"><u>Rack</u></div></td>
@@ -195,56 +188,6 @@ foreach ($abc->result() as $value) { ?>
 <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
 
 <tr></tr>
-<?php
-$z=1;
-$query_dtl=$this->db->query("select * from tbl_spare_return_dtl where refillhdr='".$_GET['id']."' or refillhdr='".$_GET['view']."' ");
-foreach($query_dtl->result() as $invoiceFetch)
-{
-
-$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$invoiceFetch->product_id'");
-$getProductName=$productQuery->row();
-
-$typeQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductName->usageunit'");
-$gettype=$typeQuery->row();
-
-?>
-<tr>
-<td align="center" style="width: 0.2%;"><?php echo $z;?></td>
-
-<td align="center" style="width: 9%;"><input type="text" name="pd[]" id="pd<?php echo $z;?>" value="<?php echo $getProductName->productname;?><?php //echo $invoiceFetch->product_id;?>" readonly="" style="text-align: center; width: 100%; border:hidden;">
-<input type="hidden" name="product_id[]" id="main_id<?php echo $z;?>" value="<?php echo $invoiceFetch->product_id;?>" readonly="" style="text-align: center; width: 100%; border:hidden;"><input type="hidden" value="<?php echo $gettype->keyvalue; ?>" name="unit[]" id="unit<?php echo $z;?>" readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-
-
-
-<td align="center" style="width: 3%;display:none;"><input type="text" name="main_loc[]" id="main_loc<?php echo $z;?>" value="<?php echo $invoiceFetch->main_loc;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-<td align="center" style="width: 3%; display:none;"><input type="text" name="loc[]" id="loc<?php echo $z;?>" value="<?php echo $invoiceFetch->loc;?>"readonly="" style="text-align: center; width: 100%; border: hidden;" />
-  <?php 
-$productQuery=$this->db->query("select * from tbl_master_data where serial_number='$invoiceFetch->loc'");
-$getProductName=$productQuery->row();
-?>
-<td align="center" style="width: 3%;">  <input type="text" name="locf[]" id="locdfsd<?php echo $z;?>" value="<?php echo $getProductName->keyvalue;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-<td align="center" style="width: 3%; display:none;"><input type="text" name="rack_id[]" id="rack_id<?php echo $z;?>" value="<?php echo $invoiceFetch->rack_id;?>"readonly="" style="text-align: center; width: 100%; border: hidden;" /></td>
-
- <?php 
-$productQuery=$this->db->query("select * from tbl_location_rack where id='$invoiceFetch->rack_id'");
-$getProductName=$productQuery->row();
-?>
-
-<td align="center" style="width: 3%;"><input type="text" name="rack_idggg[]" id="qntybb<?php echo $z;?>" value="<?php echo $getProductName->rack_name;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-
-<td align="center" style="width: 3%;">
-<input type="text" name="purchase_price[]" id="purchase_price<?php echo $z;?>" value="<?php echo $invoiceFetch->purchase_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-
-<td align="center" style="width: 3%;"><input type="text" name="new_quantity[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->quantity;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-
-
-
-<td align="center" style="width: 3%;">
-<img src="<?php echo base_url();?>assets/images/delete.png" border="0" name="dlt" id="dlt<?php echo $z;?>" onclick="deleteselectrowtest(this.id,this);"  readonly style="border: hidden;">
-
-<img src="<?php echo base_url();?>assets/images/edit.png" border="0" name="ed" id="ed<?php echo $z;?>" onclick="editselectrowtest(this.id,this);" style="border: hidden;"></td>
-</tr>
-<?php $row=$z; $z++;  } ?>
 </table>
 
 
@@ -254,27 +197,19 @@ $getProductName=$productQuery->row();
 
 </div>
 
-<input type="hidden" name="rows" id="rows" value="<?php echo $row;?>">
+<input type="hidden" name="rows" id="rows">
 <!--//////////ADDING TEST/////////-->
 <input type="hidden" name="spid" id="spid" value="d1"/>
 <input type="hidden" name="ef" id="ef" value="0" />
 
 
 <div class="table-responsive">
-<table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
-
-
+<table class="table table-striped table-bordered table-hover" >
 <tbody>
-
 <tr class="gradeA">
 <th>
 <div class="pull-right">
-<?php if($_GET['view']!='')
-{} else {?>
-<input class="btn btn-sm" type="button" value="SAVE"   id="sv1" onclick="fsv(this)" >
-&nbsp;
-<?php }?>
-<a onclick="popupclose(this.value)" class="btn btn-secondary  btn-sm">Cancel</a>
+<input class="btn btn-sm" type="button" name="save" value="SAVE"   id="sv1" onclick="fsv(this)" >&nbsp;<a href="<?=base_url();?>return/spareReturn/manage_spare_return" class="btn btn-secondary  btn-sm">Cancel</a>
 </div>
 </th>
 </tr>
@@ -323,104 +258,104 @@ function checkKeyPressed(e)
 		}
 	}
 
-document.getElementById("price").onkeydown = function (e) 
-{
-	var entr =(e.keyCode);
-	if(entr==13)
-	{	
-		var sprice=document.getElementById("price").value;
-		if(sprice=='')
-		{
-			alert("Please Select Purchase Price");
-			document.getElementById("price").focus();	
-		}
-		else
-		{
-			document.getElementById("qn").focus();			
-		}
-
-	}
-}
-
-document.getElementById("loc").onkeydown = function (e) 
-{
-
-	var entr =(e.keyCode);
-	if(entr==13)
+	document.getElementById("price").onkeydown = function (e) 
 	{
-		
-		var locA=document.getElementById("loc").value;
-		if(locA=='')
-		{
-			alert("Please Select Location");
-			document.getElementById("loc").focus();
-		}
-		else
-		{
-			var e = document.getElementById("loc");
-			var strMake = e.options[e.selectedIndex].text;
-			document.getElementById("locationVal").value=strMake;
-			document.getElementById("rack_id").focus();	
-		}
-		
+		var entr =(e.keyCode);
+		if(entr==13)
+		{	
+			var sprice=document.getElementById("price").value;
+			if(sprice=='')
+			{
+				alert("Please Select Purchase Price");
+				document.getElementById("price").focus();	
+			}
+			else
+			{
+				document.getElementById("qn").focus();			
+			}
 
+		}
 	}
 
-}
-
-document.getElementById("rack_id").onkeydown = function (e) 
-{
-	var entr =(e.keyCode);
-	if(entr==13)
-	{
-		var rack_id=document.getElementById("rack_id").value;
-		if(rack_id=='')
-		{
-			alert("Please Select Rack");	
-			document.getElementById("rack_id").focus();
-		}
-		else
-		{
-			var e = document.getElementById("rack_id");
-			var strMake = e.options[e.selectedIndex].text;
-			document.getElementById("rackVal").value=strMake;
-			document.getElementById("price").focus();
-		}
-	}
-}
-
-
-
-document.getElementById("qn").onkeydown = function (e) 
-{
-	
-	var entr =(e.keyCode);
-	if(document.getElementById("qn").value=="" && entr==08)
+	document.getElementById("loc").onkeydown = function (e) 
 	{
 
-	}
-   	if (e.keyCode == "13")
-	{
-	
-		e.preventDefault();
-	    e.stopPropagation();
-		
-		if(ppp!=='' || ef==1)
+		var entr =(e.keyCode);
+		if(entr==13)
 		{
-		
-			adda();	  											
-			var ddid=document.getElementById("spid").value;
-			var ddi=document.getElementById(ddid);
-			ddi.id="d";
 			
+			var locA=document.getElementById("loc").value;
+			if(locA=='')
+			{
+				alert("Please Select Location");
+				document.getElementById("loc").focus();
+			}
+			else
+			{
+				var e = document.getElementById("loc");
+				var strMake = e.options[e.selectedIndex].text;
+				document.getElementById("locationVal").value=strMake;
+				document.getElementById("rack_id").focus();	
+			}
+			
+
 		}
-		else
-		{
-			alert("Enter Correct Product");
-		}
-		return false;
+
 	}
-}
+
+	document.getElementById("rack_id").onkeydown = function (e) 
+	{
+		var entr =(e.keyCode);
+		if(entr==13)
+		{
+			var rack_id=document.getElementById("rack_id").value;
+			if(rack_id=='')
+			{
+				alert("Please Select Rack");	
+				document.getElementById("rack_id").focus();
+			}
+			else
+			{
+				var e = document.getElementById("rack_id");
+				var strMake = e.options[e.selectedIndex].text;
+				document.getElementById("rackVal").value=strMake;
+				document.getElementById("price").focus();
+			}
+		}
+	}
+
+
+
+	document.getElementById("qn").onkeydown = function (e) 
+	{
+		
+		var entr =(e.keyCode);
+		if(document.getElementById("qn").value=="" && entr==08)
+		{
+
+		}
+	   	if (e.keyCode == "13")
+		{
+		
+			e.preventDefault();
+		    e.stopPropagation();
+			
+			if(ppp!=='' || ef==1)
+			{
+			
+				adda();	  											
+				var ddid=document.getElementById("spid").value;
+				var ddi=document.getElementById(ddid);
+				ddi.id="d";
+				
+			}
+			else
+			{
+				alert("Enter Correct Product");
+			}
+			return false;
+		}
+	}
 
 
 }
@@ -445,38 +380,37 @@ function fsv(v)
 function getdata()
 {
 	 
-	 currentCell = 0;
-	 var product1=document.getElementById("prd").value;	 
-	 var vendor_id=document.getElementById("vendor_id").value;
-	 var type = document.getElementById("type").value;
-	 var product=product1;
+	currentCell = 0;
+	var product1=document.getElementById("prd").value;	 
+	var vendor_id=document.getElementById("vendor_id").value;
+	//var type = document.getElementById("type").value;
+	var product=product1;
 	 
-	 //alert(type);	
-	 	if(vendor_id == '' || type == '')
+	//alert(type);	
+ 	if(vendor_id == '')
+	{
+		alert("Please Select Vendor Name !");
+		return false;
+	}
+	else
+	{
+	    if(xobj)
 		{
-			alert("Please Select Vendor Name & Type");
-			return false;
-		}
-		else
-		{
-		    if(xobj)
-			{
-			
-				var obj=document.getElementById("prdsrch");			
-			 	xobj.open("GET","getproduct?con="+product+"&type="+type,true);
-			 	xobj.onreadystatechange=function()
-			  	{
-				  	if(xobj.readyState==4 && xobj.status==200)
-				   	{
-				    	obj.innerHTML=xobj.responseText;
-				   	}
-			  	}
-			}
-
-		 xobj.send(null);
-
+		
+			var obj=document.getElementById("prdsrch");			
+		 	xobj.open("GET","getproduct?con="+product+"&vendor_id="+vendor_id,true);
+		 	xobj.onreadystatechange=function()
+		  	{
+			  	if(xobj.readyState==4 && xobj.status==200)
+			   	{
+			    	obj.innerHTML=xobj.responseText;
+			   	}
+		  	}
 		}
 
+	 xobj.send(null);
+
+	}
 
 }
   

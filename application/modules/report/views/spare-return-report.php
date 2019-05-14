@@ -131,6 +131,20 @@ Showing <?=$dataConfig['page']+1;?> to
 </thead>
 
 <tbody id="getDataTable" >
+
+<tr style="display: none;">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
 <?php 
 $i=1;
 foreach($result as $fetch) { ?>

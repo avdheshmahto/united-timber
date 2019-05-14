@@ -590,7 +590,7 @@ $table_name='tbl_machine_files_uploads';
 
 							</tbody>
 							<tbody id="dataTable">
-								<input type="hidden" id="countRow" value="">
+								<input type="text" id="countRow" value="" style="display: none;">
 							</tbody>
 							<tr>
 								<th colspan="4">&nbsp;</th>

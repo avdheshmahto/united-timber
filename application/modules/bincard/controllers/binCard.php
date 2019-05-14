@@ -146,8 +146,8 @@ public function insertBinCard()
 
 				'bin_card_type' => $this->input->post('bin_card_type'),
 				'vendor_id' => $this->input->post('vendor_id'),
-				'date' => $this->input->post('rdate'),
-				'type' => $this->input->post('type'),
+				//'date' => $this->input->post('rdate'),
+				//'type' => $this->input->post('type'),
 				'grn_no' => $this->input->post('grn_no'),
 				'grn_date' => $this->input->post('grn_date'),
 				'po_no' => $this->input->post('po_no'),
@@ -171,6 +171,7 @@ public function insertBinCard()
 				$data_dtl=array(
 									'refillhdr'      => $lastHdrId11,
 									'product_id'     => $product_id[$i],
+									'type' 			 => $type[$i],
 									'main_loc'       => $main_loc[$i],
 									'loc' 		     => $locs[$i],
 									'rack_id' 	     => $rack_ids[$i],				 
@@ -190,7 +191,7 @@ public function insertBinCard()
 
 				$this->software_stock_log_insert($lastHdrId11,$bin_card_type,$vendor_id,$product_id[$i],$new_quantity[$i],$purchase_price[$i]);
 
-				$this->stock_refill_qty($new_quantity[$i],$product_id[$i],$main_loc[$i],$locs[$i],$rack_ids[$i],$bin_card_type,$vendor_id,$type,$purchase_price[$i]);
+				$this->stock_refill_qty($new_quantity[$i],$product_id[$i],$main_loc[$i],$locs[$i],$rack_ids[$i],$bin_card_type,$vendor_id,$type[$i],$purchase_price[$i]);
 				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
 			
 			}

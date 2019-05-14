@@ -191,6 +191,7 @@ Showing <?=$dataConfig['page']+1;?> to
 <tr>
 
 	<th>Workorder No.</th>
+  <th>Workorder Date</th>
 	<th>Schedule No.</th>
 	<th>Trigger No.</th>
 	<th>Section</th>
@@ -200,15 +201,27 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id="getDataTable" >
+
+<tr style="display: none;">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr> 
+
 <?php
 if($_GET['id']== 0){
 $query=("select * from tbl_work_order_maintain where status='A' Order by id DESC ");
 	$getQuery = $this->db->query($query);
 $result=$getQuery->result();
 }else{
-	$mc=$this->db->query("select * from tbl_machine where m_type='".$_GET['id']."' ");
-	$getSec=$mc->row();
-	$query=("select * from tbl_work_order_maintain where machine_name='$getSec->id' Order by id DESC ");
+	//$mc=$this->db->query("select * from tbl_machine where m_type='".$_GET['id']."' ");
+	//$getSec=$mc->row();
+	//$query=("select * from tbl_work_order_maintain where machine_name='$getSec->id' Order by id DESC ");
+  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' Order by id DESC ");
 	$getQuery = $this->db->query($query);
 $result=$getQuery->result();
 }
@@ -226,7 +239,7 @@ if($fetch_list->trigger_code!='') { ?>
 <?php 	echo "WO".$fetch_list->id;  ?></a>
 <?php } ?>
 </th>
-
+<th><?php echo $fetch_list->maker_date; ?></th>
 <th>	
 <?php
 

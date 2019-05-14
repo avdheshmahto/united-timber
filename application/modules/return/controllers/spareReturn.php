@@ -146,7 +146,7 @@ public function insertSpareReturn()
 					'bin_card_type'=> $this->input->post('bin_card_type'),						
 					'vendor_id'    => $this->input->post('vendor_id'),
 					'return_date'  => $this->input->post('return_date'),
-					'type' 		   => $this->input->post('type'),
+					//'type' 		   => $this->input->post('type'),
 					'po_no'		   => $this->input->post('po_no'),
 					'po_date' 	   => $this->input->post('po_date'),
 					'remarks' 	   => $this->input->post('remarks'),
@@ -167,27 +167,28 @@ public function insertSpareReturn()
 
 				    $data_dtl=array(
 
-									'refillhdr' 	 => $lastHdrId11,
-									'product_id' 	 => $product_id[$i],
-									'main_loc' 		 => $main_loc[$i],
-									'loc' 			 => $loc[$i],
-									'rack_id' 		 => $rack_id[$i],				 
-									'purchase_price' => $purchase_price[$i],
-									'quantity' 		 => $new_quantity[$i],
-									
-									'maker_id'   => $this->session->userdata('user_id'),
-									'maker_date' => date('y-m-d'),
-									'author_id'   => $this->session->userdata('user_id'),
-									'author_date' => date('y-m-d'),
-									'comp_id' 	 => $this->session->userdata('comp_id'),
-									'zone_id' 	 => $this->session->userdata('zone_id'),
-									'brnh_id' 	 => $this->session->userdata('brnh_id')
+							'refillhdr' 	 => $lastHdrId11,
+							'product_id' 	 => $product_id[$i],
+							'type' 		     => $type[$i],
+							'main_loc' 		 => $main_loc[$i],
+							'loc' 			 => $loc[$i],
+							'rack_id' 		 => $rack_id[$i],				 
+							'purchase_price' => $purchase_price[$i],
+							'quantity' 		 => $new_quantity[$i],
+							
+							'maker_id'    => $this->session->userdata('user_id'),
+							'maker_date'  => date('y-m-d'),
+							'author_id'   => $this->session->userdata('user_id'),
+							'author_date' => date('y-m-d'),
+							'comp_id' 	  => $this->session->userdata('comp_id'),
+							'zone_id' 	  => $this->session->userdata('zone_id'),
+							'brnh_id' 	  => $this->session->userdata('brnh_id')
 									
 									);
 					
 					$this->software_stock_log_insert($lastHdrId11,$bin_card_type,$vendor_id,$product_id[$i],$new_quantity[$i],$purchase_price[$i]);
 
-					$this->stock_refill_qty($new_quantity[$i],$product_id[$i],$main_loc[$i],$loc[$i],$rack_id[$i],$bin_card_type,$vendor_id,$type,$purchase_price[$i]);
+					$this->stock_refill_qty($new_quantity[$i],$product_id[$i],$main_loc[$i],$loc[$i],$rack_id[$i],$bin_card_type,$vendor_id,$type[$i],$purchase_price[$i]);
 					$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
 					
 				}
@@ -429,6 +430,30 @@ public function check_rack_qty()
 			echo "1";
 
 }
+
+
+function spare_dropdown()
+{
+	$vndrid=$this->input->get('vid');
+
+    $price=$this->db->query("select * from tbl_product_serial_log where supp_name='$vndrid' GROUP BY product_id");
+    
+	echo "<option value=''>----Select ----</option> ";
+	foreach ($price->result() as $getprice) 
+	{
+		$prd=$this->db->query("select * from tbl_product_stock where Product_id='$getprice->product_id'");
+		$getPrd=$prd->row();
+		echo "<option value=".$getPrd->Product_id.">".$getPrd->productname."</option>";
+	}
+}
+
+function spare_return_page()
+{
+	$data['pid']=$_GET['PID'];
+	$this->load->view('getReturnPage',$data);
+}
+
+
 
 
 }

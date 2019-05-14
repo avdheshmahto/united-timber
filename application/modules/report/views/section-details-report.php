@@ -55,6 +55,18 @@ $getWO=$wo->row(); ?>
 </thead>
 
 <tbody id="getDataTable" >
+
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <?php
 $sftcostlog=$this->db->query("select * from tbl_software_cost_log where section_id='".$_GET['id']."' AND log_type!='Labour' ");
 $count=$sftcostlog->num_rows();

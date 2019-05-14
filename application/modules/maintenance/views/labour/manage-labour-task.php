@@ -176,7 +176,8 @@ Showing <?=$dataConfig['page']+1;?> to
 <thead>
 <tr>
 <th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
-
+  
+  <th>S. No.</th>
   <th>Section</th>
   <th>Task Name</th>
   <th>Start Date</th>
@@ -185,12 +186,13 @@ Showing <?=$dataConfig['page']+1;?> to
   <th>Time Spent</th>
   <th>Cost Estimate</th>
   <th>Cost Spent</th>
+  <th>Action</th>
  </tr>
 </thead>
 <tbody id = "getDataTable"> 
                     
 <?php  
-
+$z=1;
 $i=1;
 foreach($result as $fetch_list)
 {
@@ -200,6 +202,7 @@ foreach($result as $fetch_list)
 
 <th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
 
+<th><?php echo $z++; ?></th>
 <th><?php 
   $sqlunit=$this->db->query("select * from tbl_category where id='$fetch_list->section'");
   $compRow = $sqlunit->row();
@@ -218,6 +221,12 @@ foreach($result as $fetch_list)
 
 <th><?php echo $fetch_list->cost_estimate; ?></th>
 <th><?php echo $fetch_list->cost_spent; ?></th>
+
+<th><?php
+$pri_col='id';
+$table_name='tbl_workorder_labor_task';
+?>
+<button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button></th>
 </tr>
 
 <?php $i++; } ?>

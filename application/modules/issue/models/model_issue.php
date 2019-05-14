@@ -5,7 +5,7 @@ class model_issue extends CI_Model {
 
 
 
-//=======================================Consumable===========================
+//===============================Consumable===========================
 
 function getConsumIssueData($last,$strat)
 {
@@ -43,6 +43,7 @@ function filterConsumList($perpage,$pages,$get)
   	$qry .= "  limit $pages,$perpage";
    $data =  $this->db->query($qry)->result();
   return $data;
+
 }
 
 
@@ -107,6 +108,7 @@ function filterToolsList($perpage,$pages,$get)
   	$qry .= "  limit $pages,$perpage";
    $data =  $this->db->query($qry)->result();
   return $data;
+
 }
 
 
@@ -171,6 +173,7 @@ function filterSpareList($perpage,$pages,$get)
   	$qry .= "  limit $pages,$perpage";
    $data =  $this->db->query($qry)->result();
   return $data;
+  
 }
 
 

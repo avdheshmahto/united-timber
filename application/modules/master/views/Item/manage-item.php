@@ -92,12 +92,12 @@ if($this->input->get('entries')!="")
 	<option value="<?php echo $fetchunit->serial_number;?>"><?php echo $fetchunit->keyvalue; ?></option>
 		<?php } ?>
 </select>          
-</div> 
+</div>
 </div>
 
 
 <div class="form-group"> 	
-<label class="col-sm-2 control-label">*Vendor Name:</label> 
+<label class="col-sm-2 control-label">*Vendor Name :</label> 
 <div class="col-sm-4"> 
 <select name="vendor_name" class="select2 form-control" id="vendor_name" required style="width:100%;">
 <option value="">--Select--</option>
@@ -106,14 +106,14 @@ $vendorQuery=$this->db->query("select *from tbl_contact_m where group_name = '5'
 foreach($vendorQuery->result() as $getVendor){
 ?>
 <option value="<?=$getVendor->contact_id;?>"><?=$getVendor->first_name;?></option>
-
 <?php }?>
 </select> 
 </div> 
 <label class="col-sm-2 control-label">*Purchase Price:</label> 
 <div class="col-sm-4" id="regid"> 
 <input type="number" step="any" name="unitprice_purchase" id="unitprice_purchase" value="" class="form-control" required>
-</div>
+</div> 
+
 </div>
 
 <div class="form-group"> 	

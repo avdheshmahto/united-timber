@@ -704,7 +704,7 @@ function ajex_toolListData()
 
 $("#PartsIssueForm").validate({
     rules: {
-      facility: "required",
+      section: "required",
       //groupName:"required"
     },
       submitHandler: function(e) {
@@ -766,7 +766,7 @@ function ajex_issuetListData(){
 
 $("#ConsumIssueForm").validate({
     rules: {
-      facility: "required",
+      section: "required",
       //groupName:"required"
     },
       submitHandler: function(e) {

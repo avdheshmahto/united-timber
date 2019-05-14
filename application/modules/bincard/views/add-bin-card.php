@@ -14,7 +14,7 @@ $this->load->view("header.php");
 	<li><a href="#">Bin Card</a></li> 
 	<li class="active"><strong><a href="#">Add Bin Card</a></strong></li> 
 	<div class="pull-right">
-	<a class="btn btn-sm" href="<?=base_url();?>binCard/manage_bin_card">Manage Bin Card</a>
+	<a class="btn btn-sm" href="<?=base_url();?>bincard/binCard/manage_bin_card">Manage Bin Card</a>
 	</div>
 </ol>
 
@@ -35,7 +35,7 @@ $this->load->view("header.php");
 </select>	
 <th>Vendor Name</th>
 <th>
-<select name="vendor_id" class="select2 form-control" id="vendor_id_spare" required style="width:100%;">
+<select name="vendor_id" class="select2 form-control" id="vendor_id_spare" required style="width:100%;" onchange="genrateQuotation();">
 <option value="">--Select--</option>
 <?php
 $vendorQuery=$this->db->query("select *from tbl_contact_m where group_name = '5' and status='A'");
@@ -45,7 +45,7 @@ foreach($vendorQuery->result() as $getVendor){
 <?php }?>
 </select>
 </th>
-<th>Date</th>
+<!--<th>Date</th>
 <th><input type="date" name="rdate" class="form-control" required /></th>
 <th>Type</th>
 <th>
@@ -56,14 +56,13 @@ $abc=$this->db->query("select distinct(via_type) from tbl_product_stock where st
 foreach ($abc->result() as $value) { ?>
 <option value="<?=$value->via_type?>"><?=$value->via_type?></option>
 <?php } ?>
-</th>
-</tr>
-<tr>
+</th> -->
 <th>GRN No.</th>
 <th><input type="text" name="grn_no" id="grn_no" class="form-control" readonly="" /></th>
 <th>GRN Date</th>
 <th><input type="date" name="grn_date" class="form-control" /></th>
 </tr>
+
 <tr>
 <th>Po No.</th>
 <th><input type="text" name="po_no" class="form-control" /></th>
@@ -79,7 +78,8 @@ foreach ($abc->result() as $value) { ?>
 <table class="table table-striped table-bordered table-hover" style="margin-bottom:20px;">
 <thead>
 <tr class="gradeA">
-<th>Parts And Supplies Name </th>
+<th>Parts & Supplies Name </th>
+<th>Type</th>
 <th>Qty in Stock</th>
 <th>Usages Unit</th>
 <th>Purchase Price</th>
@@ -107,6 +107,7 @@ foreach ($abc->result() as $value) { ?>
 ?>
 </div>
 </th>
+<th><input type="text" readonly="" id="type" style="width:70px;" class="form-control"></th>
 <th><input type="text" readonly="" id="quantity" style="width:70px;" class="form-control"></th>
 <th><input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> </th>
 <th><input type="number" step="any" id="price" min="1" style="width:70px;" value=""   class="form-control"></th>
@@ -338,13 +339,13 @@ function getdata()
 	var product1=document.getElementById("prd").value;	 
 	var product=product1;
 	var vendor_id_spare=document.getElementById("vendor_id_spare").value;
-	var type = document.getElementById("type").value;
+	//var type = document.getElementById("type").value;
 	var get_spare_validate = getvalues_spare();
 	//alert(vendor_id_spare);
 		
-		if(vendor_id_spare == '' || type == '')
+		if(vendor_id_spare == '')
 		{
-			alert("Please Select Vendor Name & Type");
+			alert("Please Select Vendor Name !");
 			return false;
 		}
 		else
@@ -353,7 +354,7 @@ function getdata()
 			{
 				var obj=document.getElementById("prdsrch");				
 				//xobj.open("GET","getproduct?con="+product+"&vendor_id_spare="+vendor_id_spare+"&commonSpare="+get_spare_validate,true);
-				xobj.open("GET","getproduct?con="+product+"&type="+type,true);
+				xobj.open("GET","getproduct?con="+product,true);
 				xobj.onreadystatechange=function()
 				{
 					if(xobj.readyState==4 && xobj.status==200)
@@ -405,7 +406,8 @@ function adda()
 	var quantity=document.getElementById("quantity").value;
 	var locationVal=document.getElementById("locationVal").value;
 	var rackVal=document.getElementById("rackVal").value;
-  		
+  	var ptype=document.getElementById("type").value;
+
 	//default
 	var rows=document.getElementById("rows").value;
 	var pri_id=document.getElementById("pri_id").value;
@@ -560,6 +562,25 @@ function adda()
 					main_locS.style.width="100%";
 					main_locS.style.border="hidden"; 
 					cell.appendChild(main_locS);
+
+
+			indexcell=Number(indexcell+1);		
+			var cell=cell+indexcell;
+			cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.style.display="none";
+				cell.align="center"
+				var typs = document.createElement("input");
+							typs.type="text";
+							typs.border ="0";
+							typs.value=ptype;	    
+							typs.name ='type[]';
+							typs.id='type'+rid;
+							typs.readOnly = true;
+							typs.style="text-align:center";
+							typs.style.width="100%";
+							typs.style.border="hidden"; 
+							cell.appendChild(typs);
 			
 
 	//########s#########//
@@ -727,7 +748,7 @@ function clear()
 	document.getElementById("prdsrch").innerHTML='';
 	document.getElementById("usunit").value='';
 	document.getElementById("price").value='';
-	//document.getElementById("lpr").innerHTML ='';
+	document.getElementById("type").value ='';
 	document.getElementById("qn").value='';
 	document.getElementById("quantity").value='';
 	document.getElementById("pri_id").value='';

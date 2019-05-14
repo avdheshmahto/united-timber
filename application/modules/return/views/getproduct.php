@@ -187,7 +187,7 @@ function ChangeCurrentCell()
 		}*/
 
 
-		function abc(pt,pr,tid,q,u)
+		function abc(pt,pr,tid,q,u,t)
 		{
 		  				
 			var pid=pt.split("^");
@@ -218,7 +218,7 @@ function ChangeCurrentCell()
 			document.getElementById("spid").value=tid;
 			document.getElementById("usunit").value=u;
 			document.getElementById("quantity").value=q;					
-			//document.getElementById("abqt").value=q;
+			document.getElementById("type").value=t;
 			
 		}
 
@@ -237,10 +237,10 @@ function getMake1(pids)
 <body>
 <?php
 
- if($con1!="")
- {
+if($con1!="")
+{
 
-$sel=$this->db->query("select * from tbl_product_stock where via_type='".$_GET['type']."' AND productname like '%$con1%'");
+$sel=$this->db->query("select * from tbl_product_stock where supp_name='".$_GET['vendor_id']."' AND productname like '%$con1%'");
 
 $i=0;
 
@@ -271,17 +271,16 @@ foreach($sel->result() as $arr)
 	//print_r($data)
 ?>
 
-<input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->productname.'' ?>^<?php echo $arr->Product_id; ?>" name="<?php echo $id;?>"
- onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>')"
- onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
+<input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->productname.'' ?>^<?php echo $arr->sku_no;//$arr->Product_id; ?>" name="<?php echo $id;?>"
+ onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $arr->via_type; ?>')"
+ onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $arr->via_type; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
 
 
 <?php
-
+ 
  }
 
 }
-
 
 ?>
 <input type="hidden" value="<?php echo $i;?>" id="ttsp" >

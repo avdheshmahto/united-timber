@@ -133,16 +133,6 @@ if($this->input->get('entries')!=""){
 </ol>
 </form>	
 
-<?php
-
-if($this->session->flashdata('flash_msg')!='')
-{
-?>
-<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-<strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-</div>	
-<?php }?>		
 
 <div class="row">
 <div class="col-lg-12">

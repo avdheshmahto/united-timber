@@ -148,7 +148,8 @@ if($this->input->get('entries')!=""){
 <div class="form-group">
 <label class="col-sm-2 control-label">*Operator:</label> 
 <div class="col-sm-4"> 
-<select name="operator" id="operator" required class="select2 form-control" style="width:100%;">
+<input type="text" name="operator" id="operator" class="form-control">	
+<!-- <select name="operator1" id="operator1" required class="select2 form-control" style="width:100%;">
 		<option value="" >----Select----</option>
 		<?php 
 			$sqlunit3=$this->db->query("select * from tbl_contact_m where group_name=6 ");
@@ -156,7 +157,7 @@ if($this->input->get('entries')!=""){
 		?>
 		<option value="<?php echo $fetchunit3->contact_id;?>"><?php echo $fetchunit3->first_name; ?></option>
 		<?php } ?>
-</select>
+</select> -->
 </div>
 <label class="col-sm-2 control-label">*Suggested Completion Date:</label> 
 <div class="col-sm-4"> 

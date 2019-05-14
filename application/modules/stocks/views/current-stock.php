@@ -20,6 +20,36 @@ if($this->input->get('entries')!="")
 </ul>
 </div>
 
+<div class="panel-body panel-center">
+<form class="form-horizontal" method="get" action="">
+<div class="form-group panel-body-to"> 
+<label class="col-sm-2 control-label">Pats & Supplies Name</label> 
+<div class="col-sm-3"> 
+<select name="sp_name"  class="select2 form-control" id="sp_name"  >
+<option value="">--select--</option>
+<?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A'");
+$ProductName=$getProductName->result();
+foreach($ProductName as $p) { ?>
+<option value="<?=$p->Product_id?>"  <?php if($_GET['sp_name'] == $p->Product_id) { ?>selected <?php } ?> ><?=$p->productname?></option>
+<?php } ?>
+</select>
+</div>
+<label class="col-sm-2 control-label">Type</label> 
+<div class="col-sm-3"> 
+<select name="type" class="select2 form-control" >
+	<option value="">---Select----</option>
+	<option value="Spare" <?php if($_GET['type']=='Spare') {?> selected <?php } ?> >Spare</option>
+	<option value="Tools" <?php if($_GET['type']=='Tools') {?> selected <?php } ?>>Tools</option>
+	<option value="Consumable" <?php if($_GET['type']=='Consumable') {?> selected <?php } ?>>Consumable</option>
+</select>
+</div>
+</div>
+<div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
+<button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button> 	
+<button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" ><span>Search</span>
+</div>
+</form>
+</div>
 
 <div class="row">
 <div class="col-sm-12">
@@ -174,4 +204,8 @@ function exportTableToExcel(tableID, filename = ''){
    }
 }
 
+function ResetLead()
+{
+  location.href="<?=base_url('/stocks/current_stock/manage_current_stock');?>";
+}
 </script>

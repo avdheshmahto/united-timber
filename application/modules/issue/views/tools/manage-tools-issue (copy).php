@@ -27,9 +27,9 @@ if($this->input->get('entries')!="")
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">CONSUMABLE ISSUE</h4>
+<h4 class="panel-title">TOOLS ISSUE</h4>
 <div class="pull-right">
-<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#ConsumIssuemodal" title="Add Tools Issue" onclick="refreshData();">Add Consumable Issue</button>
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#PartsIssuemodal" title="Add Tools Issue" onclick="refreshData();">Add Tools Issue</button>
 </div>
 <!-- <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
@@ -37,80 +37,115 @@ if($this->input->get('entries')!="")
 </div>
 
 
-<div class="modal fade" id="ConsumIssuemodal" role="dialog">
+<div class="modal fade" id="PartsIssuemodal" role="dialog">
 <div class="modal-dialog modal-lg">
 
 <!-- Modal content-->
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">Add Consumable Issue</h4>
-<div id="resultareaconsumable" class="text-center " style="font-size: 15px;color: red;"></div> 
+<h4 class="modal-title">Add Tools Issue</h4>
+<div id="resultareaissue" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 </div>
     <div class="modal-body overflow">
-    <form class="form-horizontal" role="form" id="ConsumIssueForm" method="post">
+    <form class="form-horizontal" role="form" id="PartsIssueForm" method="post">
         <table class="table table-striped table-bordered table-hover">
           <tr class="gradeA">
-           <th colspan="2"><h4>*Section</h4> </th>
-            <th>
-            <select class="select2 form-control" name="section" id="section" required>
-            <option value="0" class="listClass">-------Select------</option>
+            <h4><center>*Section
+              <!-- <select name="facilities" id="facilities" class="select2 form-control">
+              <option value="">---select---</option>
+              <?php 
+                //$sqltr=$this->db->query("select * from tbl_facilities where status='A'");
+                //foreach ($sqltr->result() as $fetchtr){
+              ?>
+              <option value="<?php echo $fetchtr->id;?>"><?php echo $fetchtr->fac_name; ?></option>
+                <?php //} ?>
+            </select> -->
+            <select name="section" required class="select2 form-control" id="section">
+            <option value="0" class="listClass">-----Section-----</option>
             <?php
             foreach ($categorySelectbox as $key => $dt) { ?>
             <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
             <?php } ?>
             </select>
-          </th>
-          <th colspan="2"><h4>*Consumable Name</h4></th>
-          <th>
-            <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="viewConsumeableIssuePage(this.value);">
-              <option value="">---select---</option>
-              <?php 
-                $sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Consumable' ");
-                foreach ($sqlunit->result() as $fetchunit){
-              ?>
-              <option value="<?php echo $fetchunit->Product_id;?>"><?php echo $fetchunit->productname; ?></option>
-                <?php } ?>
-            </select>                        
-          </th>
+          </center></h4>
+
           </tr> 
           <tr class="gradeA">
-            <th colspan="4">&nbsp;</th>
-          </tr>
-          <tbody>
-          <tr class="gradeA">
+            <th><div style1="width: 100px;">Tools Name</div></th>
             <th>Location</th>
             <th>Rack</th>
             <th>Vendor Name</th>
             <th>Purchase Price</th>
             <th>Qty In Stock</th>
             <th>Enter Qty</th>
-            <th>Action</th>
+            <th></th>
           </tr>
-        </tbody>
-        <tbody id="dataTablePage">
-        </tbody>
+          <tr>
+            <th>
+              <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="via_type_func(this.value);">
+              <option value="">---select---</option>
+              <?php 
+                $sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Tools' ");
+                foreach ($sqlunit->result() as $fetchunit){
+              ?>
+              <option value="<?php echo $fetchunit->Product_id;?>"><?php echo $fetchunit->productname; ?></option>
+                <?php } ?>
+            </select>
+            <input type="hidden" id="product_types" name="product_types">
+            </th>
+            <th><select name="location_id" id="location_rack_id" onchange="getRackFun(this.id);" class="form-control">
+            <option value="">----Select ----</option>
+            <?php
+            $bookingType=$this->db->query("select *from tbl_master_data  where param_id='21'");
+            foreach($bookingType->result() as $getBooking){
+            ?>
+            <option value="<?=$getBooking->serial_number;?>"><?=$getBooking->keyvalue;?></option>
+            <?php }?>
+            </select>
+            <p id="qty_pallet"></p>
+            </th>            
+            <th><select name="rack_id" class="form-control" id="rack_id" onchange="getQty(this.id);vendor_func(this.value);"   >
+            <option value="">----Select ----</option>
+            </select>
+            </th>        
+            <th>
+            <select name="vendor_id" id="vendor_id" class="form-control" onchange="price_func(this.value)">
+            <option value="">----Select ----</option>             
+            </select>
+            </th>
+            <th>
+              <select name="purchase_price" id="purchase_price" class="form-control">
+                <option value="">---Select---</option>
+              </select>
+            </th>
+            <th><p id="getQn" value=""></p></th>
+            <th><input type="number" name="qtyname" id="qtyid" onkeyup="checkQtyVal()" class="form-control"></th>
+            <th><button  class="btn btn-default"  type="button" onclick="addrowsIssue()"><img src="<?=base_url();?>assets/images/plus.png" />
+            </button>
+            </th>
+          </tr>
           <tr class="gradeA">
-            <th colspan="4">&nbsp;</th>
+            <th colspan="5">&nbsp;</th>
           </tr>
         <tbody>
           <tr class="gradeA">
-            <th>Consumable Name</th>
+            <th><div style1="width: 100px;">Tools Name</div></th>
             <th>Location</th>
             <th>Rack</th>
             <th>Vendor Name</th>  
             <th>Purchase Price</th>          
-            <th>Issue Qnty</th>
+            <th>Quantity</th>
             <th>Action</th>
             <th></th>
           </tr>
         </tbody>
         <tbody id="dataTable">
-          <input type="text" id="countRow" style="display: none;">
+          <input type="hidden" id="countRow">
         </tbody>
         <tr>
-          <th colspan="5">&nbsp;</th>
+          <th colspan="6">&nbsp;</th>
           <th>
           <input type="button" id="Psubmitform" class="btn btn-sm savebutton pull-right" value="Save" onclick="checkrows();"> 
           </th>
@@ -175,6 +210,8 @@ Showing <?=$dataConfig['page']+1;?> to
   <th>Section</th>
   <th>Type</th>  
   <th>Issued Qty</th>
+  <th>Returned Qty</th>
+  <th>Remaining Qty</th>
   <th>Status</th>
   <th>Action</th>
  </tr>
@@ -193,22 +230,49 @@ foreach($result as $fetch_list)
 
 <th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->issue_id; ?>" value="<?php echo $fetch_list->issue_id;?>" /></th>
 
-<th><?php // echo "CB".$fetch_list->issue_id; ?><?=sprintf('%03d',$fetch_list->issue_id); ?></th>
-<th><a href="<?=base_url();?>issue/ConsumIssue/view_consumable_issue?id=<?=$fetch_list->issue_id?>"><?php 
+<th><?php  //echo $i; ?><?=sprintf('%03d',$fetch_list->issue_id); ?></th>
+<th><a href="<?=base_url();?>issue/ToolsIssue/view_parts_issue?id=<?=$fetch_list->issue_id?>"><?php 
   $sqlunit=$this->db->query("select * from tbl_category where id='".$fetch_list->section."'");
   $compRow = $sqlunit->row();
   echo $compRow->name;    ?></a>
 </th>
 <th><?php echo $fetch_list->type; ?></th>
 <th><?php 
-$qty=$this->db->query("select SUM(qty) as totalqty from tbl_consum_issue_dtl where issue_id_hdr='$fetch_list->issue_id'");
+$qty=$this->db->query("select SUM(qty) as totalqty from tbl_tools_issue_dtl where issue_id_hdr='$fetch_list->issue_id'");
 $getQty=$qty->row();
 
 echo $getQty->totalqty; ?></th>
-<th><?php echo $fetch_list->issue_status; ?></th>
+
+<th>
+<?php 
+  $rtqty=$this->db->query("select * from tbl_tools_return_hdr where issue_id='$fetch_list->issue_id' ");
+  $getRt=$rtqty->row();
+  $rtdtl=$this->db->query("select SUM(qty) as dtlqty from tbl_tools_return_dtl where return_id_hdr='$getRt->return_id' ");
+  $getDtl=$rtdtl->row();
+  echo $getDtl->dtlqty;
+?>
+</th>
+<th><?php echo $remqty=$getQty->totalqty - $getDtl->dtlqty; ?></th>
+<th><?php 
+  
+  if($getQty->totalqty == $getDtl->dtlqty)
+  {
+    echo "Completed";
+  }
+  else if($getQty->totalqty > $getDtl->dtlqty)
+  {
+    echo "Pending";
+  }
+  else
+  {
+    echo "Open";
+  }
+
+//echo $fetch_list->issue_status; ?></th>
+
 <th><?php 
 $pri_col='issue_id';
-$table_name='tbl_consum_issue_hdr';
+$table_name='tbl_tools_issue_hdr';
 ?>
 <button class="btn btn-default delbutton" id="<?php echo $fetch_list->issue_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
 </th>
@@ -410,7 +474,7 @@ function vendor_func(v)
   var racks = $("#rack_id").val();
 
   $.ajax({
-    url  : "<?=base_url();?>issue/ConsumIssue/get_vendor_list",
+    url  : "<?=base_url();?>issue/ToolsIssue/get_vendor_list",
     type : "POST",
     data : {'pid':pids,'loc':locs,'rack':racks},
     success:function(data)
@@ -432,7 +496,7 @@ function price_func(v)
   var vndr = $("#vendor_id").val();
   //alert(pid);
   $.ajax({
-    url  : "<?=base_url();?>issue/ConsumIssue/get_price_list",
+    url  : "<?=base_url();?>issue/ToolsIssue/get_price_list",
     type : "POST",
     data : {'prid':pid,'loc':loct,'rack':rackt,'vid':vndr},
     success:function(data)
@@ -447,7 +511,7 @@ function price_func(v)
 function via_type_func(v)
 {
   //alert(v);
-  ur="<?=base_url();?>issue/ConsumIssue/check_product_type";
+  ur="<?=base_url();?>issue/ToolsIssue/check_product_type";
   $.ajax({
     url  : ur,
     type : "POST",
@@ -488,52 +552,7 @@ function refreshData()
 {
 
   $("#dataTable").empty();
-  $("#dataTablePage").empty();
   $("#countRow").val('');
-  $("#section").val('').trigger('change');
-  $("#spare_nameid").val('').trigger('change');
-  $("#Psubmitform").removeAttr('disabled',false);
-  
-}
-
-
-function viewConsumeableIssuePage(v)
-{
- 
-  //alert(x);
-  var prod=v;
-  var xhttp = new XMLHttpRequest();
- 
-  xhttp.open("GET", "consumeable_issue_page?PID="+ prod, false);
-  // xhttp.open("GET", "issue_spare_sm?ID="+pro, false);
-  // alert(xhttp.open);
-  xhttp.send();
-  //alert(xhttp.responseText);
-  document.getElementById("dataTablePage").innerHTML = xhttp.responseText;
-
-} 
-
-
-function qtyfunction(v) 
-{
-  
-  var zz=document.getElementById(v).id;
-  //alert(zz);
-  var myarra = zz.split("issue_qty");
-  var asx= myarra[1];
-  
-    var enqty1 = $("#issue_qty"+asx).val();
-    var isqty1 = $("#stk_qty"+asx).val();
-
-    if(Number(enqty1) > Number(isqty1))
-    {
-      alert("Issue Qty Can Not Be Greater Than Stock Qty");
-      $("#Psubmitform").attr('disabled',true);
-    }
-    else
-    {
-      $("#Psubmitform").removeAttr('disabled',false);
-    }
   
 }
 

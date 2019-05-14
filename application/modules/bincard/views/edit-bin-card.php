@@ -13,32 +13,32 @@ if($_GET['id']!='' or $_GET['view']!='')
 <form id="f1" name="f1" method="POST" action="updateBinCard" onSubmit="return checkKeyPressed(a)" enctype="multipart/form-data">
 <!-- Main content -->
 
-	<div class="main-content_ popup">
+<div class="main-content_ popup">
+
+<!-- Breadcrumb -->
+<?php if(@$_GET['popup'] == 'True') {} else {?>
+<ol class="breadcrumb breadcrumb-2"> 
+	<li><a class="btn btn-success" href="<?=base_url();?>master/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
+	<li><a class="btn btn-success" href="<?=base_url();?>StockRefillNew/manage_stock_refill">Manage Bin Card </a></li> 
 	
-	<!-- Breadcrumb -->
-	<?php if(@$_GET['popup'] == 'True') {} else {?>
-	<ol class="breadcrumb breadcrumb-2"> 
-		<li><a class="btn btn-success" href="<?=base_url();?>master/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
-		<li><a class="btn btn-success" href="<?=base_url();?>StockRefillNew/manage_stock_refill">Manage Bin Card </a></li> 
-		
-	</ol>
-	<?php }?>
-	<div class="row">
-	<div class="col-lg-12">
-	<div class="panel panel-default">
-		<div class="panel-heading clearfix">
-			<?php if($_GET['view']!='')
-		{
-		?> 
-			<h4 class="panel-title"><strong> View Bin Card</strong></h4>
-			<?php } else{
-			?>
-			<h4 class="panel-title"><strong> Edit Bin Card</strong></h4>
-			<?php } ?>
-			<ul class="panel-tool-options"> 
-				<li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-			</ul>
-		</div>
+</ol>
+<?php }?>
+<div class="row">
+<div class="col-lg-12">
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<?php if($_GET['view']!='')
+	{
+	?> 
+		<h4 class="panel-title"><strong> View Bin Card</strong></h4>
+		<?php } else{
+		?>
+		<h4 class="panel-title"><strong> Edit Bin Card</strong></h4>
+		<?php } ?>
+		<ul class="panel-tool-options"> 
+			<li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
+		</ul>
+	</div>
 
 <div class="panel-body">
 <div class="table-responsive" style="margin-bottom:20px;">
@@ -66,7 +66,7 @@ $getVendor=$vendorQuery->row(); */
 ?>
 <input type="hidden"  class="form-control" required name="vendor_id_spare" id="vendor_id_spare" value="<?php echo $fetchq->vendor_id;?>" />
 </th>
-<th>Date</th>
+<!--<th>Date</th>
 <th>
 <input type="date"  class="form-control input-sm" required name="rdate" value="<?php echo $fetchq->date;?>" />
 <input type="hidden"  class="form-control" required name="id" value="<?php echo $_GET['id'];?>" />
@@ -80,15 +80,13 @@ $abc=$this->db->query("select distinct(via_type) from tbl_product_stock where st
 foreach ($abc->result() as $value) { ?>
 <option value="<?=$value->via_type?>" <?php if($fetchq->type == $value->via_type) { ?> selected <?php } ?> ><?=$value->via_type?></option>
 <?php } ?>
-</th>
-</tr>
-
-<tr>
+</th> -->
 <th>GRN No.</th>
 <th><input type="text" name="grn_no" class="form-control input-sm" value="<?=$fetchq->grn_no;?>" required /></th>
 <th>GRN Date</th>
 <th><input type="date" name="grn_date" class="form-control input-sm" value="<?=$fetchq->grn_date;?>"required /></th>	
 </tr>
+
 <tr>
 <th>Po No.</th>
 <th><input type="text" name="po_no" class="form-control input-sm" value="<?=$fetchq->po_no;?>" required /></th>
@@ -105,7 +103,8 @@ foreach ($abc->result() as $value) { ?>
 <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
 <thead>
 <tr class="gradeA">
-<th>Parts And Supplies Name </th>
+<th>Parts & Supplies Name </th>
+<th>Type</th>
 <th>Qty in Stock</th>
 <th>Usages Unit</th>
 <th>Purchase Price</th>
@@ -133,7 +132,7 @@ $this->load->view('getproduct');
 ?>
 </div>
 </th>
-
+<th><input type="text" readonly="" id="type" class="form-control input-sm"></th>
 <th><input type="text" readonly="" id="quantity" class="form-control input-sm"></th>
 <th><input type="text" readonly="" id="usunit" class="form-control input-sm"> </th>
 <th><input type="number" step="any" id="price" min="1"  value="" class="form-control input-sm"></th>
