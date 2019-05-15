@@ -117,89 +117,83 @@ public function getproduct()
 
 }
 
-//--
+
 public function insertSpareReturn()
 {
-		
-		extract($_POST); 
+		@extract($_POST);
 		$table_name ='tbl_spare_return_hdr';
 		$table_name_dtl ='tbl_spare_return_dtl';
 		$pri_col ='rflhdrid';
 		$pri_col_dtl ='refillhdr';
-		$rows = $this->input->post('rows');
+		
+		$rows = sizeof($this->input->post('qtyname'));
 		
 		$sess = array(
+					
+			'maker_id'    => $this->session->userdata('user_id'),
+			'maker_date'  => date('y-m-d'),
+			'author_id'   => $this->session->userdata('user_id'),
+			'author_date' => date('y-m-d'),
+			'status'  => 'A',
+			'comp_id' => $this->session->userdata('comp_id'),
+			'zone_id' => $this->session->userdata('zone_id'),
+			'brnh_id' => $this->session->userdata('brnh_id'),
+			'divn_id' => $this->session->userdata('divn_id')
+		);
+	
+		$data = array(
+					
+			'vendor_id'    => $this->input->post('vendor_id'),
+			'return_date'  => $this->input->post('return_date'),
+			'po_no'		   => $this->input->post('po_no'),
+			'po_date' 	   => $this->input->post('po_date'),
+			'remarks' 	   => $this->input->post('remarks'),
+			'stock_status' => "Pending",
+					
+		);
+			
+		$data_merge = array_merge($data,$sess);					
+	    $this->Model_admin_login->insert_user($table_name,$data_merge);
+		$lastHdrId11=$this->db->insert_id();
+					
+		for($i=0; $i<$rows; $i++)
+		{
+			
+		    $data_dtl=array(
+
+					'refillhdr' 	 => $lastHdrId11,
+					'product_id' 	 => $spareids[$i],
+					'type' 		     => $via_types[$i],
+					'loc' 			 => $locs[$i],
+					'rack_id' 		 => $racks[$i],				 
+					'purchase_price' => $prices[$i],
+					'quantity' 		 => $qtyname[$i],
 					
 					'maker_id'    => $this->session->userdata('user_id'),
 					'maker_date'  => date('y-m-d'),
 					'author_id'   => $this->session->userdata('user_id'),
 					'author_date' => date('y-m-d'),
-					'status'  => 'A',
-					'comp_id' => $this->session->userdata('comp_id'),
-					'zone_id' => $this->session->userdata('zone_id'),
-					'brnh_id' => $this->session->userdata('brnh_id'),
-					'divn_id' => $this->session->userdata('divn_id')
-		);
-	
-		$data = array(
-					
-					'bin_card_type'=> $this->input->post('bin_card_type'),						
-					'vendor_id'    => $this->input->post('vendor_id'),
-					'return_date'  => $this->input->post('return_date'),
-					//'type' 		   => $this->input->post('type'),
-					'po_no'		   => $this->input->post('po_no'),
-					'po_date' 	   => $this->input->post('po_date'),
-					'remarks' 	   => $this->input->post('remarks'),
-					'stock_status' => "Pending",
-					
-					);
-			
-			$data_merge = array_merge($data,$sess);					
-		    //$this->load->model('Model_admin_login');	
-		    $this->Model_admin_login->insert_user($table_name,$data_merge);
-			$lastHdrId11=$this->db->insert_id();
-						
-			for($i=0; $i<$rows; $i++)
-			{
-				
-				if($new_quantity[$i]!='')
-				{
-
-				    $data_dtl=array(
-
-							'refillhdr' 	 => $lastHdrId11,
-							'product_id' 	 => $product_id[$i],
-							'type' 		     => $type[$i],
-							'main_loc' 		 => $main_loc[$i],
-							'loc' 			 => $loc[$i],
-							'rack_id' 		 => $rack_id[$i],				 
-							'purchase_price' => $purchase_price[$i],
-							'quantity' 		 => $new_quantity[$i],
+					'comp_id' 	  => $this->session->userdata('comp_id'),
+					'zone_id' 	  => $this->session->userdata('zone_id'),
+					'brnh_id' 	  => $this->session->userdata('brnh_id'),
+					'divn_id'     => $this->session->userdata('divn_id')
 							
-							'maker_id'    => $this->session->userdata('user_id'),
-							'maker_date'  => date('y-m-d'),
-							'author_id'   => $this->session->userdata('user_id'),
-							'author_date' => date('y-m-d'),
-							'comp_id' 	  => $this->session->userdata('comp_id'),
-							'zone_id' 	  => $this->session->userdata('zone_id'),
-							'brnh_id' 	  => $this->session->userdata('brnh_id')
-									
-									);
-					
-					$this->software_stock_log_insert($lastHdrId11,$bin_card_type,$vendor_id,$product_id[$i],$new_quantity[$i],$purchase_price[$i]);
+				);
+			//print_r($data_dtl);die;
 
-					$this->stock_refill_qty($new_quantity[$i],$product_id[$i],$main_loc[$i],$loc[$i],$rack_id[$i],$bin_card_type,$vendor_id,$type[$i],$purchase_price[$i]);
-					$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
-					
-				}
-			}
+			$this->software_stock_log_insert($lastHdrId11,'Return',$vendor_id,$spareids[$i],$qtyname[$i],$prices[$i]);
+
+			$this->stock_refill_qty($qtyname[$i],$spareids[$i],$locs[$i],$racks[$i],$vendor_id,$via_types[$i],$prices[$i]);
+			$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
+		
+		}
 				
 	redirect('/return/spareReturn/manage_spare_return');
 }
 
 
 
-public function stock_refill_qty($qty,$main_id,$main_loc,$loc,$rack_id,$bin_card_type,$vendor_id,$type,$purchase_price)
+public function stock_refill_qty($qty,$main_id,$loc,$rack_id,$vendor_id,$type,$purchase_price)
 {
 		
 	$this->db->select('*');
@@ -209,9 +203,6 @@ public function stock_refill_qty($qty,$main_id,$main_loc,$loc,$rack_id,$bin_card
 	//print_r($array);die;
 	$num = $query->num_rows();
 
-	if($bin_card_type=='Return')
-	{
-		
 	if($num>0)
 	{
 	
@@ -219,20 +210,8 @@ public function stock_refill_qty($qty,$main_id,$main_loc,$loc,$rack_id,$bin_card
 		$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
 		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock return',name_role='bincard stock return',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 		$this->db->query($sqlProdLoc1);
-	}
-	else
-	{
-
-		// $this->db->query("insert into tbl_product_serial set quantity ='$qty' ,location_id='$main_loc',product_id='$main_id',loc='$loc',rack_id='$rack_id',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."'");
-
-		// $p_Q=$this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='".$main_id."' ");
-
-		// $sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',location_id='$main_loc',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock return',name_role='bincard stock return',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
-		// $this->db->query($sqlProdLoc1);
-		
-	}
-	
-	}
+	}	
+    
 
 }
 

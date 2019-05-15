@@ -104,6 +104,7 @@ Showing <?=$dataConfig['page']+1;?> to
 	<th>Category</th>
 	<th>Uses Unit</th>
 	<th>Mninium Reorder Level</th>
+	<th>Mninium Order</th>
 	<th>Quantity In Stock</th>
 		
 </tr>
@@ -111,6 +112,7 @@ Showing <?=$dataConfig['page']+1;?> to
 <tbody id="getDataTable" >
 
 <tr style="display: none;">
+	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -145,6 +147,7 @@ foreach($result as $rows) {
 ?>
 </th>	
 <th><?php echo $rows->min_re_order_level;?></th>	
+<th><?php echo $rows->min_order;?></th>	
 <th><?php echo round($rows->quantity,2); ?></th>
 </tr>
 <?php } } ?>

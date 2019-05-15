@@ -430,11 +430,14 @@ public function insert_spare_unit()
 	$machineid      = $_GET['machine_name'];
 	$machinereading = $_GET['readingg'];
 
-	$sqlq=$this->db->query("select * from tbl_schedule_triggering where machine_id = '$machineid' and status='A' order by id desc limit 0,1"); 
+	$sqlq=$this->db->query("select * from tbl_schedule_triggering where machine_id = '$machineid' and status='A' order by id desc limit 0,1");
+	$countTrigger=$sqlq->num_rows();
 	$getdata=$sqlq->row();
+
+   if($countTrigger > 0 )
+   {
 	
-	$schdlTrgId = $getdata->id;
-	
+	$schdlTrgId = $getdata->id;	
 	$scheduleid=$getdata->schedule_id;
 
 	$sqlsheduling=$this->db->query("select * from tbl_schedule_maintain where id='$scheduleid' and status='A'"); 
@@ -452,6 +455,31 @@ public function insert_spare_unit()
 	$endbyreading    = $getdata->endby_reading;
 	$startingreading = $getdata->starting_reading;
 	$nexttriggerval  = $getdata->next_trigger_reading;
+
+   }
+   else
+   {
+
+   	$schdlTrgId = '';	
+	$scheduleid='';
+
+	// $sqlsheduling=$this->db->query("select * from tbl_schedule_maintain where id='$scheduleid' and status='A'"); 
+	// $getdatascheduling=$sqlsheduling->row();
+
+	$wostatusid = '';
+	$priorityid = '';
+	$maintypid  = '';
+
+	$machineid       = '';
+	$everyreading    = '';
+	$unitval         = '';
+	$triggercode     = '';
+	$typeval         = '';
+	$endbyreading    = '';
+	$startingreading = '';
+	$nexttriggerval  = '';
+
+   }
 
 	$sqlsheduling=$this->db->query("select * from tbl_schedule_triggering_log where next_trigger_reading='$nexttriggerval'"); 
 	$rwlog=$sqlsheduling->num_rows();
@@ -519,60 +547,10 @@ public function insert_spare_unit()
 	 	}
 	 	else
 	 	{
-	 		
 	 		$this->Model_admin_login->insert_user($table_name,$dataall);
+	 		$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
+	 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
 	 		
-	 		if($typeval == 'End_By')
-	 		{
-	 			if($machinereading > $endbyreading)
-	 			{
-	 				$x=$endbyreading - $everyreading/$everyreading;
-	 				$count=round($x);
-	 				for($i=0; $i<$count; $i++)
-	 				{
-	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
-	 					$lastId=$this->db->inser_id();
-	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
-				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
-
-	 				}
-	 			}
-	 			elseif($machinereading < $endbyreading)
-	 			{
-	 				$x=$machinereading - $everyreading/$everyreading;
-	 				$count1=round($x);
-	 				for($i=0; $i<$count1; $i++)
-	 				{
-	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
-	 					$lastId=$this->db->insert_id();
-	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
-				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
-
-	 				}
-
-	 			}
-
-	 		}
-	 		elseif($typeval == 'No_End_Reading')
-	 		{
-	 			if($machinereading > $nexttriggerval)
-	 			{
-
-	 				$y=$machinereading-$nexttriggerval/$everyreading;
-		 			$count2=round($y) + 1;
-		 			for($i=0; $i<$count2; $i++)
-	 				{
-	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
-	 					$lastId=$this->db->insert_id();
-	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
-				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
-
-	 				}
-
-	 			}	 			
-
-	 		}
-	 			 		
 	 		$nextTrg=$nexttriggerval + $everyreading;
 
 	 		if($endbyreading == '')

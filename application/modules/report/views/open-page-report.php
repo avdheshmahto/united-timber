@@ -87,28 +87,30 @@ $this->load->view("reportheader");
 <div class="row gap-0">
 
 <div class="col-xs-12 col-sm-2"  style="padding:0px;">
-<div class="step-item active"><a href="<?=base_url();?>report/Report/section_report">
+<div class="step-item active"><a href="<?=base_url();?>report/Report/comparison_report"> 
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
 <div class="inner">1</div>
 </div>
-<p>Maintenance Report</p>
+<p>Section Wise Comparison Report</p>
 </div>
-</a> </div>
+</a> 
 </div>
+</div>
+
 <div class="col-xs-12 col-sm-2"  style="padding:0px;">
-<div class="step-item active"><a href="<?=base_url();?>report/Report/comparison_report"> 
+<div class="step-item active"><a href="<?=base_url();?>report/Report/section_report">
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
 <div class="inner">2</div>
 </div>
-<p>Comparison Report</p>
+<p>Maintenance Report</p>
 </div>
-</a> 
+</a> </div>
 </div>
-</div>
+
 
 <div class="col-xs-12 col-sm-2" style="padding:0px;"> 
 <div class="step-item active"><a href="<?=base_url();?>report/Report/searchStock">

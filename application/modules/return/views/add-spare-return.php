@@ -1,7 +1,8 @@
 <?php
 $this->load->view("header.php");
 ?>
-<form id="f1" name="f1" method="POST" action="insertSpareReturn" onSubmit="return checkKeyPressed(a)">
+
+<form id="f1" name="f1" method="POST" action="<?=base_url();?>return/spareReturn/insertSpareReturn">
 
 <div class="main-content">
 <ol class="breadcrumb breadcrumb-2"> 
@@ -21,15 +22,9 @@ $this->load->view("header.php");
 <div class="panel-body">
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover" style="margin-bottom:20px;">
+
 <tbody>
-
 <tr>
-<select name="bin_card_type" style="display:none;" class="form-control"  />
-<option value="">--Select--</option>
-<option value="Receipt">Receipt</option>
-<option value="Return" selected="selected">Return</option>
-</select>	
-
 <th>Vendor Name</th>
 <th>
 <select name="vendor_id" id="vendor_id" class="form-control" onchange="getSpare(this.value)"required>
@@ -50,14 +45,13 @@ foreach($vendorQuery->result() as $getVendor){
 </th>
 <th>Return Date</th>
 <th><input type="date" name="return_date" class="form-control"  /></th>
-</th>
 </tr>
 
 <tr>
 <th>P.O. NO.</th>
-<th><input type="number" name="po_no" class="form-control" required /></th>
+<th><input type="number" name="po_no" class="form-control" /></th>
 <th>P.O. Date</th>
-<th><input type="date" name="po_date" class="form-control" required /></th>
+<th><input type="date" name="po_date" class="form-control" /></th>
 <th>Remarks</th>
 <th><textarea name="remarks" class="form-control"></textarea></th>
 </tr>
@@ -70,7 +64,7 @@ foreach($vendorQuery->result() as $getVendor){
 <tr class="gradeA">
 <th>Location </th>
 <th>Rack</th>
-<th>Vendor Name</th>
+<!-- <th>Vendor Name</th> -->
 <th>Purchase Price</th>
 <th>Qty in Stock</th>
 <th>Enter Return Qty</th>
@@ -78,6 +72,7 @@ foreach($vendorQuery->result() as $getVendor){
 </tr>
 </thead>
 <tbody id="getDataTablePage">
+  <input type="text" id="countRow" style="display: none;">
 </tbody>
 </table>
 </div>
@@ -87,7 +82,7 @@ foreach($vendorQuery->result() as $getVendor){
 <td><u>Parts & Supplies Name</u></td>
 <td><u>Location</u></td>
 <td><u>Rack</u></td>
-<th><u>Vendor Name</u></th>
+<!-- <th><u>Vendor Name</u></th> -->
 <td><u>Purchase Price</u></td>
 <td><u>Quantity</u></td>
 <td><u>Action</u></td>
@@ -103,7 +98,8 @@ foreach($vendorQuery->result() as $getVendor){
 <tr class="gradeA">
 <th>
 <div class="pull-right">
-<input class="btn btn-sm" type="button" name="save" value="SAVE"   id="sv1" onclick="fsv(this)" >&nbsp;<a href="<?=base_url();?>return/spareReturn/manage_spare_return" class="btn btn-secondary  btn-sm">Cancel</a>
+<input type="button" class="btn btn-sm" value="SAVE" id="Psubmitform" onclick="checkrows();">&nbsp;
+<a href="<?=base_url();?>return/spareReturn/manage_spare_return" class="btn btn-secondary  btn-sm">Cancel</a>
 </div>
 </th>
 </tr>
@@ -119,6 +115,24 @@ foreach($vendorQuery->result() as $getVendor){
 
 <script type="text/javascript">
 
+function checkrows()
+{
+
+  var count=$("#countRow").val();
+  if(count > 0)
+  {
+    //v.type=submit;
+    $('#Psubmitform').attr('type', 'submit');
+    $('#vendor_id').attr('disabled',false);
+  }
+  else
+  {
+    //v.type=button;
+    $('#Psubmitform').attr('type', 'button');
+    alert("Nothing To Save ! Please Add Row !");
+  }
+
+}
 
 function getSpare(v)
 {
@@ -143,7 +157,32 @@ function getLocationData(v)
   //$("#getDataTablePage").empty().append(xhttp.responseText);
 
 }
-      
+
+
+function qtyfunction(v) 
+{
+  
+  var zz=document.getElementById(v).id;
+  //alert(zz);
+  var myarra = zz.split("rtrn_qty");
+  var asx= myarra[1];
+  
+    var enqty1 = $("#rtrn_qty"+asx).val();
+    var isqty1 = $("#stk_qty"+asx).val();
+
+    if(Number(enqty1) > Number(isqty1))
+    {
+      alert("Return Qty Can Not Be Greater Than Stock Qty");
+      $("#Psubmitform").attr('disabled',true);
+    }
+    else
+    {
+      $("#Psubmitform").removeAttr('disabled',false);
+    }
+  
+}
+
+
 </script>
 
 

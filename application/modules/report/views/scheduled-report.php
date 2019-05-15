@@ -31,16 +31,6 @@ $this->load->view("reportheader");
 <form class="form-horizontal" method="get" action="">
 
 <div class="form-group panel-body-to"> 
-<!-- <label class="col-sm-2 control-label">Section</label> 
-<div class="col-sm-3"> 
-<select name="m_type" required class="select2 form-control" id="m_type" style="width:100%;">
-<option value="0" class="listClass">------Section-----</option>
-<?php
-foreach ($categorySelectbox as $key => $dt) { ?>
-<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
-<?php } ?>
-</select>
-</div> -->  
 
 <label class="col-sm-2 control-label">Machine</label> 
 <div class="col-sm-3"> 
@@ -68,15 +58,6 @@ $getFac=$fac->row(); ?>
 </div>
 
 <div class="form-group panel-body-to"> 
-<!-- <label class="col-sm-2 control-label">Date </label> 
-<div class="col-sm-3">
-<div class="input-group">
-<input type="text" class="form-control reportrange" name="date_range" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width:100%" value="<?=$_GET['date_range'];?>">
-<span class="input-group-addon">
- <span class="fa fa-calendar"></span>
-</span> 
-</div>
-</div> -->
 
 </div>
 <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 

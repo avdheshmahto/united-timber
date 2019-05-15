@@ -9,15 +9,15 @@ if($this->input->get('entries')!="")
 ?>
 <div class="main-content">
 <div class="panel-default">
-	<ol class="breadcrumb breadcrumb-2"> 
-		<li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
-		<li><a href="#">Bin Card</a></li> 
-		
-		<li class="active"><strong><a href="#">Manage Bin Card</a></strong></li> 
-		<div class="pull-right">
-		<li><a class="btn btn-sm" href="<?=base_url();?>bincard/binCard/add_bin_card" title="Add BinCard">Add Bin Card</a></li> 
-		</div>
-	</ol>
+<ol class="breadcrumb breadcrumb-2"> 
+	<li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
+	<li><a href="#">Bin Card</a></li> 
+	
+	<li class="active"><strong><a href="#">Manage Bin Card</a></strong></li> 
+	<div class="pull-right">
+	<li><a class="btn btn-sm" href="<?=base_url();?>bincard/binCard/add_bin_card" title="Add BinCard">Add Bin Card</a></li> 
+	</div>
+</ol>
 <div class="row">
 <div class="col-sm-12" id="listingData">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -56,9 +56,6 @@ if($this->input->get('entries')!="")
 </label>
 </div>
 </div>
-	
-<div style="clear:both;"></div>	
-
 
 <div class="table-responsive" style="overflow-x:auto;">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
@@ -67,11 +64,12 @@ if($this->input->get('entries')!="")
 		<th>Bin Card Id</th>
         <th>Bin Card Type</th>
         <th>Vendor Name</th>
-        <!-- <th>Date</th> -->
         <th>GRN No.</th>
         <th>GRN Date</th>
 		<th>Action</th>
 </tr>
+</thead>
+
 <tbody id="getDataTable">
 <tr>
 
@@ -79,21 +77,16 @@ if($this->input->get('entries')!="")
 	<td><input name="code"  type="text"  class="search_box form-control input-sm" style="width:60px;"  value="" /></td>
 	<td><input name="bin_card_type"  type="text"  class="search_box form-control input-sm" style="width:100px;" value="" /></td>
 	<td><input name="vendor_id"  type="text"  class="search_box form-control input-sm" style="width:100px;" value="" /></td>
-	<!-- <td><input name="rdate"  type="date"  class="search_box form-control input-sm"  value="" /></td> -->
 	<td><input name="grn_no"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
 	<td><input name="grn_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
-	<!-- <td><input name="remarks"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td> -->
 	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-	</tr>
-	</thead>
-</thead>
+	</form>
+</tr>
+</tbody>
 
 
 <?php
 
-/*$query=("select * from tbl_bin_card_hdr where status='A' ");
-$seQu=$this->db->query($query);
-*/
 $i=1;
 foreach($result as $fetch){
 
@@ -104,63 +97,42 @@ foreach($result as $fetch){
 <th><?php echo $fetch->bin_card_type;  ?></th>
 <th>
 <?php 
-
 $vendorQuery = $this -> db
            -> select('*')
            -> where('contact_id',$fetch->vendor_id)
            -> get('tbl_contact_m');
-		   $getVendor=$vendorQuery->row();
-
-echo $getVendor->first_name;
-
-  ?>
+		   $getVendor=$vendorQuery->row();?>
+<a href="<?base_url();?>edit_bin_card?id=<?=$fetch->rflhdrid?>" ><?php echo $getVendor->first_name;?> </a>
 </th>
-<!-- <th><?php echo $fetch->date;  ?></th> -->
 <th><?php echo $fetch->grn_no;  ?></th>
 <th><?php echo $fetch->grn_date;  ?></th>
 <th>
+<!-- <button class="btn btn-default" type="button" data-toggle="modal" onClick="openpopup('<?=base_url();?>bincard/binCard/edit_bin_card',1400,600,'view',<?=$fetch->rflhdrid;?>)" data-backdrop='static' data-keyboard='false' title="View BinCard"> <i class="fa fa-eye"></i> </button> -->
 
-<button class="btn btn-default" type="button" data-toggle="modal" onClick="openpopup('<?=base_url();?>bincard/binCard/edit_bin_card',1400,600,'view',<?=$fetch->rflhdrid;?>)" data-backdrop='static' data-keyboard='false' title="View BinCard"> <i class="fa fa-eye"></i> </button>
-<?php 
-if($fetch->stock_status==Pending)
-{
-?>
-<!-- <button class="btn btn-default modalEditItem" onClick="openpopup('<?=base_url();?>binCard/edit_bin_card',1400,600,'id',<?=$fetch->rflhdrid;?>)"  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit BinCard"><i class="icon-pencil"></i></button> -->
 <?php
 $pri_col='rflhdrid';
 $table_name='tbl_bin_card_hdr';
 ?>
 <button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete BinCard"><i class="icon-trash"></i></button>
-<?php } else { ?>
-<button class="btn btn-default" onClick="stockdelfun()"  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit BinCard"><i class="icon-pencil"></i></button>
-<button class="btn btn-default" onClick="stockdelfun()" type="button" title="Delete BinCard"><i class="icon-trash"></i></button>
-<?php }?>
-<!-- <a href="print_bincard?id=<?=$fetch->rflhdrid;?>" target="_blank" class="btn btn-sm" title="Print BinCard">Print </a> -->
 </th>
 
 </tr>
 <?php $i++; }  ?>
-</tbody>
+
 </table>
 </div>
 
 <div class="row">
-	<div class="col-md-12 text-right">
-		<div class="col-md-6 text-left"> 
-		</div>
-		<div class="col-md-6"> 
-			<?php echo $pagination; ?>
-		</div>
-<script>
-function stockdelfun()
-{
-	alert("Product Has Been Stocked In");
-}
-</script>
+<div class="col-md-12 text-right">
+<div class="col-md-6 text-left"> 
+</div>
+<div class="col-md-6"> 
+<?php echo $pagination; ?>
+</div>
+</div>
+</div>
 
-</div>
-</div>
-</form>
+
 </div>
 </div>
 </div><!--panel-default close-->

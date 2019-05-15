@@ -356,12 +356,11 @@ public function manageItembreakdown()
 	$totalData   = $this->model_report->count_allbreakdown($table_name,'A',$this->input->get());
 
 	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
-	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&n_o_breakdown='.$_GET['n_o_breakdown'].'&m_name='.$_GET['m_name'].'&s_name='.$_GET['s_name'].'&o_name='.$_GET['o_name'].'&section='.$_GET['section'].'&break_time='.$_GET['break_time'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.$_GET['filter']);
+	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&machine='.$_GET['machine'].'&section='.$_GET['section'].'&date_range='.$_GET['date_range'].'&filter='.$_GET['filter']);
 
 
 	}elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
-	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&n_o_breakdown='.$_GET['n_o_breakdown'].'&m_name='.$_GET['m_name'].'&s_name='.$_GET['s_name'].'&o_name='.$_GET['o_name'].'&section='.$_GET['section'].'&break_time='.$_GET['break_time'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.$_GET['filter']);
-	// sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&machine='.$_GET['machine'].'&section='.$_GET['section'].'&date_range='.$_GET['date_range'].'&filter='.$_GET['filter']);
 	}
 
 	else
@@ -422,12 +421,11 @@ public function manageScheduledJoin()
 	$totalData   = $this->model_report->count_allScheduled($table_name,'A',$this->input->get());
 
 	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
-	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&n_o_breakdown='.$_GET['n_o_breakdown'].'&m_name='.$_GET['m_name'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.$_GET['filter']);
+	$url   = site_url('/report/Report/breakdown?entries='.$_GET['entries'].'&machine='.$_GET['machine'].'&date_range='.$_GET['date_range'].'&filter='.$_GET['filter']);
 
 
 	}elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
-	$url   = site_url('/report/Report/scheduled_report?entries='.$_GET['entries'].'&n_o_breakdown='.$_GET['n_o_breakdown'].'&m_name='.$_GET['m_name'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.$_GET['filter']);
-	// sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+	$url   = site_url('/report/Report/scheduled_report?entries='.$_GET['entries'].'&machine='.$_GET['machine'].'&date_range='.$_GET['date_range'].'&filter='.$_GET['filter']);
 	}
 
 	else

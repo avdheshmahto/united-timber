@@ -374,31 +374,16 @@ function filterListbreakdown($perpage,$pages,$get)
 	if(sizeof($get) > 0)
 	{
 			
-		// if($get['n_o_breakdown'] != "")
-		// 	$qry .= " AND nature_of_breakdown LIKE '%".$get['n_o_breakdown']."%'";
-
-
-		if($get['m_name'] != "")
-		{
-			// $unitQuery=$this->db->query("select * from tbl_machine where machine_name LIKE '%".$get['m_name']."%'");
-			// $getUnit=$unitQuery->row();
-			// $sr_no=$getUnit->id;
-		
-			$qry .= " AND machine_id ='".$get['m_name']."'";
-		}
-		
-		// if($get['s_name'] != "")
-		// 	$qry .= " AND part_id LIKE '%".$get['s_name']."%'";
-
-		// if($get['o_name'] != "")
-		// 	$qry .= " AND operator_id LIKE '%".$get['o_name']."%'";
-			
-		// if($get['break_time'] != "")
-		// 	$qry .= " AND break_time LIKE '%".$get['break_time']."%'";
 
 		if($get['section'] != "")
 			$qry .= " AND section = '".$get['section']."'";
 		
+		if($get['machine'] != "")
+		{
+		
+			$qry .= " AND machine_id ='".$get['machine']."'";
+		}
+
 		if($get['date_range']!='')
 		{	
 			$daterage=explode("-",$_GET['date_range']);
@@ -435,30 +420,15 @@ function count_allbreakdown($tableName,$status = 0,$get)
     if(sizeof($get) > 0)
 	{
 			
-		// if($get['n_o_breakdown'] != "")
-		// 	$qry .= " AND nature_of_breakdown LIKE '%".$get['n_o_breakdown']."%'";
-
-
-		if($get['m_name'] != "")
-		{
-			// $unitQuery=$this->db->query("select * from tbl_machine where machine_name LIKE '%".$get['m_name']."%'");
-			// $getUnit=$unitQuery->row();
-			// $sr_no=$getUnit->id;
-		
-			$qry .= " AND machine_id ='".$get['m_name']."'";
-		}
-		
-		// if($get['s_name'] != "")
-		// 	$qry .= " AND part_id LIKE '%".$get['s_name']."%'";
-
-		// if($get['o_name'] != "")
-		// 	$qry .= " AND operator_id LIKE '%".$get['o_name']."%'";
-			
-		// if($get['break_time'] != "")
-		// 	$qry .= " AND break_time LIKE '%".$get['break_time']."%'";
 
 		if($get['section'] != "")
 			$qry .= " AND section = '".$get['section']."'";
+		
+		if($get['machine'] != "")
+		{
+		
+			$qry .= " AND machine_id ='".$get['machine']."'";
+		}
 		
 		if($get['date_range']!='')
 		{	
@@ -508,30 +478,10 @@ function filterListScheduled($perpage,$pages,$get)
 	if(sizeof($get) > 0)
 	{
 			
-		// if($get['n_o_breakdown'] != "")
-		// 	$qry .= " AND nature_of_breakdown LIKE '%".$get['n_o_breakdown']."%'";
-
-
-		if($get['m_name'] != "")
+		if($get['machine'] != "")
 		{
-			// $unitQuery=$this->db->query("select * from tbl_machine where machine_name LIKE '%".$get['m_name']."%'");
-			// $getUnit=$unitQuery->row();
-			// $sr_no=$getUnit->id;
-		
-			$qry .= " AND machine_name ='".$get['m_name']."'";
+			$qry .= " AND machine_name ='".$get['machine']."'";
 		}
-		
-		// if($get['s_name'] != "")
-		// 	$qry .= " AND part_id LIKE '%".$get['s_name']."%'";
-
-		// if($get['o_name'] != "")
-		// 	$qry .= " AND operator_id LIKE '%".$get['o_name']."%'";
-			
-		// if($get['break_time'] != "")
-		// 	$qry .= " AND break_time LIKE '%".$get['break_time']."%'";
-
-		// if($get['section'] != "")
-		// 	$qry .= " AND section = '".$get['section']."'";
 		
 		if($get['date_range']!='')
 		{	
@@ -569,30 +519,10 @@ function count_allScheduled($tableName,$status = 0,$get)
     if(sizeof($get) > 0)
 	{
 			
-		// if($get['n_o_breakdown'] != "")
-		// 	$qry .= " AND nature_of_breakdown LIKE '%".$get['n_o_breakdown']."%'";
-
-
-		if($get['m_name'] != "")
+		if($get['machine'] != "")
 		{
-			// $unitQuery=$this->db->query("select * from tbl_machine where machine_name LIKE '%".$get['m_name']."%'");
-			// $getUnit=$unitQuery->row();
-			// $sr_no=$getUnit->id;
-		
-			$qry .= " AND machine_name ='".$get['m_name']."'";
+			$qry .= " AND machine_name ='".$get['machine']."'";
 		}
-		
-		// if($get['s_name'] != "")
-		// 	$qry .= " AND part_id LIKE '%".$get['s_name']."%'";
-
-		// if($get['o_name'] != "")
-		// 	$qry .= " AND operator_id LIKE '%".$get['o_name']."%'";
-			
-		// if($get['break_time'] != "")
-		// 	$qry .= " AND break_time LIKE '%".$get['break_time']."%'";
-
-		// if($get['section'] != "")
-		// 	$qry .= " AND section = '".$get['section']."'";
 		
 		if($get['date_range']!='')
 		{	

@@ -3,10 +3,7 @@ $this->load->view("header.php");
 ?>
 
 <form id="f1" name="f1" method="POST" action="insertBinCard" onSubmit="return checkKeyPressed(a)" >
-<!-- Main content -->
-<!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=42epwf1jarbwose89sqt3dztyfu7961g4cs5xoib4kordvbd"></script>
-<script>tinymce.init({ selector:'#tem' });</script>
- -->
+
 <div class="main-content">
 
 <ol class="breadcrumb breadcrumb-2"> 
@@ -45,18 +42,6 @@ foreach($vendorQuery->result() as $getVendor){
 <?php }?>
 </select>
 </th>
-<!--<th>Date</th>
-<th><input type="date" name="rdate" class="form-control" required /></th>
-<th>Type</th>
-<th>
-<select name="type" class="select2 form-control" id="type" style="width:100%;" onchange="genrateQuotation();" required >	
-<option value="">--Select--</option>
-<?php
-$abc=$this->db->query("select distinct(via_type) from tbl_product_stock where status='A' ");
-foreach ($abc->result() as $value) { ?>
-<option value="<?=$value->via_type?>"><?=$value->via_type?></option>
-<?php } ?>
-</th> -->
 <th>GRN No.</th>
 <th><input type="text" name="grn_no" id="grn_no" class="form-control" readonly="" /></th>
 <th>GRN Date</th>
@@ -100,9 +85,8 @@ foreach ($abc->result() as $value) { ?>
 <input type="hidden"  name="pri_id" id='pri_id'  value="" style="width:80px;"  />
 </div>
 </div>
-<div id="prdsrch" style="color:black;padding-left:0px; width:30%; overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
+<div id="prdsrch" style="color:black;padding-left:0px; width:24%;height:40%; overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
 <?php
-	//include("getproduct.php");
 	$this->load->view('getproduct');
 ?>
 </div>

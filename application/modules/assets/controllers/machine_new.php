@@ -519,10 +519,60 @@ public function insert_spare_unit()
 	 	}
 	 	else
 	 	{
-	 		$this->Model_admin_login->insert_user($table_name,$dataall);
-	 		$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
-	 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
 	 		
+	 		$this->Model_admin_login->insert_user($table_name,$dataall);
+	 		
+	 		if($typeval == 'End_By')
+	 		{
+	 			if($machinereading > $endbyreading)
+	 			{
+	 				$x=$endbyreading - $everyreading/$everyreading;
+	 				$count=round($x);
+	 				for($i=0; $i<$count; $i++)
+	 				{
+	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
+	 					$lastId=$this->db->inser_id();
+	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
+				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
+
+	 				}
+	 			}
+	 			elseif($machinereading < $endbyreading)
+	 			{
+	 				$x=$machinereading - $everyreading/$everyreading;
+	 				$count1=round($x);
+	 				for($i=0; $i<$count1; $i++)
+	 				{
+	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
+	 					$lastId=$this->db->insert_id();
+	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
+				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
+
+	 				}
+
+	 			}
+
+	 		}
+	 		elseif($typeval == 'No_End_Reading')
+	 		{
+	 			if($machinereading > $nexttriggerval)
+	 			{
+
+	 				$y=$machinereading-$nexttriggerval/$everyreading;
+		 			$count2=round($y) + 1;
+		 			for($i=0; $i<$count2; $i++)
+	 				{
+	 					$this->Model_admin_login->insert_user($table_name_log,$dataalllog);
+	 					$lastId=$this->db->insert_id();
+	 					$this->db->query("update tbl_schedule_triggering_log set next_trigger_reading='$machinereading' where id='$lastId'");	 				
+				 		$this->Model_admin_login->insert_user($table_name_workorder,$dataallworkorder);
+
+	 				}
+
+	 			}	 			
+
+	 		}
+	 			 		
 	 		$nextTrg=$nexttriggerval + $everyreading;
 
 	 		if($endbyreading == '')

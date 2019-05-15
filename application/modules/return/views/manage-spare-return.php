@@ -102,33 +102,15 @@ $machineQuery = $this -> db
            -> select('*')
            -> where('contact_id',$fetch->vendor_id)
            -> get('tbl_contact_m');
-		   $getMachine=$machineQuery->row();
+		   $getMachine=$machineQuery->row(); ?>
 
-echo $getMachine->first_name;
-
-  ?></th>
+<a href="<?=base_url()?>return/spareReturn/edit_spare_return?id=<?=$fetch->rflhdrid?>"><?php echo $getMachine->first_name; ?></th>
 <th><?php echo $fetch->po_no;  ?></th>
 <th><?php echo $fetch->po_date;  ?></th>
 
 <th>
-
-<button class="btn btn-default" type="button" data-toggle="modal" onClick="openpopup('<?=base_url();?>return/spareReturn/edit_spare_return',1400,600,'view',<?=$fetch->rflhdrid;?>)" data-backdrop='static' data-keyboard='false' title="View Spare Return"> <i class="fa fa-eye"></i> </button>
-
-<button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare Return"><i class="icon-trash"></i></button>
-
-<!-- <?php if($fetch->stock_status=='Pending') { ?>
-<button class="btn btn-default modalEditItem" onClick="openpopup('<?=base_url();?>spareReturn/edit_spare_return',1400,600,'id',<?=$fetch->rflhdrid;?>)"  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare Return"><i class="icon-pencil"></i></button>
-
-<?php
-$pri_col='rflhdrid';
-$table_name='tbl_spare_return_hdr';
-?>
-<button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare Return"><i class="icon-trash"></i></button>
-<?php } else { ?>
-<button class="btn btn-default" onClick="stockdelfun()"  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare Return"><i class="icon-pencil"></i></button>
-<button class="btn btn-default" onClick="stockdelfun()" type="button" title="Delete Spare Return"><i class="icon-trash"></i></button>
-<?php }?> -->
-
+<button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare Return"><i class="icon-trash"></i>
+</button>
 </th>
 
 </tr>

@@ -75,19 +75,20 @@ display:block !important;
 <ul class="nav navbar-nav">
 
 
+<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Section<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="<?=base_url();?>report/Report/comparison_report">Section Wise Comparison Report</a></li>
+<li><a href="<?=base_url();?>report/Report/machine_report">Section Wise Machine Report</a></li>
+</ul>
+</li> 
+
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/section_report">Maintenance Report</a></li>
 </ul>
 </li>
 
-<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Comparison<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/comparison_report">Comparison Report</a></li>
-</ul>
-</li> 
-
-<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Stock <b class="caret"></b></a>
+<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Store <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/searchStock">Current Stock Report</a></li>
 <li><a href="<?=base_url();?>report/Report/searchReorderLevel">Required Stock Report</a></li>

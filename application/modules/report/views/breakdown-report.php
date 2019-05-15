@@ -33,11 +33,11 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
 <div class="col-sm-3"> 
-<select name="m_type" required class="select2 form-control" id="m_type" style="width:100%;">
-<option value="0" class="listClass">------Section-----</option>
+<select name="section" class="select2 form-control" style="width:100%;">
+<option value="" class="listClass">------Section-----</option>
 <?php
 foreach ($categorySelectbox as $key => $dt) { ?>
-<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+<option <?php if($_GET['section'] == $dt['id']) {?>selected <?php } ?> value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
 <?php } ?>
 </select>
 </div>  
@@ -131,6 +131,7 @@ Showing <?=$dataConfig['page']+1;?> to
    <th>Machine Name</th>	   
    <th>Section</th>
    <th>Operator Name</th>
+   <th>Breakdown Hours</th>
 </tr>
 </thead>
 
@@ -178,7 +179,12 @@ $cont = $this ->db->query("select * from tbl_contact_m where contact_id='".$fetc
 $getCnt = $cont->row();
 echo $getCnt->first_name; ?>
 </th>	
-
+<th><?php     
+  $day2 = strtotime( $fetch_list->end_time );
+  $day1 = strtotime( $fetch_list->start_time );
+  $diff = round(($day2 - $day1) / 3600);
+  echo $diff." Hours"; ?>  
+</th>
 </tr>
 <?php  }  ?>
 </tbody>

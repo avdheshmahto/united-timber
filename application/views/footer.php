@@ -2141,7 +2141,7 @@ function addMultiReturn()
 
       var via_type =  $('#product_type'+i).val();
       var price    =  $('#purchase_price'+i).val();
-      var is_qnty  =  $('#issue_qty'+i).val();
+      var rt_qnty  =  $('#rtrn_qty'+i).val();
 
       var loc    = $('#location_id'+i).val();
       var locVal = $('#location'+i).val();
@@ -2149,16 +2149,17 @@ function addMultiReturn()
       var rack    = $('#rack_id'+i).val();
       var rackVal = $('#rack'+i).val();
 
-      var vendor    = $('#vendor_id'+i).val();
-      var vendorName = $('#vendor'+i).val();
+      //var vendor    = $('#vendor_id'+i).val();
+      //var vendorName = $('#vendor'+i).val();
 
-     if(is_qnty != '')
+     if(rt_qnty != '')
      {
-      $('#getDataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="locs[]" value="'+loc+'">'+locVal+'</td><td><input type ="hidden" name="racks[]" value="'+rack+'">'+rackVal+'</td><td><input type ="hidden" name="vendors[]" value="'+vendor+'">'+vendorName+'</td><td><input type ="hidden" name="prices[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+is_qnty+'">'+is_qnty+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+      $('#getDataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="locs[]" value="'+loc+'">'+locVal+'</td><td><input type ="hidden" name="racks[]" value="'+rack+'">'+rackVal+'</td><td><input type ="hidden" name="prices[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+rt_qnty+'">'+rt_qnty+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="returndel" aria-hidden="true"></i></td></tr>');
       }
     }
 
    $('#getDataTablePage').empty();
+   $('#vendor_id').attr('disabled',true);
 
    var z=1;
    var c=$("#countRow").val();
@@ -2347,14 +2348,27 @@ var sparename = e.options[e.selectedIndex].text;
   }
 
 
-  $(document).delegate("#quotationdel","click",function(){
+$(document).delegate("#quotationdel","click",function(){
 
-	  var spareName = $(this).attr('spareName');
-    var spareId = $(this).attr('spareId');
-	  
-      $(this).parent().parent().remove();
-	  $("#spare_nameid").append('<option value="'+spareId+'">'+spareName+'</option>');
-    });
+  var spareName = $(this).attr('spareName');
+  var spareId = $(this).attr('spareId');
+
+  $(this).parent().parent().remove();
+  $("#spare_nameid").append('<option value="'+spareId+'">'+spareName+'</option>');
+
+});
+
+
+$(document).delegate("#returndel","click",function(){
+
+  var spareName = $(this).attr('spareName');
+  var spareId = $(this).attr('spareId');
+  $('#vendor_id').attr('disabled',false);
+
+  $(this).parent().parent().remove();
+  $("#spareName").append('<option value="'+spareId+'">'+spareName+'</option>');
+
+});
 
 //************************************************************************************************
 
