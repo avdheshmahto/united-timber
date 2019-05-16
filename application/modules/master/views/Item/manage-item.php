@@ -250,7 +250,7 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('getDataTable')" title="Excel">Excel</button>
 <a class="btn btn-sm" data-toggle="modal"  formid = "#ItemForm" data-target="#modal-0" id="formreset" title="Add Spare" onclick="sparerowdel();"><i class="fa fa-arrow-circle-left"></i> Add Parts & Supplies</a>
-<a class="btn btn-secondary btn-sm delete_all" title="Multiple Delete" ><span><i class="fa fa-trash-o"></i> Delete</span></a>
+<!-- <a class="btn btn-secondary btn-sm delete_all" title="Multiple Delete" ><span><i class="fa fa-trash-o"></i> Delete</span></a> -->
 </div>
 </div>
 
@@ -377,29 +377,31 @@ echo $keyvalue1->keyvalue;
 <!-- <th><?=$fetch_list->unitprice_purchase?></th> -->
 <th><?=$fetch_list->quantity?></th>
 <th class="bs-example">
-<?php if($view!=''){ ?>
-
-
-<!-- <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Spare Details"><i class="fa fa-eye"></i></button> -->
-
-
-<?php } if($edit!=''){ ?>
-
+<?php if($edit!=''){ ?>
 <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare"><i class="icon-pencil"></i></button>
 
 
 <?php }
 $pri_col='Product_id';
 $table_name='tbl_product_stock';
-?>
-<button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare"><i class="icon-trash"></i></button>		
-<?php
-  ?>
- 
+
+
+$stfCostLog=$this->db->query("select * from tbl_software_cost_log where product_id='$fetch_list->Product_id' ");
+$numCost=$stfCostLog->num_rows();
+
+$sftStkLog=$this->db->query("select * from tbl_software_stock_log where product_id='$fetch_list->Product_id' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost + $numStk;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Spare" onclick="return confirm('Parts & Supplies already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_item" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare"><i class="icon-trash"></i></button>		
+<?php }  ?>
  
  
 
- 
 </th>
 </tr>
 

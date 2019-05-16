@@ -121,10 +121,6 @@ foreach($stnm->result() as $stdata)
 <div class="col-sm-4" id="regid"> 
 <input type="number" name="pin_code" id="pin_code" value=""  class="form-control">
 </div> 
-<!-- <label class="col-sm-2 control-label">Nick Name</label> 
-<div class="col-sm-4" id="regid"> 
-<input type="text" name="printname" id="printname" class="form-control" value="" />
-</div>  -->
 </div>
 
 </div>
@@ -260,17 +256,28 @@ $i=1;
 <th><?=$fetch_list->phone;?></th>
 
 <th>
-<?php if($view!=''){ ?>
-<!-- <button class="btn btn-default" property="view" type="button" data-toggle="modal" data-target="#Contactmodal" arrt= '<?=json_encode($fetch_list);?>' onclick="editContact(this);" data-backdrop='static' data-keyboard='false' title="View Contact"> <i class="fa fa-eye"></i> </button> -->
-<?php } if($edit!=''){ ?>
+
+<?php if($edit!=''){ ?>
 <button class="btn btn-default" property=""  data-target="#Contactmodal" data-a="<?=$fetch_list->contact_id;?>"  arrt= '<?=json_encode($fetch_list);?>' onclick="editContact(this);" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Contact"><i class="icon-pencil"></i>
 </button>
 <?php }
 $pri_col='contact_id';
 $table_name='tbl_contact_m';
-	?>
-<button class="btn btn-default delbutton"  id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Contact"><i class="icon-trash"></i>
+
+$stfCostLog=$this->db->query("select * from tbl_product_stock where supp_name='$fetch_list->contact_id' ");
+$numCost=$stfCostLog->num_rows();
+
+$sftStkLog=$this->db->query("select * from tbl_software_stock_log where vendor_id='$fetch_list->contact_id' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost + $numStk;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Contact" onclick="return confirm('Contact already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_contact"  id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Contact"><i class="icon-trash"></i>
 </button>	
+<?php } ?>
 </th>
 </tr>
 <?php  $i++; } ?>

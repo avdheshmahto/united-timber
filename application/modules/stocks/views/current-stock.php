@@ -23,26 +23,24 @@ if($this->input->get('entries')!="")
 <div class="panel-body panel-center">
 <form class="form-horizontal" method="get" action="">
 <div class="form-group panel-body-to"> 
-<label class="col-sm-2 control-label">Pats & Supplies Name</label> 
-<div class="col-sm-3"> 
-<select name="sp_name"  class="select2 form-control" id="sp_name"  >
-<option value="">--select--</option>
-<?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A'");
-$ProductName=$getProductName->result();
-foreach($ProductName as $p) { ?>
-<option value="<?=$p->Product_id?>"  <?php if($_GET['sp_name'] == $p->Product_id) { ?>selected <?php } ?> ><?=$p->productname?></option>
-<?php } ?>
-</select>
-</div>
+
 <label class="col-sm-2 control-label">Type</label> 
 <div class="col-sm-3"> 
-<select name="type" class="select2 form-control" >
+<select name="type" class="select2 form-control" onchange="getSpareDrowdown(this.value);">
 	<option value="">---Select----</option>
 	<option value="Spare" <?php if($_GET['type']=='Spare') {?> selected <?php } ?> >Spare</option>
 	<option value="Tools" <?php if($_GET['type']=='Tools') {?> selected <?php } ?>>Tools</option>
 	<option value="Consumable" <?php if($_GET['type']=='Consumable') {?> selected <?php } ?>>Consumable</option>
 </select>
 </div>
+<label class="col-sm-2 control-label">Pats & Supplies Name</label> 
+<div class="col-sm-3"> 
+<select name="sp_name"  class="select2 form-control" id="sp_name"  >
+<option value="">--select--</option>
+
+</select>
+</div>
+
 </div>
 <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
 <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button> 	
@@ -63,7 +61,7 @@ foreach($ProductName as $p) { ?>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
-<select name="DataTables_Table_0_length" url="<?=base_url();?>stocks/current_stock/manage_current_stock?<?='&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>stocks/current_stock/manage_current_stock?<?='&sp_name='.$_GET['sp_name'].'&type='.$_GET['type'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -208,4 +206,28 @@ function ResetLead()
 {
   location.href="<?=base_url('/stocks/current_stock/manage_current_stock');?>";
 }
+
+
+function getSpareDrowdown(v)
+{
+	//alert(v);
+  var urll="<?=base_url('stocks/current_stock/get_spare_dropdown');?>";
+        $.ajax({
+          type:"POST",
+          url:urll,
+          data : {'typ':v},
+          success:function(data){            
+            //alert(data);
+            if(data != ''){
+              //alert(data);
+              //location.reload();
+             $("#sp_name").empty().append(data);
+            }            
+          }
+      });
+
+}
+$(window).load(function() {
+     getSpareDrowdown('<?=$_GET['type']?>');
+});
 </script>

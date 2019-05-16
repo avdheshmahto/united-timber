@@ -56,9 +56,9 @@ public function manageItemJoinfunSearch()
 
 
 	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
-	$url   = site_url('/stocks/current_stock/manage_current_stock?entries='.$_GET['entries'].'&code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/stocks/current_stock/manage_current_stock?entries='.$_GET['entries'].'&type='.$_GET['type'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
 	}elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
-	$url   = site_url('/stocks/current_stock/manage_current_stock?entries='.$_GET['entries'].'&code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/stocks/current_stock/manage_current_stock?entries='.$_GET['entries'].'&type='.$_GET['type'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
 
 
 	}
@@ -149,7 +149,22 @@ public function manageToolsJoinfunSearch()
 }
 //*******************************************************************************************************
 
+public function get_spare_dropdown()
+{
 
+	$type=$this->input->post('typ');
+
+	$getProductName=$this->db->query("select * from tbl_product_stock where status='A' and via_type='$type' ");
+	$ProductName=$getProductName->result();
+	
+	foreach($ProductName as $p) 
+	{ 
+	
+	echo "<option value=".$p->Product_id.">".$p->productname."</option>";
+
+	}
+
+}
 
 
 }

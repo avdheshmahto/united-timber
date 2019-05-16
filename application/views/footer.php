@@ -1491,32 +1491,32 @@ $(document).ready(function(){
 
 <!-- starts here this javascript code is for single delete -->
 <script type="text/javascript">
-$(function() {
+$(function() 
+{
+ 
+  $(document).delegate(".delbutton_item","click",function(){ 
+  //Save the link in a variable called element
+  var element = $(this);
 
-//$(".delbutton").click(function(){
-$(document).delegate(".delbutton","click",function(){ 
-//Save the link in a variable called element
-var element = $(this);
+  //Find the id of the link that was clicked
+  var del_id = element.attr("id");
 
-//Find the id of the link that was clicked
-var del_id = element.attr("id");
+  //Built a url to send
+  var info = 'id=' + del_id;
+  //alert(info);
+   if(confirm("Are you sure you want to delete ?"))
+  		  {
 
-//Built a url to send
-var info = 'id=' + del_id;
-//alert(info);
- if(confirm("Are you sure you want to delete ?"))
-		  {
+   $.ajax({
+     type: "GET",
+     url: "delete_data_item",
+     data: info,
+     success: function(){
+    
+     }
+   });
 
- $.ajax({
-   type: "GET",
-   url: "delete_data",
-   data: info,
-   success: function(){
-  
-   }
- });
-
-         $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
 		.animate({ opacity: "hide" }, "slow");
 
  }
@@ -1534,7 +1534,7 @@ return false;
 $(function() {
 
 
-$(".delbuttonProduction").click(function(){
+$(".delbutton_contact").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1550,7 +1550,7 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_production_data",
+   url: "delete_contact_data",
    data: info,
    success: function(){
   
@@ -1575,7 +1575,7 @@ return false;
 $(function() {
 
 
-$(".delbuttonpacking").click(function(){
+$(".delbutton_location").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1591,7 +1591,7 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_packing_data",
+   url: "delete_location_data",
    data: info,
    success: function(){
   
@@ -1616,7 +1616,7 @@ return false;
 $(function() {
 
 
-$(".delbuttonQc").click(function(){
+$(".delbutton_rack").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1632,7 +1632,7 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_Qc_data",
+   url: "delete_rack_data",
    data: info,
    success: function(){
   

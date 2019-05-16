@@ -74,6 +74,77 @@ function count_allproduct($tableName,$status = 0,$get)
 
 }
 
+//============================================
+
+function Spare_Get($last,$strat)
+{
+	
+	$query=("select *from tbl_product_stock where status='A' Order by Product_id DESC limit $strat,$last ");
+	$getQuery = $this->db->query($query);
+	return $result=$getQuery->result();
+  
+}
+
+
+function filterSpareList($perpage,$pages,$get)
+{
+ 	
+	$qry ="select * from tbl_product_stock where status='A'";
+
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['code'] != "")
+			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+
+		if($get['sp_name'] != "")
+		{
+			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
+			// $getUnit2   = $unitQuery2->row();
+			// $sr_no2     = $getUnit2->Product_id;
+			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		}
+		
+	}
+  
+  	$qry .= "  limit $pages,$perpage";
+ 
+  $data =  $this->db->query($qry)->result();
+  return $data;
+
+}
+
+
+function count_Spare($tableName,$status = 0,$get)
+{
+
+    $qry ="select count(*) as countval from tbl_product_stock where status='A'";
+    
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['code'] != "")
+			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+
+		if($get['sp_name'] != "")
+		{
+			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
+			// $getUnit2   = $unitQuery2->row();
+			// $sr_no2     = $getUnit2->Product_id;
+			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		}
+		
+	}
+		 
+   $query=$this->db->query($qry,array($status))->result_array();
+   return $query[0]['countval'];
+
+}
+
 
 //***********************************************************************************************
 
@@ -994,6 +1065,73 @@ function count_allDetailedWorkorder($table_name,$status=0,$get)
 
 } 
 
+
+//============================================================
+
+function machine_get($last,$strat)
+{
+	
+	$query=("select * from tbl_category where inside_cat='0' Order by id ASC limit $strat,$last ");
+	$getQuery = $this->db->query($query);
+	return $result=$getQuery->result();
+  
+}
+
+
+
+function filterList_machine($perpage,$pages,$get)
+{
+ 	
+	$qry ="select * from tbl_category where inside_cat='0' ";
+
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['code'] != "")
+			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+			
+		if($get['sp_name'] != "")
+		{			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";		
+		}
+				
+	}
+
+    $qry .= "  limit $pages,$perpage";
+ 
+  $data =  $this->db->query($qry)->result();
+  return $data;
+
+}
+
+
+function count_all_machine($tableName,$status = 0,$get)
+{
+
+    $qry ="select count(*) as countval from tbl_category where inside_cat='0' ";
+    
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['code'] != "")
+			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
+			
+		if($get['sp_name'] != "")
+		{
+			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		}
+				
+	}
+		 
+   $query=$this->db->query($qry,array($status))->result_array();
+   return $query[0]['countval'];
+
+}
+
+
+//==========================================================
 
 function categorySelectbox($parent = 0, $spacing = '', $user_tree_array = ''){
   if (!is_array($user_tree_array))

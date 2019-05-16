@@ -124,8 +124,8 @@ $i=1;
 foreach($result as $fetch_list)  {
 ?>
 
-<tr class="gradeC record" data-row-id="<?php echo $fetch_list->id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
+<tr class="gradeC record" data-row-id="<?php echo $fetch_list->serial_number; ?>">
+<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->serial_number; ?>" value="<?php echo $fetch_list->serial_number;?>" /></th>
 
 
 <th><?php echo ($dataConfig['page']+$i)?></th>
@@ -143,12 +143,20 @@ foreach($result as $fetch_list)  {
 <?php }
 $pri_col='serial_number';
 $table_name='tbl_master_data';
-?>
-<button class="btn btn-default delbutton" id="<?php echo $fetch_list->serial_number."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Main Location"><i class="icon-trash"></i></button>		
-<?php
- $i++;
- }
-  ?>
+
+
+$sftStkLog=$this->db->query("select * from tbl_product_serial_log where loc='$fetch_list->serial_number' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numStk;
+
+if($countRows > 0 ) { ?>
+<button class="btn btn-default" type="button" title="Delete Location" onclick="return confirm('Location already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_location" id="<?php echo $fetch_list->serial_number."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Location"><i class="icon-trash"></i></button>
+<?php } ?>
+		
+<?php $i++; } ?>
  
 </th>
 </tr>

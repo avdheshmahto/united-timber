@@ -163,24 +163,28 @@ foreach($result as $fetch_list)
 <th class="bs-example">
 <?php if($view!=''){ ?>
 
-<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Location Rack"> <i class="fa fa-eye"></i> </button>
+<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Rack"> <i class="fa fa-eye"></i> </button>
 
 <?php } if($edit!=''){ ?>
 
-<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Location Rack"><i class="icon-pencil"></i></button>
+<button class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#editItem'onclick="getEditItem('<?php echo $fetch_list->id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Rack"><i class="icon-pencil"></i></button>
 
 <?php }
 $pri_col='id';
 $table_name='tbl_location_rack';
-?>
-<button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Location Rack"><i class="icon-trash"></i></button>		
- 
+$sftStkLog=$this->db->query("select * from tbl_product_serial_log where rack_id='$fetch_list->id' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numStk;
+
+if($countRows > 0 ) { ?>
+<button class="btn btn-default" type="button" title="Delete Rack" onclick="return confirm('Rack already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_rack" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Rack"><i class="icon-trash"></i></button>
+<?php } ?>	 
 </th>
 </tr>
-
-
 <?php $i++; } ?>
-
 <input type="text" style="display:none;" id="table_name" value="tbl_location_rack">  
 <input type="text" style="display:none;" id="pri_col" value="id">
 </form>

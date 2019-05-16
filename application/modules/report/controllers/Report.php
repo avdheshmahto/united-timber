@@ -11,15 +11,6 @@ function __construct()
 }     
 
 
-public function fetchlocationrack_ab()
-{
-
-	$location= array('id' =>$_GET['id']);
-	$this->load->view('fetchlocationracks',$location);
-	//$this->load->view('fetchlocationracks',$location);
-
-}	
-
 
 function report_function() 
 {
@@ -36,7 +27,7 @@ function report_function()
 
 }
 
-//*********************************************************************************************************
+//***************************************************************************
 
 function searchStock() 
 {
@@ -99,7 +90,7 @@ public function manageItemJoinfun()
 
 }
 
-//**********************************************************************************************************
+//**********************************************************************************
 
 
 function searchReorderLevel() 
@@ -821,10 +812,173 @@ public function manageSectionJoinReport()
 
 //*****************************************************************************************************
 
+public function machine_details_report()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('machine-details-report',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
+public function machine_report()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$data = $this->manageMachineJoin();
+		$data['categorySelectbox'] = $this->model_report->categorySelectbox();
+		$this->load->view('machine-report',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
+public function manageMachineJoin()
+{
+
+	$table_name='tbl_category';
+	$data['result'] = "";
+	////Pagination start ///
+	$url   = site_url('/report/Report/machine_report?');
+	$sgmnt = "4";
+
+	if($_GET['entries']!="")
+	$showEntries = $_GET['entries'];
+	else
+	$showEntries = 10;
 
 
+	$totalData   = $this->model_report->count_all_machine($table_name,'A',$this->input->get());
 
-//-----------------------------Excel Functions---------------------------------------------
+
+	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
+	$url   = site_url('/report/Report/machine_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+
+
+	}
+
+	elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
+	$url   = site_url('/report/Report/machine_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	}
+
+	else
+	{
+	$url = site_url('/report/Report/machine_report?');
+	}
+
+	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+	$data       = $this->user_function();
+	//////Pagination end ///
+	$data['dataConfig'] = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+	$data['pagination'] = $this->pagination->create_links();
+
+	if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
+	$data['result'] = $this->model_report->filterList_machine($pagination['per_page'],$pagination['page'],$this->input->get());
+
+	else	
+	$data['result'] = $this->model_report->machine_get($pagination['per_page'],$pagination['page']);
+
+	// call permission fnctn
+	$data['categorySelectbox'] = $this->model_report->categorySelectbox();
+	return $data;
+
+}
+
+//========================================================
+
+
+public function spare_track_details()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('spare-tracking-details',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
+public function spare_tracking_report()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$data = $this->manageSpareTrackJoin();
+		$data['categorySelectbox'] = $this->model_report->categorySelectbox();
+		$this->load->view('spare-tracking-report',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
+public function manageSpareTrackJoin()
+{
+
+	$table_name='tbl_product_stock';
+	$data['result'] = "";
+	////Pagination start ///
+	$url   = site_url('/report/Report/spare_tracking_report?');
+	$sgmnt = "4";
+
+	if($_GET['entries']!="")
+	$showEntries = $_GET['entries'];
+	else
+	$showEntries = 10;
+
+
+	$totalData   = $this->model_report->count_Spare($table_name,'A',$this->input->get());
+
+
+	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
+	$url   = site_url('/report/Report/spare_tracking_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+
+
+	}
+
+	elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
+	$url   = site_url('/report/Report/spare_tracking_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	}
+
+	else
+	{
+	$url = site_url('/report/Report/machine_report?');
+	}
+
+	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+	$data       = $this->user_function();
+	//////Pagination end ///
+	$data['dataConfig'] = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+	$data['pagination'] = $this->pagination->create_links();
+
+	if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
+	$data['result'] = $this->model_report->filterSpareList($pagination['per_page'],$pagination['page'],$this->input->get());
+
+	else	
+	$data['result'] = $this->model_report->Spare_Get($pagination['per_page'],$pagination['page']);
+
+	// call permission fnctn
+	$data['categorySelectbox'] = $this->model_report->categorySelectbox();
+	return $data;
+
+}
+
+
+//--------------------------Excel Functions----------------------------
 
 function excel_searchStock() {
 

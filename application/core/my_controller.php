@@ -456,7 +456,7 @@ public function product_check($productId)
 //=================================Close User===============================
  
 //================================*Start delete data ============== 
- function delete_data() {
+ function delete_data_item() {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -601,16 +601,7 @@ function multiple_delete_item()
 	$this->db->query("delete from $table_name where $pri_coll in($id)");
 	$this->db->query("delete from $table_name1 where $pri_coll in($id)");	
 	$this->db->query("delete from $table_name2 where $pri_coll in($id)");
-	
-	/*
-	$this->load->model('Model_admin_login');
-	
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name1,$id);
-		$this->Model_admin_login->delete_user($pri_col,$table_name2,$id);
-		return;
-		*/
-	
+
 }
 
 
@@ -619,7 +610,7 @@ function multiple_delete_item()
 
 
 //================================*Start delete sales order ============== 
-function delete_production_data() 
+function delete_contact_data() 
 {
 	
 		$this->load->model('Model_admin_login');
@@ -628,12 +619,12 @@ function delete_production_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		$table_name1 =tbl_production_dtl;
-		$pri_col1 =productionhdr;
+		// $table_name1 =tbl_production_dtl;
+		// $pri_col1 =productionhdr;
 		
 		
 	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+	//$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
 		
 }
 
@@ -658,7 +649,7 @@ function delete_spare_price_data()
 
 //================================*Start delete packing ============== 
 
-function delete_packing_data() 
+function delete_location_data() 
 {
 	
 	$this->load->model('Model_admin_login');
@@ -667,11 +658,11 @@ function delete_packing_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		$table_name1 =tbl_production_log;
-		$pri_col1 =qc_id;
+		// $table_name1 =tbl_production_log;
+		// $pri_col1 =qc_id;
 		
 	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+	//$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
 				
 }
 
@@ -724,7 +715,7 @@ function delete_packed_log_data()
 
 
 //================================*Start delete invoice ============== 
- function delete_Qc_data() {
+ function delete_rack_data() {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -732,42 +723,8 @@ function delete_packed_log_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		//$pro_id =$dataex[3];
-		$table_name1 =tbl_production_log;
-		$pri_col1 =tai_id;
-		//$table_name_pay='tbl_invoice_payment';
-			
-		
-		
-		// starts select product id and qty from invoice table //
-		$selectTailor=$this->db->query("select * from tbl_tailor where tailor_id='$id'");
-		$getTailor = $selectTailor->row();
-		$finish_id=$getTailor->finishProductId;
-		$taiQty=$getTailor->qty;
-		
-		//$selectSalesDtl=$this->db->query("select * from tbl_production_hdr where productionid='$Production_id'");
-		//$getSalesDtl = $selectSalesDtl->row();
-		//$Prod_id=$getSalesDtl->product_id;
-		
-		$qrytemp=$this->db->query("select * from tbl_template_hdr where product_id='$finish_id'");
-		$fetchTemp=$qrytemp->row();
-		
-		$qrytempdtl=$this->db->query("select * from tbl_template_dtl where templatehdr='$fetchTemp->templateid'");
-		foreach($qrytempdtl->result() as $fetchtempdtl){
-			$main_id=$fetchtempdtl->product_id;
-			$qty=$taiQty*$fetchtempdtl->quantity;
-			$this->db->query("update tbl_product_stock set quantity=quantity+'$qty' where Product_id='$main_id' and type='13'");
-			//$this->delete_updata_stock($qty,$main_id);
-		}
-		// ends//
-		
-		
-		
 		
 		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		//$this->db->query("delete from $table_name1 where $pri_col1='$id' and production_status='Tailor'");
 		
 }
 //================================Close delete invoice ============== 
