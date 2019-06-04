@@ -62,8 +62,11 @@ if($this->input->get('entries')!=""){
 	  <select name="m_type" required class="select2 form-control" id="m_type" onChange="getCat(this.id)" style="width:100%;">
 	<option value="0" class="listClass">----------------Select----------------</option>
 	<?php
-	foreach ($categorySelectbox as $key => $dt) { ?>
-	<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+	$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+    foreach($sql->result() as $getSql) {
+	//foreach ($categorySelectbox as $key => $dt) { ?>
+	<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+	<option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
 	<?php } ?>
 </select>
 </div> 
@@ -149,14 +152,13 @@ if($this->input->get('entries')!=""){
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>assets/machine/manage_machine?<?='codee='.$_GET['codee'].'&m_type='.$_GET['m_type'].'&machine_name='.$_GET['machine_name'].'&machine_description='.$_GET['machine_description'].'&capacity='.$_GET['capacity'].'&m_type='.$_GET['m_type'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>maintenance/schedule/manage_schedule?<?='codee='.$_GET['codee'].'&m_type='.$_GET['m_type'].'&machine_name='.$_GET['machine_name'].'&machine_description='.$_GET['machine_description'].'&capacity='.$_GET['capacity'].'&m_type='.$_GET['m_type'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 </select>
 Entries</label>
 <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -6px;margin-left: 12px;float: right;">

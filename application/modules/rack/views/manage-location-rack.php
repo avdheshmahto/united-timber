@@ -91,14 +91,13 @@ foreach ($sqlgroup->result() as $fetchgroup){
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>locationRack/manage_location_rack?<?='location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>rack/locationRack/manage_location_rack?<?='location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 		
 	</select>
 	entries</label>

@@ -35,7 +35,7 @@ public function manageItemJoinfun()
 	$table_name='tbl_bin_card_hdr';
 	$data['result'] = "";
 	////Pagination start ///
-	$url   = site_url('/binCard/manage_bin_card?');
+	$url   = site_url('/bincard/binCard/manage_bin_card?');
 	$sgmnt = "4";
 
 	if($_GET['entries']!="")
@@ -48,9 +48,9 @@ public function manageItemJoinfun()
 
 
 	if($_GET['entries']!="" && $_GET['filter'] == ""){
-	$url   = site_url('/binCard/manage_bin_card?entries='.$_GET['entries']);
+	$url   = site_url('/bincard/binCard/manage_bin_card?entries='.$_GET['entries']);
 	}elseif($_GET['filter'] != ""){
-	$url   = site_url('/binCard/manage_bin_card?entries='.$_GET['entries'].'&code='.$_GET['code'].'&bin_card_type='.$_GET['bin_card_type'].'&machine_id='.$_GET['machine_id'].'&vendor_id='.$_GET['vendor_id'].'&rdate='.$_GET['rdate'].'&grn_no='.$_GET['grn_no'].'&grn_date='.$_GET['grn_date'].'&remarks='.$_GET['remarks'].'&filter='.$_GET['filter']);
+	$url   = site_url('/bincard/binCard/manage_bin_card?entries='.$_GET['entries'].'&code='.$_GET['code'].'&bin_card_type='.$_GET['bin_card_type'].'&machine_id='.$_GET['machine_id'].'&vendor_id='.$_GET['vendor_id'].'&rdate='.$_GET['rdate'].'&grn_no='.$_GET['grn_no'].'&grn_date='.$_GET['grn_date'].'&remarks='.$_GET['remarks'].'&filter='.$_GET['filter']);
 	// sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
 	}
 

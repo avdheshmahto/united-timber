@@ -52,18 +52,33 @@ if($this->input->get('entries')!="")
     <form class="form-horizontal" role="form" id="PartsIssueForm" method="post">
         <table class="table table-striped table-bordered table-hover">
           <tr class="gradeA">
-            <th colspan="2"><h4>*Section</h4> </th>
+            <th><h4>*Section</h4> </th>
+            <th colspan="2">Machine</th>
+            <th colspan="2">Issue Date</th>
+            <th colspan="2"><h4>*Tools Name</h4></th>
+          </tr>
+          <tr>
             <th>
-                <select name="section" required class="select2 form-control" id="section">
+                <select name="section" class="select2 form-control" id="section" onchange="getmachinelist(this.value);" required>
                 <option value="0" class="listClass">-----Section-----</option>
                 <?php
-                foreach ($categorySelectbox as $key => $dt) { ?>
-                <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+                $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                foreach($sql->result() as $getSql) {
+                //foreach ($categorySelectbox as $key => $dt) { ?>
+                <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+
+                  <option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
+
                 <?php } ?>
                 </select>
+            </th>            
+            <th colspan="2">
+              <select name="machineid" id="machineid" class="form-control">
+              <option>-----------Select--------</option>  
+              </select>
             </th>
-            <th colspan="2"><h4>*Tools Name</h4></th>
-              <th>
+            <th colspan="2"><input type="date" name="issue_date" class="form-control"></th>            
+            <th colspan="2">
                 <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="viewToolsIssuePage(this.value);">
                   <option value="">---select---</option>
                   <?php 
@@ -74,7 +89,6 @@ if($this->input->get('entries')!="")
                     <?php } ?>
                 </select>
             </th>
-            <th></th>           
           </tr>           
           <tr class="gradeA">
             <th colspan="4">&nbsp;</th>
@@ -136,14 +150,13 @@ if($this->input->get('entries')!="")
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
-<select name="DataTables_Table_0_length" url="<?=base_url();?>SpareIssue/manage_spare_issue?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>issue/ToolsIssue/manage_tools_issue?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 </select>
 entries</label>
 
@@ -240,8 +253,21 @@ echo $getQty->totalqty; ?></th>
 <th><?php 
 $pri_col='issue_id';
 $table_name='tbl_tools_issue_hdr';
-?>
-<button class="btn btn-default delbutton" id="<?php echo $fetch_list->issue_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
+
+
+$stfCostLog=$this->db->query("select * from tbl_tools_return_hdr where issue_id='".$fetch_list->issue_id."' ");
+$numCost=$stfCostLog->num_rows();
+
+// $sftStkLog=$this->db->query("select * from tbl_work_order_maintain where machine_name='".$fetch_list->id."' ");
+// $numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Tools Issue" onclick="return confirm('Tools already map to return. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>  
+<button class="btn btn-default delbutton_toolsissue" id="<?php echo $fetch_list->issue_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
+<?php  } ?>
 </th>
 </tr>
 
@@ -518,8 +544,8 @@ function checkrows()
 function refreshData()
 {
 
-  $("#dataTable").empty();
   $("#dataTablePage").empty();
+  $("#dataTable").empty();
   $("#countRow").val('');
   $("#section").val('').trigger('change');
   $("#spare_nameid").val('').trigger('change');
@@ -531,7 +557,7 @@ function refreshData()
 function viewToolsIssuePage(v)
 {
  
-  //alert(x);
+  //alert(v);
   var prod=v;
   var xhttp = new XMLHttpRequest();
  
@@ -567,4 +593,28 @@ function qtyfunction(v)
     }
   
 }
+
+
+function getmachinelist(v)
+{
+
+  ur="<?=base_url();?>issue/ToolsIssue/get_machine_list";
+
+  $.ajax({
+
+      url   : ur,
+      type  : "POST",
+      data  : {'mid':v},
+      success:function(data)
+      {
+        if(data != '')
+        {
+          $("#machineid").empty().append(data);
+        }
+      }
+  })
+
+}
+
+
 </script>

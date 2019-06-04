@@ -34,8 +34,11 @@ $getBrk=$brk->row();
 <select name="m_type" required class="select2 form-control" id="m_type"  <?=$type=='view'?'disabled':''?> onChange="getCatt(this.id)" style="width:100%;">
 	<option value="0" class="listClass">-----Section-----</option>
 	<?php
-	foreach ($categorySelectbox as $key => $dt) { ?>
-	<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" <?php if($dt['id'] == $fetch_list->m_type){ ?> selected <?php } ?>> <?=$dt['name'];?></option>
+	$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+    foreach($sql->result() as $getSql) {
+	//foreach ($categorySelectbox as $key => $dt) { ?>
+	<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" <?php if($dt['id'] == $fetch_list->m_type){ ?> selected <?php } ?>> <?=$dt['name'];?></option> -->
+	<option value="<?php echo $getSql->id;?>" <?php if($getSql->id == $fetch_list->m_type) { ?> selected <?php } ?> ><?php echo $getSql->name; ?></option>
 	<?php } ?>
 </select>
 </div> 

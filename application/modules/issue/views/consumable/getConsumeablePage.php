@@ -52,7 +52,7 @@ $getVndr=$vndr->row();
   <td colspan="6">
   </td>
   <td>
-    <button  class="btn btn-default"  type="button" onclick="addMutiIssue()"><img src="<?=base_url();?>assets/images/plus.png" />
+    <button  class="btn btn-default"  type="button" onclick="addMultiIssue()"><img src="<?=base_url();?>assets/images/plus.png" />
   </button>
   </td>
 </tr>

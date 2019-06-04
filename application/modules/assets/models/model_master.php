@@ -132,7 +132,7 @@ function filterMachine($last,$strat,$get)
 			
     }
 	
-	$qry .= " limit $strat,$last";	 
+	$qry .= " Order by id DESC limit $strat,$last";	 
 	
 	$data =  $this->db->query($qry)->result();
     return $data;		

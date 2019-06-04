@@ -99,7 +99,7 @@ $getFac=$fac->row(); ?>
         <?php 
         $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id='$getSec->id' "); 
         $getAprilSum=$april->row(); 
-        echo $getAprilSum->totalamt;  
+        echo (round($getAprilSum->totalamt,2));  
         ?>
     </th>
    
@@ -107,77 +107,77 @@ $getFac=$fac->row(); ?>
         <?php
         $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id='$getSec->id' ");        
         $getMaySum=$may->row();
-        echo $getMaySum->totalamt;
+        echo (round($getMaySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id='$getSec->id' "); 
         $getJuneSum=$june->row();
-        echo $getJuneSum->totalamt;
+        echo (round($getJuneSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id='$getSec->id' "); 
         $getJulySum=$july->row();
-        echo $getJulySum->totalamt;
+        echo (round($getJulySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id='$getSec->id' "); 
         $getAugustSum=$august->row();
-        echo $getAugustSum->totalamt;
+        echo (round($getAugustSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id='$getSec->id' "); 
         $getSeptemberSum=$september->row();
-        echo $getSeptemberSum->totalamt;
+        echo (round($getSeptemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id='$getSec->id' "); 
         $getOctoberSum=$october->row();
-        echo $getOctoberSum->totalamt;
+        echo (round($getOctoberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id='$getSec->id' "); 
         $getNovemberSum=$novermber->row();
-        echo $getNovemberSum->totalamt;
+        echo (round($getNovemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php 
         $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id='$getSec->id' "); 
         $getDecemberSum=$december->row();
-        echo $getDecemberSum->totalamt;
+        echo (round($getDecemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id='$getSec->id' "); 
         $getJanuarySum=$january->row();
-        echo $getJanuarySum->totalamt;
+        echo (round($getJanuarySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id='$getSec->id' "); 
         $getFebruarySum=$february->row();
-        echo $getFebruarySum->totalamt;
+        echo (round($getFebruarySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
         $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id='$getSec->id' "); 
         $getMarchSum=$march->row();
-        echo $getMarchSum->totalamt;
+        echo (round($getMarchSum->totalamt,2));
         ?>
     </th>
 
@@ -195,7 +195,7 @@ foreach($result as $fetch) { ?>
         <?php 
         $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id='$fetch->id' "); 
         $getAprilData=$april->row(); 
-        echo $getAprilData->totalamt;  
+        echo (round($getAprilData->totalamt,2));  
         ?>
     </th>
    
@@ -203,7 +203,7 @@ foreach($result as $fetch) { ?>
         <?php
         $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id='$fetch->id' "); 
         $getMayData=$may->row();
-        echo $getMayData->totalamt;
+        echo (round($getMayData->totalamt,2));
         ?>
     </th>
 
@@ -211,7 +211,7 @@ foreach($result as $fetch) { ?>
         <?php
         $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id='$fetch->id' "); 
         $getJuneData=$june->row();
-        echo $getJuneData->totalamt;
+        echo (round($getJuneData->totalamt,2));
         ?>
     </th>
 
@@ -219,7 +219,7 @@ foreach($result as $fetch) { ?>
         <?php
         $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id='$fetch->id' "); 
         $getJulyData=$july->row();
-        echo $getJulyData->totalamt;
+        echo (round($getJulyData->totalamt,2));
         ?>    
     </th>
 
@@ -227,7 +227,7 @@ foreach($result as $fetch) { ?>
         <?php
         $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id='$fetch->id' "); 
         $getAugustData=$august->row();
-        echo $getAugustData->totalamt;
+        echo (round($getAugustData->totalamt,2));
         ?>
     </th>
 
@@ -235,7 +235,7 @@ foreach($result as $fetch) { ?>
         <?php
         $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id='$fetch->id' "); 
         $getSeptemberData=$september->row();
-        echo $getSeptemberData->totalamt;
+        echo (round($getSeptemberData->totalamt,2));
         ?>
     </th>
 
@@ -243,7 +243,7 @@ foreach($result as $fetch) { ?>
         <?php
         $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id='$fetch->id' "); 
         $getOctoberData=$october->row();
-        echo $getOctoberData->totalamt;
+        echo (round($getOctoberData->totalamt,2));
         ?>
     </th>
 
@@ -251,7 +251,7 @@ foreach($result as $fetch) { ?>
         <?php
         $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id='$fetch->id' "); 
         $getNovemberData=$novermber->row();
-        echo $getNovemberData->totalamt;
+        echo (round($getNovemberData->totalamt,2));
         ?>
     </th>
 
@@ -259,7 +259,7 @@ foreach($result as $fetch) { ?>
         <?php 
         $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id='$fetch->id' "); 
         $getDecemberData=$december->row();
-        echo $getDecemberData->totalamt;
+        echo (round($getDecemberData->totalamt,2));
         ?>
     </th>
 
@@ -267,7 +267,7 @@ foreach($result as $fetch) { ?>
         <?php
         $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id='$fetch->id' "); 
         $getJanuaryData=$january->row();
-        echo $getJanuaryData->totalamt;
+        echo (round($getJanuaryData->totalamt,2));
         ?>
     </th>
 
@@ -275,7 +275,7 @@ foreach($result as $fetch) { ?>
         <?php
         $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id='$fetch->id' "); 
         $getFebruaryData=$february->row();
-        echo $getFebruaryData->totalamt;
+        echo (round($getFebruaryData->totalamt,2));
         ?>
     </th>
 
@@ -283,7 +283,7 @@ foreach($result as $fetch) { ?>
         <?php
         $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id='$fetch->id' "); 
         $getMarchData=$march->row();
-        echo $getMarchData->totalamt;
+        echo (round($getMarchData->totalamt,2));
         ?>
     </th>
 
@@ -309,18 +309,18 @@ $totalcost_march     =$totalcost_march + $getMarchData->totalamt;
 <tr class="gradeC record">
 
     <th>Totals</th>
-    <th><?php echo $totalcost_april + $getAprilSum->totalamt; ?> </th>
-    <th><?php echo $totalcost_may + $getMaySum->totalamt; ?></th>
-    <th><?php echo $totalcost_june + $getJuneSum->totalamt; ?></th>
-    <th><?php echo $totalcost_july + $getJulySum->totalamt; ?></th>
-    <th><?php echo $totalcost_august + $getAugustSum->totalamt; ?></th>
-    <th><?php echo $totalcost_september + $getSeptemberSum->totalamt; ?></th>
-    <th><?php echo $totalcost_october + $getOctoberSum->totalamt; ?></th>
-    <th><?php echo $totalcost_november + $getNovemberSum->totalamt; ?></th>
-    <th><?php echo $totalcost_december + $getDecemberSum->totalamt; ?></th>
-    <th><?php echo $totalcost_january + $getJanuarySum->totalamt; ?></th>
-    <th><?php echo $totalcost_february + $getFebruarySum->totalamt; ?></th>
-    <th><?php echo $totalcost_march + $getMarchSum->totalamt; ?></th>
+    <th><?php echo (round($totalcost_april + $getAprilSum->totalamt,2)); ?> </th>
+    <th><?php echo (round($totalcost_may + $getMaySum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_june + $getJuneSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_july + $getJulySum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_august + $getAugustSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_september + $getSeptemberSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_october + $getOctoberSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_november + $getNovemberSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_december + $getDecemberSum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_january + $getJanuarySum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_february + $getFebruarySum->totalamt,2)); ?></th>
+    <th><?php echo (round($totalcost_march + $getMarchSum->totalamt,2)); ?></th>
 
 </tr>
 

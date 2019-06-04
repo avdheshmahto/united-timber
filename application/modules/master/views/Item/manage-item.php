@@ -263,8 +263,7 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>

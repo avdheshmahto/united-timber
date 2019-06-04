@@ -90,8 +90,11 @@ if($this->input->get('entries')!=""){
 <select name="m_type" required class="select2 form-control" id="m_type" onChange="getCat(this.id)" style="width:100%;">
 	<option value="0" class="listClass">----------------Select----------------</option>
 	<?php
-	foreach ($categorySelectbox as $key => $dt) { ?>
-	<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+	$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+    foreach($sql->result() as $getSql) {
+	//foreach ($categorySelectbox as $key => $dt) { ?>
+	<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+	<option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
 	<?php } ?>
 </select>
 </div> 
@@ -210,8 +213,7 @@ if($this->session->flashdata('flash_msg')!='')
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 </select>
 Entries</label>
 <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -6px;margin-left: 12px;float: right;">

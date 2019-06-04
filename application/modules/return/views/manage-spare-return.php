@@ -30,14 +30,13 @@ if($this->input->get('entries')!=""){
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>spareReturn/manage_spare_return?<?='rflhdrid='.$_GET['rflhdrid'].'&return_date='.$_GET['return_date'].'&vendor_id='.$_GET['vendor_id'].'&po_no='.$_GET['po_no'].'&po_date='.$_GET['po_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>return/spareReturn/manage_spare_return?<?='rflhdrid='.$_GET['rflhdrid'].'&return_date='.$_GET['return_date'].'&vendor_id='.$_GET['vendor_id'].'&po_no='.$_GET['po_no'].'&po_date='.$_GET['po_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 		
 	</select>
 	entries</label>
@@ -74,11 +73,12 @@ if($this->input->get('entries')!=""){
 
 	<form method="get">
 	<td><input name="rflhdrid"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="return_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
+	<td><input name="return_date"  type="date"  class="search_box form-control input-sm"  value=""/></td>
 	<td><input name="vendor_id"  type="text"  class="search_box form-control input-sm"  value="" /></td>
 	<td><input name="po_no"  type="text"  class="search_box form-control input-sm"   value="" /></td>
 	<td><input name="po_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
+	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search">
+		<span>Search</span></button></td>
 </form>
 </tr>
 
@@ -109,7 +109,10 @@ $machineQuery = $this -> db
 <th><?php echo $fetch->po_date;  ?></th>
 
 <th>
-<button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare Return"><i class="icon-trash"></i>
+<?php
+$pri_col='rflhdrid';
+$table_name='tbl_spare_return_hdr'; ?>
+<button class="btn btn-default delbutton_return" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare Return"><i class="icon-trash"></i>
 </button>
 </th>
 

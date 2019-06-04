@@ -298,7 +298,7 @@ function insert_spare_issue_data()
 	else
 	{
 
-		$this->db->query("insert into tbl_spare_issue_hdr set spare_id='$spareids', workorder_id='$workorder_id', workorder_spare_id='$workorder_spare_id', bin_card_type='Issue', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+		$this->db->query("insert into tbl_spare_issue_hdr set issue_date='$issue_date',spare_id='$spareids', workorder_id='$workorder_id', workorder_spare_id='$workorder_spare_id', bin_card_type='Issue', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
 		$lastId=$this->db->insert_id();
 
@@ -353,7 +353,11 @@ public function stock_refill_qty($main_id,$type,$loc,$rack_id,$vendor_id,$purcha
 	{
 	
 		$this->db->query("update tbl_product_serial set quantity=quantity-$qty where product_id='$main_id' and module_status='$type' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
+		
 		$p_Q=$this->db->query("update tbl_product_stock set quantity=quantity-$qty where Product_id='$main_id' ");
+
+		$this->db->query("update tbl_product_serial_log set quantity=quantity-$qty where product_id='$main_id' and module_status='$type' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'  ");
+
 		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='spare issue',name_role='workorder spare issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 		$this->db->query($sqlProdLoc1);
 

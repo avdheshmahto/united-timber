@@ -7,6 +7,7 @@
   <th>Type</th>  
   <th>Issued Qty</th>
   <th>Status</th>
+  <th>Action</th>
  </tr>
 </thead>
 <tbody id = "getDataTable"> 
@@ -36,6 +37,25 @@ $getQty=$qty->row();
 
 echo $getQty->totalqty; ?></th>
 <th><?php echo $fetch_list->issue_status; ?></th>
+<th><?php 
+$pri_col='issue_id';
+$table_name='tbl_consum_issue_hdr';
+
+
+// $stfCostLog=$this->db->query("select * from tbl_tools_return_hdr where issue_id='".$fetch_list->issue_id."' ");
+//$numCost=$stfCostLog->num_rows();
+
+// $sftStkLog=$this->db->query("select * from tbl_work_order_maintain where machine_name='".$fetch_list->id."' ");
+// $numStk=$sftStkLog->num_rows();
+
+$countRows=0;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Consumable Issue" onclick="return confirm('Consumable already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?> 
+<button class="btn btn-default delbutton_consumable" id="<?php echo $fetch_list->issue_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
+<?php  } ?>
+</th>
 </tr>
 
 <?php $i++; } ?>

@@ -321,23 +321,23 @@ function editRow(ths)
       $('#type').val(editVal.type);
       $('#item_name').val(editVal.productname);
       $('#min_re_order_level').val(editVal.min_re_order_level);
-	  $('#min_order').val(editVal.min_order);
+	    $('#min_order').val(editVal.min_order);
       $('#unitprice_purchase').val(editVal.unitprice_purchase);
       $('#item_name').val(editVal.productname);
       $('#supp_name').val(editVal.supp_name);
       $('#unit1').val(editVal.usageunit).prop('selected', true);
       $('#category').val(editVal.category).prop('selected', true);
-	  $('#type_of_spare').val(editVal.type_of_spare).prop('selected', true);
+	    $('#type_of_spare').val(editVal.type_of_spare).prop('selected', true);
 
       if(button_property == 'view'){
-	  $('.top_title').html('View ');
-	  $('.button').hide(); 
+	    $('.top_title').html('View ');
+	    $('.button').hide(); 
        $('#button').css('display','none');
 	   //$('#buttonnn').css('display','block');
        $("#ItemForm :input").prop("disabled", true);
       }else{
-	  $('.top_title').html('Update ');
-	   $('.button').show();
+	    $('.top_title').html('Update ');
+	    $('.button').show();
       
        $("#ItemForm :input").prop("disabled", false);
       }
@@ -1657,7 +1657,7 @@ return false;
 $(function() {
 
 
-$(".delbuttondispatch").click(function(){
+$(".delbutton_section").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1673,7 +1673,7 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_dispatch_data",
+   url: "delete_section_data",
    data: info,
    success: function(){
   
@@ -1695,7 +1695,7 @@ return false;
 $(function() {
 
 
-$(".delbuttonstockrefill").click(function(){
+$(".delbutton_machine").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1711,7 +1711,7 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_stock_refill",
+   url: "delete_machine_data",
    data: info,
    success: function(){
   
@@ -1737,7 +1737,7 @@ return false;
 $(function() {
 
 
-$(".delbuttonPurchase").click(function(){
+$(".delbutton_bincard").click(function(){
 
 //Save the link in a variable called element
 var element = $(this);
@@ -1753,9 +1753,11 @@ var info = 'id=' + del_id;
 
  $.ajax({
    type: "GET",
-   url: "delete_purchase_order_data",
+   url: "delete_bincard_data",
    data: info,
-   success: function(){
+   success: function(data){
+
+     // alert(data);
   
    }
  });
@@ -1773,8 +1775,133 @@ return false;
 </script>
 <!-- ends here this javascript code is for purchase delete -->
 
+<script type="text/javascript">
+$(function() {
 
 
+$(".delbutton_return").click(function(){
+
+//Save the link in a variable called element
+var element = $(this);
+
+//Find the id of the link that was clicked
+var del_id = element.attr("id");
+
+//Built a url to send
+var info = 'id=' + del_id;
+
+ if(confirm("Are you sure you want to delete ?"))
+      {
+
+ $.ajax({
+   type: "GET",
+   url: "delete_return_data",
+   data: info,
+   success: function(data){
+
+      //alert(data);
+  
+   }
+ });
+
+         $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    .animate({ opacity: "hide" }, "slow");
+
+ }
+
+return false;
+
+});
+
+});
+</script>
+<!-- ends here this javascript code is for purchase delete -->
+
+
+<script type="text/javascript">
+$(function() {
+
+
+$(".delbutton_toolsissue").click(function(){
+
+//Save the link in a variable called element
+var element = $(this);
+
+//Find the id of the link that was clicked
+var del_id = element.attr("id");
+
+//Built a url to send
+var info = 'id=' + del_id;
+
+ if(confirm("Are you sure you want to delete ?"))
+      {
+
+ $.ajax({
+   type: "GET",
+   url: "delete_toolsissue_data",
+   data: info,
+   success: function(data){
+
+      //alert(data);
+  
+   }
+ });
+
+         $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    .animate({ opacity: "hide" }, "slow");
+
+ }
+
+return false;
+
+});
+
+});
+</script>
+<!-- ends here this javascript code is for purchase delete -->
+
+
+<script type="text/javascript">
+$(function() {
+
+
+$(".delbutton_consumable").click(function(){
+
+//Save the link in a variable called element
+var element = $(this);
+
+//Find the id of the link that was clicked
+var del_id = element.attr("id");
+
+//Built a url to send
+var info = 'id=' + del_id;
+
+ if(confirm("Are you sure you want to delete ?"))
+      {
+
+ $.ajax({
+   type: "GET",
+   url: "delete_consumable_data",
+   data: info,
+   success: function(data){
+
+      //alert(data);
+  
+   }
+ });
+
+    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    .animate({ opacity: "hide" }, "slow");
+
+ }
+
+return false;
+
+});
+
+});
+</script>
+<!-- ends here this javascript code is for purchase delete -->
 
 
 
@@ -2170,20 +2297,25 @@ function addMultiReturn()
 }
 
 
-function addMutiIssue(){
+function addMultiIssue(){
 
 
    var section  =  $('#section').val();
    var spareid  =  $('#spare_nameid').val();
+   //var issuQty  =  $("input[name='issue_qty']").val();
 
     if(section == '')
     {
-      alert("please Select Section.");
+      alert("Please Select Section.");
     }
     else if(spareid=="")
     {
-      alert("please Select Tools .");
+      alert("Please Select Tools .");
     }
+    // else if(issuQty == "")
+    // {
+    //   alert("Please Enter Issue Qty")
+    // }
     else
     {
   
@@ -2215,15 +2347,18 @@ function addMutiIssue(){
 
      if(is_qnty != '')
      {
+      
       $('#dataTable').append('<tr><td style="display:none"><p >'+spareid+'</p><input type ="hidden" name="section" value="'+section+'"><input type ="hidden" name="spareids[]" value="'+spareid+'"><input type ="hidden" name="via_types[]" value="'+via_type+'"></td><td><p id="spareName">'+sparename+'</p></td><td><input type ="hidden" name="locs[]" value="'+loc+'">'+locVal+'</td><td><input type ="hidden" name="racks[]" value="'+rack+'">'+rackVal+'</td><td><input type ="hidden" name="vendors[]" value="'+vendor+'">'+vendorName+'</td><td><input type ="hidden" name="prices[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="qtyname[]" id="qntyy" value="'+is_qnty+'">'+is_qnty+'</td><td><i spareId="'+spareid+'" spareName="'+sparename+'" class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+
+        var z=1;
+        var c=$("#countRow").val();
+        $("#countRow").val(Number(c)+ Number(z));
+
       }
+
     }
 
-   $('#dataTablePage').empty();
-
-   var z=1;
-   var c=$("#countRow").val();
-   $("#countRow").val(Number(c)+ Number(z));
+   $('#dataTablePage').empty();   
    
   }
 }

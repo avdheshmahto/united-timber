@@ -30,8 +30,8 @@ $getPrd=$prd->row();
 <td><?=$getPrd->productname?></td>
 <th>Type</th>
 <td><?=$getPrd->via_type?></td>
-<th></th>
-<td></td>
+<th>Issue Date</th>
+<td><input type="date" name="issue_date" class="form-control" required=""></td>
 <input type="hidden" name="reqstQty" id="reqstQty" value="<?=$getDtl->qty_name?>">
 <tr>
 

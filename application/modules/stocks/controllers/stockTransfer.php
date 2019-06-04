@@ -47,9 +47,9 @@ public function manageItemJoinfunSearch()
 
 
 	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
-	$url   = site_url('/stocks/stockTransfer/manage_stock_transfer?entries='.$_GET['entries'].'&code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/stocks/stockTransfer/manage_stock_transfer?entries='.$_GET['entries'].'&filter='.$_GET['filter']);
 	}elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
-	$url   = site_url('/stocks/stockTransfer/manage_stock_transfer?entries='.$_GET['entries'].'&code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/stocks/stockTransfer/manage_stock_transfer?entries='.$_GET['entries'].'&filter='.$_GET['filter']);
 
 
 	}

@@ -30,14 +30,13 @@ if($this->input->get('entries')!="")
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>binCard/manage_bin_card?<?='code='.$_GET['code'].'&bin_card_type='.$_GET['bin_card_type'].'&machine_id='.$_GET['machine_id'].'&vendor_id='.$_GET['vendor_id'].'&rdate='.$_GET['rdate'].'&grn_no='.$_GET['grn_no'].'&grn_date='.$_GET['grn_date'].'&remarks='.$_GET['remarks'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>bincard/binCard/manage_bin_card?<?='code='.$_GET['code'].'&bin_card_type='.$_GET['bin_card_type'].'&machine_id='.$_GET['machine_id'].'&vendor_id='.$_GET['vendor_id'].'&rdate='.$_GET['rdate'].'&grn_no='.$_GET['grn_no'].'&grn_date='.$_GET['grn_date'].'&remarks='.$_GET['remarks'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 		
 	</select>
 	entries</label>
@@ -112,8 +111,20 @@ $vendorQuery = $this -> db
 <?php
 $pri_col='rflhdrid';
 $table_name='tbl_bin_card_hdr';
-?>
-<button class="btn btn-default delbuttonstockrefill" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete BinCard"><i class="icon-trash"></i></button>
+
+$stfCostLog=$this->db->query("select * from tbl_software_stock_log where log_id='".$fetch_list->rflhdrid."' AND log_type='Return' AND vendor_id='$' ");
+$numCost=$stfCostLog->num_rows();
+
+// $sftStkLog=$this->db->query("select * from tbl_work_order_maintain where machine_name='".$fetch_list->id."' ");
+// $numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete BinCard" onclick="return confirm('BinCard already map to return. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_bincard" id="<?php echo $fetch->rflhdrid."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete BinCard"><i class="icon-trash"></i></button>
+<?php  } ?>
 </th>
 
 </tr>

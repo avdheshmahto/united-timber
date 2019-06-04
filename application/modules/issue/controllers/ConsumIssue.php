@@ -34,7 +34,7 @@ public function manageConsumJoinfun()
 	$table_name='tbl_consum_issue_hdr';
 	$data['result'] = "";
 	////Pagination start ///
-	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?');
+	$url   = site_url('/issue/ConsumIssue/manage_consumable_issue?');
 	$sgmnt = "4";
 
 	if($_GET['entries']!="")
@@ -47,9 +47,9 @@ public function manageConsumJoinfun()
 
 
 	if($_GET['entries']!="" && $_GET['filter'] == ""){
-	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries']);
+	$url   = site_url('/issue/ConsumIssue/manage_consumable_issue?entries='.$_GET['entries']);
 	}elseif($_GET['filter'] != ""){
-	$url   = site_url('/issue/ConsumIssue/manage_consum_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/issue/ConsumIssue/manage_consumable_issue?entries='.$_GET['entries'].'&location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'].'&filter='.$_GET['filter']);
 	// sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
 	}
 
@@ -90,18 +90,18 @@ function insert_consumable_issue()
 	$author_date = date('Y-m-d');
 		
 							
-	$this->db->query("insert into tbl_consum_issue_hdr set section='$section',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+	$this->db->query("insert into tbl_consum_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 	
 	$lastId=$this->db->insert_id();
 
-	$mac=$this->db->query("select * from tbl_machine where m_type='$section' ");
+	/*$mac=$this->db->query("select * from tbl_machine where m_type='$section' ");
 	$getMac=$mac->row();
 	
 	if(sizeof($mac->result_array()) > 0){
 		$machineid=$getMac->id;
 	}else{
 		$machineid='';
-	}	
+	}*/	
 
 	for($i=0;$i<$rows;$i++)
 	{
@@ -139,7 +139,11 @@ public function stock_refill_qty($main_id,$type,$loc,$rack_id,$vendor_id,$purcha
 	{
 	
 		$this->db->query("update tbl_product_serial set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
+
 		$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
+
+		$this->db->query("update tbl_product_serial_log set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'");
+
 		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='consumable issue',name_role='section consumable issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 		$this->db->query($sqlProdLoc1);
 	}
@@ -274,6 +278,19 @@ public function consumeable_issue_page()
 {
 	$data['pid']=$_GET['PID'];
 	$this->load->view('consumable/getConsumeablePage',$data);
+}
+
+function get_machine_list()
+{
+
+	$sec=$this->input->post('mid');
+	$machine=$this->db->query("select * from tbl_machine where m_type='$sec'");
+	echo "<option value=''>----Select ----</option> ";
+	foreach ($machine->result() as $getMachine) 
+	{
+		echo "<option value=".$getMachine->id.">".$getMachine->machine_name."</option>";
+	}
+
 }
 
 /*=====================================================================*/

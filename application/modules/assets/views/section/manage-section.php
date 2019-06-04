@@ -37,6 +37,8 @@ if($this->input->get('entries')!="")
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
+  <option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
+  <option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 </select>
 entries</label>
 
@@ -90,19 +92,27 @@ foreach($result_list as $rows) {
 </th>
 <th><?=$rows['create_on'];?></th>
 <th>
-
-
-<?php if($view!=''){ ?>
-<!-- <button class="btn btn-default modalEditItem" property="view" title="View Category !" type="button" data-toggle="modal" data-target="#modal-1" data-backdrop='static'  typeid = "<?=$rows['type'];?>" arrt = "<?=$rows['name'];?>" cat_id ="<?=$rows['parent_id'];?>" grade="<?=$rows['grade'];?>" onclick ="editRow(this.id,this);"  id="<?=$rows['id'];?>" data-keyboard='false'> <i class="fa fa-eye"></i> </button> -->
-<?php } if($edit==''){ ?>  
+<?php if($edit==''){ ?>  
 <a  id="<?=$rows['id'];?>" property="edit" typeid = "<?=$rows['type'];?>"  arrt = "<?=$rows['name'];?>" cat_id ="<?=$rows['parent_id'];?>" grade="<?=$rows['grade'];?>" onclick ="editRow(this.id,this);" class="btn btn-default modalEditItem" title="Update Category !" data-toggle="modal" data-target="#modal-1" >&nbsp; <i class="icon-pencil"></i> &nbsp; </a> 
 <?php } ?>      
 <?php 
  $pri_col='id';
  $table_name='tbl_category';
-?>
-<button class="btn btn-default delbutton" title="Delete Category !" id="<?php echo $rows['id']."^".$table_name."^".$pri_col ; ?>" ><i class="icon-trash"></i></button>	
 
+$stfCostLog=$this->db->query("select * from tbl_software_cost_log where (section_id='".$rows['id']."' OR main_section='".$rows['id']."') ");
+$numCost=$stfCostLog->num_rows();
+
+$sftStkLog=$this->db->query("select * from tbl_machine where m_type='".$rows['id']."' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost + $numStk;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Category" onclick="return confirm('Section already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+
+<button class="btn btn-default delbutton_section" title="Delete Category" id="<?php echo $rows['id']."^".$table_name."^".$pri_col ; ?>" ><i class="icon-trash"></i></button>	
+<?php } ?>
 </th>
 </tr>
 <?php } } ?>
@@ -144,8 +154,8 @@ foreach($result_list as $rows) {
 </div>
 
 <div class="form-group"> 
-<label class="col-sm-2 control-label">Select Section</label> 
-<div class="col-sm-3"> 
+<label class="col-sm-2 control-label" style="display: none;">Select Section</label> 
+<div class="col-sm-3" style="display: none;"> 
 <select class=" form-control" required name="selectCategory" id="selectCategory" style="width: 240px;">
 <option value="0" class="listClass">Section</option>
 <?php
@@ -156,7 +166,7 @@ foreach ($categorySelectbox as $key => $dt) { ?>
 </div> 
 <input type="hidden" class="hiddenField" name="editvalue" value="" id="editvalue">
 
-<label class="col-sm-2 control-label">Enter Tree Value </label>
+<label class="col-sm-2 control-label">Section Name </label>
 <div class="col-sm-3"> 
 <input type="text"  name="category" class="form-control" id="category" placeholder="Enter input" value="<?=$name;?>" required>
 </div>

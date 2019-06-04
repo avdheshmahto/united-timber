@@ -181,14 +181,15 @@ public function session_data()
 
 	$data = array(
 					
-			'comp_id' => $this->session->userdata('comp_id'),
-			'divn_id' => $this->session->userdata('divn_id'),
-			'zone_id' => $this->session->userdata('zone_id'),
-			'brnh_id' => $this->session->userdata('brnh_id'),
-			'maker_id' => $this->session->userdata('user_id'),
-			'author_id' => $this->session->userdata('user_id'),
-			'maker_date'=> date('y-m-d'),
-			'author_date'=> date('y-m-d')
+			'comp_id'     => $this->session->userdata('comp_id'),
+			'divn_id'     => $this->session->userdata('divn_id'),
+			'zone_id'     => $this->session->userdata('zone_id'),
+			'brnh_id'     => $this->session->userdata('brnh_id'),
+			'maker_id'    => $this->session->userdata('user_id'),
+			'author_id'   => $this->session->userdata('user_id'),
+			'maker_date'  => date('y-m-d'),
+			'author_date' => date('y-m-d')
+			
 			);
 
 	return $data;
@@ -454,57 +455,7 @@ public function product_check($productId)
  }
  
 //=================================Close User===============================
- 
-//================================*Start delete data ============== 
- function delete_data_item() {
-	
-	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name1 =tbl_product_serial_log;
-		$pri_col1 =product_id;
-		$table_name2 =tbl_product_serial;
-		$pri_col2 =product_id;		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		$this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
-		
-}
-//================================Close delete data ============== 
-
-
-//================================*Start delete log data ============== 
- function delete_log_data() {
-	
-	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$qnty =$dataex[3];
-		$qc_id =$dataex[4];
-		//$table_name1 =tbl_product_serial_log;
-		//$pri_col1 =product_id;
-			
-			$salesOrderReturnQ=$this->db->query("select * from tbl_qualitiy_check where qc_id='$qc_id'");	
-			$qccheck=$salesOrderReturnQ->row();
-			if($qccheck->qty==$qnty){
-				$this->db->query("delete from tbl_qualitiy_check where qc_id=$qc_id");
-			}else{		
-				$this->db->query("update tbl_qualitiy_check set qty=qty-'$qnty' where qc_id='$qc_id'");
-			}
-			
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		
-		
-}
-//================================Close delete  log data ============== 
-
- 
+  
 //================================* Start Multiple delete table data ============== 
  function delete_multiple_table_data() {
 	
@@ -520,41 +471,6 @@ public function product_check($productId)
 		$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);		
 }
 //================================Close Multiple delete table data ============== 
-
- 
-//================================* Start Sales order Multiple delete table data ============== 
- function delete_multiple_table_data_sales_order() {
-	
-	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name_dtl =$dataex[3];
-		$pri_col_dtl =$dataex[4];
-				
-		if($table_name=='tbl_sales_order_hdr' && $pri_col=='salesid'){
-		
-		$salesQuery=$this->db->query("select * from tbl_sales_order_dtl where salesid='$id'");
-		foreach($salesQuery->result() as $fetchQ){
-			$proid=$fetchQ->product_id;
-			$qnty=$fetchQ->quantity;
-			
-		$salesOrderReturnQ=$this->db->query("select * from tbl_sales_order_return_hdr where so_no='$id'");	
-		$numrow=$salesOrderReturnQ->num_rows();
-		if($numrow>0){
-			
-		}else{
-		$this->db->query("update tbl_product_serial set quantity=quantity+'$qnty' where product_id='$proid'");
-		$this->db->query("update tbl_product_stock set quantity=quantity+'$qnty' where Product_id='$proid'");	
-			  }
-			}
-		}
-	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);	
-}
-//================================Close Sales order Multiple delete table data ============== 
 
 
 //================================*Start Select All delete data==================
@@ -605,8 +521,26 @@ function multiple_delete_item()
 }
 
 
+//================================*Start delete data ============== 
 
-
+ function delete_data_item() {
+	
+	$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		$table_name1 =tbl_product_serial_log;
+		$pri_col1 =product_id;
+		$table_name2 =tbl_product_serial;
+		$pri_col2 =product_id;		
+		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+		$this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
+		
+}
+//================================Close delete data ============== 
 
 
 //================================*Start delete sales order ============== 
@@ -628,24 +562,6 @@ function delete_contact_data()
 		
 }
 
-//================================Close delete sales order ============== 
-
-function delete_spare_price_data() 
-{
-	
-	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		//$table_name1 =tbl_production_dtl;
-		//$pri_col1 =productionhdr;
-		
-	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	//$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-
-}
 
 //================================*Start delete packing ============== 
 
@@ -658,64 +574,14 @@ function delete_location_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		// $table_name1 =tbl_production_log;
-		// $pri_col1 =qc_id;
 		
 	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	//$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
 				
 }
 
-//================================Close delete packing ============== 
 
-//================================*Start delete packing ============== 
-
-function delete_packed_log_data() 
+function delete_rack_data() 
 {
-	
-	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$qnty =$dataex[3];
-		$qc_id =$dataex[4];
-		//$table_name1 =tbl_product_serial_log;
-		//$pri_col1 =product_id;
-			
-			$salesOrderReturnQ=$this->db->query("select * from tbl_packing where packing_id='$qc_id'");	
-			$qccheck=$salesOrderReturnQ->row();
-			if($qccheck->qty==$qnty){
-				$this->db->query("delete from tbl_packing where packing_id=$qc_id");
-			}else{		
-				$this->db->query("update tbl_packing set qty=qty-'$qnty' where packing_id='$qc_id'");
-			}
-			
-		$qrytemp=$this->db->query("select * from tbl_template_hdr where product_id='$qccheck->finishProductId'");
-		$fetchTemp=$qrytemp->row();
-		
-		$qrytempdtl=$this->db->query("select * from tbl_template_dtl where templatehdr='$fetchTemp->templateid'");
-		foreach($qrytempdtl->result() as $fetchtempdtl){
-			$main_id=$fetchtempdtl->product_id;
-			$qty=$qnty*$fetchtempdtl->quantity;
-			$this->db->query("update tbl_product_stock set quantity=quantity+'$qty' where Product_id='$main_id' and type='15'");
-			//$this->delete_updata_stock($qty,$main_id);
-		}
-			
-		$this->db->query("update tbl_product_stock set quantity=quantity-'$qnty' where Product_id='$qccheck->finishProductId'");
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		
-		
-		
-}
-
-//================================Close delete packing ============== 
-
-
-
-//================================*Start delete invoice ============== 
- function delete_rack_data() {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -730,7 +596,8 @@ function delete_packed_log_data()
 //================================Close delete invoice ============== 
 
 //================================*Start delete dispatch ============== 
- function delete_dispatch_data() {
+ function delete_section_data() 
+ {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -738,33 +605,33 @@ function delete_packed_log_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		//$pro_id =$dataex[3];
-		$table_name1 =tbl_dispatch_dtl;
-		$pri_col1 =dispatchhdrId;
-		//$table_name_pay='tbl_invoice_payment';
 			
-		
-		
-		// starts select product id and qty from invoice table //
-	/*	$selectdispatch=$this->db->query("select * from tbl_dispatch_dtl where dispatchhdrId='$id'");
-		foreach($selectdispatch->result() as $getdispatch){
-		
-			$this->db->query("update tbl_product_stock set quantity=quantity+'$getdispatch->qty' where Product_id='$getdispatch->item_id'");
-			//$this->delete_updata_stock($qty,$main_id);
-		}
-		*/
-		
+
 		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		//$this->db->query("delete from $table_name1 where $pri_col1='$id' and production_status='Tailor'");
 		
 }
 //================================Close delete dispatch ============== 
 
 //==================================Start delete stock refill==============
 
- function delete_stock_refill() {
+function delete_machine_data() 
+{
+	
+	$this->load->model('Model_admin_login');
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+					
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+
+		
+}
+//================================Close delete stock refill ============== 
+
+//================================*Start delete purchase order ============== 
+ function delete_bincard_data() {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -774,7 +641,27 @@ function delete_packed_log_data()
 		$pri_col =$dataex[2];
 		$table_name1 =tbl_bin_card_dtl;
 		$pri_col1 =refillhdr;
-			
+					
+		// starts select product id and qty from product table //
+		$binHdr=$this->db->query("select * from $table_name where rflhdrid='$id' ");
+		$getHdr=$binHdr->row();
+		$binDtl=$this->db->query("select * from $table_name1 where refillhdr='$id'");
+		foreach($binDtl->result() as $getDtl)
+		{
+			$qty=$getDtl->quantity;
+			$main_id=$getDtl->product_id;
+			$loc=$getDtl->loc;
+			$rack_id=$getDtl->rack_id;
+			$vendor_id=$getHdr->vendor_id;
+			$type=$getDtl->type;
+			$purchase_price=$getDtl->purchase_price;
+
+			$this->delete_updata_stock($qty,$main_id,$loc,$rack_id,$vendor_id,$type,$purchase_price);
+
+			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Receipt' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+		}
+
+		// ends//
 			
 		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
 		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
@@ -782,10 +669,56 @@ function delete_packed_log_data()
 		
 		
 }
-//================================Close delete stock refill ============== 
 
-//================================*Start delete purchase order ============== 
- function delete_purchase_order_data() {
+
+public function delete_updata_stock($qty,$main_id,$loc,$rack_id,$vendor_id,$type,$purchase_price)
+{
+		
+	$this->db->select('*');
+	$array = array('loc' => $loc, 'rack_id' => $rack_id,'product_id' => $main_id, 'supp_name' => $vendor_id,'purchase_price' => $purchase_price, 'module_status' => $type, 'quantity' => $qty);
+	$this->db->where($array);
+	$query = $this->db->get('tbl_product_serial');
+	//print_r($array);die;
+	$num = $query->num_rows();
+
+			
+	if($num>0)
+	{
+            	
+
+		$this->db->query("DELETE FROM tbl_product_serial WHERE quantity=$qty AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' AND module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity-$qty
+			     where Product_id='$main_id' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='opening stock' AND name_role='bincard opening stock' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price'";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+	else
+	{
+            	
+
+		$this->db->query("update tbl_product_serial set quantity = quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity-$qty
+			     where Product_id='$main_id' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='opening stock' AND name_role='bincard opening stock' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+}
+
+
+//================================Close delete purchase order ============== 
+
+//===============================start bincard return data====================
+ function delete_return_data() {
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -793,32 +726,223 @@ function delete_packed_log_data()
 		$id=$dataex[0];
 		$table_name =$dataex[1];
 		$pri_col =$dataex[2];
-		$table_name1 =tbl_purchase_order_dtl;
-		$pri_col1 =purchaseorderhdr;
-			
-		
-		// starts select product id and qty from sales table //
-		
-		$selectSalesDtl=$this->db->query("select * from $table_name1 where purchaseorderhdr='$id'");
-		foreach($selectSalesDtl->result() as $getSalesDtl){
-		$qty=$getSalesDtl->quantity;
-		$main_id=$getSalesDtl->product_id;
-		$this->delete_updata_stock($qty,$main_id);
+		$table_name1 =tbl_spare_return_dtl;
+		$pri_col1 =refillhdr;
+					
+		// starts select product id and qty from product table //
+		$binHdr=$this->db->query("select * from $table_name where rflhdrid='$id' ");
+		$getHdr=$binHdr->row();
+		$binDtl=$this->db->query("select * from $table_name1 where refillhdr='$id'");
+		foreach($binDtl->result() as $getDtl)
+		{
+			$qty=$getDtl->quantity;
+			$main_id=$getDtl->product_id;
+			$loc=$getDtl->loc;
+			$rack_id=$getDtl->rack_id;
+			$vendor_id=$getHdr->vendor_id;
+			$type=$getDtl->type;
+			$purchase_price=$getDtl->purchase_price;
+
+			$this->delete_return_stock($qty,$main_id,$loc,$rack_id,$vendor_id,$type,$purchase_price);
+
+			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Return' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
 		}
+
 		// ends//
-		
-		
-		
-		
+			
 		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
 		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
 		
 		
 		
 }
-//================================Close delete purchase order ============== 
 
 
+public function delete_return_stock($qty,$main_id,$loc,$rack_id,$vendor_id,$type,$purchase_price)
+{
+		
+	$this->db->select('*');
+	$array = array('loc' => $loc, 'rack_id' => $rack_id,'product_id' => $main_id, 'supp_name' => $vendor_id,'purchase_price' => $purchase_price, 'module_status' => $type);
+	$this->db->where($array);
+	$query = $this->db->get('tbl_product_serial');
+	//print_r($array);die;
+	$num = $query->num_rows();
+
+			
+	if($num>0)
+	{
+     
+
+		$this->db->query("update tbl_product_serial set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
+			     where Product_id='$main_id' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='stock return' AND name_role='bincard stock return' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+}
+
+
+//================================Close delete bincard return ============== 
+
+
+//================================tools issue start============================
+
+function delete_toolsissue_data() {
+	
+	$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		$table_name1 =tbl_tools_issue_dtl;
+		$pri_col1 =issue_id_hdr;
+					
+		// starts select product id and qty from product table //
+		$toolsHdr=$this->db->query("select * from $table_name where issue_id='$id' ");
+		$getHdr=$toolsHdr->row();
+		$toolsDtl=$this->db->query("select * from $table_name1 where issue_id_hdr='$id'");
+		foreach($toolsDtl->result() as $getDtl)
+		{
+			$section=$getHdr->section;
+			$main_id=$getDtl->spare_id;
+			$loc=$getDtl->location;
+			$rack_id=$getDtl->rack;
+			$vendor_id=$getDtl->vendor;
+			$qty=$getDtl->qty;
+			$purchase_price=$getDtl->price;
+			$type=$getDtl->type;
+
+			$this->delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type);
+
+			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Tools Issue' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+
+			$this->db->query("DELETE FROM tbl_software_cost_log WHERE log_type='Tools' AND log_id='$id' AND section_id='$section' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+		}
+
+		// ends//
+			
+		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+		
+		
+		
+}
+
+
+public function delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type)
+{
+		
+	$this->db->select('*');
+	$array = array('loc' => $loc, 'rack_id' => $rack_id,'product_id' => $main_id, 'supp_name' => $vendor_id,'purchase_price' => $purchase_price, 'module_status' => $type);
+	$this->db->where($array);
+	$query = $this->db->get('tbl_product_serial');
+	//print_r($array);die;
+	$num = $query->num_rows();
+
+			
+	if($num>0)
+	{
+     
+
+		$this->db->query("update tbl_product_serial set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
+			     where Product_id='$main_id' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='tools issue' AND name_role='section tools issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+}
+
+//==================================close tools issue===========================
+
+
+
+//==============================consumable issue start============================
+
+
+function delete_consumable_data() {
+	
+	$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		$table_name1 =tbl_consum_issue_dtl;
+		$pri_col1 =issue_id_hdr;
+					
+		// starts select product id and qty from product table //
+		$toolsHdr=$this->db->query("select * from $table_name where issue_id='$id' ");
+		$getHdr=$toolsHdr->row();
+		$toolsDtl=$this->db->query("select * from $table_name1 where issue_id_hdr='$id'");
+		foreach($toolsDtl->result() as $getDtl)
+		{
+			$section=$getHdr->section;
+			$main_id=$getDtl->spare_id;
+			$loc=$getDtl->location;
+			$rack_id=$getDtl->rack;
+			$vendor_id=$getDtl->vendor;
+			$qty=$getDtl->qty;
+			$purchase_price=$getDtl->price;
+			$type=$getDtl->type;
+
+			$this->delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type);
+
+			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Consumable Issue' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+
+			$this->db->query("DELETE FROM tbl_software_cost_log WHERE log_type='Consumable' AND log_id='$id' AND section_id='$section' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+		}
+
+		// ends//
+			
+		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+		
+		
+		
+}
+
+
+public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type)
+{
+		
+	$this->db->select('*');
+	$array = array('loc' => $loc, 'rack_id' => $rack_id,'product_id' => $main_id, 'supp_name' => $vendor_id,'purchase_price' => $purchase_price, 'module_status' => $type);
+	$this->db->where($array);
+	$query = $this->db->get('tbl_product_serial');
+	//print_r($array);die;
+	$num = $query->num_rows();
+
+			
+	if($num>0)
+	{
+     
+
+		$this->db->query("update tbl_product_serial set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
+			     where Product_id='$main_id' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='consumable issue' AND name_role='section consumable issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+}
+
+
+//==============================close consumable issue=========================
 public function forgotPassword()
 {
 

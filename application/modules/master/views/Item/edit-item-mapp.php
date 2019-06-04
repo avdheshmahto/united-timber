@@ -139,7 +139,7 @@ foreach($vendorQuery->result() as $getVendor){
 
 	$locvalue=0;
 	$m=0;
-	$ItemQuery=$this->db->query("select * from tbl_product_serial_log where product_id='$ID'");
+	$ItemQuery=$this->db->query("select * from tbl_product_serial_log where product_id='$ID' AND type='opening stock'");
 	foreach($ItemQuery->result() as $fetch_list_map){
 
 ?>
