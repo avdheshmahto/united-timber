@@ -2,7 +2,7 @@
 <thead>
 <tr>
 <th>Order No.</th>
-<th>Date</th>
+<th>Order Date</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -27,16 +27,36 @@ foreach($sparemapName->result() as $fetch_map_spare)
    <?=sprintf('%03d',$fetch_map_spare->spare_hdr_id); ?></a></td>
 	     
 	<td><?=$fetch_map_spare->maker_date; ?></td>
-	<td><?=$fetch_map_spare->work_order_status; ?></td>
-	<td> <a  class="modalMapSpare" href='#viewspareorder' onclick="viewspareorder('<?php echo  $fetch_map_spare->spare_hdr_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Parts & Supplies Order"> <i class="fa fa-eye"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;
+	<td><?php
+	$dtl=$this->db->query("select *,SUM(qty_name) as reqstQty,SUM(issue_qty) as issueQty from tbl_workorder_spare_dtl where spare_hdr_id='$fetch_map_spare->spare_hdr_id'");
+	$getDtl=$dtl->row();
+		
+	if($getDtl->issueQty == 0)
+	{
+		echo "Open";
+	}
+	else if($getDtl->issueQty < $getDtl->reqstQty)
+	{
+		echo "Partial Completed";
+	}
+	else if($getDtl->issueQty == $getDtl->reqstQty)
+	{
+		echo "Completed";
+	}
+	?></td>
+	<td> 
+
+	<a  class="modalMapSpare" href='#viewspareorder' onclick="viewspareorder('<?php echo  $fetch_map_spare->spare_hdr_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Parts & Supplies Order"> <i class="fa fa-eye"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;
 
 	<?php $pri_col='spare_hdr_id';
 	$table_name='tbl_workorder_spare_hdr';
 	?>
-	<?php if($view!=''){ ?>
-
-	<button class="btn btn-default delbutton" id="<?php echo $fetch_map_spare->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
-	<?php }?>
+	<?php if($getDtl->issue_qty == ''){ ?>
+	<button class="btn btn-default delbutton_spare_order" id="<?php echo $fetch_map_spare->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+	<?php } else { ?>
+	<button class="btn btn-default" type="button" title="Delete Parts & Supplies Order" onclick="return confirm('Parts & Supplies Issued. You can not delete it ?');"><i class="icon-trash"></i></button>	
+	<?php } ?>
+	
 
 	</td>
    

@@ -31,81 +31,6 @@ if($this->input->get('entries')!="")
 </ul>
 </div>
 
-<!-- <div class="panel-body panel-center" >
-<form class="form-horizontal" method="get" action="">
-<div class="form-group panel-body-to"> 
-<label class="col-sm-2 control-label">Machine Name</label> 
-<div class="col-sm-3"> 
- <select name="m_name"  class="select2 form-control" id="m_name">
-		<option value="" >----Select Unit----</option>
-		<?php 
-			$sqlunit=$this->db->query("select * from tbl_machine where status='A'");
-			foreach ($sqlunit->result() as $fetchunit){
-		?>
-		<option value="<?php echo $fetchunit->id;?>"><?php echo $fetchunit->machine_name; ?></option>
-		<?php } ?>
- </select>
-</div>
-
-<div class="form-group panel-body-to"> 
-<label class="col-sm-2 control-label">Parts & Supplies Name</label> 
-<div class="col-sm-3"> 
-<select name="sp_name"  class="select2 form-control" id="sp_name"  value="" >
-<option value="">--select--</option>
-<?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A'");
-$ProductName=$getProductName->result();
-foreach($ProductName as $p) { ?>
-<option value="<?=$p->Product_id?>"><?=$p->productname?></option>
-<?php } ?>
-</select>
-</div>
-<label>
-	<button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></label>
-</div>
-
-</div>
-</form>
-</div>
-
- <div class="row">
-<div class="col-sm-12">
-<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-<div class="html5buttons">
-<div class="dt-buttons">
-	<a href="<?=base_url();?>report/Report/excel_spare_machine_mapping_report?<?='&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.'filter'?>" class="btn btn-sm" >Excel</a></div>
-</div>
-
-<div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
-<select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/spare_machine_mapping_report?<?='&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
-	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
-	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
-	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
-	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
-	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
-</select>
-entries</label>
-
-<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -5px;margin-left: 12px;float: right;">
-Showing <?=$dataConfig['page']+1;?> to 
-	<?php
-		$m=$dataConfig['page']==0?$dataConfig['perPage']:$dataConfig['page']+$dataConfig['perPage'];
-		echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
-	?> of <?=$dataConfig['total'];?> entries
-</div>
-</div>
-<div id="DataTables_Table_0_filter" class="dataTables_filter">
-<label>Search:
-<input type="text" id="searchTerm"  class="search_box form-control input-sm" onkeyup="doSearch()"  placeholder="What you looking for?">
-</label>
-</div>
-</div>
-
-	 
-</div>
-</div> -->
-
 <div class="panel-body">
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
@@ -201,7 +126,7 @@ $sum2+=$innPrrrc;
 <?php } ?>
 
 <?php 
-  if($fetch->log_type == 'Issue' || $fetch->log_type == 'Tools Issue' || $fetch->log_type == 'Consumable Issue' ) { ?>
+  if($fetch->log_type == 'Parts & Supplies Issue' || $fetch->log_type == 'Tools Issue' || $fetch->log_type == 'Consumable Issue' ) { ?>
 
 <td class="blank_right text-center"></td>
 <th class="blank_left text-center"></th>

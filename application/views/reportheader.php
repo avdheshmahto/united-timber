@@ -85,7 +85,7 @@ display:block !important;
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/section_report">Maintenance Report</a></li>
-<li><a href="<?=base_url();?>report/Report/spare_tracking_report">Parts & Supplies Uses Report</a></li>
+<li><a href="<?=base_url();?>report/Report/spare_tracking_report">Frequency of Spares Report</a></li>
 </ul>
 </li>
 

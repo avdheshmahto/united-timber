@@ -47,9 +47,12 @@ $this->load->view("reportheader");
                   <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">ALL SECTION</a>
                   </li>
 	                <ul>                    		
-      				    <?php foreach ($categorySelectbox as $key => $dt) { ?>
-      				    <li id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$dt['id'];?>&name=<?=$dt['name'];?>" >
-      				   		<?=$dt['name'];?></a></li>
+      				    <?php 
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  foreach($sql->result() as $getSql) { 
+                  //foreach ($categorySelectbox as $key => $dt) { ?>
+      				    <!-- <li id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$dt['id'];?>&name=<?=$dt['name'];?>"> <?=$dt['name'];?></a></li> -->
+                  <li id="<?=$getSql->id?>" value = "<?=$getSql->id?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$getSql->id?>&name=<?=$getSql->name?>"><?=$getSql->name?></a></li>
       				    <?php } ?>                    		
       	          </ul>     
 
@@ -85,26 +88,30 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
 <div class="col-sm-3"> 
-<select name="m_type" required class="select2 form-control" id="m_type" style="width:100%;">
+<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required>
 <option value="0" class="listClass">------Section-----</option>
 <?php
-foreach ($categorySelectbox as $key => $dt) { ?>
-<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+foreach($sql->result() as $getSql) { 
+//foreach ($categorySelectbox as $key => $dt) { ?>
+<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
 <?php } ?>
 </select>
 </div>	
 
 <label class="col-sm-2 control-label">Machine</label> 
 <div class="col-sm-3"> 
-<select name="machine" class="select2 form-control">
+<select name="machineid" id="machineid" class="select2 form-control">
 <option value="">----Machine----</option>
-<?php $qry="select * from tbl_machine where status='A'";
-$qryres=$this->db->query($qry)->result();
-foreach($qryres as $res) { 
-$fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
-$getFac=$fac->row(); ?>
-<option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option>	
-<?php } ?>
+<?php 
+//$qry="select * from tbl_machine where status='A'";
+// $qryres=$this->db->query($qry)->result();
+// foreach($qryres as $res) { 
+// $fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
+//$getFac=$fac->row(); ?>
+<<!-- option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option>	 -->
+<?php// } ?>
 </select>	
 </div>
 </div>
@@ -129,49 +136,6 @@ $getFac=$fac->row(); ?>
 </div>
 
 
-
-<div class="row">
-<div class="col-sm-12">
-<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-<div class="html5buttons">
-<div class="dt-buttons">
-<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('tblData')">Excel</button>  &nbsp;&nbsp;
-<!-- <a href="<?=base_url();?>report/Report/excel_spare_location_report?<?='date_range='.$_GET['date_range'].'&section='.$_GET['section'].'&machine='.$_GET['machine'].'&filter='.$_GET['filter']?>" class="btn btn-sm" >Excel</a> -->
-</div>
-</div>
-
-<div class="dataTables_length" id="DataTables_Table_0_length">
-<label>&nbsp; &nbsp; Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/total_maintenance?<?='date_range='.$_GET['date_range'].'&section='.$_GET['section'].'&machine='.$_GET['machine'].'&filter='.$_GET['filter']?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
-	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
-	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
-	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
-	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
-	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
-
-</select>
-entries</label>
-<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -5px;margin-left: 12px;float: right;">
-Showing <?=$dataConfig['page']+1;?> to 
-<?php
-	$m=$dataConfig['page']==0?$dataConfig['perPage']:$dataConfig['page']+$dataConfig['perPage'];
-	echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
-?> of <?=$dataConfig['total'];?> entries
-</div>
-</div>
-<div id="DataTables_Table_0_filter" class="dataTables_filter">
-<label>Search:
-<input type="text" id="searchTerm" name="filter" class="search_box form-control input-sm" onkeyup="doSearch();" placeholder="What you looking for?">
-</label>
-</div>
-</div>
-
-</div>
-</div>
-
-
 <div class="panel-body">
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover dataTables-example1"  id="tblData">
@@ -182,6 +146,7 @@ Showing <?=$dataConfig['page']+1;?> to
 <th></th>
 <th></th>	
 <th></th>	
+<th></th> 
 <th>Total Workorder Amount =</th>
 <th><span id="workorder_total"> </span></th>
 </tbody>
@@ -329,15 +294,7 @@ $sum=$sum+$toatalSpent;
 </div>
 </div>
 </div>
-<div class="row">
-<div class="col-md-12 text-right">
-	<div class="col-md-6 text-left"> 
-	</div>
-	<div class="col-md-6"> 
-		<?php echo $pagination; ?>
-	</div>
-</div>
-</div>
+
 
 <?php
 $this->load->view("footer.php");
@@ -430,3 +387,29 @@ $(function() {
 <script src="<?php echo base_url();?>assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
+
+<script type="text/javascript">
+
+function getmachinelist(v)
+{
+
+  ur="<?=base_url();?>report/Report/get_machine_list";
+  //alert(ur);
+  $.ajax({
+
+      url   : ur,
+      type  : "POST",
+      data  : {'mid':v},
+      success:function(data)
+      {
+
+        //alert(data);
+        if(data != '')
+        {
+          $("#machineid").empty().append(data);
+        }
+      }
+  })
+
+}
+</script>

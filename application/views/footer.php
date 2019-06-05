@@ -1489,6 +1489,87 @@ $(document).ready(function(){
 
 <!-- ends here this javascript code is for multiple delete -->
 
+
+<!-- starts here this javascript code is for single delete -->
+<script type="text/javascript">
+$(function() 
+{
+ 
+  $(document).delegate(".delbutton","click",function(){ 
+  //Save the link in a variable called element
+  var element = $(this);
+
+  //Find the id of the link that was clicked
+  var del_id = element.attr("id");
+
+  //Built a url to send
+  var info = 'id=' + del_id;
+  //alert(info);
+   if(confirm("Are you sure you want to delete ?"))
+        {
+
+   $.ajax({
+     type: "GET",
+     url: "delete_data",
+     data: info,
+     success: function(){
+    
+     }
+   });
+
+    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    .animate({ opacity: "hide" }, "slow");
+
+ }
+
+return false;
+
+});
+
+});
+</script>
+<!-- ends here this javascript code is for single delete -->
+
+<!-- starts here this javascript code is for single delete -->
+<script type="text/javascript">
+$(function() 
+{
+ 
+  $(document).delegate(".delbutton_spare_order","click",function(){ 
+  //Save the link in a variable called element
+  var element = $(this);
+
+  //Find the id of the link that was clicked
+  var del_id = element.attr("id");
+
+  //Built a url to send
+  var info = 'id=' + del_id;
+  //alert(info);
+   if(confirm("Are you sure you want to delete ?"))
+        {
+
+   $.ajax({
+     type: "GET",
+     url: "delete_data_spare_order",
+     data: info,
+     success: function(){
+    
+     }
+   });
+
+    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+    .animate({ opacity: "hide" }, "slow");
+
+ }
+
+return false;
+
+});
+
+});
+</script>
+<!-- ends here this javascript code is for single delete -->
+
 <!-- starts here this javascript code is for single delete -->
 <script type="text/javascript">
 $(function() 

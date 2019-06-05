@@ -33,26 +33,29 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
 <div class="col-sm-3"> 
-<select name="section" class="select2 form-control" style="width:100%;">
-<option value="" class="listClass">------Section-----</option>
+<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="">
+<option value="0" class="listClass">------Section-----</option>
 <?php
-foreach ($categorySelectbox as $key => $dt) { ?>
-<option <?php if($_GET['section'] == $dt['id']) {?>selected <?php } ?> value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+foreach($sql->result() as $getSql) { 
+//foreach ($categorySelectbox as $key => $dt) { ?>
+<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
 <?php } ?>
 </select>
 </div>  
-
 <label class="col-sm-2 control-label">Machine</label> 
 <div class="col-sm-3"> 
-<select name="machine" class="select2 form-control">
+<select name="machineid" id="machineid" class="select2 form-control">
 <option value="">----Machine----</option>
-<?php $qry="select * from tbl_machine where status='A'";
-$qryres=$this->db->query($qry)->result();
-foreach($qryres as $res) { 
-$fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
-$getFac=$fac->row(); ?>
-<option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option> 
-<?php } ?>
+<?php 
+//$qry="select * from tbl_machine where status='A'";
+//$qryres=$this->db->query($qry)->result();
+//foreach($qryres as $res) { 
+//$fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
+//$getFac=$fac->row(); ?>
+<!-- <option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option>  -->
+<?php //} ?>
 </select> 
 </div>
 </div>
@@ -292,3 +295,28 @@ $(function() {
 </script>
 <script type="text/javascript" src="<?=base_url();?>/assets/daterangepicker/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url();?>/assets/daterangepicker/daterangepicker.css">
+
+<script type="text/javascript">
+function getmachinelist(v)
+{
+
+  ur="<?=base_url();?>report/Report/get_machine_list";
+  //alert(v);
+  $.ajax({
+
+      url   : ur,
+      type  : "POST",
+      data  : {'mid':v},
+      success:function(data)
+      {
+
+        //alert(data);
+        if(data != '')
+        {
+          $("#machineid").empty().append(data);
+        }
+      }
+  })
+
+}
+</script>

@@ -31,26 +31,30 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
 <div class="col-sm-3"> 
-<select name="m_type" required class="select2 form-control" id="m_type" style="width:100%;">
+<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="">
 <option value="0" class="listClass">------Section-----</option>
 <?php
-foreach ($categorySelectbox as $key => $dt) { ?>
-<option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+$sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+foreach($sql->result() as $getSql) { 
+//foreach ($categorySelectbox as $key => $dt) { ?>
+<!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
 <?php } ?>
 </select>
 </div>  
 
 <label class="col-sm-2 control-label">Machine</label> 
 <div class="col-sm-3"> 
-<select name="machine" class="select2 form-control">
+<select name="machineid" id="machineid" class="select2 form-control">
 <option value="">----Machine----</option>
-<?php $qry="select * from tbl_machine where status='A'";
-$qryres=$this->db->query($qry)->result();
-foreach($qryres as $res) { 
-$fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
-$getFac=$fac->row(); ?>
-<option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option> 
-<?php } ?>
+<?php 
+// $qry="select * from tbl_machine where status='A'";
+// $qryres=$this->db->query($qry)->result();
+// foreach($qryres as $res) { 
+// $fac=$this->db->query("select * from tbl_category where id='$res->m_type'");
+// $getFac=$fac->row(); ?>
+<!-- <option value="<?=$res->id?>" <?php if($_GET['machine'] == $res->id) {?>selected <?php } ?>><?php echo $res->machine_name."(". $getFac->name.")"?></option>  -->
+<?php //} ?>
 </select> 
 </div>
 <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px"> 
@@ -97,7 +101,7 @@ $getFac=$fac->row(); ?>
     
     <th>
         <?php 
-        $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id='$getSec->id' "); 
+        $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=04 AND section_id='$getSec->id' AND machine_id='' "); 
         $getAprilSum=$april->row(); 
         echo (round($getAprilSum->totalamt,2));  
         ?>
@@ -105,77 +109,77 @@ $getFac=$fac->row(); ?>
    
     <th>
         <?php
-        $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id='$getSec->id' ");        
+        $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=05 AND section_id='$getSec->id' AND machine_id=''");        
         $getMaySum=$may->row();
         echo (round($getMaySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id='$getSec->id' "); 
+        $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=06 AND section_id='$getSec->id' AND machine_id=''"); 
         $getJuneSum=$june->row();
         echo (round($getJuneSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id='$getSec->id' "); 
+        $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=07 AND section_id='$getSec->id' AND machine_id=''"); 
         $getJulySum=$july->row();
         echo (round($getJulySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id='$getSec->id' "); 
+        $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=08 AND section_id='$getSec->id' AND machine_id=''"); 
         $getAugustSum=$august->row();
         echo (round($getAugustSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id='$getSec->id' "); 
+        $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=09 AND section_id='$getSec->id' AND machine_id=''"); 
         $getSeptemberSum=$september->row();
         echo (round($getSeptemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id='$getSec->id' "); 
+        $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=10 AND section_id='$getSec->id' AND machine_id=''"); 
         $getOctoberSum=$october->row();
         echo (round($getOctoberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id='$getSec->id' "); 
+        $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=11 AND section_id='$getSec->id' AND machine_id=''"); 
         $getNovemberSum=$novermber->row();
         echo (round($getNovemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php 
-        $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id='$getSec->id' "); 
+        $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=12 AND section_id='$getSec->id' AND machine_id=''"); 
         $getDecemberSum=$december->row();
         echo (round($getDecemberSum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id='$getSec->id' "); 
+        $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=01 AND section_id='$getSec->id' AND machine_id=''"); 
         $getJanuarySum=$january->row();
         echo (round($getJanuarySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id='$getSec->id' "); 
+        $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=02 AND section_id='$getSec->id' AND machine_id=''"); 
         $getFebruarySum=$february->row();
         echo (round($getFebruarySum->totalamt,2));
         ?>
     </th>
     <th>
         <?php
-        $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id='$getSec->id' "); 
+        $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=03 AND section_id='$getSec->id' AND machine_id=''"); 
         $getMarchSum=$march->row();
         echo (round($getMarchSum->totalamt,2));
         ?>
@@ -184,16 +188,16 @@ $getFac=$fac->row(); ?>
 </tr>
 
 <?php
-$query=("select * from tbl_category where inside_cat='".$_GET['id']."'");
+$query=("select * from tbl_machine where m_type='".$_GET['id']."'");
 $result=$this->db->query($query)->result();
 foreach($result as $fetch) { ?>
 <tr class="gradeC record">
 
-    <th style="text-align:center;"><a target="_blank" href="<?=base_url('report/Report/section_details?id=')?><?=$fetch->id?>"> <?php  echo $fetch->name; ?> </a></th>
+    <th style="text-align:center;"><a target="_blank" href="<?=base_url('report/Report/section_details?id=')?><?=$fetch->id?>"> <?php  echo $fetch->machine_name; ?> </a></th>
     
     <th>
         <?php 
-        $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=04 AND section_id='$fetch->id' "); 
+        $april=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=04 AND machine_id='$fetch->id' "); 
         $getAprilData=$april->row(); 
         echo (round($getAprilData->totalamt,2));  
         ?>
@@ -201,7 +205,7 @@ foreach($result as $fetch) { ?>
    
     <th>
         <?php
-        $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=05 AND section_id='$fetch->id' "); 
+        $may=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=05 AND machine_id='$fetch->id' "); 
         $getMayData=$may->row();
         echo (round($getMayData->totalamt,2));
         ?>
@@ -209,7 +213,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=06 AND section_id='$fetch->id' "); 
+        $june=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=06 AND machine_id='$fetch->id' "); 
         $getJuneData=$june->row();
         echo (round($getJuneData->totalamt,2));
         ?>
@@ -217,7 +221,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=07 AND section_id='$fetch->id' "); 
+        $july=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=07 AND machine_id='$fetch->id' "); 
         $getJulyData=$july->row();
         echo (round($getJulyData->totalamt,2));
         ?>    
@@ -225,7 +229,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=08 AND section_id='$fetch->id' "); 
+        $august=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=08 AND machine_id='$fetch->id' "); 
         $getAugustData=$august->row();
         echo (round($getAugustData->totalamt,2));
         ?>
@@ -233,7 +237,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=09 AND section_id='$fetch->id' "); 
+        $september=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=09 AND machine_id='$fetch->id' "); 
         $getSeptemberData=$september->row();
         echo (round($getSeptemberData->totalamt,2));
         ?>
@@ -241,7 +245,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=10 AND section_id='$fetch->id' "); 
+        $october=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=10 AND machine_id='$fetch->id' "); 
         $getOctoberData=$october->row();
         echo (round($getOctoberData->totalamt,2));
         ?>
@@ -249,7 +253,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=11 AND section_id='$fetch->id' "); 
+        $novermber=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=11 AND machine_id='$fetch->id' "); 
         $getNovemberData=$novermber->row();
         echo (round($getNovemberData->totalamt,2));
         ?>
@@ -257,7 +261,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php 
-        $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=12 AND section_id='$fetch->id' "); 
+        $december=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=12 AND machine_id='$fetch->id' "); 
         $getDecemberData=$december->row();
         echo (round($getDecemberData->totalamt,2));
         ?>
@@ -265,7 +269,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=01 AND section_id='$fetch->id' "); 
+        $january=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=01 AND machine_id='$fetch->id' "); 
         $getJanuaryData=$january->row();
         echo (round($getJanuaryData->totalamt,2));
         ?>
@@ -273,7 +277,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=02 AND section_id='$fetch->id' "); 
+        $february=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=02 AND machine_id='$fetch->id' "); 
         $getFebruaryData=$february->row();
         echo (round($getFebruaryData->totalamt,2));
         ?>
@@ -281,7 +285,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM maker_date)=03 AND section_id='$fetch->id' "); 
+        $march=$this->db->query("select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(MONTH FROM log_date)=03 AND machine_id='$fetch->id' "); 
         $getMarchData=$march->row();
         echo (round($getMarchData->totalamt,2));
         ?>
@@ -396,3 +400,28 @@ function ResetLead()
 <script src="<?php echo base_url();?>assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
+
+<script type="text/javascript">
+function getmachinelist(v)
+{
+
+  ur="<?=base_url();?>report/Report/get_machine_list";
+  //alert(v);
+  $.ajax({
+
+      url   : ur,
+      type  : "POST",
+      data  : {'mid':v},
+      success:function(data)
+      {
+
+        //alert(data);
+        if(data != '')
+        {
+          $("#machineid").empty().append(data);
+        }
+      }
+  })
+
+}
+</script>

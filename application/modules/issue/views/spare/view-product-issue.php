@@ -130,8 +130,8 @@ $getType=$queryType->row();
 <th>Product Id</th>
 <th>Product Name</th>
 <th>Requested Qty</th>
-<th>Type</th>
-<!-- <th>Action</th> -->
+<th>Issue Qty</th>
+<th>Action</th>
 </tr>
 </thead>
 
@@ -152,14 +152,23 @@ $getHdr=$hdr->row();
 <tr class="gradeU record">
    
     <td>
-		<!-- <a  href='#spareIssue' data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare Issue"> -->
     <a  href='#spareIssue' onclick="viewSpareIssue('<?=$fetch_spares->spare_id;?>','<?=$fetch_spares->spare_hdr_id;?>','<?=$getHdr->work_order_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Issue Product"> <?=sprintf('%03d',$fetch_spares->spare_id); ?></a>
     </td>
 	     
     <td><?php echo $getPrd->productname; ?></td>
     <td><?php echo $fetch_spares->qty_name; ?></td>
-    <td><?php echo $getPrd->via_type; ?></td>
-    <!-- <td><a  href='#spareIssue' data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare Issue">Issue</a></td> -->
+    <td><?php 
+    if($fetch_spares->issue_qty == '')
+    {
+      echo 0;
+    }
+    else
+    {
+      echo $fetch_spares->issue_qty; 
+    }    
+    ?>
+    </td>
+    <td><button class="btn btn-default delbutton_spare_issue" id="<?php echo $fetch_spares->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button> </td>
 </tr>
 <?php } ?>
 

@@ -74,6 +74,7 @@ public function insert_scheduling_labor_tasks()
 	$data=array(
 				
 					'work_order_id'     	=> $this->input->post('brekdown_id'),
+					'task_date'				=> $this->input->post('task_date'),
 					'task_name'     		=> $this->input->post('task_name'),
 					'task_type'         	=> $this->input->post('task_type'),	
 					'start_date'   			=> $this->input->post('start_date'),
@@ -105,7 +106,7 @@ public function insert_scheduling_labor_tasks()
 	$this->Model_admin_login->insert_user($table_name,$dataall);
 	$lastId=$this->db->insert_id();
 
-	$this->add_software_cost_log($lastId,'Labour',$section_id,$machine_id,$brekdown_id,'','','',$cost_spent);
+	$this->add_software_cost_log($lastId,'Labour',$task_date,$section_id,$machine_id,$brekdown_id,'','','',$cost_spent);
 
 	echo 1;
 }

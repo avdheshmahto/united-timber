@@ -25,7 +25,7 @@ if($this->input->get('entries')!="")
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">CONSUMPTION REPORT ( <?=$getPs->productname?> ) </h4>
+<h4 class="panel-title">FREQUENCY OF SPARES DETAILS ( <?=$getPs->productname?> ) </h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>
@@ -37,136 +37,47 @@ if($this->input->get('entries')!="")
 <thead>
 <tr>
 		<th>Date</th>
-		<th>Vendor</th>
-		<th>Type</th>
-		<th colspan="2" class="text-center">Inwards</th>
-		<th colspan="2" class="text-center">Outwards</th>
-		<th colspan="2" class="text-center">Closing</th>
-        		
-</tr>
-<tr>
-		<th></th>
-		<th></th>
-		<th></th>
-		<!-- <th></th> -->
-		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Amount</th>
-		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Amount</th>
-		<th class="blank_right text-center">Quantity</th>
-		<th class="blank_left text-center">Amount</th>
+		<th>Section</th>
+		<th>Machine</th>
+		<th>Qty</th>
+		<th>Price</th>
+		<th>Amount</th>
         		
 </tr>
 </thead>
 <tbody id="getDataTable" >
 <?php 
 
-$prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['id']."' AND name_role='product opening stock' "); 
-$getPrd=$prd->row();
-$vndr333=$this->db->query("select * from tbl_contact_m where contact_id='$getPrd->supp_name' ");
-$getVndr22=$vndr333->row();
-?>
-<tr>
-		<td><?php echo $getPrd->maker_date;?></td>
-		<th><?php echo $getVndr22->first_name;?></th>
-		<th>Opening Stock<?php //echo $getPrd->type;?></th>
-		<!--<th></th> -->
-		<td class="blank_right text-center"><?php echo $getPrd->totalQty; ?></td>
-		<th class="blank_left text-center"><?php echo $getPrd->totalQty * $getPrd->purchase_price; ?></th>
-		<th colspan="2"></th>
-		<!-- <th></th> -->
-		<td class="blank_right text-center"><?php echo $opQty=$getPrd->totalQty; ?></td>
-		<th class="blank_left text-center"><?php echo $oPrc=$getPrd->totalQty * $getPrd->purchase_price; ?></th>
-        		
-</tr>
-
-<?php
-
-// $frstdate=date('Y-m-01');
-// $lastdate=date('Y-m-t');
-
- // date_default_timezone_set("Asia/Kolkata");
- // echo $crdtTm=date('Y-m-d G:i:s');
-
 $i=1;
-$data=$this->db->query("select * from tbl_software_stock_log where product_id='".$_GET['id']."' ");
+$data=$this->db->query("select * from tbl_software_cost_log where product_id='".$_GET['id']."' ");
 foreach($data->result() as $fetch) { ?>
 
 <tr class="gradeC record">
-<td><?php echo $fetch->maker_date; ?></td>
-<th><?php 
-$vndr=$this->db->query("select * from tbl_contact_m where contact_id='$fetch->vendor_id' ");
-$getVndr=$vndr->row();
-echo $getVndr->first_name; ?></th>
-<th><?php echo $fetch->log_type; ?></th>
-<!-- <td><?php echo $fetch->log_id; ?></td> -->
-
+<th><?php echo $fetch->log_date; ?></th>
+<th>
 <?php 
-  if($fetch->log_type == 'Receipt' || $fetch->log_type == 'Return' || $fetch->log_type == 'Tools Return' ) { ?>
-<td class="blank_right text-center"><?php echo $innnQttty=$fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $innPrrrc=$fetch->total_price; ?></th>
-
-<td class="blank_right text-center"></td>
-<th class="blank_left text-center"></th>
-
+	$sec=$this->db->query("select * from tbl_category where id='$fetch->section_id' ");
+	$getSec=$sec->row();
+	echo $getSec->name; ?>
+</th>
+<th>
 <?php 
-$sum1+=$innnQttty;
-$sum2+=$innPrrrc;
-?>
-
-<?php if($i==1){ ?>
-<td class="blank_right text-center"><?php echo $inQty=$opQty + $fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $inPric=$oPrc + $fetch->total_price; ?></th>
-<?php } else { ?>
-<td class="blank_right text-center"><?php echo $inQty=$inQty + $fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $inPric=$inPric + $fetch->total_price; ?></th>
-<?php } ?>
-
-<?php } ?>
-
-<?php 
-  if($fetch->log_type == 'Issue' || $fetch->log_type == 'Tools Issue' || $fetch->log_type == 'Consumable Issue' ) { ?>
-
-<td class="blank_right text-center"></td>
-<th class="blank_left text-center"></th>
-
-<td class="blank_right text-center"><?php echo $outQttty=$fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $outPrrrc=$fetch->total_price; ?></th>
-
-<?php 
-$sum3+=$outQttty;
-$sum4+=$outPrrrc;
-?>
-
-<?php if($i==1){ ?>
-<td class="blank_right text-center"><?php echo $inQty=$opQty - $fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $inPric=$oPrc - $fetch->total_price; ?></th>
-<?php } else { ?>
-<td class="blank_right text-center"><?php echo $inQty=$inQty - $fetch->qty; ?></td>
-<th class="blank_left text-center"><?php echo $inPric=$inPric - $fetch->total_price; ?></th>
-<?php } ?>
-
-<?php } ?>
-
+	$mac=$this->db->query("select * from tbl_machine where id='$fetch->machine_id'");
+	$getMac=$mac->row();
+	echo $getMac->machine_name; ?>
+</th>
+<th><?php echo $fetch->qty; ?></th>
+<th><?php echo $fetch->price; ?></th>
+<th><?php echo $fetch->total_spent; ?></th>
 </tr>
 <?php $i++; } 
-
-$sum1=$sum1+$opQty;
-$sum2=$sum2+$oPrc;
-$sum5=$inQty;
-$sum6=$inPric;
  ?>
 
 
-<tr>
-	<th colspan="3" class="text-center">Totals :</th>
+<!-- <tr style="display: none;">
+	<th colspan="5" class="text-center">Totals :</th>
 	<td class="blank_right text-center"><?php echo $sum1; ?></td>
-	<th class="blank_left text-center"><?php echo $sum2; ?></th>
-	<td class="blank_right text-center"><?php echo $sum3; ?></td>
-	<th class="blank_left text-center"><?php echo $sum4; ?></th>
-	<td class="blank_right text-center"><?php echo $sum5; ?></td>
-	<th class="blank_left text-center"><?php echo $sum6; ?></th>
-</tr>
+</tr> -->
 
 </tbody>
 </table>

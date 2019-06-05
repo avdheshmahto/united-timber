@@ -521,7 +521,41 @@ function multiple_delete_item()
 }
 
 
+//=================================================================
+
+function delete_data() 
+{
+	
+		$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+		
+}
+
 //================================*Start delete data ============== 
+
+ function delete_data_spare_order() {
+	
+	$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		$table_name1 =tbl_workorder_spare_dtl;
+		$pri_col1 =spare_hdr_id;
+
+		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+		
+}
+
+
 
  function delete_data_item() {
 	
@@ -1292,7 +1326,7 @@ public function software_stock_log_insert($log_id,$log_type,$vendor_id,$product_
 }
 
 
-public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,$workorder_id,$product_id,$qty,$price,$total_spent)
+public function add_software_cost_log($log_id,$log_type,$log_date,$section_id,$machine_id,$workorder_id,$product_id,$qty,$price,$total_spent)
 {
 
 
@@ -1319,6 +1353,8 @@ public function add_software_cost_log($log_id,$log_type,$section_id,$machine_id,
 			
 			'log_id'       => $log_id,
 			'log_type'     => $log_type,
+			'log_date'     => $log_date,
+
 			'section_id'   => $section_id,
 			'main_section' => $main_section,
 			'machine_id'   => $machine_id,

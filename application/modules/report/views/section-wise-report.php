@@ -52,9 +52,12 @@ $this->load->view("reportheader");
                   <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">ALL SECTION</a>
                   </li>
 	                <ul>                    		
-      				    <?php foreach ($categorySelectbox as $key => $dt) { ?>
-      				    <li id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$dt['id'];?>&name=<?=$dt['name'];?>" >
-      				   		<?=$dt['name'];?></a></li>
+      				    <?php 
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  foreach($sql->result() as $getSql) { 
+                  //foreach ($categorySelectbox as $key => $dt) { ?>
+                  <!-- <li id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$dt['id'];?>&name=<?=$dt['name'];?>"> <?=$dt['name'];?></a></li> -->
+                  <li id="<?=$getSql->id?>" value = "<?=$getSql->id?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$getSql->id?>&name=<?=$getSql->name?>"><?=$getSql->name?></a></li>
       				    <?php } ?>                    		
       	          </ul>     
 

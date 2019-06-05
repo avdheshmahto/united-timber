@@ -50,18 +50,25 @@ if($this->input->get('entries')!="")
     <div class="modal-body overflow">
     <form class="form-horizontal" role="form" id="SectionLabourTask" method="post">
         <table class="table table-striped table-bordered table-hover">
+         
           <tr class="gradeA">
-            <h4><center>*Section
+            <th><h4>*Section</h4></th>
+            <th>
             <select name="section" required class="select2 form-control" id="section">
             <option value="0" class="listClass">-----Section-----</option>
             <?php
-            foreach ($categorySelectbox as $key => $dt) { ?>
-            <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option>
+            $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+            foreach($sql->result() as $getSql) {
+            //foreach ($categorySelectbox as $key => $dt) { ?>
+            <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+            <option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
             <?php } ?>
             </select>
-          </center></h4>
+          </th>
+          <th>Task Assign Date </th>
+            <th><input type="date" name="task_date" class="form-control"></th>
+          </tr>  
 
-          </tr>         
           <tr>
             <th>*Task Name</th>
             <th>

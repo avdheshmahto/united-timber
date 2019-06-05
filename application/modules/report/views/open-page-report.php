@@ -131,7 +131,7 @@ $this->load->view("reportheader");
 <div class="number">
 <div class="inner">4</div>
 </div>
-<p>Parts & Supplies Uses Report</p>
+<p>Frequency of Spares Report</p>
 </div>
 </a> </div>
 </div>

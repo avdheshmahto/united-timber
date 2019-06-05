@@ -128,9 +128,8 @@ $getType=$queryType->row();
 <thead>
 <tr>
 <th>Order No.</th>
-<th>Date</th>
+<th>Order Date</th>
 <th>Status</th>
-<!-- <th>Action</th> -->
 </tr>
 </thead>
 
@@ -150,8 +149,24 @@ foreach($spareq->result() as $fetch_spares)
     </td>
 	     
     <td><?php echo $fetch_spares->maker_date; ?></td>
-    <td><?php echo $fetch_spares->work_order_status; ?></td>
-    <!-- <td><a  href='#spareIssue' data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare Issue">Issue</a></td> -->
+    <td><?php
+  $dtl=$this->db->query("select *,SUM(qty_name) as reqstQty,SUM(issue_qty) as issueQty from tbl_workorder_spare_dtl where spare_hdr_id='$fetch_spares->spare_hdr_id'");
+  $getDtl=$dtl->row();
+    
+  if($getDtl->issueQty == 0)
+  {
+    echo "Open";
+  }
+  else if($getDtl->issueQty < $getDtl->reqstQty)
+  {
+    echo "Partial Completed";
+  }
+  else if($getDtl->issueQty == $getDtl->reqstQty)
+  {
+    echo "Completed";
+  }
+  ?></td>
+
 </tr>
 <?php } ?>
 <tr class="gradeU" style="display: none;">

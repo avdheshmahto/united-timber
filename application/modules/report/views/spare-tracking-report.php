@@ -17,7 +17,7 @@ $this->load->view("reportheader");
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">PARTS & SUPPLIES USES REPORT </h4>
+<h4 class="panel-title">FREQUENCY OF SPARES REPORT </h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>
@@ -68,8 +68,7 @@ foreach($ProductName as $p) { ?>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>

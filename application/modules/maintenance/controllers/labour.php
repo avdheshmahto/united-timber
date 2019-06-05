@@ -82,6 +82,7 @@ function insert_labour_task()
 	$data=array(
 				
 					'section'     			=> $this->input->post('section'),
+					'task_date'				=> $this->input->post('task_date'),
 					'task_name'     		=> $this->input->post('task_name'),
 					'task_type'         	=> $this->input->post('task_type'),				
 					'start_date'   			=> $this->input->post('start_date'),
@@ -113,7 +114,7 @@ function insert_labour_task()
 		$this->Model_admin_login->insert_user($table_name,$dataall);
 		$lastId=$this->db->insert_id();
 
-		$this->add_software_cost_log($lastId,'Labour',$this->input->post('section'),'','','','','',$this->input->post('cost_spent') );
+		$this->add_software_cost_log($lastId,'Labour',$this->input->post('task_date'),$this->input->post('section'),'','','','','',$this->input->post('cost_spent') );
 
 	echo 1;
 

@@ -1023,5 +1023,19 @@ function excel_spare_location_report() {
 }	
 
 
+
+function get_machine_list()
+{
+
+	$sec=$this->input->post('mid');
+	$machine=$this->db->query("select * from tbl_machine where m_type='$sec'");
+	echo "<option value=''>----Select ----</option> ";
+	foreach ($machine->result() as $getMachine) 
+	{
+		echo "<option value=".$getMachine->id.">".$getMachine->machine_name."</option>";
+	}
+
+}
+
 }
 ?>

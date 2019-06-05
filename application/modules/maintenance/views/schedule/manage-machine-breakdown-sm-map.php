@@ -188,7 +188,7 @@ $getTask=$task->row();
 <thead>
 <tr>
 <th>Order No.</th>
-<th>Date</th>
+<th>Order Date</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -210,16 +210,33 @@ foreach($spareq->result() as $fetch_spares)
     </td>
 	     
     <td><?php echo $fetch_spares->maker_date; ?></td>
-    <td><?php echo $fetch_spares->work_order_status; ?></td>
+    <td><?php
+	$dtl=$this->db->query("select *,SUM(qty_name) as reqstQty,SUM(issue_qty) as issueQty from tbl_workorder_spare_dtl where spare_hdr_id='$fetch_map_spare->spare_hdr_id'");
+	$getDtl=$dtl->row();
+		
+	if($getDtl->issueQty == 0)
+	{
+		echo "Open";
+	}
+	else if($getDtl->issueQty < $getDtl->reqstQty)
+	{
+		echo "Partial Completed";
+	}
+	else if($getDtl->issueQty == $getDtl->reqstQty)
+	{
+		echo "Completed";
+	}
+	?></td>
     <td><a  class="modalMapSpare" href='#viewschedulepartsid' onclick="viewscheduleparts('<?php echo $fetch_spares->spare_hdr_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Parts And Supplies"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;
 
     <?php $pri_col='spare_hdr_id';
 	$table_name='tbl_workorder_spare_hdr';
 	?>
-	<?php if($view!=''){ ?>
-
-	<button class="btn btn-default delbutton" id="<?php echo $fetch_spares->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
-	<?php }?>	
+	<?php if($getDtl->issue_qty == ''){ ?>
+	<button class="btn btn-default delbutton_spare_order" id="<?php echo $fetch_map_spare->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+	<?php } else { ?>
+	<button class="btn btn-default" type="button" title="Delete Parts & Supplies Order" onclick="return confirm('Parts & Supplies Issued. You can not delete it ?');"><i class="icon-trash"></i></button>	
+	<?php } ?>	
     </td>
 
 </tr>
@@ -401,6 +418,10 @@ foreach($supplieraName->result() as $fetch_list)
 					<tbody>
 					<input type="hidden" name="brekdown_id" value="<?php echo $_GET['id'];?>">
 					<!-- <input type="hidden" name="labor_type" value="SM"> -->
+					<tr>
+						<th>Task Assign Date </th>
+						<th><input type="date" name="task_date" class="form-control"></th>
+					</tr>
 					<tr class="gradeA">
 						<th>*Task Name</th>
 						<th>
