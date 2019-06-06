@@ -29,6 +29,68 @@ function report_function()
 
 //***************************************************************************
 
+function currentStock() 
+{
+
+	extract($_POST);
+    if($this->session->userdata('is_logged_in'))
+    {
+		$data = $this->manageStockJoinfun();
+    	$this->load->view('current-stock-type', $data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
+public function manageStockJoinfun()
+{
+    
+	$table_name='tbl_master_data';
+	$data['result'] = "";
+	////Pagination start ///
+	$url   = site_url('/report/Report/currentStock?');
+	$sgmnt = "4";
+
+	if($_GET['entries']!="")
+	$showEntries = $_GET['entries'];
+	else
+	$showEntries = 10;
+
+
+	$totalData   = $this->model_report->count_ProductType($table_name,'A',$this->input->get());
+
+	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
+	$url   = site_url('/report/Report/currentStock?entries='.$_GET['entries'].'&type='.$_GET['type'].'&filter='.$_GET['filter']);
+	}elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
+	$url   = site_url('/report/Report/currentStock?entries='.$_GET['entries'].'&type='.$_GET['type'].'&filter='.$_GET['filter']);
+	}
+	else
+	{
+		$url = site_url('/report/Report/currentStock?');
+	}
+
+
+	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+	$data       = $this->user_function();
+	//////Pagination end ///
+	$data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+	$data['pagination']        = $this->pagination->create_links();
+
+	if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
+	$data['result']          = $this->model_report->filterProductType($pagination['per_page'],$pagination['page'],$this->input->get());
+	else	
+	$data['result']          = $this->model_report->product_type_get($pagination['per_page'],$pagination['page']);
+
+	// call permission fnctn
+	return $data;
+
+}
+
+//==============================================================
+
 function searchStock() 
 {
 

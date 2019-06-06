@@ -17,8 +17,8 @@
 <th>Product Id</th>
 <th>Product Name</th>
 <th>Requested Qty</th>
-<th>Type</th>
-<!-- <th>Action</th> -->
+<th>Issue Qty</th>
+<th>Action</th>
 </tr>
 </thead>
 
@@ -26,7 +26,7 @@
 <?php
 
 $i=1;
-$spareq=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='$shid' ");
+$spareq=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='".$_GET['shid']."' ");
 foreach($spareq->result() as $fetch_spares)
 {
   $prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_spares->spare_id' ");
@@ -39,14 +39,28 @@ $getHdr=$hdr->row();
 <tr class="gradeU record">
    
     <td>
-    <!-- <a  href='#spareIssue' data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare Issue"> -->
     <a  href='#spareIssue' onclick="viewSpareIssue('<?=$fetch_spares->spare_id;?>','<?=$fetch_spares->spare_hdr_id;?>','<?=$getHdr->work_order_id;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Issue Product"> <?=sprintf('%03d',$fetch_spares->spare_id); ?></a>
     </td>
        
     <td><?php echo $getPrd->productname; ?></td>
     <td><?php echo $fetch_spares->qty_name; ?></td>
-    <td><?php echo $getPrd->via_type; ?></td>
-    <!-- <td><a  href='#spareIssue' data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset" title="Add Spare Issue">Issue</a></td> -->
+    <td><?php 
+    if($fetch_spares->issue_qty == '')
+    {
+      echo 0;
+    }
+    else
+    {
+      echo $fetch_spares->issue_qty; 
+    }    
+    ?>
+    </td>
+    <td>
+      <?php $pri_col='spare_hdr_id';
+      $table_name='tbl_workorder_spare_hdr';
+      ?>
+      <button class="btn btn-default delbutton_spare_issue" id="<?php echo $fetch_spares->spare_hdr_id."^".$table_name."^".$pri_col."^".$fetch_spares->spare_id ; ?>" type="button" title="Delete Parts & Supplies"><i class="icon-trash"></i></button> 
+    </td>
 </tr>
 <?php } ?>
 
@@ -80,7 +94,7 @@ $getHdr=$hdr->row();
 <?php
 
 $i=1;
-$spissuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_spare_id='$shid' AND workorder_id='$wids' ");
+$spissuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_spare_id='".$_GET['shid']."' AND workorder_id='".$_GET['id']."' ");
 $count=$spissuehdr->num_rows();
 $getIssueHdr=$spissuehdr->row();
 

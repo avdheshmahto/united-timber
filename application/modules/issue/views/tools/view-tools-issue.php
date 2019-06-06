@@ -6,6 +6,10 @@ $getQuery=$Query->row();
 $facility=$this->db->query("select * from tbl_category where id='".$getQuery->section."'");
 $getFacility = $facility->row();
 
+
+$mach=$this->db->query("select * from tbl_machine where id='$getQuery->machine'");
+$getMachine=$mach->row();
+
 ?>
 
 <style type="text/css">
@@ -48,6 +52,21 @@ $getFacility = $facility->row();
 <div class="form-group">
 <h4>Section Name</h4>
 <input type="text" name="" value="<?=$getFacility->name;?>" class="form-control" readonly >
+</div>
+</div>
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>Machine Name</h4>
+<input type="text" name="" value="<?=$getMachine->machine_name;?>" class="form-control" readonly >
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>Issue Date</h4>
+<input type="text" name="" value="<?=$getQuery->issue_date;?>" class="form-control" readonly >
 </div>
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -137,7 +156,7 @@ foreach($spareq->result() as $fetch_spares)
 <?php } ?>
 <tr class="gradeU">
 <td>
- <button  class="btn btn-default" href='#partsReturn' onclick="viewPartsReturn('<?=$fetch_spares->issue_id_hdr;?>','<?=$getQuery2->section;?>','<?=$getQuery2->type;?>','<?=$getQuery2->issue_status;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Tools Return"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+ <button  class="btn btn-default" href='#partsReturn' onclick="viewPartsReturn('<?=$fetch_spares->issue_id_hdr;?>','<?=$getQuery2->section;?>','<?=$getQuery2->type;?>','<?=$getQuery2->issue_status;?>','<?=$getQuery2->machine;?>')"  data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Tools Return"><img src="<?=base_url();?>assets/images/plus.png" /></button>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -319,16 +338,17 @@ foreach($spareq->result() as $fetch_spares)
 
 <script type="text/javascript">
 
-function viewPartsReturn(v,x,y,z)
+function viewPartsReturn(v,x,y,z,m)
 {
   //alert(v);
   var pro=v; 
   var fro=x;
   var tro=y;
   var sro=z;
+  var mac=m;
   var xhttp = new XMLHttpRequest();
  
-  xhttp.open("GET", "return_parts?ISD="+ pro + "&"+"FID="+ fro + "&"+"PTP="+ tro + "&"+"STS="+ sro, false);
+  xhttp.open("GET", "return_parts?ISD="+ pro + "&"+"FID="+ fro + "&"+"PTP="+ tro + "&"+"STS="+ sro + "&"+"MAC="+ mac, false);
   //xhttp.open("GET", "return_parts?ISD="+pro, false);
   // alert(xhttp.open);
   xhttp.send();

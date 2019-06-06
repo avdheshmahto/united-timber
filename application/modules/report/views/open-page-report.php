@@ -124,7 +124,7 @@ $this->load->view("reportheader");
 </a> </div>
 </div>
 
-<div class="col-xs-12 col-sm-2"  style="padding:0px;">
+<!-- <div class="col-xs-12 col-sm-2"  style="padding:0px;">
 <div class="step-item active"><a href="<?=base_url();?>report/Report/spare_tracking_report">
 <div class="line"></div>
 <div class="step-item">
@@ -134,14 +134,14 @@ $this->load->view("reportheader");
 <p>Frequency of Spares Report</p>
 </div>
 </a> </div>
-</div>
+</div> -->
 
 <div class="col-xs-12 col-sm-2" style="padding:0px;"> 
-<div class="step-item active"><a href="<?=base_url();?>report/Report/searchStock">
+<div class="step-item active"><a href="<?=base_url();?>report/Report/currentStock">
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">5</div>
+<div class="inner">4</div>
 </div>
 <p>Current Stock Report</p>
 </div>
@@ -152,7 +152,7 @@ $this->load->view("reportheader");
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">6</div>
+<div class="inner">5</div>
 </div>
 <p>Required Stock Report</p>
 </div>
@@ -163,7 +163,7 @@ $this->load->view("reportheader");
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">7</div>
+<div class="inner">6</div>
 </div>
 <p>Stock Receive Report</p>
 </div>
@@ -174,7 +174,7 @@ $this->load->view("reportheader");
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">8</div>
+<div class="inner">7</div>
 </div>
 <p>Stock Return Report</p>
 </div>
@@ -186,7 +186,7 @@ $this->load->view("reportheader");
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">9</div>
+<div class="inner">8</div>
 </div>
 <p>Breakdown Wororder Report</p>
 </div>
@@ -199,7 +199,7 @@ $this->load->view("reportheader");
 <div class="line"></div>
 <div class="step-item">
 <div class="number">
-<div class="inner">10</div>
+<div class="inner">9</div>
 </div>
 <p>Scheduled Workorder Report</p>
 </div>

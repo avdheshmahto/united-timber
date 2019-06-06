@@ -6,6 +6,9 @@ $getQuery=$Query->row();
 $facility=$this->db->query("select * from tbl_category where id='".$getQuery->section."'");
 $getFacility = $facility->row();
 
+$mach=$this->db->query("select * from tbl_machine where id='$getQuery->machine'");
+$getMachine=$mach->row();
+
 ?>
 
 <style type="text/css">
@@ -48,6 +51,21 @@ $getFacility = $facility->row();
 <div class="form-group">
 <h4>Section Name </h4>
 <input type="text" name="" value="<?=$getFacility->name;?>" class="form-control" readonly >
+</div>
+</div>
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>Machine Name</h4>
+<input type="text" name="" value="<?=$getMachine->machine_name;?>" class="form-control" readonly >
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>Issue Date</h4>
+<input type="text" name="" value="<?=$getQuery->issue_date;?>" class="form-control" readonly >
 </div>
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6">

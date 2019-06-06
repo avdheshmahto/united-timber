@@ -15,6 +15,7 @@
 <input type="hidden" name="section" id="section" value="<?=$fid?>">
 <input type="hidden" name="type_id" id="type_id" value="<?=$tid?>">
 <input type="hidden" name="status" id="status" value="<?=$sts?>">
+<input type="hidden" name="machine" id="machine" value="<?=$mac?>">
 
 <tr>
   <th>Product Name</th>

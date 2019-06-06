@@ -182,6 +182,7 @@ function return_parts()
 		$data['fid']  = $_GET['FID'];
 		$data['tid']  = $_GET['PTP'];
 		$data['sts']  = $_GET['STS'];
+		$data['mac']  = $_GET['MAC'];
 		//print_r($data);die;
 		$this->load->view('tools/return-tools',$data);
 
@@ -336,6 +337,10 @@ function insert_tools_return()
 
 				$this->software_stock_log_insert($getReturn->return_id,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
 
+				//$cost=$this->db->query("select * from tbl_software_cost_log");
+
+				//$this->db->query("update tbl_software_cost_log set qty=qty - $return_qty[$i],total_spent='(qty - $return_qty[$i]) * $purchase_price ' where log_type='Tools' AND log_id='$getReturn->return_id' AND section_id='$section' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]'");
+
 				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
 		
 			}
@@ -348,7 +353,7 @@ function insert_tools_return()
 	else
 	{
 
-	 	$this->db->query("insert into tbl_tools_return_hdr set issue_id='$issue_id',section='$section',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+	 	$this->db->query("insert into tbl_tools_return_hdr set issue_id='$issue_id',section='$section',machine='$machine',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
 		$lastId=$this->db->insert_id();
 
@@ -364,6 +369,8 @@ function insert_tools_return()
 
 				$this->software_stock_log_insert($lastId,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
 				
+				//$this->db->query("update tbl_software_cost_log set qty=qty - $return_qty[$i],total_spent='(qty - $return_qty[$i]) * $purchase_price ' where log_type='Tools' AND log_id='$getReturn->return_id' AND section_id='$section' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]'");
+
 				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
 			}
 			

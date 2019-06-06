@@ -168,7 +168,12 @@ $getHdr=$hdr->row();
     }    
     ?>
     </td>
-    <td><button class="btn btn-default delbutton_spare_issue" id="<?php echo $fetch_spares->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button> </td>
+    <td>
+      <?php $pri_col='spare_hdr_id';
+      $table_name='tbl_workorder_spare_hdr';
+      ?>
+      <button class="btn btn-default delbutton_spare_issue" id="<?php echo $fetch_spares->spare_hdr_id."^".$table_name."^".$pri_col."^".$fetch_spares->spare_id ; ?>" type="button" title="Delete Parts & Supplies"><i class="icon-trash"></i></button> 
+    </td>
 </tr>
 <?php } ?>
 

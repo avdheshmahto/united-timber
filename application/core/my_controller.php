@@ -555,7 +555,7 @@ function delete_data()
 		
 }
 
-
+//===========================================================
 
  function delete_data_item() {
 	
@@ -613,6 +613,7 @@ function delete_location_data()
 				
 }
 
+//==========================================================
 
 function delete_rack_data() 
 {
@@ -812,6 +813,8 @@ public function delete_return_stock($qty,$main_id,$loc,$rack_id,$vendor_id,$type
 		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
 			     where Product_id='$main_id' ");
 
+		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
+
 		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='stock return' AND name_role='bincard stock return' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
 		$this->db->query($sqlProdLoc1);
 			  
@@ -888,6 +891,8 @@ public function delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$q
 
 		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
 			     where Product_id='$main_id' ");
+
+		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
 
 		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='tools issue' AND name_role='section tools issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
 		$this->db->query($sqlProdLoc1);
@@ -967,6 +972,8 @@ public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_
 		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
 			     where Product_id='$main_id' ");
 
+		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
+
 		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='consumable issue' AND name_role='section consumable issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
 		$this->db->query($sqlProdLoc1);
 			  
@@ -977,6 +984,108 @@ public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_
 
 
 //==============================close consumable issue=========================
+
+
+//============================start delete parts & supplies issue===============================
+
+function delete_data_spare_issue() {
+	
+	$this->load->model('Model_admin_login');
+		$getdata= $_GET['id'];
+		$dataex=explode("^",$getdata);
+		$id=$dataex[0];
+		$table_name =$dataex[1];
+		$pri_col =$dataex[2];
+		$spareId=$dataex[3];
+		
+		$table_name0 =tbl_spare_issue_hdr;
+		$pri_col0 =issue_id;
+		$table_name1 =tbl_spare_issue_dtl;
+		$pri_col1 =issue_id_hdr;
+		$table_name2 =tbl_spare_issue_log;
+		$pri_col2 =issue_id_hdr;
+
+					
+		// starts select product id and qty from product table //
+		$toolsHdr=$this->db->query("select * from $table_name where spare_hdr_id='$id' ");
+		$getHdr=$toolsHdr->row();
+
+		$isHdr=$this->db->query("select * from $table_name0 where workorder_id='$getHdr->work_order_id' AND workorder_spare_id='$getHdr->spare_hdr_id' AND spare_id='$spareId' ");
+		$getIsHdr=$isHdr->row();
+		$IssueId=$getIsHdr->issue_id;
+
+		$isDtl=$this->db->query("select * from $table_name1 where issue_id_hdr='$getIsHdr->issue_id'");
+		foreach($isDtl->result() as $getDtl)
+		{
+			$workorderId 		  = $getIsHdr->workorder_id;
+			$wordkorderSpareHdrId = $getIsHdr->workorder_spare_id;
+
+			$main_id   		=$getDtl->spare_id;
+			$loc       		=$getDtl->location;
+			$rack_id   		=$getDtl->rack;
+			$vendor_id      =$getDtl->vendor;
+			$qty            =$getDtl->qty;
+			$purchase_price =$getDtl->price;
+			$type           =$getDtl->type;
+
+			$this->delete_spare_issue($main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type);
+
+			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Parts & Supplies Issue' AND log_id='$IssueId' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+			
+			$this->db->query("DELETE FROM tbl_software_cost_log WHERE log_type='Spare' AND log_id='$IssueId' AND workorder_id='$workorderId' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
+			
+		}
+
+		// ends//
+
+		$this->db->query("DELETE FROM tbl_workorder_spare_dtl WHERE spare_hdr_id='$id' AND spare_id='$spareId' ");
+		
+
+		$this->Model_admin_login->delete_user($pri_col0,$table_name0,$IssueId);
+		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$IssueId);
+		$this->Model_admin_login->delete_user($pri_col2,$table_name2,$IssueId);
+		
+		
+		
+}
+
+
+public function delete_spare_issue($main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type)
+{
+	
+	$this->db->select('*');
+	$array = array('loc' => $loc, 'rack_id' => $rack_id,'product_id' => $main_id, 'supp_name' => $vendor_id,'purchase_price' => $purchase_price, 'module_status' => $type);
+	$this->db->where($array);
+	$query = $this->db->get('tbl_product_serial');
+	
+	//print_r($array);die;
+	
+	$num = $query->num_rows();
+
+			
+	if($num>0)
+	{
+     
+
+		$this->db->query("update tbl_product_serial set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
+
+		$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty
+			     where Product_id='$main_id' ");
+
+		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
+
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='spare issue' AND name_role='workorder spare issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$this->db->query($sqlProdLoc1);
+			  
+									
+	}
+
+}
+
+
+//=============================close delete parts & supplies issue==============================
+
+
 public function forgotPassword()
 {
 

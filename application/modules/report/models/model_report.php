@@ -4,7 +4,73 @@ error_reporting (E_ALL ^ E_NOTICE);
 class model_report extends CI_Model {
 
 
-//**************************************************************************************************************************************************************
+//****************************************************************************************
+
+function product_type_get($last,$strat)
+{
+	
+	$query=("select * from tbl_master_data where param_id='26' Order by serial_number DESC limit $strat,$last ");
+	$getQuery = $this->db->query($query);
+	return $result=$getQuery->result();
+  
+}
+
+
+function filterProductType($perpage,$pages,$get)
+{
+ 	
+	$qry ="select * from tbl_master_data where param_id='26'";
+
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['type'] != "")
+		{
+			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
+			// $getUnit2   = $unitQuery2->row();
+			// $sr_no2     = $getUnit2->Product_id;
+			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		}
+		
+	}
+  
+  	$qry .= "  limit $pages,$perpage";
+ 
+  $data =  $this->db->query($qry)->result();
+  return $data;
+
+}
+
+
+function count_ProductType($tableName,$status = 0,$get)
+{
+
+    $qry ="select count(*) as countval from tbl_master_data where param_id='26'";
+    
+	if(sizeof($get) > 0)
+	{
+		
+		if($get['type'] != "")
+		{
+			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
+			// $getUnit2   = $unitQuery2->row();
+			// $sr_no2     = $getUnit2->Product_id;
+			
+			$qry       .= " AND Product_id ='".$get['sp_name']."'";
+		
+		}
+		
+	}
+		 
+   $query=$this->db->query($qry,array($status))->result_array();
+   return $query[0]['countval'];
+
+}
+
+
+//**********************************************************************
 function product_get($last,$strat)
 {
 	

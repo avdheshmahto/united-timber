@@ -17,7 +17,7 @@ $this->load->view("reportheader");
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">CURRENT STOCK REPORT </h4>
+<h4 class="panel-title">CURRENT STOCK </h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>
@@ -49,7 +49,7 @@ foreach($ProductName as $p) { ?>
 </form>
 </div>
 
-<div class="row">
+<div class="row" style="display: none;">
 <div class="col-sm-12">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
@@ -68,8 +68,7 @@ foreach($ProductName as $p) { ?>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>
@@ -120,7 +119,9 @@ Showing <?=$dataConfig['page']+1;?> to
 
 <?php
 $yy=1;
-if(!empty($result)) {
+
+$product=$this->db->query("select * from tbl_product_stock where type_of_spare='".$_GET['id']."'");
+$result=$product->result();
 foreach($result as $rows) {
 ?>
 <tr class="gradeC record">
@@ -146,13 +147,13 @@ foreach($result as $rows) {
 </th>	
 <th><?php echo round($rows->quantity,2); ?></th>
 </tr>
-<?php } } ?>
+<?php } ?>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div class="row">
+<div class="row" style="display: none;">
 <div class="col-md-12 text-right">
 	<div class="col-md-6 text-left"> 
 	</div>
