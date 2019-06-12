@@ -40,7 +40,7 @@ $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
 foreach($sql->result() as $getSql) { 
 //foreach ($categorySelectbox as $key => $dt) { ?>
 <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
-<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+<option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
 <?php } ?>
 </select>
 </div>  
@@ -60,7 +60,7 @@ foreach($sql->result() as $getSql) {
 </div>
 </div>
 
-<div class="form-group panel-body-to"> 
+<!-- <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Date </label> 
 <div class="col-sm-3">
 <div class="input-group">
@@ -75,7 +75,7 @@ foreach($sql->result() as $getSql) {
 
 <div class="form-group panel-body-to"> 
 
-</div>
+</div> -->
 <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
 <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
 <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" ><span>Search</span>
@@ -96,14 +96,13 @@ foreach($sql->result() as $getSql) {
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
-<select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/breakdown?<?='&n_o_breakdown='.$_GET['n_o_breakdown'].'&m_name='.$_GET['m_name'].'&s_name='.$_GET['s_name'].'&break_time='.$_GET['break_time'].'&o_name='.$_GET['o_name'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/scheduled_report?<?='&n_o_breakdown='.$_GET['n_o_breakdown'].'&o_name='.$_GET['o_name'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 </select>
 entries</label>
 
@@ -220,7 +219,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'MachineBreakDownReport_<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'SCHEDULED REPORT <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");
@@ -288,6 +287,11 @@ $(function() {
 <link rel="stylesheet" type="text/css" href="<?=base_url();?>/assets/daterangepicker/daterangepicker.css">
 
 <script type="text/javascript">
+
+window.onload=function(){
+  getmachinelist(<?=$_GET['m_type']?>);
+};
+
 function getmachinelist(v)
 {
 

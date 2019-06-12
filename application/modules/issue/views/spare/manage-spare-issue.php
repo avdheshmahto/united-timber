@@ -25,8 +25,9 @@ if($this->input->get('entries')!="")
 <div class="col-sm-12">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
-<div class="dt-buttons">&nbsp;
-	<a style="display: none;" href="<?=base_url();?>report/Report/excel_spare_machine_mapping_report?<?='&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.'filter'?>" class="btn btn-sm" >Excel</a></div>
+<div class="dt-buttons" style="display: none;">&nbsp;
+<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button>
+</div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
@@ -65,7 +66,6 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData" >
 <thead>
 <tr>
-<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
   <th>Code </th>
   <th>Trigger</th>
   <th>Machine Name</th>
@@ -76,20 +76,25 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id = "getDataTable"> 
-                    
+
+<tr style="display: none;">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>                  
+
 <?php  
 
 $i=1;
-// $sqlord=$this->db->query("select * from tbl_work_order_maintain where status='A' Order by id desc");
-// foreach($sqlord->result() as $fetch_list)
+
 foreach($result as $fetch_list)
 {
 ?>
 
 <tr class="gradeC record " data-row-id="<?php echo $fetch_list->id; ?>">
-
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
-
 <th>
   <?php
 
@@ -192,7 +197,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Machine Spare Mapping Report<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Parts & Supplies Issue <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

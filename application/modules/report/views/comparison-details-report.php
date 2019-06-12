@@ -20,7 +20,7 @@ $this->load->view("reportheader");
 <div class="panel-heading clearfix">
     <?php  $sect=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
             $getSect=$sect->row(); ?>
-<h4 class="panel-title">COMPARISON DETAILS REPORT (<?php echo $getSect->name;?>)</h4>
+<h4 class="panel-title">COMPARISON DETAILS (<?php echo $getSect->name;?>)</h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>
@@ -30,15 +30,16 @@ $this->load->view("reportheader");
 <form class="form-horizontal" method="get" action="">
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
-<div class="col-sm-3"> 
-<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="">
+<div class="col-sm-3">
+<input type="hidden" name="id" id='id' value="<?php echo $_GET['id'];?>"> 
+<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="" disabled="">
 <option value="0" class="listClass">------Section-----</option>
 <?php
 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
 foreach($sql->result() as $getSql) { 
 //foreach ($categorySelectbox as $key => $dt) { ?>
 <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
-<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+<option value="<?=$getSql->id?>" <?php if($getSql->id==$_GET['id']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
 <?php } ?>
 </select>
 </div>  
@@ -188,7 +189,16 @@ foreach($sql->result() as $getSql) {
 </tr>
 
 <?php
-$query=("select * from tbl_machine where m_type='".$_GET['id']."'");
+
+if($_GET['filter'] == 'filter')
+{
+    $query=("select * from tbl_machine where m_type='".$_GET['id']."' AND id='".$_GET['machineid']."' ");    
+}
+else
+{
+    $query=("select * from tbl_machine where m_type='".$_GET['id']."'");
+}
+
 $result=$this->db->query($query)->result();
 foreach($result as $fetch) { ?>
 <tr class="gradeC record">
@@ -402,6 +412,11 @@ function ResetLead()
 <script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
 
 <script type="text/javascript">
+
+window.onload = function() {
+    getmachinelist(<?=$_GET['id']?>);
+};
+
 function getmachinelist(v)
 {
 

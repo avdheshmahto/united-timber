@@ -88,19 +88,9 @@ foreach ($comp_sql->result() as $comp_fetch){
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<a href="#/" class="btn btn-secondary btn-sm delete_all" title="Multiple Delete"><i class="fa fa-trash-o"></i>Delete all</a>
 </div>
 </ol>
 </form>
-<?php
-if($this->session->flashdata('flash_msg')!='')
-{
-?>
-<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-<strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-</div>	
-<?php }?>	
 
 <div class="row">
 <div class="col-lg-12">
@@ -108,6 +98,11 @@ if($this->session->flashdata('flash_msg')!='')
 <div class="table-responsive">
 
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+<div class="html5buttons">
+<div class="dt-buttons" style="display: none1;">
+<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
+</div>
+</div>	
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
 <select name="DataTables_Table_0_length" url="<?=base_url();?>admin/masterdata/manage_master_data?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
@@ -136,12 +131,15 @@ Showing <?=$dataConfig['page']+1;?> to
 	</label>
 </div>
 </div><!--row close-->
+</div>
+</div>
+</div>
+</div>
 
 <form class="form-horizontal" method="post" action="<?=base_url();?>admin/masterdata/insert_master_data" >
-<table class="table table-striped table-bordered table-hover dataTables-example11">
+<table class="table table-striped table-bordered table-hover dataTables-example11" id="loadData">
 <thead>
 <tr>
-		<th style="width:22px;"><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
  		<th>Value Name</th>
 		<th>Added value</th>
 		<th>Description</th>
@@ -149,7 +147,12 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 
-<tbody>
+<tbody id="getDataTable">
+<tr style="display: none;">
+	<th></th>
+	<th></th>
+	<th></th>
+</tr>	
 <?php
 $i=1;
 foreach($result as $fetch_list)
@@ -157,7 +160,6 @@ foreach($result as $fetch_list)
 ?>
 
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->serial_number; ?>">
-<td><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->serial_number; ?>" value="<?php echo $fetch_list->serial_number;?>" /></td>
 <?php 
  $compQuery = $this -> db
            -> select('*')
@@ -187,9 +189,6 @@ $table_name='tbl_master_data';
 <?php } ?>
 </th>
 </tr>
-
-<!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <?php $i++;} ?>
 </tbody>
 <input type="text" style="display:none;" id="table_name" value="tbl_master_data">  
@@ -204,10 +203,7 @@ $table_name='tbl_master_data';
   </div>
 </div>
 
-</div>
-</div>
-</div>
-</div>
+
 </div><!--panel-default close-->
 </div><!--main-content close-->
 
@@ -242,3 +238,39 @@ $this->load->view("footer.php");
 ?>
 
 
+<script type="text/javascript">
+	function exportTableToExcel(tableID, filename = '')
+{
+
+    //alert();
+   var downloadLink;
+   var dataType = 'application/vnd.ms-excel';
+   var tableSelect = document.getElementById(tableID);
+   var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+   
+   // Specify file name
+   filename = filename?filename+'.xls':'Master Data <?php echo date('d-m-Y');?>.xls';
+   
+   // Create download link element
+   downloadLink = document.createElement("a");
+   
+   document.body.appendChild(downloadLink);
+   
+   if(navigator.msSaveOrOpenBlob){
+       var blob = new Blob(['\ufeff', tableHTML], {
+           type: dataType
+       });
+       navigator.msSaveOrOpenBlob( blob, filename);
+   }else{
+
+       // Create a link to the file
+       downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+   
+       // Setting the file name
+       downloadLink.download = filename;
+       
+       //triggering the function
+       downloadLink.click();
+   }
+}
+</script>

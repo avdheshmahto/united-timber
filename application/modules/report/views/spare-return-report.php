@@ -22,7 +22,7 @@ $this->load->view("reportheader");
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
-<h4 class="panel-title">STOCK RETURN REPORT </h4>
+<h4 class="panel-title">PURCHASE RETURN REPORT </h4>
 <ul class="panel-tool-options"> 
 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
 </ul>
@@ -33,7 +33,7 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">PO No.</label> 
 <div class="col-sm-3"> 
-<input type="text" name="po_no" class="form-control" value="" />
+<input type="text" name="po_no" class="form-control" value="<?php echo $_GET['po_no']; ?>" />
 </div>
 <label class="col-sm-2 control-label">Vendor Name</label> 
 <div class="col-sm-3"> 
@@ -43,7 +43,7 @@ $this->load->view("reportheader");
       $sqlunit=$this->db->query("select * from tbl_contact_m where group_name=5 ");
       foreach ($sqlunit->result() as $fetchunit){
     ?>
-    <option value="<?php echo $fetchunit->contact_id;?>"><?php echo $fetchunit->first_name; ?></option>
+    <option value="<?php echo $fetchunit->contact_id;?>" <?php if($fetchunit->contact_id == $_GET['p_name']) { ?> selected <?php }?> ><?php echo $fetchunit->first_name; ?></option>
     <?php } ?>
  </select> 
 </div>
@@ -52,13 +52,12 @@ $this->load->view("reportheader");
 <div class="form-group"> 
 <label class="col-sm-2 control-label">From Date</label> 
 <div class="col-sm-3"> 
-<input type="date" name="f_date" class="form-control" value="" /> 
+<input type="date" name="f_date" class="form-control" value="<?php echo $_GET['f_date']; ?>" /> 
 </div>
 <label class="col-sm-2 control-label">To Date</label> 
 <div class="col-sm-3"> 
-<input type="date" name="t_date" class="form-control" value="" /> 
+<input type="date" name="t_date" class="form-control" value="<?php echo $_GET['f_date']; ?>" /> 
 </div>
-<!-- <label><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></label> -->
 </div> 
 <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
 <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
@@ -73,9 +72,7 @@ $this->load->view("reportheader");
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
 <div class="dt-buttons">
-<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('tblData')">Excel</button>  &nbsp;&nbsp;	
-<!-- <a href="<?=base_url();?>report/Report/excel_spare_return_report?<?='po_no='.$_GET['po_no'].'&p_name='.$_GET['p_name'].'&p_date='.$_GET['p_date'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'].'&filter='.'filter'?>" class="btn btn-sm" >Excel</a> -->
-
+<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('tblData')">Excel</button>&nbsp;&nbsp;
 </div>
 </div>
 
@@ -225,7 +222,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'SPARE RETURN REPORT(<?php echo date('d-m-Y');?>).xls';
+   filename = filename?filename+'.xls':'PURCHASE RETURN REPORT(<?php echo date('d-m-Y');?>).xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

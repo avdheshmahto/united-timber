@@ -54,6 +54,8 @@ if($this->input->get('entries')!=""){
 </label>
 </div>
 </div>
+</div>
+</div>
 
 <table class="table table-striped table-bordered table-hover dataTables-example1"  id="loadData">
 
@@ -63,23 +65,19 @@ if($this->input->get('entries')!=""){
         <th>Return Date</th>
         <th>Vendor Name</th>
         <th>P.O. No.</th>
-        <th>P.O. date</th>        
+        <th>P.O. Date</th>        
 		<th>Action</th>
 </tr>
 </thead>
 
 <tbody id="getDataTable">
-<tr>
-
-	<form method="get">
-	<td><input name="rflhdrid"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="return_date"  type="date"  class="search_box form-control input-sm"  value=""/></td>
-	<td><input name="vendor_id"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="po_no"  type="text"  class="search_box form-control input-sm"   value="" /></td>
-	<td><input name="po_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search">
-		<span>Search</span></button></td>
-</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 
 
@@ -120,31 +118,21 @@ $table_name='tbl_spare_return_hdr'; ?>
 <?php $i++; }  ?>
 </tbody>
 </table>
+
 <div class="row">
-	<div class="col-md-12 text-right">
-		<div class="col-md-6 text-left"> 
-		</div>
-	<div class="col-md-6"> 
-			<?php echo $pagination; ?>
-	</div>
+<div class="col-md-12 text-right">
+<div class="col-md-6 text-left"> 
+</div>
+<div class="col-md-6"> 
+<?php echo $pagination; ?>
+</div>
+</div>
+</div>
 
-
-<script>
-function stockdelfun()
-{
-	alert("Product Has Been Stocked In");
-}
-</script>
-</div>
-</div>
-</form>
-</div>
-</div>
 </div><!--panel-default close-->
 </div><!--main-content close-->
 
 <?php
-
 $this->load->view("footer.php");
 ?>
 
@@ -159,7 +147,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Spare Return <?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Parts & Supplies Return <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

@@ -131,60 +131,60 @@ public function manageItemJoinfun()
 public function insert_item()
 {
 	
-		@extract($_POST);
+	@extract($_POST);
+	
+	$table_name = 'tbl_product_stock';
+	$pri_col    = 'Product_id';
+ 	$id         = $this->input->post('Product_id');
+	
+	$supp_name  = $this->input->post('vendor_name');
+	$via_type   = $this->input->post('sub_type');
+	$price      = $this->input->post('unitprice_purchase');
+	/*echo "id=".$id;die;*/		
+    
+    $data= array(
+    	 'sku_no'             => $this->input->post('sku_no'),
+		 'productname'        => $this->input->post('item_name'),
+		 'type_of_spare'	  => $this->input->post('type_of_spare'),
+		 'priority'			  => $this->input->post('priority'),
+		 'usageunit'          => $this->input->post('unit'),
+		 'unitprice_purchase' => $this->input->post('unitprice_purchase'),
+		 'supp_name'          => $this->input->post('vendor_name'),
+		 'via_type'			  => $this->input->post('sub_type'),
+		 'min_order'		  => $this->input->post('min_order'),
+		 'min_re_order_level' => $this->input->post('min_re_order_level'),
+	  );
+     
+     $sesio = array(
+     	'maker_id'    => $this->session->userdata('user_id'),
+     	'author_id'   => $this->session->userdata('user_id'),
+		'comp_id'     => $this->session->userdata('comp_id'),
+		'divn_id'     => $this->session->userdata('divn_id'),
+		'zone_id'     => $this->session->userdata('zone_id'),
+		'brnh_id'     => $this->session->userdata('brnh_id'),
+		'maker_date'  => date('y-m-d'),
+		'author_date' => date('y-m-d')
+		);
 		
-		$table_name = 'tbl_product_stock';
-		$pri_col    = 'Product_id';
-	 	$id         = $this->input->post('Product_id');
-		
-		$supp_name  = $this->input->post('vendor_name');
-		$via_type   = $this->input->post('sub_type');
-		$price      = $this->input->post('unitprice_purchase');
-		/*echo "id=".$id;die;*/		
-        
-        $data= array(
-        	 'sku_no'             => $this->input->post('sku_no'),
-			 'productname'        => $this->input->post('item_name'),
-			 'type_of_spare'	  => $this->input->post('type_of_spare'),
-			 'priority'			  => $this->input->post('priority'),
-			 'usageunit'          => $this->input->post('unit'),
-			 'unitprice_purchase' => $this->input->post('unitprice_purchase'),
-			 'supp_name'          => $this->input->post('vendor_name'),
-			 'via_type'			  => $this->input->post('sub_type'),
-			 'min_order'		  => $this->input->post('min_order'),
-			 'min_re_order_level' => $this->input->post('min_re_order_level'),
-		  );
-         
-         $sesio = array(
-         	'maker_id'    => $this->session->userdata('user_id'),
-         	'author_id'   => $this->session->userdata('user_id'),
-			'comp_id'     => $this->session->userdata('comp_id'),
-			'divn_id'     => $this->session->userdata('divn_id'),
-			'zone_id'     => $this->session->userdata('zone_id'),
-			'brnh_id'     => $this->session->userdata('brnh_id'),
-			'maker_date'  => date('y-m-d'),
-			'author_date' => date('y-m-d')
-			);
-			
-		if($id != '')
+	if($id != '')
+	{
+ 	    //print_r($data);
+	    // echo "id=".$id;die;
+	    $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
+	    //print_r($qtyy);
+	    $a=sizeof($qtyy);
+	    for($i=0; $i<$a; $i++){
+		if($qtyy[$i]!='')
 		{
-	 	    //print_r($data);
-		    // echo "id=".$id;die;
-		    $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
-		    //print_r($qtyy);
-		    $a=sizeof($qtyy);
-		    for($i=0; $i<$a; $i++){
-			if($qtyy[$i]!='')
-			{
-			 	//echo $new_quantity[$i];die;
-				//echo "jkykjy".$qtyy[$i];
-			   	$logloc;$lograck;$logqty;
-            	$Querylog = "select quantity,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";            
-				$selectQuery1=$this->db->query($Querylog);
-			    $num = $selectQuery1->num_rows();
+		 	//echo $new_quantity[$i];die;
+			//echo "jkykjy".$qtyy[$i];
+		   	$logloc;$lograck;$logqty;
+        	$Querylog = "select quantity,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";            
+			$selectQuery1=$this->db->query($Querylog);
+		    $num = $selectQuery1->num_rows();
 
-			 	if($num > 0)
-			    {	
+		 	if($num > 0)
+		    {	
                 
 				$Querylog = "select quantity,loc,rack_id,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";
 				$resultlog=$this->db->query($Querylog)->result();
@@ -199,21 +199,25 @@ public function insert_item()
 				     	$logserial_number = $dtlog->serial_number;
 				   		//if($logqty != ""){
 				    
-				    if($qtyy[$i]!=$logqty || $location[$i]!=$logloc || $rack[$i]!=$lograck)
-				    { 
+					    if($qtyy[$i]!=$logqty || $location[$i]!=$logloc || $rack[$i]!=$lograck)
+					    { 
 
-				   	 	$this->db->query("update tbl_product_serial set quantity = '$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',supp_name='$supp_name' where product_id='".$Product_id."' and loc='".$logloc."' and rack_id='".$lograck."'");
-				   	 	
+					   	 	$this->db->query("update tbl_product_serial set quantity = '$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',supp_name='$supp_name' where product_id='".$Product_id."' and loc='".$logloc."' and rack_id='".$lograck."'");
+					   	 	
 
-					   	$datavalss=($qtyy[$i]-$logqty);
-					   	//(quantity-$logqty)+$qtyy[$i]
-					    $p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$datavalss
-					     where Product_id='$Product_id' ");
+						   	$datavalss=($qtyy[$i]-$logqty);
+						   	//(quantity-$logqty)+$qtyy[$i]
+						    $p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$datavalss
+						     where Product_id='$Product_id' ");
+					  
+						}
+						else
+						{
+							$this->db->query("update tbl_product_serial set quantity = '$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',supp_name='$supp_name' where product_id='".$Product_id."' and loc='".$logloc."' and rack_id='".$lograck."'");
+						}
 				  
-					}
-				  
-					if($logserial_number !="")
-             			$this->db->query("delete from tbl_product_serial_log where serial_number = $logserial_number");    
+						if($logserial_number !="")
+             				$this->db->query("delete from tbl_product_serial_log where serial_number = $logserial_number");    
 					}  	 
 				 
 				}	
@@ -275,6 +279,7 @@ public function insert_item()
 		//$this->session->set_flashdata('flash_msg', 'Record Added Successfully.');
 		
 		}
+
 	  }
 
 	echo 1;
@@ -318,12 +323,22 @@ function changesubcatg()
 
 function deletephpdata()
 {
-	$serial_id=$_POST['s_id'];
 	
+	$serial_id=$_POST['s_id'];	
 	$qres=$this->db->query("select * from tbl_product_serial_log where serial_number='".$serial_id."'");
-	//echo "select * from tbl_product_serial_log where serial_number='".$serial_id."'";die;
 	$qresres=$qres->row();
-	echo $qresres->rack_id; 
+	$updtdQty=$qresres->quantity;
+
+	$sql=$this->db->query("select * from tbl_product_stock where Product_id='$qresres->product_id' ");
+	$getSql=$sql->row();
+	$oldQty=$getSql->quantity;
+	$newQty=$oldQty - $updtdQty;
+
+	$this->db->query("update tbl_product_stock set quantity='$newQty' where Product_id='$qresres->product_id' ");
+	$this->db->query("DELETE FROM tbl_product_serial WHERE quantity ='$qresres->quantity' AND product_id='$qresres->product_id' AND loc='$qresres->loc' AND rack_id='$qresres->rack_id' AND module_status='$qresres->module_status' AND supp_name='$qresres->supp_name' AND purchase_price='$qresres->purchase_price' ");
+	$this->db->query("DELETE FROM tbl_product_serial_log where serial_number='$serial_id' ");
+
+	//echo $qresres->rack_id; 
 }
 
 

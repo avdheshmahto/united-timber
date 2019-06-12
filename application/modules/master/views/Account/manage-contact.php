@@ -158,13 +158,13 @@ foreach($stnm->result() as $stdata)
 <div class="dt-buttons">
   <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
   <a class="btn btn-sm" data-toggle="modal" formid = "#contactForm" data-target="#Contactmodal" id="formreset" title="Add Contact">Add Contact</a>
-  <a class="btn btn-secondary btn-sm delete_all" title="Delete Multiple"><span>Delete</span></a>
+ 
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Account/manage_contact?<?='first_namee='.$_GET['first_namee'].'&maingroupname='.$_GET['maingroupname'].'&emailee='.$_GET['emailee'].'&mobile='.$_GET['mobile'].'&phone='.$_GET['phone'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Account/manage_contact?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 
 	<option value="10">10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
@@ -201,27 +201,23 @@ entries</label>
 <table class="table table-striped table-bordered table-hover dataTables-example11" id="loadData">
 <thead bgcolor="#CCCCCC">
 <tr>
-		<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
-	    <th>Name</th>
-		<th>Group Name</th>
-        <th>Email Id</th>
-		<th>Mobile No.</th>
-		<th>Phone No.</th>
-		<th style="width:110px;">Action</th>
+    <th>Name</th>
+	<th>Group Name</th>
+    <th>Email Id</th>
+	<th>Mobile No.</th>
+	<th>Phone No.</th>
+	<th style="width:110px;">Action</th>
 </tr>
 </thead>
 
 <tbody id="getDataTable">
-<tr>
-		<form method="get">
-		<th>&nbsp;</th>
-		<th><input name="first_namee"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="maingroupname"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="emailee"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="mobile"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="phone" type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><button type="submit" class="btn btn-sm" name="filter" value="filter" style="margin:0 0 0 0px;" title="Search"><span>Search</span></button></th>
-		</form>
+<tr style="display: none;">
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
 </tr>
 
 
@@ -234,7 +230,6 @@ $i=1;
   ?>
 
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->contact_id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->contact_id; ?>" value="<?php echo $fetch_list->contact_id;?>" /></th>
 <th>
 <?php if($fetch_list->group_name=='5'){ ?>
 <a href="<?=base_url();?>master/Account/manage_contact_map?id=<?php echo $fetch_list->contact_id; ?>" title="contact Details"><?php echo $fetch_list->first_name; ?></a>

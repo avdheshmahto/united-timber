@@ -41,8 +41,8 @@ foreach($sql->result() as $getSql) {
 </select>
 </div>  
 
-<label class="col-sm-2 control-label">Machine</label> 
-<div class="col-sm-3"> 
+<label class="col-sm-2 control-label" style="display: none;">Machine</label> 
+<div class="col-sm-3" style="display: none;"> 
 <select name="machineid" id="machineid" class="select2 form-control">
 <option value="">----Machine----</option>
 <?php 
@@ -70,7 +70,6 @@ foreach($sql->result() as $getSql) {
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button> &nbsp;&nbsp; 
  
-<!-- <a href="<?=base_url();?>report/Report/excel_searchReorderLevel?<?='code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter'];?>" class="btn btn-sm">Excel</a> -->
 </div>
 </div>
 
@@ -189,7 +188,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Product Bin Card Report<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Machine Report<?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

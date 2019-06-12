@@ -28,13 +28,14 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Code</label> 
 <div class="col-sm-3"> 
+<input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
 <input name="code"  type="text"  class="search_box form-control input-sm" value="<?=$_GET['code']?>"  />
 </div>
 <label class="col-sm-2 control-label">Pats & Supplies Name</label> 
 <div class="col-sm-3"> 
 <select name="sp_name"  class="select2 form-control" id="sp_name"  >
 <option value="">--select--</option>
-<?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A'");
+<?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A' AND type_of_spare='".$_GET['id']."' ");
 $ProductName=$getProductName->result();
 foreach($ProductName as $p) { ?>
 <option value="<?=$p->Product_id?>"  <?php if($_GET['sp_name'] == $p->Product_id) { ?>selected <?php } ?> ><?=$p->productname?></option>
@@ -120,8 +121,24 @@ Showing <?=$dataConfig['page']+1;?> to
 <?php
 $yy=1;
 
-$product=$this->db->query("select * from tbl_product_stock where type_of_spare='".$_GET['id']."'");
-$result=$product->result();
+if($_GET['filter'] == 'filter')
+{
+	
+	$product="select * from tbl_product_stock where type_of_spare='".$_GET['id']."'";
+	
+	if($_GET['code'] != '')	
+		$product .=" AND sku_no LIKe '%".$_GET['code']."%' ";
+
+	if($_GET['sp_name'] != '')
+		$product .=" AND Product_id='".$_GET['sp_name']."'";
+
+}
+else
+{
+	$product="select * from tbl_product_stock where type_of_spare='".$_GET['id']."'";
+}
+
+$result=$this->db->query($product)->result();
 foreach($result as $rows) {
 ?>
 <tr class="gradeC record">
@@ -214,6 +231,6 @@ function exportTableToExcel(tableID, filename = ''){
 
 function ResetLead()
 {
-  location.href="<?=base_url('/report/Report/searchStock');?>";
+  location.href="<?=base_url('/report/Report/searchStock?id=');?><?=$_GET['id']?>";
 }
 </script>

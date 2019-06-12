@@ -9,6 +9,7 @@ if($this->input->get('entries')!="")
 ?>
 <div class="main-content">
 <div class="panel-default">
+
 <ol class="breadcrumb breadcrumb-2"> 
 	<li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
 	<li><a href="#">Bin Card</a></li> 
@@ -18,6 +19,7 @@ if($this->input->get('entries')!="")
 	<li><a class="btn btn-sm" href="<?=base_url();?>bincard/binCard/add_bin_card" title="Add BinCard">Add Bin Card</a></li> 
 	</div>
 </ol>
+
 <div class="row">
 <div class="col-sm-12" id="listingData">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -30,7 +32,7 @@ if($this->input->get('entries')!="")
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>bincard/binCard/manage_bin_card?<?='code='.$_GET['code'].'&bin_card_type='.$_GET['bin_card_type'].'&machine_id='.$_GET['machine_id'].'&vendor_id='.$_GET['vendor_id'].'&rdate='.$_GET['rdate'].'&grn_no='.$_GET['grn_no'].'&grn_date='.$_GET['grn_date'].'&remarks='.$_GET['remarks'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>bincard/binCard/manage_bin_card?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -55,8 +57,10 @@ if($this->input->get('entries')!="")
 </label>
 </div>
 </div>
+</div>
+</div>
 
-<div class="table-responsive" style="overflow-x:auto;">
+<div class="table-responsive" style1="overflow-x:auto;">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
 <thead>
 <tr>
@@ -70,18 +74,16 @@ if($this->input->get('entries')!="")
 </thead>
 
 <tbody id="getDataTable">
-<tr>
 
-	<form method="get">
-	<td><input name="code"  type="text"  class="search_box form-control input-sm" style="width:60px;"  value="" /></td>
-	<td><input name="bin_card_type"  type="text"  class="search_box form-control input-sm" style="width:100px;" value="" /></td>
-	<td><input name="vendor_id"  type="text"  class="search_box form-control input-sm" style="width:100px;" value="" /></td>
-	<td><input name="grn_no"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
-	<td><input name="grn_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-	</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
-</tbody>
+
 
 
 <?php
@@ -106,7 +108,6 @@ $vendorQuery = $this -> db
 <th><?php echo $fetch->grn_no;  ?></th>
 <th><?php echo $fetch->grn_date;  ?></th>
 <th>
-<!-- <button class="btn btn-default" type="button" data-toggle="modal" onClick="openpopup('<?=base_url();?>bincard/binCard/edit_bin_card',1400,600,'view',<?=$fetch->rflhdrid;?>)" data-backdrop='static' data-keyboard='false' title="View BinCard"> <i class="fa fa-eye"></i> </button> -->
 
 <?php
 $pri_col='rflhdrid';
@@ -129,8 +130,9 @@ if($countRows > 0 ) {  ?>
 
 </tr>
 <?php $i++; }  ?>
-
+</tbody>
 </table>
+
 </div>
 
 <div class="row">
@@ -143,9 +145,6 @@ if($countRows > 0 ) {  ?>
 </div>
 </div>
 
-
-</div>
-</div>
 </div><!--panel-default close-->
 </div><!--main-content close-->
 

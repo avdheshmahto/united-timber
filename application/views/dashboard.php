@@ -42,7 +42,7 @@
 <!-- /last month sale -->
 </a>
 <!-- New Visits -->
-<a href="<?=base_url();?>binCard/manage_bin_card">
+<a href="<?=base_url();?>bincard/binCard/manage_bin_card">
 <div class="col-lg-3 col-sm-6">
 <div class="panel minimal royalblue-bg">
 <div class="panel-body">

@@ -56,7 +56,6 @@ foreach($ProductName as $p) { ?>
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button>
 &nbsp;&nbsp;
-<!-- <a href="<?=base_url();?>report/Report/excel_searchStock?<?='code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter'];?>" class="btn btn-sm" >Excel</a> -->
 </div>
 </div>
 
@@ -191,6 +190,6 @@ function exportTableToExcel(tableID, filename = ''){
 
 function ResetLead()
 {
-  location.href="<?=base_url('/report/Report/searchStock');?>";
+  location.href="<?=base_url('/report/Report/currentStock');?>";
 }
 </script>

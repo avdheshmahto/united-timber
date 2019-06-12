@@ -24,19 +24,12 @@ function filterProductType($perpage,$pages,$get)
 	if(sizeof($get) > 0)
 	{
 		
-		if($get['type'] != "")
-		{
-			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
-			// $getUnit2   = $unitQuery2->row();
-			// $sr_no2     = $getUnit2->Product_id;
-			
-			$qry       .= " AND Product_id ='".$get['sp_name']."'";
-		
-		}
-		
+		if($get['type'] != "")			
+			$qry       .= " AND serial_number ='".$get['type']."'";
+
 	}
   
-  	$qry .= "  limit $pages,$perpage";
+  	$qry .= "  Order by serial_number DESC limit $pages,$perpage";
  
   $data =  $this->db->query($qry)->result();
   return $data;
@@ -54,12 +47,10 @@ function count_ProductType($tableName,$status = 0,$get)
 		
 		if($get['type'] != "")
 		{
-			// $unitQuery2 = $this->db->query("select * from  tbl_product_stock where productname LIKE '%".$get['sp_name']."%'");
-			// $getUnit2   = $unitQuery2->row();
-			// $sr_no2     = $getUnit2->Product_id;
-			
-			$qry       .= " AND Product_id ='".$get['sp_name']."'";
 		
+			if($get['type'] != "")			
+				$qry       .= " AND serial_number ='".$get['type']."'";
+					
 		}
 		
 	}
@@ -326,7 +317,7 @@ function filterListbincard($perpage,$pages,$get)
 
 			$t_date1=$t_date[0]."-".$t_date[1]."-".$t_date[2];
 	        $f_date1=$f_date[0]."-".$f_date[1]."-".$f_date[2];
-			$qry .=" and date >='$f_date1' and date <='$t_date1'";
+			$qry .=" and grn_date >='$f_date1' and grn_date <='$t_date1'";
 		}
 	
 	}
@@ -366,7 +357,7 @@ function count_allbincard($tableName,$status = 0,$get)
 
 			$t_date1=$t_date[0]."-".$t_date[1]."-".$t_date[2];
 	        $f_date1=$f_date[0]."-".$f_date[1]."-".$f_date[2];
-			$qry .=" and date >='$f_date1' and date <='$t_date1'";
+			$qry .=" and grn_date >='$f_date1' and grn_date <='$t_date1'";
 		}
 	
 	}
@@ -512,16 +503,16 @@ function filterListbreakdown($perpage,$pages,$get)
 	{
 			
 
-		if($get['section'] != "")
-			$qry .= " AND section = '".$get['section']."'";
+		if($get['m_type'] != "")
+			$qry .= " AND section = '".$get['m_type']."'";
 		
-		if($get['machine'] != "")
+		if($get['machineid'] != "")
 		{
 		
-			$qry .= " AND machine_id ='".$get['machine']."'";
+			$qry .= " AND machine_id ='".$get['machineid']."'";
 		}
 
-		if($get['date_range']!='')
+		/*if($get['date_range']!='')
 		{	
 			$daterage=explode("-",$_GET['date_range']);
 			
@@ -537,7 +528,7 @@ function filterListbreakdown($perpage,$pages,$get)
 			$todate1=$todtrng[2]."-".$todtrng[0]."-".$todtrng[1];
 	        
 			$qry .=" AND maker_date >='$fdate1' AND maker_date <='$todate1'";
-		}
+		}*/
 			
 	}
 
@@ -558,16 +549,16 @@ function count_allbreakdown($tableName,$status = 0,$get)
 	{
 			
 
-		if($get['section'] != "")
-			$qry .= " AND section = '".$get['section']."'";
+		if($get['m_type'] != "")
+			$qry .= " AND section = '".$get['m_type']."'";
 		
-		if($get['machine'] != "")
+		if($get['machineid'] != "")
 		{
 		
-			$qry .= " AND machine_id ='".$get['machine']."'";
+			$qry .= " AND machine_id ='".$get['machineid']."'";
 		}
-		
-		if($get['date_range']!='')
+
+		/*if($get['date_range']!='')
 		{	
 			$daterage=explode("-",$_GET['date_range']);
 			
@@ -583,7 +574,7 @@ function count_allbreakdown($tableName,$status = 0,$get)
 			$todate1=$todtrng[2]."-".$todtrng[0]."-".$todtrng[1];
 	        
 			$qry .=" AND maker_date >='$fdate1' AND maker_date <='$todate1'";
-		}
+		}*/
 			
 	}
 		 
@@ -614,13 +605,18 @@ function filterListScheduled($perpage,$pages,$get)
 
 	if(sizeof($get) > 0)
 	{
-			
-		if($get['machine'] != "")
+		
+		if($get['m_type'] != "")
 		{
-			$qry .= " AND machine_name ='".$get['machine']."'";
+			$qry .= " AND m_type ='".$get['m_type']."'";
+		}
+
+		if($get['machineid'] != "")
+		{
+			$qry .= " AND machine_name ='".$get['machineid']."'";
 		}
 		
-		if($get['date_range']!='')
+		/*if($get['date_range']!='')
 		{	
 			$daterage=explode("-",$_GET['date_range']);
 			
@@ -636,11 +632,11 @@ function filterListScheduled($perpage,$pages,$get)
 			$todate1=$todtrng[2]."-".$todtrng[0]."-".$todtrng[1];
 	        
 			$qry .=" AND maker_date >='$fdate1' AND maker_date <='$todate1'";
-		}
+		}*/
 			
 	}
 
-    $qry .= "  limit $pages,$perpage";
+    $qry .= "  Order by id DESC limit $pages,$perpage";
  
   $data =  $this->db->query($qry)->result();
   return $data;
@@ -655,13 +651,18 @@ function count_allScheduled($tableName,$status = 0,$get)
 
     if(sizeof($get) > 0)
 	{
-			
-		if($get['machine'] != "")
+		
+		if($get['m_type'] != "")
 		{
-			$qry .= " AND machine_name ='".$get['machine']."'";
+			$qry .= " AND m_type ='".$get['m_type']."'";
+		}
+
+		if($get['machineid'] != "")
+		{
+			$qry .= " AND machine_name ='".$get['machineid']."'";
 		}
 		
-		if($get['date_range']!='')
+		/*if($get['date_range']!='')
 		{	
 			$daterage=explode("-",$_GET['date_range']);
 			
@@ -677,7 +678,7 @@ function count_allScheduled($tableName,$status = 0,$get)
 			$todate1=$todtrng[2]."-".$todtrng[0]."-".$todtrng[1];
 	        
 			$qry .=" AND maker_date >='$fdate1' AND maker_date <='$todate1'";
-		}
+		}*/
 			
 	}
 		 
@@ -889,14 +890,14 @@ function getSoftwareCost($last,$strat){
 
 function filterSoftwareCost($perpage,$pages,$get){
  	
-	$qry ="select *,SUM(total_spent) from tbl_software_cost_log GROUP BY section_id ORDER BY id DESC limit $strat,$last";
+	$qry ="select *,SUM(total_spent) from tbl_software_cost_log ";
 
 	if(sizeof($get) > 0)
 	{
 
 	}
  
-  $qry .= "  limit $pages,$perpage";
+  $qry .= "  GROUP BY section_id ORDER BY id DESC limit $strat,$last";
   $data =  $this->db->query($qry)->result();
   return $data;
 
@@ -1153,17 +1154,12 @@ function filterList_machine($perpage,$pages,$get)
 	if(sizeof($get) > 0)
 	{
 		
-		if($get['code'] != "")
-			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
-			
-		if($get['sp_name'] != "")
-		{			
-			$qry       .= " AND Product_id ='".$get['sp_name']."'";		
-		}
-				
+		if($get['m_type'] != "")
+			$qry .= " AND id='".$get['m_type']."'";
+					
 	}
 
-    $qry .= "  limit $pages,$perpage";
+    $qry .= "  Order by id ASC limit $pages,$perpage";
  
   $data =  $this->db->query($qry)->result();
   return $data;
@@ -1179,16 +1175,9 @@ function count_all_machine($tableName,$status = 0,$get)
 	if(sizeof($get) > 0)
 	{
 		
-		if($get['code'] != "")
-			$qry .= " AND sku_no LIKE '%".$get['code']."%'";
-			
-		if($get['sp_name'] != "")
-		{
-			
-			$qry       .= " AND Product_id ='".$get['sp_name']."'";
-		
-		}
-				
+		if($get['m_type'] != "")
+			$qry .= " AND id='".$get['m_type']."'";
+					
 	}
 		 
    $query=$this->db->query($qry,array($status))->result_array();

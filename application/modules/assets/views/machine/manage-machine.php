@@ -121,7 +121,6 @@ foreach($sql->result() as $getSql) {
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<a href="#/" class="btn btn-secondary btn-sm delete_all" title="Delete Multiple"><i class="fa fa-trash-o"></i> Delete All</a>
 </div>
 </ol>
 </form>	
@@ -141,7 +140,7 @@ foreach($sql->result() as $getSql) {
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>assets/machine/manage_machine?<?='codee='.$_GET['codee'].'&m_type='.$_GET['m_type'].'&machine_name='.$_GET['machine_name'].'&machine_description='.$_GET['machine_description'].'&capacity='.$_GET['capacity'].'&m_type='.$_GET['m_type'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>assets/machine/manage_machine?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -171,7 +170,6 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData" >
 <thead>
 <tr>
-	<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	<th>Code</th>
 	<th>Section</th>
 	<th>Machine Name</th>
@@ -182,16 +180,13 @@ Showing <?=$dataConfig['page']+1;?> to
 </thead>
 
 <tbody id = "getDataTable">	
-<tr>
-<form method="get">	
-	<td>&nbsp;</td>
-	<td><input name="codee"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="m_type"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="machine_name" type="text"  class="search_box form-control input-sm" value=""/></td>
-	<td><input name="machine_description"  type="text"  class="search_box form-control input-sm" /></td>
-	<td><input name="capacity"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-</form>	
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 										
 <?php  
@@ -205,7 +200,6 @@ foreach($result as $fetch_list)
 ?>
 
 <tr class="gradeC record " data-row-id="<?php echo $fetch_list->id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
 <th><?php echo $fetch_list->code; ?></th>
 <th><?php 
 	$sqlunit=$this->db->query("select * from tbl_category where id='".$fetch_list->m_type."'");
@@ -508,35 +502,39 @@ function exportTableToExcel(tableID, filename = '')
 <script src="<?php echo base_url();?>assets/js/vendor/chosen/chosen.jquery.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/main.js"></script>
 
-<style>
-.c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-}
-.c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-}
-.c-label:after{
-  color: #c51244 !important;
-}
-.c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-}
-.c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-}
+<script type="text/javascript">
+function exportTableToExcel(tableID, filename = '')
+{
 
-</style>
+    //alert();
+   var downloadLink;
+   var dataType = 'application/vnd.ms-excel';
+   var tableSelect = document.getElementById(tableID);
+   var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+   
+   // Specify file name
+   filename = filename?filename+'.xls':'Machine <?php echo date('d-m-Y');?>.xls';
+   
+   // Create download link element
+   downloadLink = document.createElement("a");
+   
+   document.body.appendChild(downloadLink);
+   
+   if(navigator.msSaveOrOpenBlob){
+       var blob = new Blob(['\ufeff', tableHTML], {
+           type: dataType
+       });
+       navigator.msSaveOrOpenBlob( blob, filename);
+   }else{
+
+       // Create a link to the file
+       downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+   
+       // Setting the file name
+       downloadLink.download = filename;
+       
+       //triggering the function
+       downloadLink.click();
+   }
+}
+</script>

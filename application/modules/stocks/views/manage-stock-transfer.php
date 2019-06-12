@@ -26,7 +26,6 @@ if($this->input->get('entries')!="")
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
 <div class="dt-buttons">
-	<!-- <a href="<?=base_url();?>report/Report/excel_spare_machine_mapping_report?<?='&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.'filter'?>" class="btn btn-sm" >Excel</a> -->
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button>
 &nbsp;&nbsp;		
 </div>
@@ -77,13 +76,21 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id="getDataTable" >
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <?php
 $yy=1;
 if(!empty($result)) {
 foreach($result as $rows) {
 ?>
 <tr class="gradeC record">
-
 <th><?php echo $rows->sku_no; ?></th>
 <th><a href="<?=base_url();?>stocks/stockTransfer/stock_transfer_map?id=<?=$rows->Product_id?>">
 	<?php echo $rows->productname; ?></a></th>
@@ -141,7 +148,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'LOCATION WISE CURRENT STOCK REPORT(<?php echo date('d-m-Y');?>).xls';
+   filename = filename?filename+'.xls':'Stock Transfer (<?php echo date('d-m-Y');?>).xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

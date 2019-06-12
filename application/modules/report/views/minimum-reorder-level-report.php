@@ -56,8 +56,7 @@ foreach($ProductName as $p) { ?>
 <div class="html5buttons">
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button> &nbsp;&nbsp; 
- 
-<!-- <a href="<?=base_url();?>report/Report/excel_searchReorderLevel?<?='code='.$_GET['code'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter'];?>" class="btn btn-sm">Excel</a> -->
+
 </div>
 </div>
 
@@ -69,8 +68,7 @@ foreach($ProductName as $p) { ?>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>
@@ -160,7 +158,6 @@ foreach($result as $rows) {
 <div class="row">
 <div class="col-md-12 text-right">
 	<div class="col-md-6 text-left"> 
-	<!-- <h6>Showing 1 to 10 of <?php echo $totalrow; ?> entries</h6> -->
 	</div>
 	<div class="col-md-6"> 
 		<?php echo $pagination; ?>
@@ -171,12 +168,6 @@ foreach($result as $rows) {
 </div>
 </div>
 </div><!--main-content close-->
-
-
-
-
-
-
 
 
 

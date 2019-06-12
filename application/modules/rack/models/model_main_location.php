@@ -30,7 +30,7 @@ function filterListproduct($perpage,$pages,$get)
 		}	
 	}
 
-  $qry .= "  limit $pages,$perpage"; 	
+  $qry .= "  Order by serial_number desc limit $pages,$perpage"; 	
   $data =  $this->db->query($qry)->result();
   return $data;
 

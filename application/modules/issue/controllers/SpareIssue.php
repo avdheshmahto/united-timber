@@ -282,7 +282,7 @@ function insert_spare_issue_data()
 
 				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-				$this->add_software_cost_log($getIssue->issue_id,'Spare',$issue_date,$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent);
+				$this->add_software_cost_log($getIssue->issue_id,'Spare',$getIssue->issue_date,$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent,$getIssue->shift);
 
 				$this->software_stock_log_insert($getIssue->issue_id,'Parts & Supplies Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
 
@@ -298,7 +298,7 @@ function insert_spare_issue_data()
 	else
 	{
 
-		$this->db->query("insert into tbl_spare_issue_hdr set issue_date='$issue_date',spare_id='$spareids', workorder_id='$workorder_id', workorder_spare_id='$workorder_spare_id', bin_card_type='Issue', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+		$this->db->query("insert into tbl_spare_issue_hdr set issue_date='$issue_date',shift='$shift',spare_id='$spareids', workorder_id='$workorder_id', workorder_spare_id='$workorder_spare_id', bin_card_type='Issue', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
 		$lastId=$this->db->insert_id();
 
@@ -319,7 +319,7 @@ function insert_spare_issue_data()
 
 				$total_spent=$spare_qty[$i] * $purchase_price[$i];
 
-				$this->add_software_cost_log($lastId,'Spare',$issue_date,$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent);
+				$this->add_software_cost_log($lastId,'Spare',$issue_date,$section_id,$machine_id,$workordid,$spareids,$spare_qty[$i],$purchase_price[$i],$total_spent,$shift);
 
 				$this->software_stock_log_insert($lastId,'Parts & Supplies Issue',$vendor_id[$i],$spareids,$spare_qty[$i],$purchase_price[$i]);
 				

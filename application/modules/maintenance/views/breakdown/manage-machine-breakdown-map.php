@@ -346,7 +346,6 @@ foreach($toolName->result() as $fetch_map_tool)
 <th>Breakdown Start Time</th>
 <th>Breakdown End Time</th>
 <th>Breakdown Total Hours</th>
-<!-- <th>Action</th> -->
 </tr>
 </thead>
 
@@ -366,20 +365,28 @@ $miscName=$this->db->query("select * from tbl_machine_breakdown where workorder_
 	<td><?=$fetch_hours->start_time; ?></td>
 	<td><?=$fetch_hours->end_time; ?></td>
     <td><?php     
-	$day2 = strtotime( $fetch_hours->end_time );
-	$day1 = strtotime( $fetch_hours->start_time );
-	$diff = round(($day2 - $day1) / 3600);
-	echo $diff." Hours"; ?>    	
-    </td>
-    <!-- <td>
-    	<?php $pri_col='id';
-		$table_name='tbl_machine_breakdown';
-		?>
-		<?php if($view!=''){ ?>
+	// $day2 = strtotime( $fetch_hours->end_time );
+	// $day1 = strtotime( $fetch_hours->start_time );
+	// $diff = round(($day2 - $day1) / 3600);
+	// echo $diff." Hours"; 
+	$time1 = $fetch_hours->start_time;
+	$time2 = $fetch_hours->end_time;
 
-		<button class="btn btn-default delbutton" id="<?php echo $fetch_hours->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
-		<?php }?>
-    </td> -->	
+	$diff = abs(strtotime($time1) - strtotime($time2));
+
+	$tmins = $diff/60;
+
+	$hours = floor($tmins/60);
+
+	$mins = $tmins%60;
+
+
+	echo "<b>$hours</b> Hours | <b>$mins</b> Minutes</b>";
+
+
+
+	?>    	
+    </td>
 
 </tr>
 

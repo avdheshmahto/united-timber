@@ -854,8 +854,9 @@ function delete_toolsissue_data() {
 			$qty=$getDtl->qty;
 			$purchase_price=$getDtl->price;
 			$type=$getDtl->type;
+			$authorDate=$getDtl->author_date;
 
-			$this->delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type);
+			$this->delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type,$authorDate);
 
 			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Tools Issue' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
 
@@ -872,7 +873,7 @@ function delete_toolsissue_data() {
 }
 
 
-public function delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type)
+public function delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type,$authorDate)
 {
 		
 	$this->db->select('*');
@@ -894,7 +895,7 @@ public function delete_tools_issue($section,$main_id,$loc,$rack_id,$vendor_id,$q
 
 		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
 
-		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='tools issue' AND name_role='section tools issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='tools issue' AND name_role='section tools issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' AND author_date='$authorDate' ";
 		$this->db->query($sqlProdLoc1);
 			  
 									
@@ -934,8 +935,9 @@ function delete_consumable_data() {
 			$qty=$getDtl->qty;
 			$purchase_price=$getDtl->price;
 			$type=$getDtl->type;
+			$authorDate=$getDtl->author_date;
 
-			$this->delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type);
+			$this->delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type,$authorDate);
 
 			$this->db->query("DELETE FROM tbl_software_stock_log WHERE log_type='Consumable Issue' AND log_id='$id' AND vendor_id='$vendor_id' AND product_id='$main_id' AND qty='$qty' AND price='$purchase_price' ");
 
@@ -952,7 +954,7 @@ function delete_consumable_data() {
 }
 
 
-public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type)
+public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_id,$qty,$purchase_price,$type,$authorDate)
 {
 		
 	$this->db->select('*');
@@ -974,7 +976,7 @@ public function delete_consumable_issue($section,$main_id,$loc,$rack_id,$vendor_
 
 		$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' and type='opening stock' ");
 
-		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='consumable issue' AND name_role='section consumable issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' ";
+		$sqlProdLoc1="DELETE FROM tbl_product_serial_log WHERE quantity ='$qty' AND product_id='$main_id' AND loc='$loc' AND rack_id='$rack_id' AND type='consumable issue' AND name_role='section consumable issue' AND module_status='$type' AND supp_name='$vendor_id' AND purchase_price='$purchase_price' AND author_date='$authorDate' ";
 		$this->db->query($sqlProdLoc1);
 			  
 									
@@ -1435,7 +1437,7 @@ public function software_stock_log_insert($log_id,$log_type,$vendor_id,$product_
 }
 
 
-public function add_software_cost_log($log_id,$log_type,$log_date,$section_id,$machine_id,$workorder_id,$product_id,$qty,$price,$total_spent)
+public function add_software_cost_log($log_id,$log_type,$log_date,$section_id,$machine_id,$workorder_id,$product_id,$qty,$price,$total_spent,$shift)
 {
 
 
@@ -1473,6 +1475,7 @@ public function add_software_cost_log($log_id,$log_type,$log_date,$section_id,$m
 			'qty'		   => $qty,
 			'price'        => $price,
 			'total_spent'  => $total_spent,
+			'shift'        => $shift,
 
 		);
 

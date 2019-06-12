@@ -10,7 +10,6 @@ if($this->input->get('entries')!=""){
 ?>
 <!-- Main content -->
 <div class="main-content">
-
 <?php
 $this->load->view("reportheader");
 ?>
@@ -32,10 +31,15 @@ $getWO=$wo->row(); ?>
 <tbody>
 <th></th>
 <th></th>
-<th></th>	
+<th><a target="_blank" href="<?=base_url('report/Report/frequency_details?id=')?><?=$getWO->id?>" style="font-size: small;">Frequncy Of Spares</a></th>	
 <th></th>	
 <th>Section Total Amount =</th>
-<th><input type="text" name="section_total" id="section_total" class="form-control" style="width: 100px;" readonly=""/></th>
+<th>
+	<input type="text" name="section_total" id="section_total" class="form-control" style="width: 100px;" readonly=""/>
+</th>
+<th></th>
+<th></th>
+<th></th>
 </tbody>
 </thead>
 
@@ -46,6 +50,7 @@ $getWO=$wo->row(); ?>
 	<th>Date</th>
 	<th>Parts & Supplies Name</th>
 	<th>Type</th>
+	<th>Shift</th>
 	<th>Price</th>
 	<th>Qty</th>
 	<th>Parts & Supplies Amount</th>
@@ -57,6 +62,7 @@ $getWO=$wo->row(); ?>
 <tbody id="getDataTable" >
 
 <tr style="display: none;">
+	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -80,7 +86,7 @@ foreach($sftcostlog->result() as $fetch_list) {
 ?>
 <tr class="gradeC record">
 <th><?php echo $z++; ?></th>	
-<th><?php echo $fetch_list->author_date; ?></th>
+<th><?php echo $fetch_list->log_date; ?></th>
 <th>
 <?php
 	$prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->product_id'");
@@ -88,6 +94,7 @@ foreach($sftcostlog->result() as $fetch_list) {
 	echo $getPrd->productname; ?>
 </th>
 <th><?=$getPrd->via_type?></th>
+<th><?=$fetch_list->shift;?></th>
 <th><?php echo $fetch_list->price ;?></th>	 
 <th><?php echo $fetch_list->qty; ?></th>
 <th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
@@ -127,7 +134,7 @@ else
 ?>
 <tr>
 	<th>1</th>
-	<th colspan="6"></th>
+	<th colspan="7"></th>
   
   <?php 
 	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND (section_id='".$_GET['id']."' OR machine_id='".$_GET['id']."') ");
@@ -174,10 +181,13 @@ $sum=$total;
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
 <?php
 $this->load->view("footer.php");
 ?>
-</div>
 
 
 

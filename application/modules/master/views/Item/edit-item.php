@@ -50,34 +50,28 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example_"  id="getDataTable">
 <thead bgcolor="#CCCCCC">
 <tr>
-	<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	<th>Code </th>
 	<th>Type</th>
-	<th>Sub-Type</th>	
+	<th>Sub-Type</th>
 	<th>Priority</th>
 	<th>Name</th>
 	<th>Usages Unit</th>
-	<th>Purchase Price</th>
-	<th>Quantity</th>
+	<th>Quantity In Stock</th>
 	<th><div style="width: 100px;"> Action</div></th>
 </tr>
 </thead>
 
 <tbody id = "getDataTable">
 	
-<tr>
-<form method="get">
-	<td>&nbsp;</td>
-	<td><input name="sku_no" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><input name="category" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><input name="type_of_spare" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="sub_type" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="productname" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="usages_unit" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="purchase_price" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="qtty" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>	
 	
 <?php  
@@ -87,17 +81,12 @@ foreach($result as $fetch_list)
 {
 ?>
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->Product_id; ?>" value="<?php echo $fetch_list->Product_id;?>" /></th>
 <?php
 $queryType=$this->db->query("select *from tbl_master_data where serial_number='$fetch_list->type'");
 $getType=$queryType->row();
-
-
 ?>
 
 <th><?=$fetch_list->sku_no;?></th>
-
-
 <th><?php $compQuery1 = $this -> db
 		   -> select('*')
 		   -> where('serial_number',$fetch_list->type_of_spare)
@@ -122,7 +111,7 @@ if($psize->keyvalue !='')
 ?>
 <th><?php echo $fetch_list->productname .'   ( '.$psize->keyvalue .')' ; } else { ?></th>
 <th>
-<!-- <a class="modalMapSpare"   onclick="viewItem(<?=$fetch_list->Product_id;?>);"  data-toggle="modal" data-target="#modal-1" data-backdrop='static' data-keyboard='false'  id="formreset" title="View Machine Details"> -->
+
 <a href="<?=base_url();?>master/Item/manage_item_map?id=<?php echo $fetch_list->Product_id; ?>" title="Spare Details"><?php echo $fetch_list->productname; } ?></a></th>
 
 <th>
@@ -136,32 +125,33 @@ echo $keyvalue1->keyvalue;
 
 
 ?></th>
-<th><?=$fetch_list->unitprice_purchase?></th>
 <th><?=$fetch_list->quantity?></th>
 <th class="bs-example">
-<?php if($view!=''){ ?>
-
-
-<!-- <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Spare Details"><i class="fa fa-eye"></i></button> -->
-
-
-<?php } if($edit!=''){ ?>
-
+<?php if($edit!=''){ ?>
 <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare"><i class="icon-pencil"></i></button>
 
 
 <?php }
 $pri_col='Product_id';
 $table_name='tbl_product_stock';
-?>
-<button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare"><i class="icon-trash"></i></button>		
-<?php
-  ?>
- 
+
+
+$stfCostLog=$this->db->query("select * from tbl_software_cost_log where product_id='$fetch_list->Product_id' ");
+$numCost=$stfCostLog->num_rows();
+
+$sftStkLog=$this->db->query("select * from tbl_software_stock_log where product_id='$fetch_list->Product_id' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost + $numStk;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Spare" onclick="return confirm('Parts & Supplies already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_item" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Spare"><i class="icon-trash"></i></button>		
+<?php }  ?>
  
  
 
- 
 </th>
 </tr>
 

@@ -41,7 +41,7 @@ function filterListproduct($perpage,$pages,$get)
 		
 	
 	}
- 	 $qry .= "  limit $pages,$perpage";
+ 	 $qry .= " order by id desc limit $pages,$perpage";
  
   $data =  $this->db->query($qry)->result();
   return $data;

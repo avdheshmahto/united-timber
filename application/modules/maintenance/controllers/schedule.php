@@ -106,7 +106,7 @@ public function insert_scheduling_labor_tasks()
 	$this->Model_admin_login->insert_user($table_name,$dataall);
 	$lastId=$this->db->insert_id();
 
-	$this->add_software_cost_log($lastId,'Labour',$task_date,$section_id,$machine_id,$brekdown_id,'','','',$cost_spent);
+	$this->add_software_cost_log($lastId,'Labour',$task_date,$section_id,$machine_id,$brekdown_id,'','','',$cost_spent,'');
 
 	echo 1;
 }

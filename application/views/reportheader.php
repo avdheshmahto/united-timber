@@ -85,7 +85,7 @@ display:block !important;
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/section_report">Maintenance Report</a></li>
-<!-- <li><a href="<?=base_url();?>report/Report/spare_tracking_report">Frequency of Spares Report</a></li> -->
+<li><a href="<?=base_url();?>report/Report/breakdown_hours_report">Breakdown Hours Report</a></li>
 </ul>
 </li>
 
@@ -93,17 +93,17 @@ display:block !important;
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/currentStock">Current Stock Report</a></li>
 <li><a href="<?=base_url();?>report/Report/searchReorderLevel">Required Stock Report</a></li>
-<li><a href="<?=base_url();?>report/Report/searchBincard">Stock Receive Report</a></li>
-<li><a href="<?=base_url();?>report/Report/spare_return">Stock Return Report</a></li>
+<li><a href="<?=base_url();?>report/Report/searchBincard">Purchase Report</a></li>
+<li><a href="<?=base_url();?>report/Report/spare_return">Purchase Return Report</a></li>
 </ul>
 </li>
 
-<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Workorder <b class="caret"></b></a>
+<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Workorder <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/breakdown_report">Breakdown Workorder Report</a></li>
 <li><a href="<?=base_url();?>report/Report/scheduled_report">Scheduled Workorder Report</a></li>
 </ul>
-</li>
+</li> -->
 
 <!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">

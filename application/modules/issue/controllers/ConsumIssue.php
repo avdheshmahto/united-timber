@@ -90,7 +90,7 @@ function insert_consumable_issue()
 	$author_date = date('Y-m-d');
 		
 							
-	$this->db->query("insert into tbl_consum_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+	$this->db->query("insert into tbl_consum_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',shift='$shift',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 	
 	$lastId=$this->db->insert_id();
 
@@ -106,11 +106,11 @@ function insert_consumable_issue()
 	for($i=0;$i<$rows;$i++)
 	{
 
-		$this->db->query("insert into tbl_consum_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids[$i]',type='$via_types[$i]',location='$locs[$i]',rack='$racks[$i]',vendor='$vendors[$i]',price='$prices[$i]',qty='$qtyname[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+		$this->db->query("insert into tbl_consum_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids[$i]',type='$via_types[$i]',location='$locs[$i]',rack='$racks[$i]',vendor='$vendors[$i]',price='$prices[$i]',qty='$qtyname[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date=NOW()");
 
 		$total_spent=$qtyname[$i] * $prices[$i];
 
-		$this->add_software_cost_log($lastId,'Consumable',$issue_date,$section,$machineid,'',$spareids[$i],$qtyname[$i],$prices[$i],$total_spent);
+		$this->add_software_cost_log($lastId,'Consumable',$issue_date,$section,$machineid,'',$spareids[$i],$qtyname[$i],$prices[$i],$total_spent,$shift);
 
 		$this->software_stock_log_insert($lastId,'Consumable Issue',$vendors[$i],$spareids[$i],$qtyname[$i],$prices[$i]);		
 

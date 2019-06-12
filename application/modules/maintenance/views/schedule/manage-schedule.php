@@ -28,8 +28,9 @@ if($this->input->get('entries')!=""){
     </div>	 
 </div>
 </form>
+
 <div class="panel-default">
-<form class="form-horizontal" role="form" method="post" action="insert_schedule">			
+<form class="form-horizontal" role="form" method="post" action="insert_schedule">		
 <ol class="breadcrumb breadcrumb-2"> 
 <li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
 <li><a href="#">Maintenance</a></li> 
@@ -131,15 +132,10 @@ if($this->input->get('entries')!=""){
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<a href="#/" class="btn btn-secondary btn-sm delete_all"><i class="fa fa-trash-o"></i> Delete All</a>
 </div>
 </ol>
 </form>	
 
-
-<div class="row">
-<div class="col-lg-12">
-<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 
 <div class="row">
 <div class="col-sm-12" id="listingData">
@@ -152,7 +148,7 @@ if($this->input->get('entries')!=""){
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>maintenance/schedule/manage_schedule?<?='codee='.$_GET['codee'].'&m_type='.$_GET['m_type'].'&machine_name='.$_GET['machine_name'].'&machine_description='.$_GET['machine_description'].'&capacity='.$_GET['capacity'].'&m_type='.$_GET['m_type'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>maintenance/schedule/manage_schedule?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -176,13 +172,14 @@ Showing <?=$dataConfig['page']+1;?> to
 </label>
 </div>
 </div>
+</div>
+</div>
 
 <div class="panel-body">
-<div class="table-responsive" style="overflow-x:auto;">
+<div class="table-responsive">
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData" >
 <thead>
 <tr>
-<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	<th>Schedule Code </th>
 	<th>Section</th>
 	<th>Machine Name</th>
@@ -193,17 +190,15 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id = "getDataTable">	
-<tr>
-<form method="get">	
-	<td>&nbsp;</td>
-	<td><input name="codee"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="m_type"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="machine_namee"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="wostatus"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="priority"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><input name="maintyp"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
-</form>	
+
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 										
 
@@ -218,8 +213,6 @@ foreach($result as $fetch_list)
 ?>
 
 <tr class="gradeC record " data-row-id="<?php echo $fetch_list->id; ?>">
-
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
 
 <th><a href="<?=base_url();?>maintenance/schedule/manage_schedule_map?id=<?php echo $fetch_list->id; ?>"><?php echo "SM".$fetch_list->code; ?></a></th>
 
@@ -289,13 +282,8 @@ $table_name='tbl_schedule_maintain';
 <?php  } ?>
 </tbody>
 </table>
-
-
-
 <input type="text" style="display:none;" id="table_name" value="tbl_machine">  
 <input type="text" style="display:none;" id="pri_col" value="id">
-
-<!--</form>-->
 </div>
 
 <div class="row">
@@ -305,12 +293,6 @@ $table_name='tbl_schedule_maintain';
 	</div>
 </div>
 
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -435,52 +417,8 @@ if(wostatus=='')
 	
 }
 
-	
 </SCRIPT>
 
-<script>
-/*$(document).ready(function() {
-  $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-  setInterval(function() {
-    //$('#getDataTable').load('get_machine');
-  }, 3000); // the "3000" 
-});
-*/
-</script>
-
-
-<style>
-.c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-}
-.c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-}
-.c-label:after{
-  color: #c51244 !important;
-}
-.c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-}
-.c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-}
-
-</style>
 
 <script>
 function exportTableToExcel(tableID, filename = ''){
@@ -523,21 +461,23 @@ function exportTableToExcel(tableID, filename = ''){
 function getCat()
 {
 
-var loc=document.getElementById("m_type").value;
-var xhttp = new XMLHttpRequest();
-xhttp.open("GET", "getcat?loc="+loc, false);
-xhttp.send();
-document.getElementById("machine_name").innerHTML = xhttp.responseText;
+	var loc=document.getElementById("m_type").value;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "getcat?loc="+loc, false);
+	xhttp.send();
+	document.getElementById("machine_name").innerHTML = xhttp.responseText;
+
 }
 
 function getCatt()
 {
 
-var loc=document.getElementById("m_type").value;
-var xhttp = new XMLHttpRequest();
-xhttp.open("GET", "getcatt?loc="+loc, false);
-xhttp.send();
-document.getElementById("machine_name").innerHTML = xhttp.responseText;
+	var loc=document.getElementById("m_type").value;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "getcatt?loc="+loc, false);
+	xhttp.send();
+	document.getElementById("machine_name").innerHTML = xhttp.responseText;
+
 }
 
 

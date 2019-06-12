@@ -72,9 +72,6 @@ foreach ($sqlgroup->result() as $fetchgroup){
 </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
-
-<a href="#/" class="btn btn-secondary btn-sm delete_all" title="Multiple Delete">
-	<i class="fa fa-trash-o"></i> Delete All</a>
 </div>
 </ol>
 </form>	
@@ -83,15 +80,14 @@ foreach ($sqlgroup->result() as $fetchgroup){
 <div class="col-sm-12" id="listingData">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
-<div class="dt-buttons">
-
+<div class="dt-buttons" style="display: none1;">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>rack/locationRack/manage_location_rack?<?='location_rack_id='.$_GET['location_rack_id'].'&rack_name='.$_GET['rack_name'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>rack/locationRack/manage_location_rack?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -114,13 +110,13 @@ foreach ($sqlgroup->result() as $fetchgroup){
 <input type="text" id="searchTerm" name="filter"  class="search_box form-control input-sm" onkeyup="doSearch()"  placeholder="What you looking for?">
 </label>
 </div>
-
+</div>
+</div>
 </div>
 
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData"  >
 <thead>
 <tr>
-		<th style="width:22px;"><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	   <th>Location Name </th>       
 		 <th>Location Rack</th>             
 		 <th style="width:110px;">Action</th>
@@ -128,14 +124,10 @@ foreach ($sqlgroup->result() as $fetchgroup){
 </thead>
 
 <tbody id = "getDataTable">
-<tr>
-
-	<form method="get">
-	<td>&nbsp;</td>
-	<td><input name="location_rack_id"  type="text"  class="search_box form-control input-sm"   value="" /></td>
-	<td><input name="rack_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 
 <form class="form-horizontal" method="post" action="update_item"  enctype="multipart/form-data">
@@ -147,7 +139,6 @@ foreach($result as $fetch_list)
 ?>
 
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
 <?php 
  $compQuery = $this -> db
            -> select('*')
@@ -199,8 +190,7 @@ if($countRows > 0 ) { ?>
 </div>
 </div>
 
-</div>
-</div>
+
 </div><!--panel-default close-->
 </div><!--main-content close-->
 

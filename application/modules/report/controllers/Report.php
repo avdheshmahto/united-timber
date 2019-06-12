@@ -27,6 +27,20 @@ function report_function()
 
 }
 
+function frequency_details() 
+{
+
+    if($this->session->userdata('is_logged_in'))
+    {
+    	$this->load->view('frequency-of-spares');
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
 //***************************************************************************
 
 function currentStock() 
@@ -958,12 +972,12 @@ public function manageMachineJoin()
 //========================================================
 
 
-public function spare_track_details()
+public function breakdown_hours_details()
 {
 
 	if($this->session->userdata('is_logged_in'))
 	{
-		$this->load->view('spare-tracking-details',$data);
+		$this->load->view('breakdown-hours-details',$data);
 	}
 	else
 	{
@@ -972,14 +986,15 @@ public function spare_track_details()
 
 }
 
-public function spare_tracking_report()
+
+public function breakdown_hours_report()
 {
 
 	if($this->session->userdata('is_logged_in'))
 	{
-		$data = $this->manageSpareTrackJoin();
+		$data = $this->manageBreakdownHoursJoin();
 		$data['categorySelectbox'] = $this->model_report->categorySelectbox();
-		$this->load->view('spare-tracking-report',$data);
+		$this->load->view('breakdown-hours-report',$data);
 	}
 	else
 	{
@@ -988,13 +1003,13 @@ public function spare_tracking_report()
 
 }
 
-public function manageSpareTrackJoin()
+public function manageBreakdownHoursJoin()
 {
 
 	$table_name='tbl_product_stock';
 	$data['result'] = "";
 	////Pagination start ///
-	$url   = site_url('/report/Report/spare_tracking_report?');
+	$url   = site_url('/report/Report/breakdown_hours_report?');
 	$sgmnt = "4";
 
 	if($_GET['entries']!="")
@@ -1007,18 +1022,18 @@ public function manageSpareTrackJoin()
 
 
 	if($_GET['entries']!="" && $_GET['filter'] != 'filter'){
-	$url   = site_url('/report/Report/spare_tracking_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/report/Report/breakdown_hours_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
 
 
 	}
 
 	elseif($_GET['filter'] == 'filter' || $_GET['entries'] != ''){
-	$url   = site_url('/report/Report/spare_tracking_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
+	$url   = site_url('/report/Report/breakdown_hours_report?entries='.$_GET['entries'].'&m_name='.$_GET['m_name'].'&sp_name='.$_GET['sp_name'].'&filter='.$_GET['filter']);
 	}
 
 	else
 	{
-	$url = site_url('/report/Report/machine_report?');
+	$url = site_url('/report/Report/breakdown_hours_report?');
 	}
 
 	$pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);

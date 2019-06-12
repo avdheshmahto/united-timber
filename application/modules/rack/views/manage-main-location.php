@@ -54,7 +54,6 @@ if($this->input->get('entries')!="")
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<a href="#/" class="btn btn-secondary btn-sm delete_all" title="Multiple Delete"><i class="fa fa-trash-o"></i> Delete All</a>
 </div>
 </ol>
 </form>	
@@ -63,15 +62,14 @@ if($this->input->get('entries')!="")
 <div class="col-sm-12" id="listingData">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
-<div class="dt-buttons">
-
+<div class="dt-buttons" style="display: none1;">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 	<label>Show
-	<select name="DataTables_Table_0_length" url="<?=base_url();?>rack/Mainlocation/manage_main_location?<?='loc_name='.$_GET['loc_name']?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+	<select name="DataTables_Table_0_length" url="<?=base_url();?>rack/Mainlocation/manage_main_location?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -95,11 +93,12 @@ if($this->input->get('entries')!="")
 </label>
 </div>
 </div>
-								
+</div>
+</div>			
+
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData"  >
 <thead>
 <tr>
-   <th style="width:22px;"><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
    <th>Serial Number</th>	   
    <th>Location Name </th>
    <th style="width:110px;">Action</th>
@@ -107,13 +106,10 @@ if($this->input->get('entries')!="")
 </thead>
 
 <tbody id = "getDataTable">
-<tr>
-<form method="get">
-	<td>&nbsp;</td>
-	<td><input name="serial_no"  type="text"  class="search_box form-control input-sm"   value="" readonly="" style="background-color: white;" /></td>
-	<td><input name="loc_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 
 <form class="form-horizontal" method="post" action="update_item"  enctype="multipart/form-data">
@@ -124,9 +120,6 @@ foreach($result as $fetch_list)  {
 ?>
 
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->serial_number; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->serial_number; ?>" value="<?php echo $fetch_list->serial_number;?>" /></th>
-
-
 <th><?php echo ($dataConfig['page']+$i)?></th>
 <th><?=$fetch_list->keyvalue;?></th>
 <th class="bs-example">
@@ -170,11 +163,10 @@ if($countRows > 0 ) { ?>
 	<div class="col-md-6"> 
 		<?php echo $pagination; ?>
 	</div>
+</div>
+</div>
 
-</div>
-</div>
-</div>
-</div>
+
 </div><!--panel-default close-->
 </div><!--main-content close-->
 
@@ -235,7 +227,7 @@ function exportTableToExcel(tableID, filename = '')
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Locations  <?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Location <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");
@@ -288,9 +280,6 @@ function validationfunc()
               }
         });
 }
-
-   
-
-
+  
 </script>
 

@@ -88,14 +88,21 @@ $this->load->view("reportheader");
 <div class="form-group panel-body-to"> 
 <label class="col-sm-2 control-label">Section</label> 
 <div class="col-sm-3"> 
-<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required>
+<input type="hidden" name="id" id='id' value="<?php echo $_GET['id']; ?>">
+<input type="hidden" name="name" id='name' value="<?php echo $_GET['name']; ?>">
+<select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" <?php if($_GET['id'] == 0 ) { ?> <?php } else { ?> disabled="" <?php } ?> >
 <option value="0" class="listClass">------Section-----</option>
 <?php
 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
 foreach($sql->result() as $getSql) { 
 //foreach ($categorySelectbox as $key => $dt) { ?>
 <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
-<option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+
+<?php if($_GET['id'] == 0 ) { ?>
+<option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
+<?php } else { ?>
+<option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
+<?php } ?>
 <?php } ?>
 </select>
 </div>	
@@ -116,7 +123,7 @@ foreach($sql->result() as $getSql) {
 </div>
 </div>
 
-<div class="form-group panel-body-to"> 
+<!-- <div class="form-group panel-body-to" style="display: none;"> 
 <label class="col-sm-2 control-label">Date </label> 
 <div class="col-sm-4">
 <div class="input-group">
@@ -126,8 +133,8 @@ foreach($sql->result() as $getSql) {
 </span>	
 </div>
 </div>
+</div> -->
 
-</div>
 <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
 <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button> 	
 <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" ><span>Search</span>
@@ -178,17 +185,47 @@ foreach($sql->result() as $getSql) {
 </tr> 
 
 <?php
-if($_GET['id']== 0){
-$query=("select * from tbl_work_order_maintain where status='A' Order by id DESC ");
+if($_GET['id']== 0)
+{
+  
+  if($_GET['filter'] == 'filter')
+  {
+    
+    $query="select * from tbl_work_order_maintain where status='A' ";
+
+    if($_GET['m_type'] != '')
+      $query .= " AND m_type='".$_GET['m_type']."' ";
+
+    if($_GET['machineid'] != '')
+       $query .= " AND machine_name='".$_GET['machineid']."' "; 
+
+
+
+       $query .= " Order by id DESC ";
+      
+  }
+  else
+  {
+    $query=("select * from tbl_work_order_maintain where status='A' Order by id DESC ");
+  }
+  
 	$getQuery = $this->db->query($query);
-$result=$getQuery->result();
-}else{
-	//$mc=$this->db->query("select * from tbl_machine where m_type='".$_GET['id']."' ");
-	//$getSec=$mc->row();
-	//$query=("select * from tbl_work_order_maintain where machine_name='$getSec->id' Order by id DESC ");
-  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' Order by id DESC ");
+  $result=$getQuery->result();
+}
+else
+{
+	
+  if($_GET['filter'] == 'filter')
+  {
+    $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' AND machine_name='".$_GET['machineid']."' Order by id DESC ");  
+  }
+  else
+  {
+    $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' Order by id DESC ");
+  }
+  
 	$getQuery = $this->db->query($query);
-$result=$getQuery->result();
+  $result=$getQuery->result();
 }
 
 foreach($result as $fetch_list) {
@@ -388,8 +425,22 @@ $(function() {
 <script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
 
+
 <script type="text/javascript">
 
+window.onload = function() {
+
+  <?php if($_GET['id'] == 0 ) { ?>
+    getmachinelist(<?=$_GET['m_type']?>);
+  <?php } else { ?>
+    getmachinelist(<?=$_GET['id']?>);
+  <?php } ?>
+
+};
+
+</script>
+
+<script type="text/javascript">
 function getmachinelist(v)
 {
 

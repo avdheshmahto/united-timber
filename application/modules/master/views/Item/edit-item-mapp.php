@@ -120,8 +120,9 @@ foreach($vendorQuery->result() as $getVendor){
 <div class="table-responsive">
 <?php if($type != "view"){ ?>
 <INPUT type="button" value="Add Row" class="btn btn-primary" onclick="addRow_edit('dataTable_edit')" />
-<INPUT type="button" class="btn btn-danger delete_other" value="Delete Row" onclick="deleteRow_edit('dataTable_edit')" />
+<!-- <INPUT type="button" class="btn btn-danger delete_other" value="Delete Row" onclick="deleteRow_edit('dataTable_edit')" /> -->
 <?php } ?>
+
 <table class="table table-striped table-bordered table-hover" id="dataTable_edit" >
 <tbody>
 <tr class="gradeA">
@@ -150,7 +151,7 @@ foreach($vendorQuery->result() as $getVendor){
 
 	
 <th >
-   <!-- <input type="checkbox" name="chkbox[]" class="sub_chk" id="chk1"  data-id="<?php echo $fetch_list_map->serial_number; ?>"  /> -->
+<input type="checkbox" name="chkbox[]" class="sub_chk" id="chk1"  data-id="<?php echo $fetch_list_map->serial_number; ?>"  />
 </th>
 <?php } ?>
 
@@ -223,9 +224,8 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 	</th>
 <?php if($type != "view"){ ?>
 <th>
-<!-- <img src="<?=base_url("assets/images/delete.png");?>" onclick="deletevalfunc(this);" attrid="<?=$fetch_list_map->serial_number?>"> -->
-<!-- <button type="button" name="Deletedatabasedata" onclick="deleteval();">DELETE</button></th>
- -->
+<img src="<?=base_url("assets/images/delete.png");?>" onclick="deletevalfunc(this);" attrid="<?=$fetch_list_map->serial_number?>" />
+</th>
 <?php } ?>
 </tr>
 <?php

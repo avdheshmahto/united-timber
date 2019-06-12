@@ -130,7 +130,7 @@ foreach($vendorQuery->result() as $getVendor){
 
 <div class="table-responsive">
 <INPUT type="button" value="Add Row" class="btn btn-sm" onclick="addRow('dataTable')" />
-<INPUT type="button" class="btn btn-secondary" value="Delete Row" onclick="deleteRow('dataTable')" />
+<!-- <INPUT type="button" class="btn btn-secondary" value="Delete Row" onclick="deleteRow('dataTable')" /> -->
 <table class="table table-striped table-bordered table-hover" id="dataTable" >
 <tbody class="tablejs">
 <tr class="gradeA">
@@ -138,8 +138,6 @@ foreach($vendorQuery->result() as $getVendor){
 <th>Location</th>
 <th>Rack</th>
 <th>Quantity</th>
-<!-- <th>Minimum Reorder Level</th>
-<th>Minimum Order</th> -->
 <th>Action</th>
 </tr>
 
@@ -174,13 +172,6 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 
 <th><input type="number" step="any"   name="qtyy[]"   class="form-control"></th>
 
-<!-- <th>
-<input type="number" step="any"   name="min_re_order_level[]"   class="form-control"> 
-</th>
-<th>
-<input type="number" step="any"   name="min_order[]"   class="form-control"> 
-</th> -->
-
 <th>&nbsp;</th>
 
 </tr>
@@ -198,12 +189,6 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 <img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="44.63" height="30">
 </span>
 
-
-<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-<button type="submit" id="formsave" class="btn btn-primary">Save</button>
-<span id="saveload" style="display: none;">
-<img src="<?=base_url('assets/loadgif.gif');?>" alt="HTML5 Icon" width="54.63" height="40">
-</span> -->
 
 </div>
 </form>
@@ -250,13 +235,13 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('getDataTable')" title="Excel">Excel</button>
 <a class="btn btn-sm" data-toggle="modal"  formid = "#ItemForm" data-target="#modal-0" id="formreset" title="Add Spare" onclick="sparerowdel();"><i class="fa fa-arrow-circle-left"></i> Add Parts & Supplies</a>
-<!-- <a class="btn btn-secondary btn-sm delete_all" title="Multiple Delete" ><span><i class="fa fa-trash-o"></i> Delete</span></a> -->
+
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Item/manage_item?<?='sku_no='.$_GET['sku_no'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&purchase_price='.$_GET['purchase_price'].'&type_of_spare='.$_GET['type_of_spare'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Item/manage_item?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
@@ -287,14 +272,12 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example_"  id="getDataTable">
 <thead bgcolor="#CCCCCC">
 <tr>
-	<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	<th>Code </th>
 	<th>Type</th>
 	<th>Sub-Type</th>
 	<th>Priority</th>
 	<th>Name</th>
 	<th>Usages Unit</th>
-<!-- 	<th>Purchase Price</th> -->
 	<th>Quantity In Stock</th>
 	<th><div style="width: 100px;"> Action</div></th>
 </tr>
@@ -302,19 +285,15 @@ Showing <?=$dataConfig['page']+1;?> to
 
 <tbody id = "getDataTable">
 	
-<tr>
-<form method="get">
-	<td>&nbsp;</td>
-	<td><input name="sku_no" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><input name="category" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><input name="type_of_spare" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="sub_type" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="productname" type="text" class="search_box form-control input-sm" value="" /></td>
-	<td><input name="usages_unit" type="text" class="search_box form-control input-sm" value="" /></td>
-<!-- <td><input name="purchase_price" type="text" class="search_box form-control input-sm" value="" /></td> -->
-	<td><input name="qtty" type="text"  class="search_box form-control input-sm" value="" /></td>
-	<td><button type="submit" class="btn btn-sm" name="filter" value="filter" title="Search"><span>Search</span></button></td>
-</form>
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>	
 	
 <?php  
@@ -324,17 +303,12 @@ foreach($result as $fetch_list)
 {
 ?>
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->Product_id; ?>" value="<?php echo $fetch_list->Product_id;?>" /></th>
 <?php
 $queryType=$this->db->query("select *from tbl_master_data where serial_number='$fetch_list->type'");
 $getType=$queryType->row();
-
-
 ?>
 
 <th><?=$fetch_list->sku_no;?></th>
-
-
 <th><?php $compQuery1 = $this -> db
 		   -> select('*')
 		   -> where('serial_number',$fetch_list->type_of_spare)
@@ -359,7 +333,7 @@ if($psize->keyvalue !='')
 ?>
 <th><?php echo $fetch_list->productname .'   ( '.$psize->keyvalue .')' ; } else { ?></th>
 <th>
-<!-- <a class="modalMapSpare"   onclick="viewItem(<?=$fetch_list->Product_id;?>);"  data-toggle="modal" data-target="#modal-1" data-backdrop='static' data-keyboard='false'  id="formreset" title="View Machine Details"> -->
+
 <a href="<?=base_url();?>master/Item/manage_item_map?id=<?php echo $fetch_list->Product_id; ?>" title="Spare Details"><?php echo $fetch_list->productname; } ?></a></th>
 
 <th>
@@ -373,7 +347,6 @@ echo $keyvalue1->keyvalue;
 
 
 ?></th>
-<!-- <th><?=$fetch_list->unitprice_purchase?></th> -->
 <th><?=$fetch_list->quantity?></th>
 <th class="bs-example">
 <?php if($edit!=''){ ?>
@@ -429,7 +402,6 @@ if($countRows > 0 ) {  ?>
 		<div class="modal-header">
 		<button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4 class="modal-title">Machine Details</h4>
-		<!-- <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>  -->
 		</div>
         <div class="modal-body overflow"  id="viewData">
         </div><!-- /.modal-content -->
@@ -521,7 +493,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Spare<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Parts & Supplies <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");
@@ -1058,18 +1030,22 @@ function deletevalfunc(ths)
 	
 	var a=$(ths).attr("attrid");
 	var datas="s_id="+a;
-	$.ajax({
-			type:"POST",
-			url:"<?php echo base_url('master/Item/deletephpdata');?>",
-			data:datas,
-			success:function(data){
-				//alert(data);
-				setTimeout(function() {
-					$(ths).parent().parent().hide();
-				}, 10);
-				
-			}
-	});
+
+	if(confirm("Are you sure you want to delete this row ?"))
+    {
+		$.ajax({
+				type:"POST",
+				url:"<?php echo base_url('master/Item/deletephpdata');?>",
+				data:datas,
+				success:function(data){
+					alert("Row Delete Successfully !");
+					setTimeout(function() {
+						$(ths).parent().parent().hide();
+					}, 10);
+					
+				}
+		});
+	}
 }
 
 

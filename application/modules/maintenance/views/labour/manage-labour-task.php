@@ -31,9 +31,6 @@ if($this->input->get('entries')!="")
 <div class="pull-right">
 <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#LabouTaskModal" title="Add Labour Task" >Add Labour Task</button>
 </div>
-<!-- <ul class="panel-tool-options"> 
-<li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-</ul> -->
 </div>
 
 
@@ -170,9 +167,7 @@ Showing <?=$dataConfig['page']+1;?> to
 <input type="text" id="searchTerm"  class="search_box form-control input-sm" onkeyup="doSearch()"  placeholder="What you looking for?">
 </label>
 </div>
-</div>
-
-	 
+</div>	 
 </div>
 </div>
 
@@ -182,8 +177,6 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="listingData" >
 <thead>
 <tr>
-<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
-  
   <th>S. No.</th>
   <th>Section</th>
   <th>Task Name</th>
@@ -197,7 +190,20 @@ Showing <?=$dataConfig['page']+1;?> to
  </tr>
 </thead>
 <tbody id = "getDataTable"> 
-                    
+
+<tr style="display: none;">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
 <?php  
 $z=1;
 $i=1;
@@ -206,9 +212,6 @@ foreach($result as $fetch_list)
 ?>
 
 <tr class="gradeC record " data-row-id="<?php echo $fetch_list->id; ?>">
-
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->id; ?>" value="<?php echo $fetch_list->id;?>" /></th>
-
 <th><?php echo $z++; ?></th>
 <th><?php 
   $sqlunit=$this->db->query("select * from tbl_category where id='$fetch_list->section'");
@@ -274,7 +277,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Machine Spare Mapping Report<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Machine Labour <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

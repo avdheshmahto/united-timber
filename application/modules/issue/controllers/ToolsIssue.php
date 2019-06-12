@@ -89,7 +89,7 @@ function insert_tools_issue()
 	$author_date = date('Y-m-d');
 		
 							
-	$this->db->query("insert into tbl_tools_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+	$this->db->query("insert into tbl_tools_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',shift='$shift',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
 
 	$lastId=$this->db->insert_id();
 
@@ -105,11 +105,11 @@ function insert_tools_issue()
 	for($i=0;$i<$rows;$i++)
 	{
 
-		$this->db->query("insert into tbl_tools_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids[$i]',type='$via_types[$i]',location='$locs[$i]',rack='$racks[$i]',vendor='$vendors[$i]',price='$prices[$i]',qty='$qtyname[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
+		$this->db->query("insert into tbl_tools_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids[$i]',type='$via_types[$i]',location='$locs[$i]',rack='$racks[$i]',vendor='$vendors[$i]',price='$prices[$i]',qty='$qtyname[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date=NOW()");
 
 		$total_spent=$qtyname[$i] * $prices[$i];
 
-		$this->add_software_cost_log($lastId,'Tools',$issue_date,$section,$machineid,'',$spareids[$i],$qtyname[$i],$prices[$i],$total_spent);
+		$this->add_software_cost_log($lastId,'Tools',$issue_date,$section,$machineid,'',$spareids[$i],$qtyname[$i],$prices[$i],$total_spent,$shift);
 
 		$this->software_stock_log_insert($lastId,'Tools Issue',$vendors[$i],$spareids[$i],$qtyname[$i],$prices[$i]);
 
@@ -318,7 +318,7 @@ function insert_tools_return()
 	$maker_date  = date('Y-m-d');
 	$author_date = date('Y-m-d');
 	
-	$return=$this->db->query("select * from tbl_tools_return_hdr where issue_id='$issue_id' AND section='$section' ");
+	$return=$this->db->query("select * from tbl_tools_return_hdr where issue_id='$issue_id' AND section='$section' AND machine='$machine'");
 	$getReturn=$return->row();	
 	$count=$return->num_rows();
 
@@ -337,9 +337,13 @@ function insert_tools_return()
 
 				$this->software_stock_log_insert($getReturn->return_id,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
 
-				//$cost=$this->db->query("select * from tbl_software_cost_log");
+				$cost=$this->db->query("select * from tbl_software_cost_log where log_type='Tools' AND section_id='$section' AND machine_id='$machine' AND product_id='$product_id[$i]' ");
+				$getCost=$cost->row();
 
-				//$this->db->query("update tbl_software_cost_log set qty=qty - $return_qty[$i],total_spent='(qty - $return_qty[$i]) * $purchase_price ' where log_type='Tools' AND log_id='$getReturn->return_id' AND section_id='$section' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]'");
+				$actQty=$getCost->qty - $return_qty[$i];
+				$actSpent=$actQty * $getCost->price;
+
+				$this->db->query("update tbl_software_cost_log set qty='$actQty',total_spent='$actSpent' where log_type='Tools' AND log_id='$issue_id' AND section_id='$section' AND machine_id='$machine' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]' AND qty='$getCost->qty'");
 
 				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
 		
@@ -369,7 +373,13 @@ function insert_tools_return()
 
 				$this->software_stock_log_insert($lastId,'Tools Return',$vendor_id[$i],$product_id[$i],$return_qty[$i],$purchase_price[$i]);
 				
-				//$this->db->query("update tbl_software_cost_log set qty=qty - $return_qty[$i],total_spent='(qty - $return_qty[$i]) * $purchase_price ' where log_type='Tools' AND log_id='$getReturn->return_id' AND section_id='$section' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]'");
+				$cost=$this->db->query("select * from tbl_software_cost_log where log_type='Tools' AND section_id='$section' AND machine_id='$machine' AND product_id='$product_id[$i]' ");
+				$getCost=$cost->row();
+
+				$actQty=$getCost->qty - $return_qty[$i];
+				$actSpent=$actQty * $getCost->price;
+
+				$this->db->query("update tbl_software_cost_log set qty='$actQty',total_spent='$actSpent' where log_type='Tools' AND log_id='$issue_id' AND section_id='$section' AND machine_id='$machine' AND product_id='$product_id[$i]' AND price='$purchase_price[$i]' AND qty='$getCost->qty'");
 
 				$this->stock_refill_qty_return($product_id[$i],$via_type[$i],$location_id[$i],$rack_id[$i],$vendor_id[$i],$purchase_price[$i],$return_qty[$i]);
 			}

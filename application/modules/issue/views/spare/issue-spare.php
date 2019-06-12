@@ -12,6 +12,8 @@
 <table class="table table-striped table-bordered table-hover"> 
 
 <?php 
+$spHdr=$this->db->query("select * from tbl_spare_issue_hdr where spare_id='$pid' AND workorder_id='$wid' AND workorder_spare_id='$hid'");
+$getSpHdr=$spHdr->row();
 
 $sidtl=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='$hid' AND spare_id='$pid' ");
 $getDtl=$sidtl->row();
@@ -24,20 +26,35 @@ $getPrd=$prd->row();
 <input type="hidden" name="workorder_spare_id" id="workorder_spare_id" value="<?=$hid?>">
 <input type="hidden" name="spareids" id="spareids" value="<?=$pid?>">
 <input type="hidden" name="via_types" id="via_types" value="<?=$getPrd->via_type?>">
+<input type="hidden" name="reqstQty" id="reqstQty" value="<?=$getDtl->qty_name?>">
 
 <tr>
-<th>Spare Name</th>
-<td><?=$getPrd->productname?></td>
-<th>Type</th>
-<td><?=$getPrd->via_type?></td>
+<th colspan="2">Parts & Supplies Name</th>
+<th colspan="2">Type</th>
 <th>Issue Date</th>
-<td><input type="date" name="issue_date" class="form-control" required=""></td>
-<input type="hidden" name="reqstQty" id="reqstQty" value="<?=$getDtl->qty_name?>">
+<th>Shift</th>
 <tr>
+
+<tr>
+<td colspan="2"><?=$getPrd->productname?></td>
+<td colspan="2"><?=$getPrd->via_type?></td>
+<td><input type="date" name="issue_date" class="form-control" required="" <?php if($getSpHdr->issue_date != '') { ?> value="<?=$getSpHdr->issue_date ?>" readonly <?php } ?> ></td>
+<td>
+  <select name="shift" id="shift" class="form-control" <?php if($getSpHdr->shift != '') { ?> disabled <?php } ?>>
+    <option>--Select--</option>
+    <option value="Day" <?php if($getSpHdr->shift == 'Day') { ?> selected <?php } ?> >Day</option>
+    <option value="Night" <?php if($getSpHdr->shift == 'Night') { ?> selected <?php } ?> >Night</option>
+  </select>
+</td>
+</tr>
 
 <?php 
 $remainQty=$getDtl->qty_name - $getDtl->issue_qty;
 ?>
+
+<tr style="height: 25px;">
+  <th colspan="6"></th>
+</tr>
 
 <tr>
 <th>Requested Qty</th>
@@ -48,9 +65,11 @@ $remainQty=$getDtl->qty_name - $getDtl->issue_qty;
 <td><?=$remainQty?></td>
 <input type="hidden" name="remainQty" id="remainQty" value="<?=$remainQty?>">
 </tr>
+
 <tr style="height: 25px;">
   <th colspan="6"></th>
 </tr>
+
 <tr>
   <th>Location</th>
   <th>Rack</th>

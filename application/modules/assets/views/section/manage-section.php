@@ -23,16 +23,15 @@ if($this->input->get('entries')!="")
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
 <div class="dt-buttons">
-<a class="dt-button buttons-excel buttons-html5" tabindex="0" aria-controls="DataTables_Table_0"><span>Excel</span></a>
-<!-- <a id="TreeShowId" class="dt-button" tabindex="0" data-toggle="modal" data-target="#modal-2"><span><i class="icon-flow-tree"></i>Section Tree</span></a> -->
-<a class="btn btn-sm" data-toggle="modal" formid = "#formId" data-target="#modal-1" id="formreset" style="margin: 0px 0px 15px 0px;"><i class="fa fa-arrow-circle-left" onclick="inputdisable();"></i> Add Section</a>
-<a class="btn btn-secondary btn-sm delete_all" style="margin: 0px 0px 15px 0px;"><span><i class="fa fa-trash-o"></i> Delete</span></a>
+<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
+<a class="btn btn-sm" data-toggle="modal" formid = "#formId" data-target="#modal-1" id="formreset" ><i class="fa fa-arrow-circle-left" onclick="inputdisable();"></i> Add Section</a>
+
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?= base_url('assets/Section/manage_section').'?filtername='.$_GET['filtername'].'&filterdate='.$_GET['filterdate'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?= base_url('assets/Section/manage_section?')?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 	<option value="10">10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -59,36 +58,30 @@ Showing <?=$dataConfig['page']+1;?> to
 </div>
 
 <div class="table-responsive">
-<table class="table table-striped table-bordered table-hover dataTables-example1" >
+<table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
 <thead>
 <tr>
-<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 <th>Category Name</th>	
 <th>Date</th>
 <th>Action</th>
 </tr>
 </thead>
-<thead>
-<tr>
-<form action="" method="get">
-<th></th>
-<th><input type="text" name="filtername" id="searchTerm" value="<?=$filtername;?>"  class="search_box form-control input-sm"  placeholder="Please Enter Section Name"></th>
-<th><input type="date" name="filterdate" id="searchTerm" value="<?=$filterdate;?>"  class="search_box form-control input-sm"  placeholder="Please Enter Section Date"></th>
-<th><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Filter</span></button></th>
-</form>
-
-</tr>
-</thead>
 
 <tbody id="getDataTable">
+
+<tr style="display: none;">
+  <th></th>
+  <th></th>
+  <th></th>
+</tr>
+
 <?php
 $yy=1;
 if(!empty($result_list)) {
 foreach($result_list as $rows) {
 ?>
 <tr class="gradeC record" data-row-id="<?=$rows['id'];?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?=$rows['id'];?>" value="<?=$rows['id'];?>" /></th>
-<th id="row<?=$rows['id'];?>" onmouseover="showRowtree(<?=$rows['id'];?>)" style="cursor: pointer;"><?php echo $rows['name'];?>
+<th id="row<?=$rows['id'];?>" onmouseover="showRowtree1(<?=$rows['id'];?>)" style="cursor: pointer;"><?php echo $rows['name'];?>
 </th>
 <th><?=$rows['create_on'];?></th>
 <th>
@@ -341,4 +334,42 @@ function editRow(ths){
 
 
 
+</script>
+
+
+<script type="text/javascript">
+function exportTableToExcel(tableID, filename = '')
+{
+
+    //alert();
+   var downloadLink;
+   var dataType = 'application/vnd.ms-excel';
+   var tableSelect = document.getElementById(tableID);
+   var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+   
+   // Specify file name
+   filename = filename?filename+'.xls':'Section <?php echo date('d-m-Y');?>.xls';
+   
+   // Create download link element
+   downloadLink = document.createElement("a");
+   
+   document.body.appendChild(downloadLink);
+   
+   if(navigator.msSaveOrOpenBlob){
+       var blob = new Blob(['\ufeff', tableHTML], {
+           type: dataType
+       });
+       navigator.msSaveOrOpenBlob( blob, filename);
+   }else{
+
+       // Create a link to the file
+       downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+   
+       // Setting the file name
+       downloadLink.download = filename;
+       
+       //triggering the function
+       downloadLink.click();
+   }
+}
 </script>

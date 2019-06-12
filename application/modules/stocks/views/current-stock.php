@@ -10,9 +10,6 @@ if($this->input->get('entries')!=""){
 <!-- Main content -->
 <div class="main-content">
 
-<?php
-$this->load->view("reportheader");
-?>
 <div class="row">
 <div class="col-lg-12">
 <div class="panel panel-default">
@@ -107,6 +104,14 @@ Showing <?=$dataConfig['page']+1;?> to
 </tr>
 </thead>
 <tbody id="getDataTable" >
+<tr style="display: none;">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <?php
 $yy=1;
 if(!empty($result)) {
@@ -174,7 +179,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'CURRENT STOCK REPORT(<?php echo date('d-m-Y');?>).xls';
+   filename = filename?filename+'.xls':'CURRENT STOCK REPORT <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");

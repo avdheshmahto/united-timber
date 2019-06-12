@@ -333,7 +333,7 @@ function qtyfunc(v)
     //else if(rmQty < total)
     else if(Number(total) > Number(rmQty))
     {
-      alert("Toatal Issue Qty Can Not Be Greater Than Stock Qty");
+      alert("Toatal Issue Qty Can Not Be Greater Than Requested Qty");
       $("#issueButton").attr('disabled',true);
     }
     else

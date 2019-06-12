@@ -80,6 +80,10 @@ if($getWO->trigger_code != '') { ?>
 
 $issuedtl=$this->db->query("select * from tbl_spare_issue_dtl where issue_id_hdr IN ($IssueIdHdr) ");
 $count=$issuedtl->num_rows();
+
+if($count > 0)
+{
+
 $z=1;
 $i=0;
 foreach($issuedtl->result() as $fetch_list) {
@@ -123,6 +127,46 @@ foreach($issuedtl->result() as $fetch_list) {
 <?php 
 $sum=$sum+$total;
 $i++;
+} ?>
+
+<?php 
+
+} 
+	
+else 
+{ 
+	$count=1;
+
+?>
+
+<tr>
+<th>1</th>	
+<th colspan="6"></th>
+<?php 
+	
+	$laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['id']."' ");
+	$getCost=$laborCost->row();
+
+	if($i == 0)
+	{ ?>
+		<th rowspan="<?=$count?>">
+		<div style="text-align: center;margin: <?php echo $count * 10;?>px 0px 0px 0px;">
+			<?php echo $cost=$getCost->totalcost; ?>
+		</div>	
+		</th>
+	<?php
+	}
+	else
+	{
+		$cost=0;
+	}
+
+	$total=$cost;
+?>	
+</tr>
+
+<?php 
+	$sum=$total;
 } ?>
 
 <input type="hidden" name="totalprice" id="totalprice" class="form-control" value="<?php echo $sum;?>" />

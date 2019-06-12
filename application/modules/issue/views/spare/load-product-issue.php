@@ -26,7 +26,7 @@
 <?php
 
 $i=1;
-$spareq=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='".$_GET['shid']."' ");
+$spareq=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='$shid' ");
 foreach($spareq->result() as $fetch_spares)
 {
   $prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_spares->spare_id' ");
@@ -94,7 +94,7 @@ $getHdr=$hdr->row();
 <?php
 
 $i=1;
-$spissuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_spare_id='".$_GET['shid']."' AND workorder_id='".$_GET['id']."' ");
+$spissuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_spare_id='$shid' AND workorder_id='$wids' ");
 $count=$spissuehdr->num_rows();
 $getIssueHdr=$spissuehdr->row();
 

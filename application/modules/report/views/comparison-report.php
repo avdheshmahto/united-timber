@@ -41,8 +41,8 @@ foreach($sql->result() as $getSql) {
 </select>
 </div>  
 
-<label class="col-sm-2 control-label">Machine</label> 
-<div class="col-sm-3"> 
+<label class="col-sm-2 control-label" style="display: none;">Machine</label> 
+<div class="col-sm-3" style="display: none;"> 
 <select name="machineid" id="machineid" class="select2 form-control">
 <option value="">----Machine----</option>
 <?php 
@@ -69,26 +69,34 @@ foreach($sql->result() as $getSql) {
 <thead>
 <tr>
 
-	<th>Particulars</th>
-	<th>April</th>
-	<th>May</th>
-    <th>June</th>
-    <th>July</th>
-    <th>August</th>
-    <th>September</th>
-    <th>October</th>
-	<th>November</th>
-	<th>December</th>
-    <th>January</th>
-    <th>February</th>
-    <th>March</th>
+  <th>Particulars</th>
+  <th>April</th>
+  <th>May</th>
+  <th>June</th>
+  <th>July</th>
+  <th>August</th>
+  <th>September</th>
+  <th>October</th>
+  <th>November</th>
+  <th>December</th>
+  <th>January</th>
+  <th>February</th>
+  <th>March</th>
 		
 </tr>
 </thead>
 <tbody id="getDataTable" >
 <?php
 
-$query=("select * from tbl_software_cost_log  GROUP BY main_section ");
+if($_GET['filter']=='filter')
+{
+  $query=("select * from tbl_software_cost_log where section_id='".$_GET['m_type']."'  GROUP BY main_section ");
+}
+else
+{
+  $query=("select * from tbl_software_cost_log  GROUP BY main_section ");  
+}
+
 $result=$this->db->query($query)->result();
 //echo date('m');
 foreach($result as $fetch) { ?>

@@ -54,7 +54,8 @@ if($this->input->get('entries')!="")
           <tr class="gradeA">
             <th><h4>*Section</h4> </th>
             <th colspan="2">Machine</th>
-            <th colspan="2">Issue Date</th>
+            <th colspan="1">Issue Date</th>
+            <th colspan="1">Shift</th>
             <th colspan="2"><h4>*Tools Name</h4></th>
           </tr>
           <tr>
@@ -77,7 +78,14 @@ if($this->input->get('entries')!="")
               <option>-----------Select--------</option>  
               </select>
             </th>
-            <th colspan="2"><input type="date" name="issue_date" class="form-control"></th>            
+            <th colspan="1"><input type="date" name="issue_date" class="form-control" style="width: 115px;"></th>
+            <th colspan="1">
+              <select name="shift" id="shift" class="form-control">
+                <option>-----Select----</option>
+                <option value="Day">Day</option>
+                <option value="Night">Night</option>
+              </select>
+            </th>
             <th colspan="2">
                 <select name="spare_name" id="spare_nameid" class="select2 form-control" onchange="viewToolsIssuePage(this.value);">
                   <option value="">---select---</option>
@@ -144,8 +152,8 @@ if($this->input->get('entries')!="")
 <div class="col-sm-12">
 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 <div class="html5buttons">
-<div class="dt-buttons">&nbsp;
-	<a style="display: none;" href="<?=base_url();?>report/Report/excel_spare_machine_mapping_report?" class="btn btn-sm" >Excel</a>
+<div class="dt-buttons" style="display: none;">&nbsp;
+<button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button>
 </div>
 </div>
 
@@ -185,7 +193,6 @@ Showing <?=$dataConfig['page']+1;?> to
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="listingData" >
 <thead>
 <tr>
-<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
   <th>Issue Id</th>
   <th>Section</th>
   <th>Type</th>  
@@ -197,19 +204,25 @@ Showing <?=$dataConfig['page']+1;?> to
  </tr>
 </thead>
 <tbody id = "getDataTable"> 
-                    
-<?php  
 
- $i=1;
- //$sqlord=$this->db->query("select * from tbl_work_order_maintain where status='A'");
+<tr style="display: none;">                    
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
+<?php  
+$i=1;
 foreach($result as $fetch_list)
 {
 ?>
 
 <tr class="gradeC record " data-row-id="<?php echo $fetch_list->issue_id; ?>">
-
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->issue_id; ?>" value="<?php echo $fetch_list->issue_id;?>" /></th>
-
 <th><?php  //echo $i; ?><?=sprintf('%03d',$fetch_list->issue_id); ?></th>
 <th><a href="<?=base_url();?>issue/ToolsIssue/view_parts_issue?id=<?=$fetch_list->issue_id?>"><?php 
   $sqlunit=$this->db->query("select * from tbl_category where id='".$fetch_list->section."'");
@@ -309,7 +322,7 @@ function exportTableToExcel(tableID, filename = ''){
    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
    
    // Specify file name
-   filename = filename?filename+'.xls':'Machine Spare Mapping Report<?php echo date('d-m-Y');?>.xls';
+   filename = filename?filename+'.xls':'Tools Issue <?php echo date('d-m-Y');?>.xls';
    
    // Create download link element
    downloadLink = document.createElement("a");
