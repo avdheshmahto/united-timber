@@ -25,9 +25,10 @@ if($this->input->get('entries')!="")
 <div class="modal-content">
 
 <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span></button>
 <h4 class="modal-title" > <span class="top_title" >Add </span>Parts & Supplies</h4>
-<div id="resultareaspares" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div id="resultareaspares" class="text-center " style="font-size: 15px;color: red;"></div>
 </div>
 
 <div class="modal-body overflow">
@@ -1037,12 +1038,13 @@ function deletevalfunc(ths)
 				type:"POST",
 				url:"<?php echo base_url('master/Item/deletephpdata');?>",
 				data:datas,
-				success:function(data){
-					alert("Row Delete Successfully !");
+				success:function(data){					
+					alert("Row Deleted Successfully !");
 					setTimeout(function() {
 						$(ths).parent().parent().hide();
+						$("#editItem .close").click();	   
 					}, 10);
-					
+				  ajex_ItemListData();
 				}
 		});
 	}

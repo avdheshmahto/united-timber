@@ -483,4 +483,6 @@ function check_sku_no()
 	}
 
 }
+
+
 }?>

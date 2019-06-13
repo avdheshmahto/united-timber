@@ -237,13 +237,16 @@ public function stock_transfer_qty()
 		if($num > 0)
 		{
                 	
-	 		//$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='".$main_id."' and loc='".$loc."' and rack_id='".$rack_id."' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
 
 			$this->db->query("update tbl_product_serial set quantity = quantity - $qty where product_id='$main_id1' and loc='$loc1' and rack_id='$rack_id1' and supp_name='$vendor_id1' and purchase_price='$purchase_price1' and module_status='$type1' ");
 			
-			//$p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$qty where Product_id='$main_id' ");
 			$this->db->query("update tbl_product_serial set quantity = quantity + $qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' ");
 
+
+			//===
+			$this->db->query("update tbl_product_serial_log set quantity = quantity - $qty where product_id='$main_id1' and loc='$loc1' and rack_id='$rack_id1' and supp_name='$vendor_id1' and purchase_price='$purchase_price1' and module_status='$type1' AND type='opening stock' ");
+			
+			$this->db->query("update tbl_product_serial_log set quantity = quantity + $qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and module_status='$type' AND type='opening stock' ");
 
 			
 			$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock transfer',name_role='current stock transfer',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
@@ -269,7 +272,11 @@ public function stock_transfer_qty()
 
 			$this->db->query("insert into tbl_product_serial set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."'");
 
-			//$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity+$qty where Product_id='".$main_id."' ");
+			//====
+
+			$this->db->query("update tbl_product_serial_log set quantity = quantity - $qty where product_id='$main_id1' and loc='$loc1' and rack_id='$rack_id1' and supp_name='$vendor_id1' and purchase_price='$purchase_price1' and module_status='$type1' AND type='opening stock' ");
+
+			$this->db->query("insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price',name_role='product opening stock',type='opening stock', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."'");
 		
 			$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock transfer',name_role='current stock transfer',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 			$this->db->query($sqlProdLoc1);
@@ -281,6 +288,7 @@ public function stock_transfer_qty()
 			$this->db->query("insert into tbl_stock_transfer_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock transfer',name_role='stock transfer to',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ");
 			
 		}
+
 		echo $main_id;
 	
 	

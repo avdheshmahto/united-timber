@@ -70,7 +70,7 @@ $getRack = $rack->row();
             <th>
             <input type="hidden" name="via_type" id="via_type" class="form-control" value="<?=$getPrd->via_type?>"><?=$getPrd->via_type?>
             </th>
-            <th><select name="location_id" id="location_rack_id" onchange="getRackFun(this.id);" class="form-control" required="">
+            <th><select name="location_id" id="location_rack_id" onchange="getRackFun(this.id);" class="form-control" >
             <option value="">----Select ----</option>
             <?php
             $bookingType=$this->db->query("select *from tbl_master_data  where param_id='21'");
@@ -81,7 +81,7 @@ $getRack = $rack->row();
             </select>
             <p id="qty_pallet"></p>
             </th>            
-            <th><select name="rack_id" class="form-control" id="rack_id" onchange="getQty(this.id);vendor_func(this.value);checkLoc();" required="">
+            <th><select name="rack_id" class="form-control" id="rack_id" onchange="getQty(this.id);vendor_func(this.value);checkLoc();" >
             <option value="">----Select ----</option>
             </select>
             </th>        

@@ -949,8 +949,8 @@ function ajex_returnPartsData(thsid){
 
 $("#fromStockTransfer").validate({
     rules: {
-      location_rack_id: "required",
-      rack_id:"required",
+      //location_rack_id: "required",
+      //rack_id:"required",
       purchase_price: "required",
       qtyid:"required"
 

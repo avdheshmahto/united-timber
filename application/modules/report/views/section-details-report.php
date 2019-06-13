@@ -99,7 +99,7 @@ foreach($sftcostlog->result() as $fetch_list) {
 <th><?php echo $fetch_list->qty; ?></th>
 <th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
 <?php 
-	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['id']."' ");
+	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND (section_id='".$_GET['id']."' OR machine_id='".$_GET['id']."') ");
 	$getLbr=$lbr->row();
 
 	if($i == 0)
