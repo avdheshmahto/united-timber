@@ -58,10 +58,10 @@ foreach($result as $fetch) { ?>
 
 <tr class="gradeC record">
 
-    <th style="text-align:center;"><?php  echo $fetch->machine_name; ?></th>
+    <th style="text-align:center;"><a target="_blank" href="<?=base_url();?>report/Report/breakdown_workorder?id=<?=$fetch->id?>"><?php  echo $fetch->machine_name; ?></a></th>
     
     <th>
-        <?php $april=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=04 AND machine_id='$fetch->id' "); 
+        <?php $april=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=04 AND machine_id='$fetch->id' "); 
         $diff4='';
         foreach($april->result() as $getAprilData)
         {
@@ -81,7 +81,7 @@ foreach($result as $fetch) { ?>
     
     <th>
         <?php
-        $may=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=05 AND machine_id='$fetch->id'"); 
+        $may=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=05 AND machine_id='$fetch->id'"); 
         $diff5='';
         foreach($may->result() as $getMayData)
         {
@@ -100,7 +100,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $june=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=06 AND machine_id='$fetch->id'");
+        $june=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=06 AND machine_id='$fetch->id'");
         $diff6='';    
         foreach($june->result() as $getJuneData)
         {
@@ -119,7 +119,7 @@ foreach($result as $fetch) { ?>
 
     <th>
         <?php
-        $july=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=07 AND machine_id='$fetch->id'");
+        $july=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=07 AND machine_id='$fetch->id'");
         $diff7='';    
         foreach($july->result() as $getJulyData)
         {
@@ -138,7 +138,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $august=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=08 AND machine_id='$fetch->id'");
+        $august=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=08 AND machine_id='$fetch->id'");
         $diff8='';    
         foreach($august->result() as $getAugustData)
         {
@@ -157,7 +157,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $september=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=09 AND machine_id='$fetch->id'");
+        $september=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=09 AND machine_id='$fetch->id'");
         $diff9='';    
         foreach($september->result() as $getSeptemberData)
         {
@@ -176,7 +176,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $october=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=10 AND machine_id='$fetch->id'");
+        $october=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=10 AND machine_id='$fetch->id'");
         $diff10='';    
         foreach($october->result() as $getOctoberData)
         {
@@ -195,7 +195,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $november=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=11 AND machine_id='$fetch->id'");
+        $november=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=11 AND machine_id='$fetch->id'");
         $diff11='';    
         foreach($november->result() as $getNovemberData)
         {
@@ -214,7 +214,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $december=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=12 AND machine_id='$fetch->id'");
+        $december=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=12 AND machine_id='$fetch->id'");
         $diff12='';    
         foreach($december->result() as $getDecemberData)
         {
@@ -233,7 +233,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $january=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=01 AND machine_id='$fetch->id'");
+        $january=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=01 AND machine_id='$fetch->id'");
         $diff01='';    
         foreach($january->result() as $getJanuaryData)
         {
@@ -252,7 +252,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $february=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=02 AND machine_id='$fetch->id'");
+        $february=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=02 AND machine_id='$fetch->id'");
         $diff02='';    
         foreach($february->result() as $getFebruaryData)
         {
@@ -271,7 +271,7 @@ foreach($result as $fetch) { ?>
 
     <th>      
         <?php
-        $march=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM maker_date)=03 AND machine_id='$fetch->id'");
+        $march=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=03 AND machine_id='$fetch->id'");
         $diff03='';    
         foreach($march->result() as $getMarchData)
         {

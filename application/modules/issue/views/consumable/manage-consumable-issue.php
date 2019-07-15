@@ -76,10 +76,10 @@ if($this->input->get('entries')!="")
               <option>-----------Select--------</option>  
               </select>
             </th>
-            <th colspan="1"><input type="date" name="issue_date" class="form-control" style="width: 115px;"></th>
+            <th colspan="1"><input type="date" name="issue_date" class="form-control" style="width: 115px;" required=""></th>
             <th colspan="1">
               <select name="shift" id="shift" class="form-control">
-                <option>-----Select----</option>
+                <option value="">-----Select----</option>
                 <option value="Day">Day</option>
                 <option value="Night">Night</option>
               </select>
@@ -191,7 +191,8 @@ Showing <?=$dataConfig['page']+1;?> to
 <tr>
   <th>Issue Id</th>
   <th>Section</th>
-  <th>Type</th>  
+  <!-- <th>Type</th>  --> 
+  <th>Issued Date</th>
   <th>Issued Qty</th>
   <th>Status</th>
   <th>Action</th>
@@ -222,7 +223,8 @@ foreach($result as $fetch_list)
   $compRow = $sqlunit->row();
   echo $compRow->name;    ?></a>
 </th>
-<th><?php echo $fetch_list->type; ?></th>
+<!-- <th><?php //echo $fetch_list->type; ?></th> -->
+<th><?php echo $fetch_list->issue_date; ?></th>
 <th><?php 
 $qty=$this->db->query("select SUM(qty) as totalqty from tbl_consum_issue_dtl where issue_id_hdr='$fetch_list->issue_id'");
 $getQty=$qty->row();

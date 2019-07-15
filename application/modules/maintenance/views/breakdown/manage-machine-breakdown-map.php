@@ -343,6 +343,7 @@ foreach($toolName->result() as $fetch_map_tool)
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadHours" >
 <thead>
 <tr>
+<th>Breakdown Date</th>
 <th>Breakdown Start Time</th>
 <th>Breakdown End Time</th>
 <th>Breakdown Total Hours</th>
@@ -362,6 +363,7 @@ $miscName=$this->db->query("select * from tbl_machine_breakdown where workorder_
 
 <tr class="gradeU record">
 
+	<td><?=$fetch_hours->breakdown_date?></td>
 	<td><?=$fetch_hours->start_time; ?></td>
 	<td><?=$fetch_hours->end_time; ?></td>
     <td><?php     
@@ -847,6 +849,10 @@ $table_name='tbl_machine_files_uploads';
 							<input type="hidden" name="code" id="code" value="<?=$getsched->code; ?>">	
 							<input type="text" value="<?=$compRowmachine->machine_name;?>" class="form-control" readonly="">
 						</th>
+						<th>Breakdown Date</th>
+						<th>
+							<input type="date" value="" name="breakdown_date"  class="form-control" style="width:100%;" required="" />
+						</th>
 						<th>Breakdown Start Time</th>
 						<th>
 							<input type="text" value="" name="breakdown_start_time" id="datetimepicker_mask1" class="form-control" style="width:100%;" required="" />
@@ -857,9 +863,11 @@ $table_name='tbl_machine_files_uploads';
 						</th>						
 					</tr>					
 					<tr>
-						<th colspan="5">&nbsp;</th>
+						<th colspan="6">&nbsp;</th>
 						<th>
-							<input type="button" class="btn btn-sm savebutton" id="saveHours" onclick="hoursfunc();" value="Save">
+							<input type="button" class="btn btn-sm savebutton" id="saveHours" onclick="hoursfunc();" value="Save">							
+						</th>
+						<th>
 							<button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button>
 						</th>
 					</tr>

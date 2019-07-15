@@ -19,7 +19,7 @@ $ID=$_GET['ID'];
 <?php
 $lock=0;
 
-$ItemQuery=$this->db->query("select * from tbl_product_stock where Product_id='$ID'");
+$ItemQuery=$this->db->query("select * from tbl_product_stock where Product_id='$ID' " );
 $fetch_list=$ItemQuery->row();
 
 ?>
@@ -43,7 +43,7 @@ $fetch_list=$ItemQuery->row();
 <div class="form-group">
 <label class="col-sm-2 control-label">Type :</label> 
 <div class="col-sm-4" id="regid"> 
-<select name="type_of_spare" required class="form-control" <?=$type=='view'?'disabled':''?> id="type_of_spare1" onchange="editsubtype(this.value)">
+<select name="type_of_spare" required class="form-control" <?=$type=='edit'?'disabled':''?> id="type_of_spare1" onchange="editsubtype(this.value)">
 	<option value="" >----Select Unit----</option>
 	<?php 
 		$sqlunit=$this->db->query("select * from tbl_master_data where param_id=26");
@@ -90,7 +90,7 @@ $fetch_list=$ItemQuery->row();
 <div class="form-group"> 
 <label class="col-sm-2 control-label">*Vendor Name:</label> 
 <div class="col-sm-4"> 
-<select name="vendor_name" class="form-control" id="vendor_name" required style="width:100%;">
+<select name="vendor_name" class="form-control" <?=$type=='edit'?'disabled':''?> id="vendor_name" required style="width:100%;">
 <option value="">--Select--</option>
 <?php
 $vendorQuery=$this->db->query("select *from tbl_contact_m where group_name = '5' and status='A'");
@@ -102,23 +102,23 @@ foreach($vendorQuery->result() as $getVendor){
 </div> 
 <label class="col-sm-2 control-label">*Purchase Price:</label> 
 <div class="col-sm-4" id="regid"> 
-<input type="number" step="any" name="unitprice_purchase" <?=$type=='view'?'disabled':''?> id="unitprice_purchase" value="<?php echo $fetch_list->unitprice_purchase; ?>" class="form-control" required>
+<input type="number" step="any" name="unitprice_purchase" <?=$type=='edit'?'disabled':''?> id="unitprice_purchase" value="<?php echo $fetch_list->unitprice_purchase; ?>" class="form-control" required>
 </div> 
 </div>
 
 <div class="form-group"> 	
 <label class="col-sm-2 control-label">*Minimum Order:</label> 
 <div class="col-sm-4"> 
-<input type="text" name="min_order" id="min_order" class="form-control" value="<?php echo $fetch_list->min_order; ?>" required="">
+<input type="text" name="min_order" id="min_order" <?=$type=='view'?'disabled':''?> class="form-control" value="<?php echo $fetch_list->min_order; ?>" required="">
 </div> 
 <label class="col-sm-2 control-label">*Minimum Reorder Level:</label> 
 <div class="col-sm-4" id="regid"> 
-<input type="text" name="min_re_order_level" id="min_re_order_level" value="<?php echo $fetch_list->min_re_order_level; ?>" class="form-control" required="">
+<input type="text" name="min_re_order_level" <?=$type=='view'?'disabled':''?> id="min_re_order_level" value="<?php echo $fetch_list->min_re_order_level; ?>" class="form-control" required="">
 </div>
 </div>
 
 <div class="table-responsive">
-<?php if($type != "view"){ ?>
+<?php if($type != "edit"){ ?>
 <INPUT type="button" value="Add Row" class="btn btn-primary" onclick="addRow_edit('dataTable_edit')" />
 <!-- <INPUT type="button" class="btn btn-danger delete_other" value="Delete Row" onclick="deleteRow_edit('dataTable_edit')" /> -->
 <?php } ?>
@@ -126,28 +126,29 @@ foreach($vendorQuery->result() as $getVendor){
 <table class="table table-striped table-bordered table-hover" id="dataTable_edit" >
 <tbody>
 <tr class="gradeA">
-<?php if($type != "view"){ ?>
+<?php if($type != "edit"){ ?>
 <th>Check </th><?php } ?>
 <th>Location</th>
 <th>Rack</th>
 <th >Quantity</th>
 <!-- <th>Minimum Reorder Level</th>
 <th>Minimum Order</th> -->
-<?php if($type != "view"){ ?>
+<?php if($type != "edit"){ ?>
 <th>Action</th><?php } ?>
 
 <?php
 
 	$locvalue=0;
 	$m=0;
-	$ItemQuery=$this->db->query("select * from tbl_product_serial_log where product_id='$ID' AND type='opening stock'");
+	//$ItemQuery=$this->db->query("select * from tbl_product_serial_log where product_id='$ID' AND type='opening stock'");
+	$ItemQuery=$this->db->query("select * from tbl_product_serial where product_id='$ID'");
 	foreach($ItemQuery->result() as $fetch_list_map){
 
 ?>
 
 </tr>
 <tr class="gradeC" data-row-id="<?php echo $fetch_list_map->serial_number; ?>">
-<?php if($type != "view"){ ?>
+<?php if($type != "edit"){ ?>
 
 	
 <th >
@@ -156,7 +157,7 @@ foreach($vendorQuery->result() as $getVendor){
 <?php } ?>
 
 <th>
-<select name="location[]" id="cat_idd<?=$m+1;?>"  class="form-control" <?=$type=='view'?'disabled':''?> onChange="getCatt(this.id)">
+<select name="location[]" id="cat_idd<?=$m+1;?>"  class="form-control" <?=$type=='edit'?'disabled':''?> onChange="getCatt(this.id)">
 	<option value=""selected disabled>----Select ----</option>
 				<?php 
 					$sqlgroup=$this->db->query("select * from tbl_master_data where param_id='21'");
@@ -168,7 +169,7 @@ foreach($vendorQuery->result() as $getVendor){
 </th>
 
 <th style="display: none;">
-<select name="location_php[]" id="cat_idd<?=$m+1;?>"  class="form-control" <?=$type=='view'?'disabled':''?> onChange="getCatt(this.id)">
+<select name="location_php[]" id="cat_idd<?=$m+1;?>"  class="form-control" <?=$type=='edit'?'disabled':''?> onChange="getCatt(this.id)">
 	<option value=""selected disabled>----Select ----</option>
 				<?php 
 					
@@ -182,7 +183,7 @@ foreach($vendorQuery->result() as $getVendor){
 
 <th>
 <input type="hidden" name="location_id" value="<?php echo $locvalue; ?>">
-<select name="rack[]" id="div_cat_idd<?=$m+1;?>" class="form-control" <?=$type=='view'?'disabled':''?>  onchange="validatephprack(this);" attri="<?php echo $locvalue; ?>">
+<select name="rack[]" id="div_cat_idd<?=$m+1;?>" class="form-control" <?=$type=='edit'?'disabled':''?>  onchange="validatephprack(this);" attri="<?php echo $locvalue; ?>">
 <option value=""selected disabled>----Select ----</option>
 <?php
 $queryMainLocation1=$this->db->query("select *from tbl_location_rack where status='A' and location_rack_id='$locvalue'");
@@ -195,7 +196,7 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 </th>
 
 <th style="display: none;">
-<select name="rack_php[]" id="div_cat_idd<?=$m+1;?>" class="form-control" <?=$type=='view'?'disabled':''?> >
+<select name="rack_php[]" id="div_cat_idd<?=$m+1;?>" class="form-control" <?=$type=='edit'?'disabled':''?> >
 <option value=""selected disabled>----Select ----</option>
 <?php
 $queryMainLocation1=$this->db->query("select *from tbl_location_rack where status='A'");
@@ -209,11 +210,11 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 
 
 <th>
-<input type="number" step="any"  value="<?php echo $fetch_list_map->quantity; ?>" id="qtyy"  name="qtyy[]"  <?=$type=='view'?'disabled':''?>  class="form-control"> 
+<input type="number" step="any"  value="<?php echo $fetch_list_map->quantity; ?>" id="qtyy"  name="qtyy[]"  <?=$type=='edit'?'disabled':''?>  class="form-control"> 
 </th>
 
 <!-- <th>
-<input type="number" step="any"  value="<?php echo $fetch_list_map->min_re_order_level; ?>" id="min_re_order_level"  name="min_re_order_level[]"  <?=$type=='view'?'disabled':''?>  class="form-control"> 
+<input type="number" step="any"  value="<?php echo $fetch_list_map->min_re_order_level; ?>" id="min_re_order_level"  name="min_re_order_level[]"  <?=$type=='edit'?'disabled':''?>  class="form-control"> 
 </th>
 <th>
 <input type="number" step="any"  value="<?php echo $fetch_list_map->min_order; ?>" id="min_order"  name="min_order[]" class="form-control"> 
@@ -222,7 +223,7 @@ foreach($queryMainLocation1->result() as $getMainLocation1){
 <th style="display: none;">
 <input type="text" name="pr_id[]" id="pr_id" value="<?=$fetch_list_map->serial_number;?>" class="form-control" readonly="true">
 	</th>
-<?php if($type != "view"){ ?>
+<?php if($type != "edit"){ ?>
 <th>
 <img src="<?=base_url("assets/images/delete.png");?>" onclick="deletevalfunc(this);" attrid="<?=$fetch_list_map->serial_number?>" />
 </th>

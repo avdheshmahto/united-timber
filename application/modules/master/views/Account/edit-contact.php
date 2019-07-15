@@ -19,20 +19,20 @@
 <div class="dt-buttons">
   <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')" title="Excel">Excel</button>
   <a class="btn btn-sm" data-toggle="modal" formid = "#contactForm" data-target="#Contactmodal" id="formreset" title="Add Contact">Add Contact</a>
-  <a class="btn btn-secondary btn-sm delete_all" title="Delete Multiple"><span>Delete</span></a>
+ 
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Account/manage_contact?<?='first_namee='.$_GET['first_namee'].'&maingroupname='.$_GET['maingroupname'].'&emailee='.$_GET['emailee'].'&mobile='.$_GET['mobile'].'&phone='.$_GET['phone'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Account/manage_contact?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 
 	<option value="10">10</option>
 	<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 	<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 	<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 	<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+	<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>
@@ -58,31 +58,27 @@ entries</label>
 <div class="row">
 <div class="col-lg-12">
 <div class="table-responsive">
-<!--<form class="form-horizontal" method="post" action=""  enctype="multipart/form-data">-->											
+											
 <table class="table table-striped table-bordered table-hover dataTables-example11" id="loadData">
 <thead bgcolor="#CCCCCC">
 <tr>
-		<th><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
-	    <th>Name</th>
-		<th>Group Name</th>
-        <th>Email Id</th>
-		<th>Mobile No.</th>
-		<th>Phone No.</th>
-		<th style="width:110px;">Action</th>
+    <th>Name</th>
+	<th>Group Name</th>
+    <th>Email Id</th>
+	<th>Mobile No.</th>
+	<th>Phone No.</th>
+	<th style="width:110px;">Action</th>
 </tr>
 </thead>
 
 <tbody id="getDataTable">
-<tr>
-		<form method="get">
-		<th>&nbsp;</th>
-		<th><input name="first_namee"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="maingroupname"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="emailee"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="mobile"  type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><input name="phone" type="text"  class="search_box form-control input-sm"  value="" /></th>
-		<th><button type="submit" class="btn btn-sm" name="filter" value="filter" style="margin:0 0 0 0px;" title="Search"><span>Search</span></button></th>
-		</form>
+<tr style="display: none;">
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<th></th>
 </tr>
 
 
@@ -95,7 +91,6 @@ $i=1;
   ?>
 
 <tr class="gradeC record" data-row-id="<?php echo $fetch_list->contact_id; ?>">
-<th><input name="cid[]" type="checkbox" id="cid[]" class="sub_chk" data-id="<?php echo $fetch_list->contact_id; ?>" value="<?php echo $fetch_list->contact_id;?>" /></th>
 <th>
 <?php if($fetch_list->group_name=='5'){ ?>
 <a href="<?=base_url();?>master/Account/manage_contact_map?id=<?php echo $fetch_list->contact_id; ?>" title="contact Details"><?php echo $fetch_list->first_name; ?></a>
@@ -117,17 +112,28 @@ $i=1;
 <th><?=$fetch_list->phone;?></th>
 
 <th>
-<?php if($view!=''){ ?>
-<!-- <button class="btn btn-default" property="view" type="button" data-toggle="modal" data-target="#Contactmodal" arrt= '<?=json_encode($fetch_list);?>' onclick="editContact(this);" data-backdrop='static' data-keyboard='false' title="View Contact"> <i class="fa fa-eye"></i> </button> -->
-<?php } if($edit!=''){ ?>
+
+<?php if($edit!=''){ ?>
 <button class="btn btn-default" property=""  data-target="#Contactmodal" data-a="<?=$fetch_list->contact_id;?>"  arrt= '<?=json_encode($fetch_list);?>' onclick="editContact(this);" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Contact"><i class="icon-pencil"></i>
 </button>
 <?php }
 $pri_col='contact_id';
 $table_name='tbl_contact_m';
-	?>
-<button class="btn btn-default delbutton"  id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Contact"><i class="icon-trash"></i>
+
+$stfCostLog=$this->db->query("select * from tbl_product_stock where supp_name='$fetch_list->contact_id' ");
+$numCost=$stfCostLog->num_rows();
+
+$sftStkLog=$this->db->query("select * from tbl_software_stock_log where vendor_id='$fetch_list->contact_id' ");
+$numStk=$sftStkLog->num_rows();
+
+$countRows=$numCost + $numStk;
+
+if($countRows > 0 ) {  ?>
+<button class="btn btn-default" type="button" title="Delete Contact" onclick="return confirm('Contact already map. You can not delete ?');"><i class="icon-trash"></i></button>
+<?php } else { ?>
+<button class="btn btn-default delbutton_contact"  id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete Contact"><i class="icon-trash"></i>
 </button>	
+<?php } ?>
 </th>
 </tr>
 <?php  $i++; } ?>

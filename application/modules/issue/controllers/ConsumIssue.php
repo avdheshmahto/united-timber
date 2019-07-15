@@ -142,7 +142,7 @@ public function stock_refill_qty($main_id,$type,$loc,$rack_id,$vendor_id,$purcha
 
 		$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
 
-		$this->db->query("update tbl_product_serial_log set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'");
+		//$this->db->query("update tbl_product_serial_log set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'");
 
 		$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='consumable issue',name_role='section consumable issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
 		$this->db->query($sqlProdLoc1);

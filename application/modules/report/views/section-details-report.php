@@ -18,9 +18,9 @@ $this->load->view("reportheader");
 <div class="panel panel-default">
 <div class="panel-heading clearfix">
 <?php 
-$wo=$this->db->query("select * from tbl_machine where id='".$_GET['id']."'");
+$wo=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
 $getWO=$wo->row(); ?>
-<h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo $getWO->machine_name; ?>) </h4>	
+<h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo $getWO->name; ?>) </h4>	
 </div>
 
 <div class="panel-body">
@@ -31,7 +31,7 @@ $getWO=$wo->row(); ?>
 <tbody>
 <th></th>
 <th></th>
-<th><a target="_blank" href="<?=base_url('report/Report/frequency_details?id=')?><?=$getWO->id?>" style="font-size: small;">Frequncy Of Spares</a></th>	
+<th><a target="_blank" href="<?=base_url('report/Report/frequency_details_section?id=')?><?=$getWO->id?>" style="font-size: small;">Frequncy Of Spares</a></th>	
 <th></th>	
 <th>Section Total Amount =</th>
 <th>
@@ -74,7 +74,7 @@ $getWO=$wo->row(); ?>
 </tr>
 
 <?php
-$sftcostlog=$this->db->query("select * from tbl_software_cost_log where machine_id='".$_GET['id']."' AND log_type!='Labour' ");
+$sftcostlog=$this->db->query("select * from tbl_software_cost_log where section_id='".$_GET['id']."' AND log_type!='Labour' AND machine_id='' ");
 $count=$sftcostlog->num_rows();
 if($count > 0)
 {
@@ -99,7 +99,7 @@ foreach($sftcostlog->result() as $fetch_list) {
 <th><?php echo $fetch_list->qty; ?></th>
 <th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
 <?php 
-	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND (section_id='".$_GET['id']."' OR machine_id='".$_GET['id']."') ");
+	$lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['id']."' ");
 	$getLbr=$lbr->row();
 
 	if($i == 0)

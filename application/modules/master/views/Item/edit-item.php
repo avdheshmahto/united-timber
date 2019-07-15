@@ -12,21 +12,20 @@
 <div class="dt-buttons">
 <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('getDataTable')" title="Excel">Excel</button>
 <a class="btn btn-sm" data-toggle="modal"  formid = "#ItemForm" data-target="#modal-0" id="formreset" title="Add Spare" onclick="sparerowdel();"><i class="fa fa-arrow-circle-left"></i> Add Parts & Supplies</a>
-<a class="btn btn-secondary btn-sm delete_all" title="Multiple Delete" ><span><i class="fa fa-trash-o"></i> Delete</span></a>
+
 </div>
 </div>
 
 <div class="dataTables_length" id="DataTables_Table_0_length">
 <label>Show
-<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Item/manage_item?<?='sku_no='.$_GET['sku_no'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&purchase_price='.$_GET['purchase_price'].'&type_of_spare='.$_GET['type_of_spare'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+<select name="DataTables_Table_0_length" url="<?=base_url();?>master/Item/manage_item?" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
 
 		<option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
 		<option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
 		<option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
 		<option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
 		<option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-		<option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
-		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
+		<option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
 
 </select>
 entries</label>
@@ -127,11 +126,11 @@ echo $keyvalue1->keyvalue;
 ?></th>
 <th><?=$fetch_list->quantity?></th>
 <th class="bs-example">
-<?php if($edit!=''){ ?>
+<!-- <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Spare"><i class="fa fa-eye"></i></button> -->	
 <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare"><i class="icon-pencil"></i></button>
 
 
-<?php }
+<?php
 $pri_col='Product_id';
 $table_name='tbl_product_stock';
 
@@ -180,7 +179,6 @@ if($countRows > 0 ) {  ?>
 		<div class="modal-header">
 		<button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4 class="modal-title">Machine Details</h4>
-		<!-- <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>  -->
 		</div>
         <div class="modal-body overflow"  id="viewData">
         </div><!-- /.modal-content -->

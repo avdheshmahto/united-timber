@@ -97,7 +97,7 @@ foreach($sql->result() as $getSql) {
         $sec=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
         $getSec=$sec->row(); ?>
 
-        <a target="_blank" href="<?=base_url('report/Report/section_details?id=')?><?=$_GET['id']?>"><?php echo $getSec->name; ?> 
+        <a target="_blank" href="<?=base_url('report/Report/section_details?id=')?><?=$getSec->id?>"><?php echo $getSec->name; ?> 
     </th>
     
     <th>
@@ -203,7 +203,7 @@ $result=$this->db->query($query)->result();
 foreach($result as $fetch) { ?>
 <tr class="gradeC record">
 
-    <th style="text-align:center;"><a target="_blank" href="<?=base_url('report/Report/section_details?id=')?><?=$fetch->id?>"> <?php  echo $fetch->machine_name; ?> </a></th>
+    <th style="text-align:center;"><a target="_blank" href="<?=base_url('report/Report/machine_details?id=')?><?=$fetch->id?>"> <?php  echo $fetch->machine_name; ?> </a></th>
     
     <th>
         <?php 

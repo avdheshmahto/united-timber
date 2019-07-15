@@ -22,11 +22,11 @@ $prd=$this->db->query("select * from tbl_product_stock where product_id='$getDtl
 $getPrd=$prd->row();
 
 ?>
-<input type="hidden" name="workorder_id" id="workorder_id" value="<?=$wid?>">
-<input type="hidden" name="workorder_spare_id" id="workorder_spare_id" value="<?=$hid?>">
-<input type="hidden" name="spareids" id="spareids" value="<?=$pid?>">
-<input type="hidden" name="via_types" id="via_types" value="<?=$getPrd->via_type?>">
-<input type="hidden" name="reqstQty" id="reqstQty" value="<?=$getDtl->qty_name?>">
+<input type="text" name="workorder_id" id="workorder_id" value="<?=$wid?>" style="display: none;">
+<input type="text" name="workorder_spare_id" id="workorder_spare_id" value="<?=$hid?>" style="display: none;">
+<input type="text" name="spareids" id="spareids" value="<?=$pid?>" style="display: none;">
+<input type="text" name="via_types" id="via_types" value="<?=$getPrd->via_type?>" style="display: none;">
+<input type="text" name="reqstQty" id="reqstQty" value="<?=$getDtl->qty_name?>" style="display: none;">
 
 <tr>
 <th colspan="2">Parts & Supplies Name</th>
@@ -38,10 +38,10 @@ $getPrd=$prd->row();
 <tr>
 <td colspan="2"><?=$getPrd->productname?></td>
 <td colspan="2"><?=$getPrd->via_type?></td>
-<td><input type="date" name="issue_date" class="form-control" required="" <?php if($getSpHdr->issue_date != '') { ?> value="<?=$getSpHdr->issue_date ?>" readonly <?php } ?> ></td>
+<td><input type="date" name="issue_date" class="form-control"  <?php if($getSpHdr->issue_date != '') { ?> value="<?=$getSpHdr->issue_date ?>" readonly <?php } ?> ></td>
 <td>
   <select name="shift" id="shift" class="form-control" <?php if($getSpHdr->shift != '') { ?> disabled <?php } ?>>
-    <option>--Select--</option>
+    <option value="">--Select--</option>
     <option value="Day" <?php if($getSpHdr->shift == 'Day') { ?> selected <?php } ?> >Day</option>
     <option value="Night" <?php if($getSpHdr->shift == 'Night') { ?> selected <?php } ?> >Night</option>
   </select>

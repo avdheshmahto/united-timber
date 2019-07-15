@@ -72,7 +72,7 @@ foreach($machine->result() as $getMachine)
 <tr class="gradeC record">  
   <th><?php echo $z++; ?></th>
   <th><?php echo $getMachine->code;?></th>
-  <th><?php echo $getMachine->machine_name; ?></th>
+  <th><a target="_blank" href="<?=base_url();?>report/Report/machine_files_log?id=<?=$getMachine->id?>"> <?php echo $getMachine->machine_name; ?> </a></th>
   <th><?php 
       $master=$this->db->query("select * from tbl_master_data where serial_number='$getMachine->m_unit'");
       $getMaster=$master->row();
@@ -100,55 +100,5 @@ foreach($machine->result() as $getMachine)
 $this->load->view("footer.php");
 ?>	
 </div>
-
-
-
-
-
-<script>
-function exportTableToExcel(tableID, filename = ''){
-
-    //alert();
-   var downloadLink;
-   var dataType = 'application/vnd.ms-excel';
-   var tableSelect = document.getElementById(tableID);
-   var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-   
-   // Specify file name
-   filename = filename?filename+'.xls':'Product Bin Card Report<?php echo date('d-m-Y');?>.xls';
-   
-   // Create download link element
-   downloadLink = document.createElement("a");
-   
-   document.body.appendChild(downloadLink);
-   
-   if(navigator.msSaveOrOpenBlob){
-       var blob = new Blob(['\ufeff', tableHTML], {
-           type: dataType
-       });
-       navigator.msSaveOrOpenBlob( blob, filename);
-   }else{
-
-       // Create a link to the file
-       downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-   
-       // Setting the file name
-       downloadLink.download = filename;
-       
-       //triggering the function
-       downloadLink.click();
-   }
-}
-
-
-
-function ResetLead()
-{
-  location.href="<?=base_url('/report/Report/comparison_details_report?id=');?><?=$_GET['id']?>";
-}
-
-</script>
-
-<script src="<?php echo base_url();?>assets/plugins/select2/js/select2.full.min.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
-<script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
+</div>
+</div>

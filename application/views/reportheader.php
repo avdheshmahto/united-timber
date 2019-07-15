@@ -78,7 +78,7 @@ display:block !important;
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Section<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/comparison_report">Section Wise Comparison Report</a></li>
-<li><a href="<?=base_url();?>report/Report/machine_report">Section Wise Machine Report</a></li>
+<li><a href="<?=base_url();?>report/Report/machine_report">Machine & History Card Report</a></li>
 </ul>
 </li> 
 
@@ -130,7 +130,7 @@ display:block !important;
 <li><a href="<?=base_url();?>report/Report/spare_machine_mapping_report">Machine Spare Mapping Report</a></li>
 </ul>
 </li> -->
-
+</ul>
 </div><!-- /.navbar-collapse -->
 </nav>
 </div>

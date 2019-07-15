@@ -106,7 +106,7 @@ $this->load->view("reportheader");
 <div class="number">
 <div class="inner">2</div>
 </div>
-<p>Section Wise Machine Report</p>
+<p>Machine & History Card Report</p>
 </div>
 </a> 
 </div>

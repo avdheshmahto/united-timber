@@ -981,12 +981,13 @@ public function insert_breakdown_hours()
 	//print_r($_POST);die;
 	$table_name="tbl_machine_breakdown";
 
+	$breakdown_date=$this->input->post('breakdown_date');
 	$breakdown_start_time=$this->input->post('breakdown_start_time');
 	$breakdown_end_time=$this->input->post('breakdown_end_time');
 	$code=$this->input->post('code');
 	$work_order_id_hours=$this->input->post("work_order_id_hours");
 
-	$this->db->query("update tbl_machine_breakdown set start_time='$breakdown_start_time',end_time='$breakdown_end_time' where code='$code' ");
+	$this->db->query("update tbl_machine_breakdown set breakdown_date='$breakdown_date', start_time='$breakdown_start_time',end_time='$breakdown_end_time' where code='$code' ");
 
 	echo $work_order_id_hours;
 

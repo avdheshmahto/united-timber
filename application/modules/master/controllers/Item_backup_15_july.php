@@ -168,16 +168,87 @@ public function insert_item()
 		
 	if($id != '')
 	{
- 	    
  	    //print_r($data);
+	    // echo "id=".$id;die;
 	    $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
 	    //print_r($qtyy);
-	    //$a=sizeof($qtyy);
-	    //$this->db->query("update tbl_product_serial set supp_name='$vendor_name',purchase_price='$unitprice_purchase' where product_id='$id' ");
+	    $a=sizeof($qtyy);
+	    for($i=0; $i<$a; $i++){
+		if($qtyy[$i]!='')
+		{
+		 	//echo $new_quantity[$i];die;
+			//echo "jkykjy".$qtyy[$i];
+		   	$logloc;$lograck;$logqty;
+        	$Querylog = "select quantity,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";            
+			$selectQuery1=$this->db->query($Querylog);
+		    $num = $selectQuery1->num_rows();
 
-	    //$this->db->query("update tbl_product_serial_log set supp_name='$vendor_name',purchase_price='$unitprice_purchase' where product_id='$id' AND name_role='product opening stock' AND type='opening stock' ");
-	 
-		echo 2;
+		 	if($num > 0)
+		    {	
+                
+				$Querylog = "select quantity,loc,rack_id,serial_number from tbl_product_serial_log where product_id='$Product_id' and serial_number='$pr_id[$i]' AND type='opening stock'";
+				$resultlog=$this->db->query($Querylog)->result();
+				//print_r($resultlog);
+				if($resultlog != "")
+				{
+				    foreach($resultlog as $dtlog)
+				    {
+				  	  	$logloc           = $dtlog->loc;	
+				    	$lograck          = $dtlog->rack_id;
+				    	$logqty           = $dtlog->quantity;
+				     	$logserial_number = $dtlog->serial_number;
+				   		//if($logqty != ""){
+				    
+					    if($qtyy[$i]!=$logqty || $location[$i]!=$logloc || $rack[$i]!=$lograck)
+					    { 
+
+					   	 	$this->db->query("update tbl_product_serial set quantity = '$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',supp_name='$supp_name' where product_id='".$Product_id."' and loc='".$logloc."' and rack_id='".$lograck."'");
+					   	 	
+
+						   	$datavalss=($qtyy[$i]-$logqty);
+						   	//(quantity-$logqty)+$qtyy[$i]
+						    $p_Q_R=$this->db->query("update tbl_product_stock set quantity =quantity+$datavalss
+						     where Product_id='$Product_id' ");
+					  
+						}
+						else
+						{
+							$this->db->query("update tbl_product_serial set quantity = '$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',supp_name='$supp_name' where product_id='".$Product_id."' and loc='".$logloc."' and rack_id='".$lograck."'");
+						}
+				  
+						if($logserial_number !="")
+             				$this->db->query("delete from tbl_product_serial_log where serial_number = $logserial_number");    
+					}  	 
+				 
+				}	
+													
+				$sqlProdLoc2="insert into tbl_product_serial_log set product_id='$Product_id',supp_name='$supp_name',quantity ='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',name_role='product opening stock',type='opening stock',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."',maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."' ";
+					$this->db->query($sqlProdLoc2);
+
+			}
+			else
+			{
+
+				$sqlProdLoc2="insert into tbl_product_serial set product_id='$Product_id',supp_name='$supp_name',quantity ='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."',maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."'"; 
+				$this->db->query($sqlProdLoc2);
+			
+				$sqlProdLoc1="insert into tbl_product_serial_log set product_id='$Product_id',supp_name='$supp_name',quantity ='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',name_role='product opening stock',type='opening stock',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."' ";
+				$this->db->query($sqlProdLoc1);
+				
+				// echo $qtyy[$i]."insert";
+
+				$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity+$qtyy[$i] where Product_id='$Product_id' ");
+			
+			}
+
+ 		}
+		
+	    //$this->session->set_flashdata('flash_msg', 'Record Updated Successfully.');
+	}
+	
+	//die;	//redirect('master/Item/manage_item');
+	
+	echo 2;
 	
 	}
 	
@@ -191,26 +262,28 @@ public function insert_item()
 		 
 		$a=sizeof($qtyy);
 		
-		for($i=0; $i<$a; $i++)
+		for($i=0; $i<$a; $i++){
+		
+		if($qtyy[$i]!='')
 		{
 		
-			if($qtyy[$i]!='')
-			{
+			$sqlProdLoc2="insert into tbl_product_serial set product_id='$lastproduct_id',supp_name='$supp_name', quantity ='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."',maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."'"; 
+			$this->db->query($sqlProdLoc2);
 			
-				$sqlProdLoc2="insert into tbl_product_serial set product_id='$lastproduct_id',supp_name='$supp_name', quantity ='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."',maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."'"; 
-				$this->db->query($sqlProdLoc2);
+			$sqlProdLoc1="insert into tbl_product_serial_log set product_id='$lastproduct_id',supp_name='$supp_name',quantity='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',name_role='product opening stock',type='opening stock',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."' ";
+				$this->db->query($sqlProdLoc1);
 				
-				$sqlProdLoc1="insert into tbl_product_serial_log set product_id='$lastproduct_id',supp_name='$supp_name',quantity='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',name_role='product opening stock',type='opening stock',maker_date=NOW(),author_date=now(),author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."',divn_id='".$this->session->userdata('divn_id')."',comp_id='".$this->session->userdata('comp_id')."',zone_id='".$this->session->userdata('zone_id')."',brnh_id='".$this->session->userdata('brnh_id')."' ";
-					$this->db->query($sqlProdLoc1);
-					
-				$p_Q=$this->db->query("update tbl_product_stock set quantity=quantity+$qtyy[$i] where Product_id='$lastproduct_id' ");
-
+			$p_Q=$this->db->query("update tbl_product_stock set quantity=quantity+$qtyy[$i] where Product_id='$lastproduct_id' ");
 			
-			}
-	  	}
+		
+		//$this->session->set_flashdata('flash_msg', 'Record Added Successfully.');
+		
+		}
 
-		echo 1;
-	}
+	  }
+
+	echo 1;
+  }
 
 }
 

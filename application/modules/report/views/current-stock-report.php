@@ -145,7 +145,7 @@ foreach($result as $rows) {
 
 <th><?php echo $rows->sku_no; ?></th>
 <th>
-<a href="<?=base_url('report/Report/consumption_report?id=');?><?php echo $rows->Product_id; ?>" target="blank">
+<a href="<?=base_url('report/Report/consumption_report?id=');?><?php echo $rows->Product_id; ?>" target="_blank">
 	<?php echo $rows->productname; ?></a></th>
 <th>
 <?php

@@ -41,6 +41,21 @@ function frequency_details()
 
 }
 
+
+function frequency_details_section() 
+{
+
+    if($this->session->userdata('is_logged_in'))
+    {
+    	$this->load->view('frequency-of-spares-section');
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
 //***************************************************************************
 
 function currentStock() 
@@ -405,6 +420,17 @@ function breakdown_report()
 
 }
 
+function breakdown_workorder()
+{
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('breakdown-workorder');
+	}
+	else
+	{
+		redirect('index');
+	}
+}
 
 public function manageItembreakdown()
 {
@@ -621,6 +647,20 @@ function section_details()
 	if($this->session->userdata('is_logged_in'))
 	{
 		$this->load->view('section-details-report');
+	}
+	else
+	{
+		redirect('index');
+	}
+}
+
+
+function machine_details()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('machine-details-page');
 	}
 	else
 	{
@@ -887,6 +927,22 @@ public function manageSectionJoinReport()
 
 
 //*****************************************************************************************************
+
+
+public function machine_files_log()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('machine-files-log',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+
+}
+
 
 public function machine_details_report()
 {

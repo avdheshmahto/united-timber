@@ -94,7 +94,7 @@ $getTypeunit=$queryTypeunit->row();
 <li class="active"><a href="#metering" data-toggle="tab">Metering</a></li>
 <li><a href="#warranties" data-toggle="tab">Warranties</a></li>
 <li><a href="#suppliers" data-toggle="tab">Suppliers</a></li>
-<li><a href="#filesid" data-toggle="tab">Files</a></li>
+<li><a href="#filesid" data-toggle="tab">History Card</a></li>
 <li><a href="#scheduledmaintenance" data-toggle="tab">Scheduled Maintenance</a></li>
 <!-- <li><a href="#openworkorder" data-toggle="tab">Open Work Orders</a></li> -->
 <li><a href="#work_order" data-toggle="tab">Work Order Log</a></li>

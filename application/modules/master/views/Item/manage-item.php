@@ -350,11 +350,11 @@ echo $keyvalue1->keyvalue;
 ?></th>
 <th><?=$fetch_list->quantity?></th>
 <th class="bs-example">
-<?php if($edit!=''){ ?>
+<!-- <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="View Spare"><i class="fa fa-eye"></i></button> -->	
 <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->Product_id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->Product_id;?>','edit')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Edit Spare"><i class="icon-pencil"></i></button>
 
 
-<?php }
+<?php
 $pri_col='Product_id';
 $table_name='tbl_product_stock';
 
