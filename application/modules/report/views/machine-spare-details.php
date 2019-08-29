@@ -19,7 +19,7 @@
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          <h4 class="panel-title">MACHINE DETAILS REPORT ( <?=$fetch->name;?> )</h4>
+          <h4 class="panel-title">MACHINE TO SPARE DETAILS REPORT ( <?=$fetch->name;?> )</h4>
           <ul class="panel-tool-options">
             <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
           </ul>
@@ -64,7 +64,7 @@
                   <th>S. No.</th>
                   <th>Machine Code</th>
                   <th>Machine Name</th>
-                  <th>Machine Unit</th>
+                  <th>Total Parts & Supplies</th>
                 </tr>
               </thead>
               <tbody id="getDataTable" >
@@ -85,12 +85,15 @@
                 <tr class="gradeC record">
                   <th><?php echo $z++; ?></th>
                   <th><?php echo $getMachine->code;?></th>
-                  <th><a target="_blank" href="<?=base_url();?>report/Report/machine_files_log?id=<?=$getMachine->id?>"> <?php echo $getMachine->machine_name; ?> </a></th>
-                  <th><?php 
-                    $master=$this->db->query("select * from tbl_master_data where serial_number='$getMachine->m_unit'");
-                    $getMaster=$master->row();
-                    echo $getMaster->keyvalue;
-                    ?></th>
+                   <?php 
+                    $ssftCstLog=$this->db->query("select product_id,machine_id from tbl_software_cost_log where machine_id='$getMachine->id' group by product_id");
+                    $getCostLog=$ssftCstLog->row();
+                    $count=$ssftCstLog->num_rows();
+                    //echo $count;
+                    ?>         
+                  <th><a target="_blank" href="<?=base_url();?>report/Report/machine_spares_log?id=<?=$getMachine->id?>"> <?php echo $getMachine->machine_name; ?> </a></th>
+                  
+                  <th><?php echo $count; ?></th>
                 </tr>
                 <?php  }  ?>
               </tbody>

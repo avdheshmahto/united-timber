@@ -664,7 +664,7 @@ public function getcatt()
 	
 	$queryPo=$this->db->query("select * from tbl_machine where m_type='".$_GET['loc']."'");
 	echo '<select>';
-	echo '<option>----select----</option>';
+	echo '<option value="">----select----</option>';
 	foreach($queryPo->result() as $getPO){
 	
 	echo '<option value='.$getPO->id.'>'.$getPO->machine_name.'</option>';

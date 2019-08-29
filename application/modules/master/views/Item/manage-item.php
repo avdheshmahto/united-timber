@@ -112,6 +112,13 @@
               <input type="text" name="min_re_order_level" id="min_re_order_level" class="form-control" required="">
             </div>
           </div>
+          <div class="form-group">           
+            <label class="col-sm-2 control-label">*Description:</label> 
+            <div class="col-sm-10"> 
+              <textarea name="description" id="description" class="form-control"></textarea>
+            </div>
+          </div>
+
           <div class="table-responsive">
             <INPUT type="button" value="Add Row" class="btn btn-sm" onclick="addRow('dataTable')" />
             <!-- <INPUT type="button" class="btn btn-secondary" value="Delete Row" onclick="deleteRow('dataTable')" /> -->

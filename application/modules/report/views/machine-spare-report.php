@@ -1,6 +1,3 @@
-<link href="<?=base_url();?>assets/plugins/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
-<link href="<?=base_url();?>assets/plugins/colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet">
-<link href="<?=base_url();?>assets/plugins/select2/css/select2.css" rel="stylesheet">
 <?php
   $this->load->view("header.php");
   
@@ -19,7 +16,7 @@
 <div class="col-lg-12">
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
-      <h4 class="panel-title">SCHEDULED WORKORDER REPORT </h4>
+      <h4 class="panel-title">MACHINE TO SPARE REPORT</h4>
       <ul class="panel-tool-options">
         <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
       </ul>
@@ -34,41 +31,42 @@
               <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
-              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
+              <option value="<?=$getSql->id?>"><?=$getSql->name?></option>
               <?php } ?>
             </select>
           </div>
-          <label class="col-sm-2 control-label">Machine</label> 
-          <div class="col-sm-3">
+          <label class="col-sm-2 control-label" style="display: none;">Machine</label> 
+          <div class="col-sm-3" style="display: none;">
             <select name="machineid" id="machineid" class="select2 form-control">
               <option value="">----Machine----</option>
             </select>
           </div>
-        </div>
-        <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px">
-          <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-          <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" >
-            <span>Search</span>
+          <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px">
+            <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
+            <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" >
+              <span>Search</span>
+          </div>
         </div>
       </form>
     </div>
-    </form>
     <div class="row">
     <div class="col-sm-12">
     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
     <div class="html5buttons">
     <div class="dt-buttons">
-    <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button> &nbsp; &nbsp;
+    <button class="dt-button buttons-excel buttons-html5" onclick="exportTableToExcel('loadData')">Excel</button> &nbsp;&nbsp; 
     </div>
     </div>
-    <div class="dataTables_length" id="DataTables_Table_0_length">&nbsp; &nbsp;Show<label>
-    <select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/scheduled_report?<?='&n_o_breakdown='.$_GET['n_o_breakdown'].'&o_name='.$_GET['o_name'].'&f_date='.$_GET['f_date'].'&t_date='.$_GET['t_date'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+    <div class="dataTables_length" id="DataTables_Table_0_length">
+    <label>&nbsp; &nbsp;&nbsp; &nbsp;Show
+    <select name="DataTables_Table_0_length" url="<?=base_url();?>report/Report/machine_spare_report?<?='m_type='.$_GET['m_type'].'&machineid='.$_GET['machineid'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
     <option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
     <option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
     <option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
     <option value="100" <?=$entries=='100'?'selected':'';?>>100</option>
     <option value="500" <?=$entries=='500'?'selected':'';?>>500</option>
-    <option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>ALL</option>
+    <option value="1000" <?=$entries=='1000'?'selected':'';?>>1000</option>
+    <option value="<?=$dataConfig['total'];?>" <?=$entries==$dataConfig['total']?'selected':'';?>>All</option>
     </select>
     entries</label>
     <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style="margin-top: -5px;margin-left: 12px;float: right;">
@@ -92,65 +90,43 @@
         <table class="table table-striped table-bordered table-hover dataTables-example1" id="loadData">
           <thead>
             <tr>
-              <th>Trigger Code</th>
-              <th>Schedule Id</th>
-              <th>Machine Name</th>
-              <th>Status</th>
-              <th>Mintenance Type</th>
+              <th>S. No.</th>
+              <th>Section</th>
+              <th>Total Machine</th>
             </tr>
           </thead>
           <tbody id="getDataTable" >
-            <tr style="display: none;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
             <?php
-              foreach($result as $fetch_list)
+              $z=1;
+              foreach($result as $fetch) 
               {
+              
+              $machine=$this->db->query("select COUNT(machine_name) as totalmachine from tbl_machine where m_type='$fetch->id' ");
+              $getMachine=$machine->row();
               ?>
-            <tr class="gradeC record " data-row-id="<?php echo $fetch_list->id; ?>">
-              <th><?=$fetch_list->trigger_code ?></th>
-              <th><?=$fetch_list->schedule_id ?></th>
-              <th>
-                <?php 
-                  $machineQuery = $this ->db->query("select * from tbl_machine where id='".$fetch_list->machine_name."'");
-                  $getMachine = $machineQuery->row();
-                  echo $getMachine->machine_name; ?>
-              </th>
-              <th>
-                <?php 
-                  $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$fetch_list->wostatus."'");
-                  $compRow = $sqlunit->row();
-                  echo $compRow->keyvalue; ?>
-              </th>
-              <th>
-                <?php 
-                  $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$fetch_list->maintyp."'");
-                  $compRow = $sqlunit->row();
-                  echo $compRow->keyvalue; ?>
-              </th>
+            <tr class="gradeC record">
+              <th><?php echo $z++; ?></th>
+              <th><a target="_blannk" href="<?=base_url();?>report/Report/machine__spare_details?id=<?=$fetch->id?>"><?php echo $fetch->name; ?></a></th>
+              <th><?php echo $getMachine->totalmachine; ?></th>
             </tr>
             <?php  }  ?>
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <div class="col-md-6 text-left"> 
-      </div>
-      <div class="col-md-6"> 
-        <?php echo $pagination; ?>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <div class="col-md-6 text-left"> 
+          </div>
+          <div class="col-md-6"> 
+            <?php echo $pagination; ?>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <?php
     $this->load->view("footer.php");
-    ?>
+    ?>  
 </div>
 <script>
   function exportTableToExcel(tableID, filename = ''){
@@ -162,7 +138,7 @@
      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
      
      // Specify file name
-     filename = filename?filename+'.xls':'SCHEDULED REPORT <?php echo date('d-m-Y');?>.xls';
+     filename = filename?filename+'.xls':'Machine Report<?php echo date('d-m-Y');?>.xls';
      
      // Create download link element
      downloadLink = document.createElement("a");
@@ -187,22 +163,18 @@
      }
   }
   
+  
+  
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/scheduled_report');?>";
+    location.href="<?=base_url('/report/Report/machine_spare_report');?>";
   }
   
 </script>
 <script src="<?php echo base_url();?>assets/plugins/select2/js/select2.full.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url();?>assets/js/form-advanced-script.js"></script>
-<script type="text/javascript" src="<?=base_url();?>/assets/daterangepicker/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="<?=base_url();?>/assets/daterangepicker/daterangepicker.css">
 <script type="text/javascript">
-  window.onload=function(){
-    getmachinelist(<?=$_GET['m_type']?>);
-  };
-  
   function getmachinelist(v)
   {
   

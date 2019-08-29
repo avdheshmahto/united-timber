@@ -103,6 +103,14 @@
       <input type="text" name="min_re_order_level" <?=$type=='view'?'disabled':''?> id="min_re_order_level" value="<?php echo $fetch_list->min_re_order_level; ?>" class="form-control" required="">
     </div>
   </div>
+  <div class="form-group">           
+    <label class="col-sm-2 control-label">*Description:</label> 
+    <div class="col-sm-10"> 
+      <textarea name="description" id="description" class="form-control">
+        <?php echo $fetch_list->description; ?>
+      </textarea>
+    </div>
+  </div>
   <div class="table-responsive">
     <?php if($type != "edit"){ ?>
     <INPUT type="button" value="Add Row" class="btn btn-primary" onclick="addRow_edit('dataTable_edit')" />

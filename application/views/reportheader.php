@@ -78,13 +78,18 @@ display:block !important;
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Section<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="<?=base_url();?>report/Report/comparison_report">Section Wise Comparison Report</a></li>
+<?php if($this->session->userdata('user_id') == 1) { ?>
 <li><a href="<?=base_url();?>report/Report/machine_report">Machine & History Card Report</a></li>
+<?php } ?>
 </ul>
 </li> 
 
+
 <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
 <ul class="dropdown-menu">
+<?php if($this->session->userdata('user_id') == 1) { ?>    
 <li><a href="<?=base_url();?>report/Report/section_report">Maintenance Report</a></li>
+<?php } ?>
 <li><a href="<?=base_url();?>report/Report/breakdown_hours_report">Breakdown Hours Report</a></li>
 </ul>
 </li>
@@ -94,42 +99,22 @@ display:block !important;
 <li><a href="<?=base_url();?>report/Report/currentStock">Current Stock Report</a></li>
 <li><a href="<?=base_url();?>report/Report/searchReorderLevel">Required Stock Report</a></li>
 <li><a href="<?=base_url();?>report/Report/searchBincard">Purchase Report</a></li>
+<?php if($this->session->userdata('user_id') == 1) { ?>
 <li><a href="<?=base_url();?>report/Report/spare_return">Purchase Return Report</a></li>
+<?php } ?>
 </ul>
 </li>
 
-<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Workorder <b class="caret"></b></a>
+<?php if($this->session->userdata('user_id') == 1) { ?>
+<li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Uses<b class="caret"></b></a>
 <ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/breakdown_report">Breakdown Workorder Report</a></li>
-<li><a href="<?=base_url();?>report/Report/scheduled_report">Scheduled Workorder Report</a></li>
+<li><a href="<?=base_url();?>report/Report/machine_spare_report">Machine To Spare Report</a></li>
+<li><a href="<?=base_url();?>report/Report/spare_machine_report">Spare To Machine Report</a></li>
 </ul>
-</li> -->
+</li>
+<?php } ?>
 
-<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/total_maintenance">Total Miantenance Report</a></li>
-<li><a href="<?=base_url();?>report/Report/detailed_workorder">Detailed Work Order Report</a></li>
-</ul>
-</li> -->
 
-<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Consumption<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/consumption_report">Consumption Report</a></li>
-</ul>
-</li> -->
-
-<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Spare Return <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/spare_return">Spare Return Report</a></li>
-<li><a href="<?=base_url();?>report/Report/spare_price_mapping_report">Spare Price Mapping Report</a></li>
-</ul>
-</li> -->
-
-<!-- <li class="dropdown hoves"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Machine Spare Mapping <b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="<?=base_url();?>report/Report/spare_machine_mapping_report">Machine Spare Mapping Report</a></li>
-</ul>
-</li> -->
 </ul>
 </div><!-- /.navbar-collapse -->
 </nav>

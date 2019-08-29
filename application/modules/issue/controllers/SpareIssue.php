@@ -255,12 +255,28 @@ function insert_spare_issue_data()
 
 	$wo=$this->db->query("SELECT * FROM tbl_work_order_maintain where id='$workordid'");
 	$getWorkid=$wo->row();
-	$machine_id=$getWorkid->machine_name;
-	$mac=$this->db->query("select * from tbl_machine where id='$machine_id' ");
-	$getMac=$mac->row();
-	$section_id=$getMac->m_type;
 
-
+	if($getWorkid->machine_name != '')
+	{
+		$machine_id=$getWorkid->machine_name;	
+	}
+	else
+	{
+		$machine_id='';
+	}
+	
+	
+	//$mac=$this->db->query("select * from tbl_machine where id='$machine_id' ");
+	//$getMac=$mac->row();
+	if($getWorkid->m_type != '')
+	{
+		$section_id=$getWorkid->m_type;
+	}
+	else
+	{
+		$section_id='';
+	}
+	
 
 	if($count > 0)
 	{

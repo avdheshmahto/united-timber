@@ -18,7 +18,7 @@
 <th>Product Name</th>
 <th>Requested Qty</th>
 <th>Issue Qty</th>
-<th>Action</th>
+<!-- <th>Action</th> -->
 </tr>
 </thead>
 
@@ -55,12 +55,12 @@ $getHdr=$hdr->row();
     }    
     ?>
     </td>
-    <td>
+    <!-- <td>
       <?php $pri_col='spare_hdr_id';
       $table_name='tbl_workorder_spare_hdr';
       ?>
       <button class="btn btn-default delbutton_spare_issue" id="<?php echo $fetch_spares->spare_hdr_id."^".$table_name."^".$pri_col."^".$fetch_spares->spare_id ; ?>" type="button" title="Delete Parts & Supplies"><i class="icon-trash"></i></button> 
-    </td>
+    </td> -->
 </tr>
 <?php } ?>
 

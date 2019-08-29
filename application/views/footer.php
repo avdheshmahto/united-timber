@@ -12,8 +12,10 @@ Copyright &copy; <?php echo date(Y);?> <a target="_blank" href="http://www.techv
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script> -->
+
  <script type="text/javascript" src="<?=base_url();?>assets/newjs/jquery.min.js"></script> 
  <script type="text/javascript" src="<?=base_url();?>assets/js/jquery.min.js"></script> 
+ 
 <script type="text/javascript" src="<?=base_url();?>assets/js/bootstrap.min.js"></script>
 
 

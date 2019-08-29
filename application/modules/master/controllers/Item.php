@@ -153,6 +153,8 @@ public function insert_item()
 		 'via_type'			  => $this->input->post('sub_type'),
 		 'min_order'		  => $this->input->post('min_order'),
 		 'min_re_order_level' => $this->input->post('min_re_order_level'),
+		 'description' 		  => $this->input->post('description'),
+
 	  );
      
      $sesio = array(
