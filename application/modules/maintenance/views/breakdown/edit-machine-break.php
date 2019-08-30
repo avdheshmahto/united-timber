@@ -23,7 +23,7 @@
     ?>
   <div class="form-group">
     <label class="col-sm-2 control-label">*Code:</label> 
-    <div class="col-sm-4"> 	
+    <div class="col-sm-4">  
       <input type="hidden" id="id"  name="id" class="form-control"  value="<?php echo $fetch_list->id; ?>" />
       <input type="text" class="form-control" id="code" name="code" value="<?php echo $fetch_list->code; ?>"<?=$type=='view'?'disabled':''?> readonly> 
     </div>

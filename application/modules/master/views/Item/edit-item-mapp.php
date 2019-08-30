@@ -24,7 +24,7 @@
 <div class="modal-body overflow">
   <div class="form-group">
     <label class="col-sm-2 control-label">*Code:</label> 
-    <div class="col-sm-4"> 	
+    <div class="col-sm-4">  
       <input type="hidden" class="hiddenField" name="Product_id" id="Product_id" value="<?=$ID;?>" />
       <input type="text" class="form-control" name="sku_no" id="sku_no1" value="<?php echo $fetch_list->sku_no; ?>" <?=$type=='view'?'disabled':''?> onkeyup="editcheckSpareCode()"> 
     </div>
@@ -40,9 +40,9 @@
     <div class="col-sm-4" id="regid"> 
       <?php 
         $sqlunit=$this->db->query("select * from tbl_master_data where param_id=26 AND serial_number='$fetch_list->type_of_spare' ");
-        $fetchunit=$sqlunit->row();		
+        $fetchunit=$sqlunit->row();   
         ?>
-      <input type="hidden" name="type_of_spare" class="form-control" id="type_of_spare1" value="<?php echo $fetchunit->serial_number; ?>" >	
+      <input type="hidden" name="type_of_spare" class="form-control" id="type_of_spare1" value="<?php echo $fetchunit->serial_number; ?>" > 
       <input type="text" class="form-control" value="<?php echo $fetchunit->keyvalue; ?>" onchange="editsubtype(this.value)" readonly="">
       </select>
     </div>
@@ -103,11 +103,11 @@
       <input type="text" name="min_re_order_level" <?=$type=='view'?'disabled':''?> id="min_re_order_level" value="<?php echo $fetch_list->min_re_order_level; ?>" class="form-control" required="">
     </div>
   </div>
-  <div class="form-group">           
+  <div class="form-group">
     <label class="col-sm-2 control-label">*Description:</label> 
     <div class="col-sm-10"> 
       <textarea name="description" id="description" class="form-control">
-        <?php echo $fetch_list->description; ?>
+      <?php echo $fetch_list->description; ?>
       </textarea>
     </div>
   </div>
@@ -150,8 +150,8 @@
               <option value=""selected disabled>----Select ----</option>
               <?php 
                 $sqlgroup=$this->db->query("select * from tbl_master_data where param_id='21'");
-                foreach ($sqlgroup->result() as $fetchgroup){						
-                ?>					
+                foreach ($sqlgroup->result() as $fetchgroup){           
+                ?>          
               <option value="<?php echo $fetchgroup->serial_number; ?>"<?php if($fetch_list_map->loc == $fetchgroup->serial_number){ ?> selected <?php } ?>><?php $locvalue=$fetch_list_map->loc;echo $fetchgroup->keyvalue; ?></option>
               <?php } ?>
             </select>
@@ -161,8 +161,8 @@
               <option value=""selected disabled>----Select ----</option>
               <?php 
                 $sqlgroup=$this->db->query("select * from tbl_master_data where param_id='21'");
-                foreach ($sqlgroup->result() as $fetchgroup){						
-                ?>					
+                foreach ($sqlgroup->result() as $fetchgroup){           
+                ?>          
               <option value="<?php echo $fetchgroup->serial_number; ?>"<?php if($fetch_list_map->loc == $fetchgroup->serial_number){ ?> selected <?php } ?>><?php echo $fetchgroup->keyvalue  ?></option>
               <?php } ?>
             </select>

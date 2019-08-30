@@ -25,7 +25,6 @@
           <div class="pull-right">
             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#ConsumIssuemodal" title="Add Tools Issue" onclick="refreshData();">Add Consumable Issue</button>
           </div>
-  
         </div>
         <div class="modal fade" id="ConsumIssuemodal" role="dialog">
           <div class="modal-dialog modal-lg">
@@ -59,7 +58,6 @@
                           $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                           foreach($sql->result() as $getSql) {
                           //foreach ($categorySelectbox as $key => $dt) { ?>
-                      
                         <option value="<?php echo $getSql->id;?>"><?php echo $getSql->name;?></option>
                         <?php } ?>
                       </select>
@@ -182,7 +180,7 @@
                 <tr>
                   <th>Issue Id</th>
                   <th>Section</th>
-                  <th>Consumable Issue</th>  
+                  <th>Consumable Issue</th>
                   <th>Issued Date</th>
                   <th>Issued Qty</th>
                   <th>Status</th>
@@ -211,16 +209,15 @@
                     $compRow = $sqlunit->row();
                     echo $compRow->name;    ?></a></th>
                   <th><?php 
-
                     $chdr=$this->db->query("select * from tbl_consum_issue_dtl where issue_id_hdr='$fetch_list->issue_id' ");
                     $count=$chdr->num_rows();
-
+                    
                     $var = array();
                     foreach($chdr->result() as $getHdr)
                     {
                       array_push($var, $getHdr->spare_id);
                     }
-
+                    
                     if($count > 0)
                     {
                       $sp_id=implode(',', $var);
@@ -229,19 +226,19 @@
                     {
                       $sp_id='99999999';
                     }
-
+                    
                     $prd=$this->db->query("select * from tbl_product_stock where Product_id IN ($sp_id) ");
-
+                    
                     $sp_name=array();
                     foreach($prd->result() as $getPrd)
                     {
                       array_push($sp_name, $getPrd->productname);
                     }
-
+                    
                     echo $sp_name[0];
                     //print_r($sp_name);
-
-                  ?></th>
+                    
+                    ?></th>
                   <th><?php echo $fetch_list->issue_date; ?></th>
                   <th><?php 
                     $qty=$this->db->query("select SUM(qty) as totalqty from tbl_consum_issue_dtl where issue_id_hdr='$fetch_list->issue_id'");

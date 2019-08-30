@@ -132,10 +132,9 @@
                 </table>
               </form>
             </div>
-          </div>
-          <!-- /.modal-content -->
+          </div>          
         </div>
-        <!-- </div> -->
+<!-- /.modal-content -->
         <div class="row">
           <div class="col-sm-12">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">

@@ -148,7 +148,7 @@
                             $table_name='tbl_workorder_labor_task';
                             ?>
                             <?php if($view!=''){ ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button> 
                             <?php }?>
                           </td>
                         </tr>
@@ -200,18 +200,18 @@
                           <td><?php
                             $dtl=$this->db->query("select *,SUM(qty_name) as reqstQty,SUM(issue_qty) as issueQty from tbl_workorder_spare_dtl where spare_hdr_id='$fetch_map_spare->spare_hdr_id'");
                             $getDtl=$dtl->row();
-                            	
+                              
                             if($getDtl->issueQty == 0)
                             {
-                            	echo "Open";
+                              echo "Open";
                             }
                             else if($getDtl->issueQty < $getDtl->reqstQty)
                             {
-                            	echo "Partial Completed";
+                              echo "Partial Completed";
                             }
                             else if($getDtl->issueQty == $getDtl->reqstQty)
                             {
-                            	echo "Completed";
+                              echo "Completed";
                             }
                             ?></td>
                           <td> 
@@ -220,9 +220,9 @@
                               $table_name='tbl_workorder_spare_hdr';
                               ?>
                             <?php if($getDtl->issue_qty == ''){ ?>
-                            <button class="btn btn-default delbutton_spare_order" id="<?php echo $fetch_map_spare->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+                            <button class="btn btn-default delbutton_spare_order" id="<?php echo $fetch_map_spare->spare_hdr_id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>  
                             <?php } else { ?>
-                            <button class="btn btn-default" type="button" title="Delete Parts & Supplies Order" onclick="return confirm('Parts & Supplies Issued. You can not delete it ?');"><i class="icon-trash"></i></button>	
+                            <button class="btn btn-default" type="button" title="Delete Parts & Supplies Order" onclick="return confirm('Parts & Supplies Issued. You can not delete it ?');"><i class="icon-trash"></i></button> 
                             <?php } ?>
                           </td>
                         </tr>
@@ -332,7 +332,7 @@
                             
                             
                             
-                            ?>    	
+                            ?>      
                           </td>
                         </tr>
                         <?php } ?>
@@ -376,7 +376,7 @@
                             $table_name='tbl_machine_files_uploads';
                             ?>
                             <?php if($view!=''){ ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button>	
+                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button" title="Delete file"><i class="icon-trash"></i></button> 
                             <?php }?>
                           </td>
                         </tr>
@@ -635,7 +635,7 @@
                             <tr class="gradeA">
                               <th>Machine Name</th>
                               <th>
-                                <?php	
+                                <?php 
                                   $wrorQuery=$this->db->query("select * from tbl_work_order_maintain where id='".$_GET['id']."' and status = 'A'");
                                   $getwror=$wrorQuery->row();
                                   
@@ -643,7 +643,7 @@
                                   $machinedata = $sqlmachine->row();
                                   
                                   echo $machinedata->machine_name;
-                                  			?>
+                                        ?>
                               </th>
                               <th>*Meter Reading</th>
                               <th><input type="text" name="meter_reading" class="form-control"></th>
@@ -723,17 +723,17 @@
                         </table>
                         <script type="text/javascript">
                           function totalestcosts(){
-                          	var est_qtyid=document.getElementById("est_qtyid").value;
-                          	var est_unit_costid=document.getElementById("est_unit_costid").value;
-                          	var sumtotalestcost=Number(est_qtyid)*Number(est_unit_costid);
-                          	document.getElementById("est_total_costid").value=sumtotalestcost;
+                            var est_qtyid=document.getElementById("est_qtyid").value;
+                            var est_unit_costid=document.getElementById("est_unit_costid").value;
+                            var sumtotalestcost=Number(est_qtyid)*Number(est_unit_costid);
+                            document.getElementById("est_total_costid").value=sumtotalestcost;
                           }
                           
                           function totalactqty(){
-                          	var act_qtyid=document.getElementById("act_qtyid").value;
-                          	var act_unit_cost=document.getElementById("act_unit_costid").value;
-                          	var sumtotalactcost=Number(act_qtyid)*Number(act_unit_cost);
-                          	document.getElementById("act_total_costid").value=sumtotalactcost;
+                            var act_qtyid=document.getElementById("act_qtyid").value;
+                            var act_unit_cost=document.getElementById("act_unit_costid").value;
+                            var sumtotalactcost=Number(act_qtyid)*Number(act_unit_cost);
+                            document.getElementById("act_total_costid").value=sumtotalactcost;
                           }
                           
                         </script>
@@ -757,7 +757,7 @@
                             <tr class="gradeA">
                               <th>Breakdown Machine</th>
                               <th>
-                                <input type="hidden" name="code" id="code" value="<?=$getsched->code; ?>">	
+                                <input type="hidden" name="code" id="code" value="<?=$getsched->code; ?>">  
                                 <input type="text" value="<?=$compRowmachine->machine_name;?>" class="form-control" readonly="">
                               </th>
                               <th>Breakdown Date</th>
@@ -776,7 +776,7 @@
                             <tr>
                               <th colspan="6">&nbsp;</th>
                               <th>
-                                <input type="button" class="btn btn-sm savebutton" id="saveHours" onclick="hoursfunc();" value="Save">							
+                                <input type="button" class="btn btn-sm savebutton" id="saveHours" onclick="hoursfunc();" value="Save">              
                               </th>
                               <th>
                                 <button type="button" class="btn btn-secondary btn-sm pull-right" data-dismiss="modal">Cancel</button>
@@ -853,7 +853,7 @@
                   xhttp.send();
                   
                   document.getElementById("modal-spare-order").innerHTML = xhttp.responseText;
-                 } 	
+                 }  
                 
                  function viewtoolsorder(v){
                 //alert(v);
@@ -864,7 +864,7 @@
                   xhttp.send();
                   
                   document.getElementById("modal-tool-order").innerHTML = xhttp.responseText;
-                 } 	
+                 }  
                 
               </script>
               <!-- ==================================================================================== -->
@@ -884,20 +884,20 @@
   function submitworkorderfilesupload() 
   {
           
-  	var form_data = new FormData(document.getElementById("formfileuploads"));
-  	form_data.append("label", "WEBUPLOAD");
+    var form_data = new FormData(document.getElementById("formfileuploads"));
+    form_data.append("label", "WEBUPLOAD");
   
-  	$.ajax({
-  		      url: "insert_breakdown_files",
-  		      type: "POST",
-  		      data: form_data,
-  		      processData: false,  // tell jQuery not to process the data
-  		      contentType: false   // tell jQuery not to set contentType
-  		  }).done(function( data ) {
-  	
-  	$("#addfiles .close").click();
-  	$('#formfileuploads')[0].reset(); 	
-    	ajex_RawMatData(<?=$_GET['id'];?>);	 
+    $.ajax({
+            url: "insert_breakdown_files",
+            type: "POST",
+            data: form_data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false   // tell jQuery not to set contentType
+        }).done(function( data ) {
+    
+    $("#addfiles .close").click();
+    $('#formfileuploads')[0].reset();   
+      ajex_RawMatData(<?=$_GET['id'];?>);  
       //console.log(data);
       //Perform ANy action after successfuly post data       
     });
@@ -907,63 +907,63 @@
   
   function ajex_RawMatData(production_id)
   {
-  	//alert(production_id);
-   	ur = "get_breakdown_files";
+    //alert(production_id);
+    ur = "get_breakdown_files";
       $.ajax({
-  			url: ur,
-  			data: { 'id' : production_id },
-  			type: "POST",
-  			
-  			success: function(data)
-  			{
-  				// alert(data);
-  				//alert("jkhkjh"+type);
-  				//$("#listingData").hide();
-  				$("#loadfileupload").empty().append(data).fadeIn();
-  		    }
-  		   });
+        url: ur,
+        data: { 'id' : production_id },
+        type: "POST",
+        
+        success: function(data)
+        {
+          // alert(data);
+          //alert("jkhkjh"+type);
+          //$("#listingData").hide();
+          $("#loadfileupload").empty().append(data).fadeIn();
+          }
+         });
   
   }
   
   function via_type_func(v)
    {
-   	//alert(v);
-   	ur="<?=base_url();?>maintenance/schedule/check_product_type";
-   	$.ajax({
-   		url  : ur,
-   		type : "POST",
-   		data : {'pid':v},
-   		success:function(data)
-   		{
-   			//alert(data);
-   			if(data !='')
-   			{
-   				$("#product_type").val(data);
-   			}
-   		}
-   		
-   		})
+    //alert(v);
+    ur="<?=base_url();?>maintenance/schedule/check_product_type";
+    $.ajax({
+      url  : ur,
+      type : "POST",
+      data : {'pid':v},
+      success:function(data)
+      {
+        //alert(data);
+        if(data !='')
+        {
+          $("#product_type").val(data);
+        }
+      }
+      
+      })
    }
   
   
    function via_type_func_tools(v)
    {
-   	//alert(v);
-   	ur="<?=base_url();?>maintenance/schedule/check_product_type";
-   	$.ajax({
-   		url  : ur,
-   		type : "POST",
-   		data : {'pid':v},
-   		success:function(data)
-   		{
-   			//alert(data);
-   			if(data !='')
-   			{
-   				$("#product_type_tools").val(data);
-   			}
-   		}
-   		
-   		})
+    //alert(v);
+    ur="<?=base_url();?>maintenance/schedule/check_product_type";
+    $.ajax({
+      url  : ur,
+      type : "POST",
+      data : {'pid':v},
+      success:function(data)
+      {
+        //alert(data);
+        if(data !='')
+        {
+          $("#product_type_tools").val(data);
+        }
+      }
+      
+      })
    }
   
   
@@ -971,22 +971,22 @@
    {
   
       //your code here
-     	var fromDate = $("#datetimepicker_mask1").val();
-  	var toDate 	 = $("#datetimepicker_mask3").val();
+      var fromDate = $("#datetimepicker_mask1").val();
+    var toDate   = $("#datetimepicker_mask3").val();
   
-  	//alert(toDate);
+    //alert(toDate);
   
-  	if(toDate < fromDate)
-  	{
-  		alert("End Date Can't Be Smaller Than Start Date !");
-  		$("#saveHours").attr('disabled',true);
-  		$('#saveHours').attr('type', 'button');
-  	}
-  	else
-  	{
-  		$("#saveHours").removeAttr('disabled',false);
-  		$('#saveHours').attr('type', 'submit');	
-  	}
+    if(toDate < fromDate)
+    {
+      alert("End Date Can't Be Smaller Than Start Date !");
+      $("#saveHours").attr('disabled',true);
+      $('#saveHours').attr('type', 'button');
+    }
+    else
+    {
+      $("#saveHours").removeAttr('disabled',false);
+      $('#saveHours').attr('type', 'submit'); 
+    }
   
   }
   
@@ -996,18 +996,18 @@
   function checkrows()
   {
   
-  	var count=$("#countRow").val();
-  	if(count > 0)
-  	{
-  		//v.type=submit;
-  		$('#saveSpare').attr('type', 'submit');
-  	}
-  	else
-  	{
-  		//v.type=button;
-  		$('#saveSpare').attr('type', 'button');
-  		alert("Nothing To Save ! Please Add Row !");
-  	}
+    var count=$("#countRow").val();
+    if(count > 0)
+    {
+      //v.type=submit;
+      $('#saveSpare').attr('type', 'submit');
+    }
+    else
+    {
+      //v.type=button;
+      $('#saveSpare').attr('type', 'button');
+      alert("Nothing To Save ! Please Add Row !");
+    }
   
   }
   
@@ -1015,9 +1015,9 @@
   function refreshData()
   {
   
-  	$("#dataTable").empty();
-  	$("#countRow").val('');
-  	
+    $("#dataTable").empty();
+    $("#countRow").val('');
+    
   }
   
 </script>

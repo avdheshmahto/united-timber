@@ -108,7 +108,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label">*Operator:</label> 
                     <div class="col-sm-4"> 
-                      <input type="text" name="operator" id="operator" class="form-control">	
+                      <input type="text" name="operator" id="operator" class="form-control">  
                     </div>
                     <label class="col-sm-2 control-label">*Completion Date:</label> 
                     <div class="col-sm-4"> 
@@ -201,68 +201,67 @@
               <th>
                 <?php
                   if($fetch_list->trigger_code!=''){
-                  	?>
+                    ?>
                 <a href="<?=base_url();?>maintenance/machine_breakdown/manage_machine_breakdown_sm_map?id=<?php echo $fetch_list->id; ?>" onclick='yourFunct(<?=$fetch_list->id?>,<?=$fetch_list->trigger_code?>)' >
-                <?php 	echo "WO".$fetch_list->id."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SM".$fetch_list->schedule_id;  ?></a>
+                <?php   echo "WO".$fetch_list->id."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SM".$fetch_list->schedule_id;  ?></a>
                 <?php
                   }else{
                   ?>
-                <a href="<?=base_url();?>maintenance/machine_breakdown/manage_machine_breakdown_map?id=<?php echo $fetch_list->id; ?>"><?php 	echo "WO".$fetch_list->id;  ?></a>
+                <a href="<?=base_url();?>maintenance/machine_breakdown/manage_machine_breakdown_map?id=<?php echo $fetch_list->id; ?>"><?php  echo "WO".$fetch_list->id;  ?></a>
                 <?php } ?>
               </th>
-              <th>	
+              <th>  
                 <?php
-            
-				$whdr=$this->db->query("select * from tbl_workorder_spare_hdr where work_order_id='$fetch_list->id' ");
-				$count=$whdr->num_rows();
-
-
-				$val=array();
-				foreach($whdr->result() as $getHdr)
-				{
-				  if($getHdr->spare_hdr_id != ''){
-				    array_push($val,$getHdr->spare_hdr_id);
-				  }
-				}
-
-				if($count > 0)
-				{
-				  $valAbc=implode(',', $val);  
-				}
-				else
-				{
-				  $valAbc='99999999';
-				}
-
-				$wdtl=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id IN ($valAbc)");
-				$count2=$wdtl->num_rows();
-
-				$val2=array();
-				foreach($wdtl->result() as $getDtl)
-				{
-				  if($getDtl->spare_id != ''){
-				    array_push($val2,$getDtl->spare_id);
-				  }
-				}
-				if($count2 > 0)
-				{
-				  $valXyz=implode(',',$val2);  
-				}
-				else
-				{
-				  $valXyz='99999999';
-				}
-
-				$prd=$this->db->query("select * from tbl_product_stock where Product_id IN ($valXyz) ");
-				$values4=array();
-				foreach($prd->result() as $value) {
-					
-					array_push($values4, $value->productname);
-				}
-
-					echo $values4[0];
-					//print_r($values4);
-                ?>
+                  $whdr=$this->db->query("select * from tbl_workorder_spare_hdr where work_order_id='$fetch_list->id' ");
+                  $count=$whdr->num_rows();
+                  
+                  
+                  $val=array();
+                  foreach($whdr->result() as $getHdr)
+                  {
+                    if($getHdr->spare_hdr_id != ''){
+                      array_push($val,$getHdr->spare_hdr_id);
+                    }
+                  }
+                  
+                  if($count > 0)
+                  {
+                    $valAbc=implode(',', $val);  
+                  }
+                  else
+                  {
+                    $valAbc='99999999';
+                  }
+                  
+                  $wdtl=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id IN ($valAbc)");
+                  $count2=$wdtl->num_rows();
+                  
+                  $val2=array();
+                  foreach($wdtl->result() as $getDtl)
+                  {
+                    if($getDtl->spare_id != ''){
+                      array_push($val2,$getDtl->spare_id);
+                    }
+                  }
+                  if($count2 > 0)
+                  {
+                    $valXyz=implode(',',$val2);  
+                  }
+                  else
+                  {
+                    $valXyz='99999999';
+                  }
+                  
+                  $prd=$this->db->query("select * from tbl_product_stock where Product_id IN ($valXyz) ");
+                  $values4=array();
+                  foreach($prd->result() as $value) {
+                    
+                    array_push($values4, $value->productname);
+                  }
+                  
+                    echo $values4[0];
+                    //print_r($values4);
+                              ?>
               </th>
               <th>
                 <a href="<?=base_url();?>assets/machine/manage_spare_map?id=<?php echo $fetch_list->machine_name; ?>" title="Machine Spare Details">
@@ -270,7 +269,7 @@
                   $sqlunit=$this->db->query("select * from tbl_machine where id='".$fetch_list->machine_name."'");
                   $compRow = $sqlunit->row();
                   echo $compRow->machine_name;
-                  	?>
+                    ?>
                 </a>
               </th>
               <th>
@@ -278,28 +277,28 @@
                   $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$fetch_list->wostatus."'");
                   $compRow = $sqlunit->row();
                   echo $compRow->keyvalue;
-                  	?>
+                    ?>
               </th>
               <th>
                 <?php 
                   $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$fetch_list->priority."'");
                   $compRow = $sqlunit->row();
                   echo $compRow->keyvalue;
-                  	?>
+                    ?>
               </th>
               <th>
                 <?php 
                   $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$fetch_list->maintyp."'");
                   $compRow = $sqlunit->row();
                   echo $compRow->keyvalue;
-                  	?>
+                    ?>
               </th>
               <th class="bs-example">
                 <?php
                   if($fetch_list->trigger_code!=''){
                   
                   }else{
-                  	?>
+                    ?>
                 <?php if($view!=''){ ?>
                 <button class="btn btn-default modalEditItem" data-a="<?php echo $fetch_list->id;?>" href='#editItem' onclick="getEditItem('<?php echo $fetch_list->id;?>','view')" type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i> </button>
                 <?php } if($edit!=''){ ?>
@@ -308,7 +307,7 @@
                   $pri_col='id';
                   $table_name='tbl_work_order_maintain';
                   ?>
-                <button style="display:none" class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>		
+                <button style="display:none" class="btn btn-default delbutton" id="<?php echo $fetch_list->id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>    
                 <?php
                   ?>
                 <button style="display:none" class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false'>MAP SPARE</button>
@@ -343,7 +342,7 @@
    xhttp.send();
   
    document.getElementById("modal-contentitem").innerHTML = xhttp.responseText;
-   } 	
+   }  
   
   
   function getSpareMap(v){
@@ -354,43 +353,43 @@
     xhttp.send();
     document.getElementById("modal-contentMap").innerHTML = xhttp.responseText;
   
-   } 	
+   }  
   function showviatype(v)
   {
   //alert(v);
-  	if(v==14){
-  		document.getElementById("viatype").style.display="Block";
-  	}else{
-  		document.getElementById("viatype").style.display="none";
-  	}
+    if(v==14){
+      document.getElementById("viatype").style.display="Block";
+    }else{
+      document.getElementById("viatype").style.display="none";
+    }
   }
   
   function showviatype11(v)
   {
   //alert(v);
-  	if(v==14){
-  		document.getElementById("viatypeeee").style.display="Block";
+    if(v==14){
+      document.getElementById("viatypeeee").style.display="Block";
   
-  	}else{
-  		document.getElementById("viatypeeee").style.display="none";
-  		document.getElementById("via_type").value='';
+    }else{
+      document.getElementById("viatypeeee").style.display="none";
+      document.getElementById("via_type").value='';
   
-  	}
+    }
   }
-</script>	
+</script> 
 <script type="text/javascript">
   function saveData()
   {
-  	
+    
       var code         = document.getElementById("code").value;
-  	var id           = document.getElementById("id").value;
-  	var machine_name = document.getElementById("machine_name").value;
-  	var wostatus  = document.getElementById("wostatus").value;
-  	var maintyp     = document.getElementById("maintyp").value;
-  	var priority     = document.getElementById("priority").value;
-  	var m_type       = document.getElementById("m_type").value;
-  	var operator       = document.getElementById("operator").value;
-  	var datetimepicker_mask       = document.getElementById("datetimepicker_mask1").value;
+    var id           = document.getElementById("id").value;
+    var machine_name = document.getElementById("machine_name").value;
+    var wostatus  = document.getElementById("wostatus").value;
+    var maintyp     = document.getElementById("maintyp").value;
+    var priority     = document.getElementById("priority").value;
+    var m_type       = document.getElementById("m_type").value;
+    var operator       = document.getElementById("operator").value;
+    var datetimepicker_mask       = document.getElementById("datetimepicker_mask1").value;
   
   if(code=='')
    {
@@ -404,7 +403,7 @@
    xhttp.send();
   
    $("#resultareabreak").html("Breakdown Added Successfully !");
-   $("#modal-0 .close").click();	 
+   $("#modal-0 .close").click();   
    $('#addbreakdownformid')[0].reset();   
    document.getElementById("loadData").innerHTML = xhttp.responseText;
   
@@ -412,22 +411,22 @@
   
   
   
-  	
+    
   }
   
   function editData()
   {
-  	
+    
       var code         = document.getElementById("code").value;
-  	var id           = document.getElementById("id").value;
-  	var machine_name = document.getElementById("machine_name").value;
-  	var wostatus  = document.getElementById("wostatus").value;
-  	var maintyp     = document.getElementById("maintyp").value;
-  	var priority     = document.getElementById("priority").value;
-  	var m_type       = document.getElementById("m_type").value;
-  	var operator       = document.getElementById("operator").value;
-  	var datetimepicker_mask       = document.getElementById("datetimepicker_mask").value
-  	
+    var id           = document.getElementById("id").value;
+    var machine_name = document.getElementById("machine_name").value;
+    var wostatus  = document.getElementById("wostatus").value;
+    var maintyp     = document.getElementById("maintyp").value;
+    var priority     = document.getElementById("priority").value;
+    var m_type       = document.getElementById("m_type").value;
+    var operator       = document.getElementById("operator").value;
+    var datetimepicker_mask       = document.getElementById("datetimepicker_mask").value
+    
   if(wostatus=='')
    {
   
@@ -443,16 +442,16 @@
   
   
    $("#resultareabreak").html("Breakdown Updated Successfully !");
-   $("#editItem .close").click();	   
+   $("#editItem .close").click();    
    document.getElementById("loadData").innerHTML = xhttp.responseText;
   
    document.getElementById("code").value='';
    document.getElementById("id").value='';
-  	
-  	
+    
+    
   }
   
-  	
+    
 </script>
 <script type="text/javascript">
   function exportTableToExcel(tableID, filename = ''){
@@ -517,28 +516,28 @@
   
   var datas=$("#code").val();
   
-  		$.ajax({
-  			
-  			url   : "<?=base_url();?>maintenance/machine_breakdown/Work_orderCode_validate",
-  			type  : "GET",
-  			data  : {'codeval':datas},
-  			success:function(data){
-  									
-  				if(data > 0)
-  				{
-  					//alert("Code Already Exist");
-  					$("#codemsg").html("Code Already Exists");
-  					$(".wo_save").attr("disabled", true);
-  				}
-  				else
-  				{
-  					$("#codemsg").html("");
-  					$(".wo_save").attr("disabled", false);
-  				}
-  				
-  			}
-  			
-  		});
+      $.ajax({
+        
+        url   : "<?=base_url();?>maintenance/machine_breakdown/Work_orderCode_validate",
+        type  : "GET",
+        data  : {'codeval':datas},
+        success:function(data){
+                    
+          if(data > 0)
+          {
+            //alert("Code Already Exist");
+            $("#codemsg").html("Code Already Exists");
+            $(".wo_save").attr("disabled", true);
+          }
+          else
+          {
+            $("#codemsg").html("");
+            $(".wo_save").attr("disabled", false);
+          }
+          
+        }
+        
+      });
   
   });
   
@@ -550,56 +549,56 @@
   
   function yourFunct(wkid,trid)
   {
-  	//var wrkid=$("#trgid").val();
-  	//alert(wkid);
-  	//alert(trid);
+    //var wrkid=$("#trgid").val();
+    //alert(wkid);
+    //alert(trid);
   
      var ur="<?=base_url();?>maintenance/machine_breakdown/update_workorder_id";
-  	$.ajax({
+    $.ajax({
   
-  			url  : ur,
-  			type : "POST",
-  			data : {'trgid':trid, 'wid':wkid},
-  			success:function(data)
-  			{
-  				//alert(data);
-  			}
+        url  : ur,
+        type : "POST",
+        data : {'trgid':trid, 'wid':wkid},
+        success:function(data)
+        {
+          //alert(data);
+        }
   
-  		   });
+         });
   
   
-  }	
+  } 
   
 </script>
 <script type="text/javascript">
   function checkBreakdownHours(wostatus)
   {
-  	var ur="<?=base_url();?>maintenance/machine_breakdown/chek_breakdown_hours";
-  	var woid=$("#workorderid").val();
-  	var wos=$("#wostatus").val();
-  	 //alert(wostatus);
-  	 //alert(woid);
+    var ur="<?=base_url();?>maintenance/machine_breakdown/chek_breakdown_hours";
+    var woid=$("#workorderid").val();
+    var wos=$("#wostatus").val();
+     //alert(wostatus);
+     //alert(woid);
   
-  	if(wostatus==75 || wostatus==76 )
-  	{
-  		$.ajax({
+    if(wostatus==75 || wostatus==76 )
+    {
+      $.ajax({
   
-  				url  : ur,
-  				type : "POST",
-  				data : {'wid' : woid},
-  				success:function(data)
-  				{
-  					//alert(data);
-  					if(data==0){
-  						$("#saveButton").attr("disabled",true);
-  						$("#resultareabreakhours").html("Add Breakdown Hours First !");
-  					}else{
-  						$("#saveButton").attr("disabled",false);
-  						$("#resultareabreakhours").html("");
-  					}
-  				}
+          url  : ur,
+          type : "POST",
+          data : {'wid' : woid},
+          success:function(data)
+          {
+            //alert(data);
+            if(data==0){
+              $("#saveButton").attr("disabled",true);
+              $("#resultareabreakhours").html("Add Breakdown Hours First !");
+            }else{
+              $("#saveButton").attr("disabled",false);
+              $("#resultareabreakhours").html("");
+            }
+          }
   
-  			   });
-  	}
+           });
+    }
   }
 </script>

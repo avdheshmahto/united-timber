@@ -43,7 +43,7 @@ else
              <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
-             <option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+             <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
              <?php } ?>
           </select>
        </div>
@@ -67,6 +67,9 @@ else
        </div>
     </div>
  </form>
+<h4 style="margin: -10px 0px 0px 440px;font-weight: 200;font-size: x-large;">
+	<?=$myear?>
+</h4>
 </div>
 </div>
 </div>
@@ -148,6 +151,33 @@ else
 	$getDecemberData=$december->row();
 	$decemberSec=round($getDecemberData->totalamt,2);
 
+//==========================Bar Chart Calculation======================
+
+$dJan=array(
+	'y' => $januarySec,
+	'label' => "January"
+);
+
+$dFeb=array(
+	'y' => $februarySec,
+	'label' => "February"
+);
+
+$dMarch=array(
+	'y' => $marchSec,
+	'label' => "March"
+);
+
+$dApril=array(
+	'y' => $aprilSec,
+	'label' => "April"
+);
+
+$dMay=array(
+	'y' => $maySec,
+	'label' => "May"
+);
+
 $dJune=array(
 	'y' => $juneSec, 
 	'label' => "June"
@@ -158,7 +188,34 @@ $dJuly=array(
 	'label' => "July"
 );
 
-$dataAll=[$dJune,$dJuly];
+$dAug=array(
+	'y' => $augustSec,
+	'label' => "August"
+);
+
+$dSep=array(
+	'y' => $septemberSec,
+	'label' => "September"
+);
+
+$dOct=array(
+	'y' => $octoberSec,
+	'label' => "October"
+);
+
+$dNov=array(
+	'y' => $novemberSec,
+	'label' => "November"
+);
+
+$dDec=array(
+	'y' => $decemberSec,
+	'label' => "December"
+);
+
+
+
+$dataAll=[$dJan,$dFeb,$dMarch,$dApril,$dMay,$dJune,$dJuly,$dAug,$dSep,$dOct,$dNov,$dDec];
 
 $data=array(
 	'name' => $sectionName,
@@ -168,30 +225,9 @@ $data=array(
 $datas[]=$data;
 
 
-}  ?>
+} ?>
  
 
-<?php //echo $json_data=json_encode($datas); ?>
-<!-- <?php foreach ($datas as $key => $value) {
-		$name=$value['name'];
-		$data=$value['dataPoints'];
-	 ?>
-		{
-			type: "stackedColumn",
-			name: "<?=$name?>",
-			showInLegend: "true",
-			yValueFormatString: "#,##0mn tonnes",
-			dataPoints: [<?php foreach ($data as $keyss => $get) { 
-				$y=$get['y'];
-				$label=$get['label'];
-				?>
-				{ 
-					y: <?=$y?> , 
-					label: "<?=$label?>" 
-				},
-			<?php } ?>]
-		},
-	<?php } ?> -->
 <div id="chartContainer" style="height: 400px; width: 100%;">
 
 </div>
@@ -208,7 +244,7 @@ $datas[]=$data;
 	var options = {
 	animationEnabled: true,
 	title:{
-		text: "Section Expenses Of United Timber"   
+		text: "Section Expenses of United Timber"   
 	},
 	axisY:{
 		title:"Section (Expense In Rupees)"

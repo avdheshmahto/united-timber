@@ -233,7 +233,7 @@ function category_all($last,$strat)
 {
 
 	$data="";
-  	/*echo "SELECT  id, name,name as text, inside_cat as parent_id ,create_on FROM tbl_category where status = 1 Order by id ASC limit $strat,$last";*/
+
   	$result = $this->db->query("SELECT  id, name,name as text, inside_cat as parent_id ,create_on FROM tbl_category where status = 1 Order by id DESC limit $strat,$last")->result_array();
   	if(sizeof($result ) > 0)
   	{

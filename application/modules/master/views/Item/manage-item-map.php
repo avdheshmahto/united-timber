@@ -424,13 +424,13 @@
                         <tr class="gradeA">
                           <td><a href="<?=base_url();?>maintenance/machine_breakdown/manage_machine_breakdown_map?id=<?=$fetch_map_triggerlog->id?>"><?="WO".$fetch_map_triggerlog->id;?></a></td>
                           <td><?php
-                          $mac=$this->db->query("select * from tbl_machine where id='$fetch_map_triggerlog->machine_name'");
-                          $getMac=$mac->row();
-                          echo $getMac->machine_name;?></td>
+                            $mac=$this->db->query("select * from tbl_machine where id='$fetch_map_triggerlog->machine_name'");
+                            $getMac=$mac->row();
+                            echo $getMac->machine_name;?></td>
                           <td><?php
-                          $mst=$this->db->query("select * from tbl_master_data where serial_number='$fetch_map_triggerlog->wostatus'");
-                          $getMstData=$mst->row();
-                          echo $getMstData->keyvalue;?></td>
+                            $mst=$this->db->query("select * from tbl_master_data where serial_number='$fetch_map_triggerlog->wostatus'");
+                            $getMstData=$mst->row();
+                            echo $getMstData->keyvalue;?></td>
                         </tr>
                       </tbody>
                       <?php } ?>

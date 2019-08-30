@@ -1,11 +1,7 @@
 ﻿<?php $this->load->view("indexheader.php"); ?>
 		
-	</div>
-</div>
-<?php
 
-$this->load->view("indexfooter.php");
-?>
+<?php $this->load->view("indexfooter.php"); ?>
 
 <script>
 function show()

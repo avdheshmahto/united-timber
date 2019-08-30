@@ -42,7 +42,7 @@
                      <?php
                         $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                         foreach($sql->result() as $getSql) { ?>
-                     <option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+                     <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                      <?php } ?>
                   </select>
                </div>

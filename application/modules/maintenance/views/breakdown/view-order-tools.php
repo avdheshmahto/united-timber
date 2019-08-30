@@ -25,12 +25,12 @@
       </tr>
       <?php
         $i=1;
-        	
-        	$smsparelogQuery=$this->db->query("select *from tbl_workorder_spare_dtl where spare_hdr_id='$getSchedule->spare_hdr_id'");
-        	foreach($smsparelogQuery->result() as $getSmlog){
+          
+          $smsparelogQuery=$this->db->query("select *from tbl_workorder_spare_dtl where spare_hdr_id='$getSchedule->spare_hdr_id'");
+          foreach($smsparelogQuery->result() as $getSmlog){
         
-        		$sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Tools' and status='A' and Product_id='$getSmlog->spare_id'");
-        		$fetchunit=$sqlunit->row();
+            $sqlunit=$this->db->query("select * from tbl_product_stock where via_type='Tools' and status='A' and Product_id='$getSmlog->spare_id'");
+            $fetchunit=$sqlunit->row();
         ?>
       <tr class="gradeA">
         <th><?php echo $i;?></th>
@@ -39,13 +39,13 @@
         <th><?php echo $getSmlog->qty_name;?></th>
         <th><?php if($getSmlog->issue_qty != '') 
           {
-          	echo $getSmlog->issue_qty;
+            echo $getSmlog->issue_qty;
           } else {
-          	echo 0;
+            echo 0;
           } ?>
         </th>
       </tr>
-      <?php $i++; } ?>			
+      <?php $i++; } ?>      
     </tbody>
   </table>
 </div>
