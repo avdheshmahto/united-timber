@@ -12,7 +12,7 @@
 <link rel='shortcut icon' type='image/x-icon' href='<?=base_url();?>assets/images/favicon.ico' />
 <!-- /site favicon -->
 
-<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="<?=base_url();?>assets/newjs/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?=base_url();?>assets/dropdown-customer/semantic.js"></script>
 <link rel="stylesheet" href="<?=base_url();?>assets/js/fullcalendar/fullcalendar.css">
 <script src="<?=base_url();?>assets/js/fullcalendar/fullcalendar.min.js"></script>
