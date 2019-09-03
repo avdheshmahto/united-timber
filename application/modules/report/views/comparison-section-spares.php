@@ -17,16 +17,17 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <?php 
-            $wo=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
+            $wo=$this->db->query("select * from tbl_category where id='".$_GET['sid']."'");
             $getWO=$wo->row(); ?>
           <h4 class="panel-title">COMPARISON SECTION SPARES DETAILS (<?php echo $getWO->name; ?>) </h4>
+          <a href="<?=base_url();?>report/Report/comparison_details_report?sid=<?=$_GET['sid']?>&year=<?=$_GET['year']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
     <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">From Date</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="id" value="<?php echo $_GET['id'];?>"> 
+            <input type="hidden" name="sid" value="<?php echo $_GET['sid'];?>"> 
             <input type="hidden" name="year" value="<?php echo $_GET['year'];?>"> 
             <input type="hidden" name="month" value="<?php echo $_GET['month'];?>"> 
             <input type="date" name="from_date" id='from_date' value="<?=$_GET['from_date'];?>" class="form-control"> 
@@ -70,10 +71,10 @@
                 <th></th>
                 <th>
                   <?php if($_GET['filter'] == 'filter') { ?>
-                  <a target="_blank" href="<?=base_url('report/Report/frequency_details_section?id=')?><?=$getWO->id?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>&from_date=<?=$_GET['from_date']?>&to_date=<?=$_GET['to_date']?>&spare_type=<?=$_GET['spare_type']?>&spare_id=<?=$_GET['spare_id']?>&filter=<?=$_GET['filter']?>" style="font-size: small;">
+                  <a href="<?=base_url('report/Report/frequency_details_section?sid=')?><?=$_GET['sid']?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>&from_date=<?=$_GET['from_date']?>&to_date=<?=$_GET['to_date']?>&spare_type=<?=$_GET['spare_type']?>&spare_id=<?=$_GET['spare_id']?>&filter=<?=$_GET['filter']?>" style="font-size: small;">
                   Frequncy Of Spares</a>
                 <?php  } else { ?>
-                  <a target="_blank" href="<?=base_url('report/Report/frequency_details_section?id=')?><?=$getWO->id?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>" style="font-size: small;">Frequncy Of Spares</a>
+                  <a href="<?=base_url('report/Report/frequency_details_section?sid=')?><?=$_GET['sid']?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>" style="font-size: small;">Frequncy Of Spares</a>
                   <?php } ?>
                 </th>
                 <th></th>
@@ -116,7 +117,7 @@
                 if($_GET['filter'] == 'filter')
                 {
 
-                  $qry="select * from tbl_software_cost_log where section_id='".$_GET['id']."' AND log_type!='Labour' AND machine_id='' ";
+                  $qry="select * from tbl_software_cost_log where section_id='".$_GET['sid']."' AND log_type!='Labour' AND machine_id='' ";
 
 
                     if($_GET['from_date'] && $_GET['to_date'] != '') 
@@ -201,7 +202,7 @@
                 else
                 {
                   
-                  $qry="select * from tbl_software_cost_log where section_id='".$_GET['id']."' AND log_type!='Labour' AND machine_id='' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ";
+                  $qry="select * from tbl_software_cost_log where section_id='".$_GET['sid']."' AND log_type!='Labour' AND machine_id='' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ";
 
                   $qry .= " ORDER BY log_date ASC";
 
@@ -237,7 +238,7 @@
                   <th><?php echo $fetch_list->qty; ?></th>
                   <th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
                   <?php 
-                    $lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['id']."' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ");
+                    $lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['sid']."' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ");
                     $getLbr=$lbr->row();
                     
                     if($i == 0)
@@ -272,7 +273,7 @@
                   <th>1</th>
                   <th colspan="7"></th>
                   <?php 
-                    $lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['id']."' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ");
+                    $lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['sid']."' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ");
                     $getLbr=$lbr->row();
                     
                     if($i == 0)
@@ -348,7 +349,7 @@
 
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/comparison_section_spares?id=');?><?=$_GET['id']?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>";
+    location.href="<?=base_url('/report/Report/comparison_section_spares?sid=');?><?=$_GET['sid']?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>";
   }
 
  window.onload = function() {

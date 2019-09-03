@@ -35,13 +35,13 @@
         <div class="row">
           <div class="col-md-3">
             <ul id="tree2">
-              <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">ALL SECTION</a>
+              <li><a href="<?=base_url();?>report/Report/total_maintenance?sid=0">ALL SECTION</a>
               </li>
               <ul>
                 <?php 
                   $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                   foreach($sql->result() as $getSql) { ?>                 
-                <li id="<?=$getSql->id?>" value = "<?=$getSql->id?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$getSql->id?>&name=<?=$getSql->name?>"><?=$getSql->name?></a></li>
+                <li><a href="<?=base_url();?>report/Report/total_maintenance?sid=<?=$getSql->id?>"><?=$getSql->name?></a></li>
                 <?php } ?>                        
               </ul>
             </ul>
@@ -57,7 +57,10 @@
 <div class="col-lg-9">
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
-      <h4 class="panel-title">MAINTENANCE REPORT <?php if($_GET['id']==0){ ?>( All Section ) <?php } else {?>(&nbsp;&nbsp;<?=$_GET['name'];?>&nbsp;&nbsp;)<?php }?></h4>
+      <?php $sql=$this->db->query("select * from tbl_category where inside_cat='0' AND id='".$_GET['sid']."' ");
+        $getSec=$sql->row();
+       ?>
+      <h4 class="panel-title">MAINTENANCE REPORT <?php if($_GET['sid']==0){ ?>( All Section ) <?php } else {?>(&nbsp;&nbsp;<?=$getSec->name;?>&nbsp;&nbsp;)<?php }?></h4>
       <ul class="panel-tool-options">
         <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
       </ul>
@@ -67,17 +70,16 @@
         <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">Section</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="id" id='id' value="<?php echo $_GET['id']; ?>">
-            <input type="hidden" name="name" id='name' value="<?php echo $_GET['name']; ?>">
-            <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" <?php if($_GET['id'] == 0 ) { ?> <?php } else { ?> disabled="" <?php } ?> >
+            <input type="hidden" name="sid" id='sid' value="<?php echo $_GET['sid']; ?>">
+            <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" <?php if($_GET['sid'] == 0 ) { ?> <?php } else { ?> disabled="" <?php } ?> >
               <option value="0" class="listClass">------Section-----</option>
               <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
-              <?php if($_GET['id'] == 0 ) { ?>
+              <?php if($_GET['sid'] == 0 ) { ?>
               <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
               <?php } else { ?>
-              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
+              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['sid'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
               <?php } ?>
               <?php } ?>
             </select>
@@ -131,7 +133,7 @@
               <td></td>
             </tr>
             <?php
-              if($_GET['id']== 0)
+              if($_GET['sid']== 0)
               {
                 
                 if($_GET['filter'] == 'filter')
@@ -163,11 +165,11 @@
                 
                 if($_GET['filter'] == 'filter')
                 {
-                  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' AND machine_name='".$_GET['machineid']."' Order by id DESC ");  
+                  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['sid']."' AND machine_name='".$_GET['machineid']."' Order by id DESC ");  
                 }
                 else
                 {
-                  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['id']."' Order by id DESC ");
+                  $query=("select * from tbl_work_order_maintain where m_type='".$_GET['sid']."' Order by id DESC ");
                 }
                 
                 $getQuery = $this->db->query($query);
@@ -180,10 +182,10 @@
               <th>
                 <?php
                   if($fetch_list->trigger_code!='') { ?>
-                <a target="_blank" href="<?=base_url();?>report/Report/maintenance_details?id=<?php echo $fetch_list->id;?>" >
+                <a href="<?=base_url();?>report/Report/maintenance_details?sid=<?=$_GET['sid']?>&wid=<?=$fetch_list->id;?>" >
                 <?php   echo "WO".$fetch_list->id."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SM".$fetch_list->schedule_id;  ?></a>
                 <?php } else { ?>
-                <a target="_blank" href="<?=base_url();?>report/Report/maintenance_details?id=<?php echo $fetch_list->id;?>">
+                <a href="<?=base_url();?>report/Report/maintenance_details?sid=<?=$_GET['sid']?>&wid=<?=$fetch_list->id;?>" >
                 <?php   echo "WO".$fetch_list->id;  ?></a>
                 <?php } ?>
               </th>
@@ -283,7 +285,7 @@
   
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/total_maintenance?id=');?><?=$_GET['id']?>&name=<?=$_GET['name']?>";
+    location.href="<?=base_url('/report/Report/total_maintenance?sid=');?><?=$_GET['sid']?>";
   }
 </script>
 <script type="text/javascript" src="<?=base_url();?>/assets/daterangepicker/daterangepicker.js"></script>
@@ -294,10 +296,10 @@
 <script type="text/javascript">
   window.onload = function() {
   
-    <?php if($_GET['id'] == 0 ) { ?>
+    <?php if($_GET['sid'] == 0 ) { ?>
       getmachinelist(<?=$_GET['m_type']?>);
     <?php } else { ?>
-      getmachinelist(<?=$_GET['id']?>);
+      getmachinelist(<?=$_GET['sid']?>);
     <?php } ?>
   
   };

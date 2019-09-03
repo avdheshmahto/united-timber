@@ -16,13 +16,14 @@
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <?php 
-        $wo=$this->db->query("select * from tbl_work_order_maintain where id='".$_GET['id']."' ");
+        $wo=$this->db->query("select * from tbl_work_order_maintain where id='".$_GET['wid']."' ");
         $getWO=$wo->row();
         if($getWO->trigger_code != '') { ?>
       <h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo 'WO'.$getWO->id.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SM'.$getWO->trigger_code;?>)</h4>
       <?php } else { ?>
       <h4 class="panel-title">WORKORDER MAINTENANCE DETAILS (<?php echo 'WO'.$getWO->id; ?>) </h4>
       <?php } ?>
+      <a href="<?=base_url();?>report/Report/total_maintenance?sid=<?=$_GET['sid']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
     </div>
     <div class="panel-body">
       <div class="table-responsive">
@@ -51,7 +52,7 @@
           </thead>
           <tbody id="getDataTable" >
             <?php
-              $issuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_id='".$_GET['id']."' ");
+              $issuehdr=$this->db->query("select * from tbl_spare_issue_hdr where workorder_id='".$_GET['wid']."' ");
               $count=$issuehdr->num_rows();
               
               $ishdrid=array();
@@ -93,7 +94,7 @@
               <th><?php echo $fetch_list->qty; ?></th>
               <th><?php echo $totalprice = $fetch_list->price * $fetch_list->qty?></th>
               <?php 
-                $laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['id']."' ");
+                $laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['wid']."' ");
                 $getCost=$laborCost->row();
                 
                 if($i == 0)
@@ -129,7 +130,7 @@
               <th>1</th>
               <th colspan="6"></th>
               <?php 
-                $laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['id']."' ");
+                $laborCost=$this->db->query("select SUM(cost_spent) as totalcost from tbl_workorder_labor_task where work_order_id='".$_GET['wid']."' ");
                 $getCost=$laborCost->row();
                 
                 if($i == 0)

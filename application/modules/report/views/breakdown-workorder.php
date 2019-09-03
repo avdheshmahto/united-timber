@@ -12,7 +12,7 @@
   <?php
     $this->load->view("reportheader");
     
-    $mac=$this->db->query("select * from tbl_machine where id='".$_GET['id']."'");
+    $mac=$this->db->query("select * from tbl_machine where id='".$_GET['mid']."'");
     $fetch=$mac->row();
     ?>
   <div class="row">
@@ -20,16 +20,16 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <h4 class="panel-title">BREAKDOWN WORKORDER DETAILS( <?=$fetch->machine_name;?> )</h4>
-          <ul class="panel-tool-options">
-            <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-          </ul>
+          <a href="<?=base_url();?>report/Report/breakdown_hours_details?sid=<?=$_GET['sid']?>&year=<?=$_GET['year']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
       <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">          
           <label class="col-sm-2 control-label">Workorder</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="id" id='id' value="<?php echo $_GET['id']; ?>">
+            <input type="hidden" name="sid" id='sid' value="<?=$_GET['sid']; ?>">
+            <input type="hidden" name="mid" id='mid' value="<?=$_GET['mid']; ?>">
+            <input type="hidden" name="year" id='year' value="<?=$_GET['year']; ?>">
             <select name="wo_id" id="wo_id" class="select2 form-control">
               <option value="">----Select----</option>
               <option value="1" <?php if($_GET['wo_id'] == 1) { ?> selected <?php } ?> >Workorder With Hours</option>
@@ -59,14 +59,14 @@
                 {
                   if($_GET['wo_id']==2){
 
-                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['id']."' AND start_time='' AND end_time=''");
+                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' AND start_time='' AND end_time=''");
                   }else{
-                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['id']."' AND start_time!='' AND end_time!='' ");
+                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' AND start_time!='' AND end_time!='' ");
                   }
                 }
                 else
                 {
-                  $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['id']."' ");
+                  $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' ");
                 }
                   
                   
@@ -112,6 +112,6 @@
 <script type="text/javascript">
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/breakdown_workorder?id=');?><?=$_GET['id']?>";
+    location.href="<?=base_url('/report/Report/breakdown_workorder?sid=');?><?=$_GET['sid']?>&mid=<?=$_GET['mid']?>&year=<?=$_GET['year']?>";
   }
 </script>

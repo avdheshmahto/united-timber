@@ -88,6 +88,14 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h4>Description</h4>
+                        <div class="form-group">
+                          <textarea class="form-control" readonly><?=$getspare->description;?></textarea>
+                        </div>
+                      </div>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -367,9 +375,9 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example1" >
                       <thead>
                         <tr>
-                          <th>Code</th>
-                          <th>Machine Name</th>
-                          <th>Workorder Status</th>
+                          <th>Trigger Code</th>
+                          <th>Updated Trigger Value</th>
+                          <th>Date Of Created Work Order</th>
                         </tr>
                       </thead>
                       <?php
@@ -395,14 +403,14 @@
                         }
                         
                         //echo "select * from tbl_workorder_spare_hdr where spare_hdr_id IN ($valAbc)";
-                        $wosh=$this->db->query("select * from tbl_workorder_spare_hdr where spare_hdr_id IN ($valAbc) AND trigger_id='' ");
+                        $wosh=$this->db->query("select * from tbl_workorder_spare_hdr where spare_hdr_id IN ($valAbc) AND trigger_id!='' ");
                         $count2=$wosh->num_rows();
                         
                         $val2=array();
                         foreach($wosh->result() as $getWosh)
                         {
-                          if($getWosh->work_order_id != ''){
-                            array_push($val2,$getWosh->work_order_id);
+                          if($getWosh->trigger_id != ''){
+                            array_push($val2,$getWosh->trigger_id);
                           }
                         }
                         if($count2 > 0)
@@ -416,21 +424,15 @@
                         
                         //echo "select * from tbl_schedule_triggering_log where trigger_code IN ($valXyz) ORDER BY trigger_code DESC ";
                         
-                         $triggerlog=$this->db->query("select * from tbl_work_order_maintain where id IN ($valXyz) ORDER BY id DESC ");
+                         $triggerlog=$this->db->query("select * from tbl_schedule_triggering_log where trigger_code IN ($valXyz) ORDER BY trigger_code DESC ");
                           foreach($triggerlog->result() as $fetch_map_triggerlog)
                           {
                         ?>
                       <tbody>
                         <tr class="gradeA">
-                          <td><a href="<?=base_url();?>maintenance/machine_breakdown/manage_machine_breakdown_map?id=<?=$fetch_map_triggerlog->id?>"><?="WO".$fetch_map_triggerlog->id;?></a></td>
-                          <td><?php
-                            $mac=$this->db->query("select * from tbl_machine where id='$fetch_map_triggerlog->machine_name'");
-                            $getMac=$mac->row();
-                            echo $getMac->machine_name;?></td>
-                          <td><?php
-                            $mst=$this->db->query("select * from tbl_master_data where serial_number='$fetch_map_triggerlog->wostatus'");
-                            $getMstData=$mst->row();
-                            echo $getMstData->keyvalue;?></td>
+                          <td><?="TR".$fetch_map_triggerlog->trigger_code;?></td>
+                          <td><?=$fetch_map_triggerlog->next_trigger_reading;?></td>
+                          <td><?=$fetch_map_triggerlog->author_date;?></td>
                         </tr>
                       </tbody>
                       <?php } ?>
@@ -696,8 +698,8 @@
                   </div>
                   <!--<div id="prdsrch" style="color:black;padding-left:0px; width:30%; height:110px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
                     <?php
-                      $this->load->view('getproduct');
-                                 ?>
+                      //$this->load->view('getproduct');
+                    ?>
                     </div>-->
               </th>
               <th>

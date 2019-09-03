@@ -106,7 +106,7 @@
               ?>
             <tr class="gradeC record">
               <th><?php echo $z++; ?></th>
-              <th><a target="_blannk" href="<?=base_url();?>report/Report/machine_details_report?id=<?=$fetch->id?>"><?php echo $fetch->name; ?></a></th>
+              <th><a href="<?=base_url();?>report/Report/machine_details_report?sid=<?=$fetch->id?>"><?php echo $fetch->name; ?></a></th>
               <th><?php echo $getMachine->totalmachine; ?></th>
             </tr>
             <?php  }  ?>

@@ -14,7 +14,7 @@
 <?php
   $this->load->view("reportheader");
   
-  $ps=$this->db->query("select * from tbl_product_stock where Product_id='".$_GET['id']."'");
+  $ps=$this->db->query("select * from tbl_product_stock where Product_id='".$_GET['sid']."'");
   $getPs=$ps->row();
   ?>
 <div class="row">
@@ -22,9 +22,7 @@
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <h4 class="panel-title">CONSUMPTION REPORT (<?=$getPs->productname?>) </h4>
-        <ul class="panel-tool-options">
-          <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-        </ul>
+        <a href="<?=base_url();?>report/Report/searchStock?tid=<?=$_GET['tid']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
@@ -52,7 +50,7 @@
             </thead>
             <tbody id="getDataTable" >
               <?php 
-                $prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['id']."' AND name_role='product opening stock' "); 
+                $prd=$this->db->query("select *,SUM(quantity) as totalQty from tbl_product_serial_log where product_id='".$_GET['sid']."' AND name_role='product opening stock' "); 
                 $getPrd=$prd->row();
                 $vndr333=$this->db->query("select * from tbl_contact_m where contact_id='$getPrd->supp_name' ");
                 $getVndr22=$vndr333->row();
@@ -71,7 +69,7 @@
               </tr>
               <?php
                 $i=1;
-                $data=$this->db->query("select * from tbl_software_stock_log where product_id='".$_GET['id']."' ");
+                $data=$this->db->query("select * from tbl_software_stock_log where product_id='".$_GET['sid']."' ");
                 foreach($data->result() as $fetch) { ?>
               <tr class="gradeC record">
                 <td><?php 

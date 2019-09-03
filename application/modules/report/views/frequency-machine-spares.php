@@ -17,9 +17,10 @@
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <?php 
-        $wo=$this->db->query("select * from tbl_machine where id='".$_GET['id']."'");
+        $wo=$this->db->query("select * from tbl_machine where id='".$_GET['mid']."'");
         $getWO=$wo->row(); ?>
       <h4 class="panel-title">FREQUENCY OF SPARES MACHINE (<?php echo $getWO->machine_name; ?>) </h4>
+      <a href="<?=base_url();?>report/Report/comparison_machine_spares?sid=<?=$_GET['sid']?>&mid=<?=$_GET['mid']?>&year=<?=$_GET['year']?>&month=<?=$_GET['month']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
     </div>
     <div class="panel-body">
       <div class="table-responsive">
@@ -36,7 +37,7 @@
               if($_GET['filter'] == 'filter') 
               {
 
-                $qry ="select *,COUNT(product_id) as frequncyofspares from tbl_software_cost_log where machine_id='".$_GET['id']."' AND log_type!='Labour'";
+                $qry ="select *,COUNT(product_id) as frequncyofspares from tbl_software_cost_log where machine_id='".$_GET['mid']."' AND log_type!='Labour'";
                 
                     if($_GET['from_date'] && $_GET['to_date'] != '') 
                     {
@@ -120,7 +121,7 @@
               else
               {
 
-                $qry ="select *,COUNT(product_id) as frequncyofspares from tbl_software_cost_log where machine_id='".$_GET['id']."' AND log_type!='Labour' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' GROUP BY product_id";
+                $qry ="select *,COUNT(product_id) as frequncyofspares from tbl_software_cost_log where machine_id='".$_GET['mid']."' AND log_type!='Labour' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' GROUP BY product_id";
 
                 $sftcostlog=$this->db->query($qry);
 

@@ -117,7 +117,7 @@
                      <th>
                         <?php $sec=$this->db->query("select * from tbl_category where id='$fetch->main_section'");
                            $getSec=$sec->row(); ?>
-                        <a target="_blank" href="<?=base_url('report/Report/comparison_details_report?id=')?><?=$fetch->main_section?>&year=<?=$myear?>"> <?php echo $getSec->name;?> </a>
+                        <a href="<?=base_url('report/Report/comparison_details_report?sid=')?><?=$fetch->main_section?>&year=<?=$myear?>"> <?php echo $getSec->name;?> </a>
                      </th>
                      <th>
                         <?php

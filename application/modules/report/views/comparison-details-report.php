@@ -16,25 +16,23 @@
 <div class="col-lg-12">
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
-      <?php  $sect=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
+      <?php  $sect=$this->db->query("select * from tbl_category where id='".$_GET['sid']."'");
         $getSect=$sect->row(); ?>
       <h4 class="panel-title">COMPARISON MACHINE DETAILS (<?php echo $getSect->name;?>)</h4>
-      <ul class="panel-tool-options">
-        <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-      </ul>
+      <a href="<?=base_url();?>report/Report/comparison_report" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
     </div>
     <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">Section</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="id" id='id' value="<?php echo $_GET['id'];?>"> 
+            <input type="hidden" name="sid" id='sid' value="<?php echo $_GET['sid'];?>"> 
             <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="" disabled="">
               <option value="0" class="listClass">------Section-----</option>
               <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) {  ?>
-              <option value="<?=$getSql->id?>" <?php if($getSql->id==$_GET['id']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
+              <option value="<?=$getSql->id?>" <?php if($getSql->id==$_GET['sid']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
               <?php } ?>
             </select>
           </div>
@@ -75,7 +73,7 @@
             <tr>
               <th>
                 <?php  
-                  $sec=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
+                  $sec=$this->db->query("select * from tbl_category where id='".$_GET['sid']."'");
                   $getSec=$sec->row(); ?>
                 <!-- <a target="_blank" href="<?php //echo base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>"></a> -->
                   <?php echo $getSec->name; ?> 
@@ -86,7 +84,7 @@
                 $getJanuarySum=$january->row();
                 //echo (round($getJanuarySum->totalamt,2));
                 ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=01"><?php echo (round($getJanuarySum->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=01"><?php echo (round($getJanuarySum->totalamt,2)); ?> 
               </a>
               </th>
               <th>
@@ -95,7 +93,7 @@
                 $getFebruarySum=$february->row();
                 //echo (round($getFebruarySum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=02"><?php echo (round($getFebruarySum->totalamt,2)); ?> 
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=02"><?php echo (round($getFebruarySum->totalamt,2)); ?> 
               </a>
               </th>
               <th>
@@ -104,7 +102,7 @@
                 $getMarchSum=$march->row();
                 //echo (round($getMarchSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=03"><?php echo (round($getMarchSum->totalamt,2)); ?></a>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=03"><?php echo (round($getMarchSum->totalamt,2)); ?></a>
               </th>
               <th>
               <?php 
@@ -112,7 +110,7 @@
                 $getAprilSum=$april->row(); 
                 //echo (round($getAprilSum->totalamt,2));  
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=04"><?php echo (round($getAprilSum->totalamt,2));?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=04"><?php echo (round($getAprilSum->totalamt,2));?>
                 </a>
               </th>
               <th>
@@ -121,7 +119,7 @@
                 $getMaySum=$may->row();
                 //echo (round($getMaySum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=05"><?php echo (round($getMaySum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=05"><?php echo (round($getMaySum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -130,7 +128,7 @@
                 $getJuneSum=$june->row();
                 //echo (round($getJuneSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=06"><?php echo (round($getJuneSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=06"><?php echo (round($getJuneSum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -139,7 +137,7 @@
                 $getJulySum=$july->row();
                 //echo (round($getJulySum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=07"><?php echo (round($getJulySum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=07"><?php echo (round($getJulySum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -148,7 +146,7 @@
                 $getAugustSum=$august->row();
                 //echo (round($getAugustSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=08"><?php echo (round($getAugustSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=08"><?php echo (round($getAugustSum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -157,7 +155,7 @@
                 $getSeptemberSum=$september->row();
                 //echo (round($getSeptemberSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=09"><?php echo (round($getSeptemberSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=09"><?php echo (round($getSeptemberSum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -166,7 +164,7 @@
                 $getOctoberSum=$october->row();
                 //echo (round($getOctoberSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=10"><?php echo (round($getOctoberSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=10"><?php echo (round($getOctoberSum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -175,7 +173,7 @@
                 $getNovemberSum=$novermber->row();
                 //echo (round($getNovemberSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=11"><?php echo (round($getNovemberSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=11"><?php echo (round($getNovemberSum->totalamt,2)); ?>
                 </a>
               </th>
               <th>
@@ -184,7 +182,7 @@
                 $getDecemberSum=$december->row();
                 //echo (round($getDecemberSum->totalamt,2));
                 ?>
-                <a target="_blank" href="<?=base_url('report/Report/comparison_section_spares?id=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=12"><?php echo (round($getDecemberSum->totalamt,2)); ?>
+                <a href="<?=base_url('report/Report/comparison_section_spares?sid=')?><?=$getSec->id?>&year=<?=$_GET['year']?>&month=12"><?php echo (round($getDecemberSum->totalamt,2)); ?>
                 </a>
               </th>
               
@@ -192,11 +190,11 @@
             <?php
               if($_GET['filter'] == 'filter')
               {
-                  $query=("select * from tbl_machine where m_type='".$_GET['id']."' AND id='".$_GET['machineid']."' ");    
+                  $query=("select * from tbl_machine where m_type='".$_GET['sid']."' AND id='".$_GET['machineid']."' ");    
               }
               else
               {
-                  $query=("select * from tbl_machine where m_type='".$_GET['id']."'");
+                  $query=("select * from tbl_machine where m_type='".$_GET['sid']."'");
               }
               
               $result=$this->db->query($query)->result();
@@ -212,7 +210,7 @@
               $getJanuaryData=$january->row();
               //echo (round($getJanuaryData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=01"><?php echo (round($getJanuaryData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=01"><?php echo (round($getJanuaryData->totalamt,2)); ?> 
               </a>
             </th>
             <th>
@@ -221,7 +219,7 @@
               $getFebruaryData=$february->row();
               //echo (round($getFebruaryData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=02"><?php echo (round($getFebruaryData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=02"><?php echo (round($getFebruaryData->totalamt,2)); ?> 
               </a>
             </th>
             <th>
@@ -230,7 +228,7 @@
               $getMarchData=$march->row();
               //echo (round($getMarchData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=03"><?php echo (round($getMarchData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=03"><?php echo (round($getMarchData->totalamt,2)); ?> 
               </a>
             </th>
             <th>
@@ -239,7 +237,7 @@
               $getAprilData=$april->row(); 
               //echo (round($getAprilData->totalamt,2));  
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=04"><?php echo (round($getAprilData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=04"><?php echo (round($getAprilData->totalamt,2));  ?> 
               </a>
             </th>
             <th>
@@ -248,7 +246,7 @@
               $getMayData=$may->row();
               //echo (round($getMayData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=05"><?php echo (round($getMayData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=05"><?php echo (round($getMayData->totalamt,2));  ?> 
               </a>
             </th>
             <th>
@@ -257,7 +255,7 @@
               $getJuneData=$june->row();
               //echo (round($getJuneData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=06"> <?php  echo (round($getJuneData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=06"> <?php  echo (round($getJuneData->totalamt,2)); ?> 
               </a>
             </th>
             <th>
@@ -266,7 +264,7 @@
               $getJulyData=$july->row();
               //echo (round($getJulyData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=07"><?php echo (round($getJulyData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=07"><?php echo (round($getJulyData->totalamt,2));  ?> 
               </a>    
             </th>
             <th>
@@ -275,7 +273,7 @@
               $getAugustData=$august->row();
               //echo (round($getAugustData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=08"><?php echo (round($getAugustData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=08"><?php echo (round($getAugustData->totalamt,2));  ?> 
               </a> 
             </th>
             <th>
@@ -284,7 +282,7 @@
               $getSeptemberData=$september->row();
               //echo (round($getSeptemberData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=09"><?php echo (round($getSeptemberData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=09"><?php echo (round($getSeptemberData->totalamt,2));  ?> 
               </a>
             </th>
             <th>
@@ -293,7 +291,7 @@
               $getOctoberData=$october->row();
               //echo (round($getOctoberData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=10"><?php echo (round($getOctoberData->totalamt,2));  ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=10"><?php echo (round($getOctoberData->totalamt,2));  ?> 
               </a>
             </th>
             <th>
@@ -302,7 +300,7 @@
               $getNovemberData=$novermber->row();
               //echo (round($getNovemberData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=11"><?php echo (round($getNovemberData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=11"><?php echo (round($getNovemberData->totalamt,2)); ?> 
               </a>
             </th>
             <th>
@@ -311,7 +309,7 @@
               $getDecemberData=$december->row();
               //echo (round($getDecemberData->totalamt,2));
               ?>
-              <a target="_blank" href="<?=base_url('report/Report/comparison_machine_spares?id=')?><?=$fetch->id?>&year=<?=$_GET['year']?>&month=12"><?php echo (round($getDecemberData->totalamt,2)); ?> 
+              <a href="<?=base_url('report/Report/comparison_machine_spares?sid=')?><?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>&month=12"><?php echo (round($getDecemberData->totalamt,2)); ?> 
               </a>
             </th>
             
@@ -378,7 +376,7 @@
 <script type="text/javascript">
 
   window.onload = function() {
-      getmachinelist(<?=$_GET['id']?>);
+      getmachinelist(<?=$_GET['mid']?>);
   };
   
   function getmachinelist(v)

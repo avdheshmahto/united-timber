@@ -5,7 +5,7 @@
   <?php
     $this->load->view("reportheader");
     
-    $cat=$this->db->query("select * from tbl_machine where id='".$_GET['id']."' ");
+    $cat=$this->db->query("select * from tbl_machine where id='".$_GET['mid']."' ");
     $fetch=$cat->row();
     ?>
   <div class="row">
@@ -13,9 +13,7 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <h4 class="panel-title">MACHINE FILES LOG ( <?=$fetch->machine_name;?> )</h4>
-          <ul class="panel-tool-options">
-            <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-          </ul>
+          <a href="<?=base_url();?>report/Report/machine_details_report?sid=<?=$_GET['sid']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
         <div class="panel-body">
           <div class="table-responsive">
@@ -29,7 +27,7 @@
               <tbody>
                 <?php
                   $i=1;
-                  $supplieraName=$this->db->query("select * from tbl_machine_files_uploads where module_type='Machine' AND file_log_id='".$_GET['id']."' ");
+                  $supplieraName=$this->db->query("select * from tbl_machine_files_uploads where module_type='Machine' AND file_log_id='".$_GET['mid']."' ");
                   foreach($supplieraName->result() as $fetch_list) { ?>
                 <tr class="gradeU record">
                   <td><?=$fetch_list->id;?></td>

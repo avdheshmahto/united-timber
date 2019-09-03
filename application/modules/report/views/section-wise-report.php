@@ -41,13 +41,13 @@
               <div class="row">
                 <div class="col-md-3">
                   <ul id="tree2">
-                    <li><a href="<?=base_url();?>report/Report/total_maintenance?id=0">ALL SECTION</a>
+                    <li><a href="<?=base_url();?>report/Report/total_maintenance?sid=0">ALL SECTION</a>
                     </li>
                     <ul>
-                      <?php 
-                        $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
-                        foreach($sql->result() as $getSql) {  ?>                
-                      <li id="<?=$getSql->id?>" value = "<?=$getSql->id?>"><a href="<?=base_url();?>report/Report/total_maintenance?id=<?=$getSql->id?>&name=<?=$getSql->name?>"><?=$getSql->name?></a></li>
+                    <?php 
+                     $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                     foreach($sql->result() as $getSql) {  ?>                
+                      <li><a href="<?=base_url();?>report/Report/total_maintenance?sid=<?=$getSql->id?>"><?=$getSql->name?></a></li>
                       <?php } ?>                        
                     </ul>
                   </ul>

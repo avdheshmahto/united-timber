@@ -16,31 +16,27 @@
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <h4 class="panel-title">CURRENT STOCK </h4>
-      <ul class="panel-tool-options">
-        <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-      </ul>
+      <a href="<?=base_url();?>report/Report/currentStock" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
     </div>
     <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">Code</label> 
           <div class="col-sm-3"> 
-            <input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
+            <input type="hidden" name="tid" id="tid" value="<?php echo $_GET['tid']; ?>">
             <input name="code"  type="text"  class="search_box form-control input-sm" value="<?=$_GET['code']?>"  />
           </div>
           <label class="col-sm-2 control-label">Pats & Supplies Name</label> 
           <div class="col-sm-3">
             <select name="sp_name"  class="select2 form-control" id="sp_name"  >
               <option value="">--select--</option>
-              <?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A' AND type_of_spare='".$_GET['id']."' order by productname asc ");
+              <?php $getProductName=$this->db->query("select * from tbl_product_stock where status='A' AND type_of_spare='".$_GET['tid']."' order by productname asc ");
                 $ProductName=$getProductName->result();
                 foreach($ProductName as $p) { ?>
               <option value="<?=$p->Product_id?>"  <?php if($_GET['sp_name'] == $p->Product_id) { ?>selected <?php } ?> ><?=$p->productname?></option>
               <?php } ?>
             </select>
           </div>
-        </div>
-        <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px">
           <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button> 	
           <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" >
             <span>Search</span>
@@ -111,7 +107,7 @@
               if($_GET['filter'] == 'filter')
               {
               	
-              	$product="select * from tbl_product_stock where type_of_spare='".$_GET['id']."'";
+              	$product="select * from tbl_product_stock where type_of_spare='".$_GET['tid']."'";
               	
               	if($_GET['code'] != '')	
               		$product .=" AND sku_no LIKe '%".$_GET['code']."%' ";
@@ -122,7 +118,7 @@
               }
               else
               {
-              	$product="select * from tbl_product_stock where type_of_spare='".$_GET['id']."'";
+              	$product="select * from tbl_product_stock where type_of_spare='".$_GET['tid']."'";
               }
               
               $result=$this->db->query($product)->result();
@@ -131,7 +127,8 @@
             <tr class="gradeC record">
               <th><?php echo $rows->sku_no; ?></th>
               <th>
-                <a href="<?=base_url('report/Report/consumption_report?id=');?><?php echo $rows->Product_id; ?>" target="_blank">
+                <a href="<?=base_url('report/Report/consumption_report?tid=');?><?=$_GET[
+                'tid']?>&sid=<?=$rows->Product_id;?>">
                 <?php echo $rows->productname; ?></a>  
                 <div><a href="<?=base_url();?>master/Item/manage_item_map?id=<?=$rows->Product_id?>" target="_blank">Master</a> </div>
               </th>
@@ -209,6 +206,6 @@
   
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/searchStock?id=');?><?=$_GET['id']?>";
+    location.href="<?=base_url('/report/Report/searchStock?tid=');?><?=$_GET['tid']?>";
   }
 </script>

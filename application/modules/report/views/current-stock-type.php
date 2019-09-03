@@ -35,8 +35,6 @@
               <?php } ?>
             </select>
           </div>
-        </div>
-        <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px">
           <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
           <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" >
             <span>Search</span>
@@ -105,7 +103,7 @@
             <tr class="gradeC record">
               <th><?php echo $yy++; ?></th>
               <th>
-                <a href="<?=base_url('report/Report/searchStock?id=');?><?php echo $rows->serial_number; ?>" target="blank">
+                <a href="<?=base_url('report/Report/searchStock?tid=');?><?=$rows->serial_number; ?>">
                 <?php echo $rows->keyvalue; ?></a>
               </th>
             </tr>

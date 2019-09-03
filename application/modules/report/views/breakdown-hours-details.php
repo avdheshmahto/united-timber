@@ -16,30 +16,24 @@
 <div class="col-lg-12">
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
-      <?php  $sect=$this->db->query("select * from tbl_category where id='".$_GET['id']."'");
+      <?php  $sect=$this->db->query("select * from tbl_category where id='".$_GET['sid']."'");
         $getSect=$sect->row(); ?>
       <h4 class="panel-title">BREAKDOWN HOURS DETAILS (<?php echo $getSect->name;?>)</h4>
-      <ul class="panel-tool-options">
-        <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-      </ul>
+      <a href="<?=base_url();?>report/Report/breakdown_hours_report" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
     </div>
     <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">Section</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="id" id='id' value="<?php echo $_GET['id']; ?>">
+            <input type="hidden" name="sid" id='sid' value="<?php echo $_GET['sid']; ?>">
             <input type="hidden" name="year" id='year' value="<?php echo $_GET['year']; ?>">
-            <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" <?php if($_GET['id'] == 0 ) { ?> <?php } else { ?> disabled="" <?php } ?> >
+            <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" disabled="" >
               <option value="0" class="listClass">------Section-----</option>
               <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
-              <?php if($_GET['id'] == 0 ) { ?>
-              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
-              <?php } else { ?>
-              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
-              <?php } ?>
+              <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['sid'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
               <?php } ?>
             </select>
           </div>
@@ -82,19 +76,17 @@
             <?php
               if($_GET['filter'] == 'filter')
               {
-                $query=("select * from tbl_machine where m_type='".$_GET['id']."' AND id='".$_GET['machineid']."' ");  
+                $query=("select * from tbl_machine where m_type='".$_GET['sid']."' AND id='".$_GET['machineid']."' ");  
               }
               else
               {
-                $query=("select * from tbl_machine where m_type='".$_GET['id']."'  ");
+                $query=("select * from tbl_machine where m_type='".$_GET['sid']."'  ");
               }
-              
-            
 
               $result=$this->db->query($query)->result();
               foreach($result as $fetch) { ?>
             <tr class="gradeC record">
-              <th style="text-align:center;"><a target="_blank" href="<?=base_url();?>report/Report/breakdown_workorder?id=<?=$fetch->id?>"><?php  echo $fetch->machine_name; ?></a></th>
+              <th style="text-align:center;"><a href="<?=base_url();?>report/Report/breakdown_workorder?sid=<?=$_GET['sid']?>&mid=<?=$fetch->id?>&year=<?=$_GET['year']?>"><?php  echo $fetch->machine_name; ?></a></th>
 
               <th>      
                 <?php
@@ -439,17 +431,13 @@
 <script type="text/javascript">
   window.onload = function() {
   
-    <?php if($_GET['id'] == 0 ) { ?>
-      getmachinelist(<?=$_GET['m_type']?>);
-    <?php } else { ?>
-      getmachinelist(<?=$_GET['id']?>);
-    <?php } ?>
+      getmachinelist(<?=$_GET['sid']?>);
   
   };
 
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/breakdown_hours_details?id=');?><?=$_GET['id']?>&year=<?=$_GET['year']?>";
+    location.href="<?=base_url('/report/Report/breakdown_hours_details?sid=');?><?=$_GET['sid']?>&year=<?=$_GET['year']?>";
   }
 
 </script>

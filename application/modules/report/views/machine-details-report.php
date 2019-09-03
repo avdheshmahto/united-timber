@@ -12,7 +12,7 @@
   <?php
     $this->load->view("reportheader");
     
-    $cat=$this->db->query("select * from tbl_category where id='".$_GET['id']."' ");
+    $cat=$this->db->query("select * from tbl_category where id='".$_GET['sid']."' ");
     $fetch=$cat->row();
     ?>
   <div class="row">
@@ -20,26 +20,20 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <h4 class="panel-title">MACHINE DETAILS REPORT ( <?=$fetch->name;?> )</h4>
-          <ul class="panel-tool-options">
-            <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
-          </ul>
+          <a href="<?=base_url();?>report/Report/machine_report" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
         <div class="panel-body panel-center">
           <form class="form-horizontal" method="get" action="">
             <div class="form-group panel-body-to">
               <label class="col-sm-2 control-label">Section</label> 
               <div class="col-sm-3">
-                <input type="hidden" name="id" id='id' value="<?php echo $_GET['id']; ?>">
-                <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" <?php if($_GET['id'] == 0 ) { ?> <?php } else { ?> disabled="" <?php } ?> >
+                <input type="hidden" name="sid" id='sid' value="<?php echo $_GET['sid']; ?>">
+                <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" disabled="">
                   <option value="0" class="listClass">------Section-----</option>
                   <?php
                     $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                     foreach($sql->result() as $getSql) {  ?>
-                  <?php if($_GET['id'] == 0 ) { ?>
-                  <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['m_type'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
-                  <?php } else { ?>
-                  <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
-                  <?php } ?>
+                  <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['sid'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -71,11 +65,11 @@
                 <?php 
                   if($_GET['filter'] == 'filter')
                   {
-                    $machine=$this->db->query("select * from tbl_machine where m_type='".$_GET['id']."' AND id='".$_GET['machineid']."' ");
+                    $machine=$this->db->query("select * from tbl_machine where m_type='".$_GET['sid']."' AND id='".$_GET['machineid']."' ");
                   }
                   else
                   {
-                    $machine=$this->db->query("select * from tbl_machine where m_type='".$_GET['id']."' "); 
+                    $machine=$this->db->query("select * from tbl_machine where m_type='".$_GET['sid']."' "); 
                   }
                   
                   $z=1;
@@ -85,7 +79,7 @@
                 <tr class="gradeC record">
                   <th><?php echo $z++; ?></th>
                   <th><?php echo $getMachine->code;?></th>
-                  <th><a target="_blank" href="<?=base_url();?>report/Report/machine_files_log?id=<?=$getMachine->id?>"> <?php echo $getMachine->machine_name; ?> </a></th>
+                  <th><a href="<?=base_url();?>report/Report/machine_files_log?sid=<?=$_GET['sid']?>&mid=<?=$getMachine->id?>"> <?php echo $getMachine->machine_name; ?> </a></th>
                   <th><?php 
                     $master=$this->db->query("select * from tbl_master_data where serial_number='$getMachine->m_unit'");
                     $getMaster=$master->row();
@@ -115,19 +109,15 @@
 </div>
 <script type="text/javascript">
   window.onload = function() {
-  
-    <?php if($_GET['id'] == 0 ) { ?>
-      getmachinelist(<?=$_GET['m_type']?>);
-    <?php } else { ?>
-      getmachinelist(<?=$_GET['id']?>);
-    <?php } ?>
+
+      getmachinelist(<?=$_GET['sid']?>);
   
   };
   
   
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/machine_details_report?id=');?><?=$_GET['id']?>";
+    location.href="<?=base_url('/report/Report/machine_details_report?sid=');?><?=$_GET['sid']?>";
   }
   
   

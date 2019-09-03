@@ -994,7 +994,7 @@ class Report extends my_controller
         
     }    
     
-    public function machine__spare_details()
+    public function machine_spare_details()
     {
         
         if ($this->session->userdata('is_logged_in')) {
