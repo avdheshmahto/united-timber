@@ -23,7 +23,7 @@ class model_master extends CI_Model
         
         $qry = "select * from tbl_spare_return_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['rflhdrid'] != "")
                 $qry .= " AND rflhdrid LIKE '%" . $get['rflhdrid'] . "%'";
             
@@ -62,7 +62,7 @@ class model_master extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_spare_return_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['rflhdrid'] != "")
                 $qry .= " AND rflhdrid LIKE '%" . $get['rflhdrid'] . "%'";
             

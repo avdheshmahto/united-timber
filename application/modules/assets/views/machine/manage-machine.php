@@ -345,8 +345,10 @@
   
   	}, 1500 );	
   	
-  	document.getElementById("loadData").innerHTML = xhttp.responseText;
-  	document.getElementById("code").value='';
+    window.location.reload();   
+    
+  	// document.getElementById("loadData").innerHTML = xhttp.responseText;
+  	// document.getElementById("code").value='';
   	
   }
   
@@ -381,14 +383,14 @@
   
   	$("#saveload").css("display","none");
   	$("#editButton").css("display","inline-block");
-  	$("#editButton").attr("type","submit")   	
+  	$("#editButton").attr("type","submit")  
   
   	},1000);
   	
-  	document.getElementById("loadData").innerHTML = xhttp.responseText;
-  
-  	document.getElementById("code").value='';
-  	document.getElementById("id").value='';
+    window.location.reload();   
+  	// document.getElementById("loadData").innerHTML = xhttp.responseText;
+  	// document.getElementById("code").value='';
+  	// document.getElementById("id").value='';
   	
   }
   

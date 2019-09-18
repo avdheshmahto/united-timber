@@ -53,18 +53,18 @@ $("#contactForm").validate({
   });
 
 function ajex_contactListData(){
-  ur = "ajex_ContactListData";
+  
+  /*ur = "ajex_ContactListData";
     $.ajax({
       url: ur,
       type: "POST",
       success: function(data){
-        // $("#listingDataremove").hide();
-        // $("#listingData").append(data);
-        // $("#listingData").fadeIn();
         $("#listingData").empty().append(data).fadeIn();
        // console.log(data);
      }
-  });
+  });*/
+
+  window.location.reload();
 
 }
 
@@ -241,7 +241,7 @@ $("#ItemForm1").validate({
 function ajex_ItemListData()
 {
 
-  ur = "ajex_ItemListData";
+  /*ur = "ajex_ItemListData";
     $.ajax({
       url: ur,
       type: "POST",
@@ -251,7 +251,10 @@ function ajex_ItemListData()
         
        
      }
-    });
+    });*/
+
+    window.location.reload();
+
 }
 
 //--------------------------- Main Location Starts-----------------------------------
@@ -320,7 +323,7 @@ $("#Location_form").validate({
 function LocationTable()
 {
     
-    ur="LocationTable";
+    /*ur="LocationTable";
     $.ajax({
           type:"POST",
           url:ur,
@@ -330,7 +333,8 @@ function LocationTable()
           }
 
 
-    });
+    });*/
+    window.location.reload();
 
 }
 
@@ -459,7 +463,7 @@ $("#LocationRackForm").validate({
 function LocationRackTable()
 {
         
-    ur="LocationRackData";
+    /*ur="LocationRackData";
     $.ajax({
       url:ur,
       type:"POST",
@@ -467,7 +471,8 @@ function LocationRackTable()
        $("#loadData").empty().append(data).fadeIn();
         
       }  
-    });
+    });*/
+    window.location.reload();
 
 }
 
@@ -553,7 +558,7 @@ $("#LocationRackFormEdit").validate({
 function LocationRackTableEdit()
 {
   
-  ur="LocationRackDataEdit";
+  /*ur="LocationRackDataEdit";
 
   $.ajax({
 
@@ -564,7 +569,9 @@ function LocationRackTableEdit()
       $("#loadData").empty().append(data).fadeIn();      
     }  
 
-  });
+  });*/
+  
+  window.location.reload();
 
 }
 
@@ -685,18 +692,17 @@ function LocationRackTableEdit()
 function ajex_toolListData()
 {
 
-  //alert("anoj");
-  ur = "ajex_toolsecondpageListData";
+  /*ur = "ajex_toolsecondpageListData";
     $.ajax({
       url: ur,
       type: "POST",
       success: function(data)
       {
-         //alert(data);
-         //$("#listingData").hide();
+
          $("#listingDataoftools").empty().append(data).fadeIn();
       }
-    });
+    });*/
+    window.location.reload();
 
 }
 
@@ -745,18 +751,19 @@ $("#PartsIssueForm").validate({
   });
 
 function ajex_issuetListData(){
-  ur = "ajex_IssueListData";
+
+/*  ur = "ajex_IssueListData";
     $.ajax({
       url: ur,
       type: "POST",
       success: function(data){
-        // $("#listingDataremove").hide();
-        // $("#listingData").append(data);
-        // $("#listingData").fadeIn();
+
         $("#listingData").empty().append(data).fadeIn();
        // console.log(data);
      }
-  });
+  });*/
+
+  window.location.reload();
 
 }
 
@@ -807,7 +814,8 @@ $("#ConsumIssueForm").validate({
   });
 
 function ajex_issueConsumData(){
-  ur = "ajex_IssueDataConsumable";
+  
+  /*ur = "ajex_IssueDataConsumable";
     $.ajax({
       url: ur,
       type: "POST",
@@ -815,7 +823,8 @@ function ajex_issueConsumData(){
         $("#listingData").empty().append(data).fadeIn();
        // console.log(data);
      }
-  });
+  });*/
+  window.location.reload();
 
 }
 
@@ -864,8 +873,8 @@ $("#formedSpareIssue").validate({
   });
 
 function ajex_issuetSpareData(thsid){
-  ur = "ajex_IssueListData";
-  //alert(thsid);
+  
+  /*ur = "ajex_IssueListData";
   var words = thsid.split('^');
   
   console.log(words[0]);
@@ -882,7 +891,9 @@ function ajex_issuetSpareData(thsid){
         $("#ajaxContent").empty().append(data).fadeIn();
        // console.log(data);
      }
-  });
+  });*/
+
+  window.location.reload();
 
 }
 
@@ -931,7 +942,8 @@ $("#formedPartsReturn").validate({
   });
 
 function ajex_returnPartsData(thsid){
-  ur = "ajex_returnToolsListData";
+  
+  /*ur = "ajex_returnToolsListData";
   //alert(thsid);
     $.ajax({
       url  : ur,
@@ -941,7 +953,8 @@ function ajex_returnPartsData(thsid){
         $("#AjaxData").empty().append(data).fadeIn();
         console.log(data);
      }
-  });
+  });*/
+  window.location.reload();
 
 }
 
@@ -993,7 +1006,8 @@ $("#fromStockTransfer").validate({
   });
 
 function ajex_stockTransfer(thsid){
-  ur = "/"+base_url+"/stocks/stockTransfer/ajax_TransferStock";
+
+  /*ur = "/"+base_url+"/stocks/stockTransfer/ajax_TransferStock";
   //alert(ur);
     $.ajax({
       url: ur,
@@ -1004,7 +1018,8 @@ function ajex_stockTransfer(thsid){
         $("#loadAjax").empty().append(data).fadeIn();
         console.log(data);
      }
-  });
+  });*/
+  window.location.reload();
 
 }
 
@@ -1055,7 +1070,8 @@ $("#formBreakDown").validate({
   });
 
 function ajex_breadkDownHours(thsid){
-  ur = "ajax_getBreakdownHours";
+
+  /*ur = "ajax_getBreakdownHours";
   //alert(ur);
     $.ajax({
       url: ur,
@@ -1066,7 +1082,8 @@ function ajex_breadkDownHours(thsid){
         $("#loadHours").empty().append(data).fadeIn();
         console.log(data);
      }
-  });
+  });*/
+  window.location.reload();
 
 }
 
@@ -1115,7 +1132,8 @@ $("#SectionLabourTask").validate({
   });
 
 function ajex_getLabourTask(){
-  ur = "ajex_LabourTaskData";
+
+  /*ur = "ajex_LabourTaskData";
     $.ajax({
       url: ur,
       type: "POST",
@@ -1123,6 +1141,7 @@ function ajex_getLabourTask(){
         $("#listingData").empty().append(data).fadeIn();
         console.log(data);
      }
-  });
+  });*/
+  window.location.reload();
 
 }

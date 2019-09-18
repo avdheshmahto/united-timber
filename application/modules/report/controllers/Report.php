@@ -1270,6 +1270,85 @@ class Report extends my_controller
         }
         
     }
+
+
+//=====================================================================================
+
+
+    public function daily_entries_report()
+    {
+        
+        //extract($_POST);
+        if ($this->session->userdata('is_logged_in')) {
+            $data = $this->manageSoftwareLog();
+            $this->load->view('daily-entries',$data);
+        } else {
+            redirect('index');
+        }
+        
+    }
+
+
+    public function manageSoftwareLog()
+    {
+        
+        $table_name     = 'tbl_software_log';
+        $data['result'] = "";
+        ////Pagination start ///
+        $url            = site_url('/report/Report/daily_entries_report?');
+        $sgmnt          = "4";
+        
+        if ($_GET['entries'] != "")
+            $showEntries = $_GET['entries'];
+        else
+            $showEntries = 10;
+        
+        
+        $totalData = $this->model_report->count_softwareLog($table_name, 'A', $this->input->get());
+        
+        
+        if ($_GET['entries'] != "" && $_GET['filter'] != 'filter') {
+            $url = site_url('/report/Report/daily_entries_report?entries=' . $_GET['entries'] . '&f_date=' . $_GET['f_date'] . '&t_date=' . $_GET['t_date'] . '&filter=' . $_GET['filter']);
+            
+            
+        }
+        
+        elseif ($_GET['filter'] == 'filter' || $_GET['entries'] != '') {
+            $url = site_url('/report/Report/daily_entries_report?entries=' . $_GET['entries'] . '&f_date=' . $_GET['f_date'] . '&t_date=' . $_GET['t_date'] . '&filter=' . $_GET['filter']);
+        }
+        
+        else {
+            $url = site_url('/report/Report/daily_entries_report?');
+        }
+        
+        $pagination         = $this->ciPagination($url, $totalData, $sgmnt, $showEntries);
+        $data               = $this->user_function();
+        //////Pagination end ///
+        $data['dataConfig'] = array(
+            'total' => $totalData,
+            'perPage' => $pagination['per_page'],
+            'page' => $pagination['page']
+        );
+        $data['pagination'] = $this->pagination->create_links();
+        
+        if ($this->input->get('filter') == 'filter' || $_GET['entries'] != '') ////filter start ////
+            $data['result'] = $this->model_report->filterList_softwareLog($pagination['per_page'], $pagination['page'], $this->input->get());
+        
+        else
+            $data['result'] = $this->model_report->get_softwareLog($pagination['per_page'], $pagination['page']);
+        
+        // call permission fnctn
+        $data['categorySelectbox'] = $this->model_report->categorySelectbox();
+        return $data;
+        
+    }
+
+
+
+
+
+
     
 }
+
 ?>

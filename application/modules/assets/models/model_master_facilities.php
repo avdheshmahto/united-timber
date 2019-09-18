@@ -18,7 +18,7 @@ class model_master_facilities extends CI_Model
         
         $qry = "select * from tbl_facilities where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['fac_loc'] != "") {
                 $unitQuery2 = $this->db->query("select * from  tbl_master_data where keyvalue LIKE '%" . $get['fac_loc'] . "%'  and param_id='21'");
@@ -51,7 +51,7 @@ class model_master_facilities extends CI_Model
         
         $qry = "select count(*) as countval from tbl_facilities where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['fac_loc'] != "") {
                 
@@ -121,7 +121,7 @@ class model_master_facilities extends CI_Model
         
         $qry = "select * from tbl_machine where status = 'A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['Code'] != "")
                 $qry .= " AND Code LIKE '%" . $get['Code'] . "%'";

@@ -96,7 +96,7 @@ class model_master extends CI_Model
         
         $qry = "select * from tbl_machine where status = 'A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";
@@ -135,7 +135,7 @@ class model_master extends CI_Model
         
         $qry = "select count(*) as countval from tbl_machine where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";

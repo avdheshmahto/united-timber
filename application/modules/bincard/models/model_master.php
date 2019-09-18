@@ -17,7 +17,7 @@ class model_master extends CI_Model
         
         $qry = "select * from tbl_bin_card_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND rflhdrid LIKE '%" . $get['code'] . "%'";
@@ -71,7 +71,7 @@ class model_master extends CI_Model
         
         $qry = "select count(*) as countval from tbl_bin_card_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND rflhdrid LIKE '%" . $get['code'] . "%'";

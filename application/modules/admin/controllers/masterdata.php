@@ -43,7 +43,7 @@ class Masterdata extends my_controller
     
     public function update_master_data()
     {
-        //echo "hi";die;
+
         extract($_POST);
         $table_name = 'tbl_master_data';
         $pri_col    = 'serial_number';
@@ -62,8 +62,6 @@ class Masterdata extends my_controller
             );
             
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $dataarr);
-            //echo "update tbl_master_data set param_id='$param_id', keyvalue='$keyvalue',description='$description' where serial_number = '$id' ";die;
-            //$this->db->query("update tbl_master_data set param_id='$param_id', keyvalue='$keyvalue',description='$description' where serial_number = '$id' ");
             $this->session->set_flashdata('flash_msg', 'Record Update Successfully.');
             redirect('/admin/masterdata/manage_master_data');
         }
@@ -104,6 +102,10 @@ class Masterdata extends my_controller
             $dataall = array_merge($data, $sesio);
             
             $this->Model_admin_login->insert_user($table_name, $dataall);
+
+            $lastId=$this->db->insert_id();
+            $this->software_log_insert($lastId, 'Master Data Created');
+
             $this->session->set_flashdata('flash_msg', 'Record Added Successfully.');
             redirect('/admin/masterdata/manage_master_data');
         }
@@ -124,8 +126,7 @@ class Masterdata extends my_controller
             'id' => $_GET['id'],
             'type' => $_GET['type']
         );
-        //print_r($data);
-        //$data['result'] = $this->model_admin->master_data();
+
         $this->load->view("masterdata/edit-master-data", $data);
         
     }
@@ -134,7 +135,6 @@ class Masterdata extends my_controller
     {
         if ($this->session->userdata('is_logged_in')) {
             $data = $this->user_function(); // call permission fnctn
-            //$data['result'] = $this->model_admin->master_data();
             $data = $this->manageMasterJoin();
             $this->load->view('/masterdata/manage-master-data', $data);
         } else {
@@ -160,15 +160,7 @@ class Masterdata extends my_controller
         
         
         $totalData = $this->model_admin->countMasterData($table_name, 'A', $this->input->get());
-        
-        
-        // if($_GET['entries']!="" && $_GET['filter'] == ""){
-        // $url   = site_url('/admin/masterdata/manage_master_data?entries='.$_GET['entries']);
-        // }elseif($_GET['filter'] != ""){
-        //      $url   = site_url('/admin/masterdata/manage_master_data?entries='.$_GET['entries'].'&sku_no='.$_GET['sku_no'].'&category='.$_GET['category'].'&type_of_spare='.$_GET['type_of_spare'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&purchase_price='.$_GET['purchase_price'].'&filter='.$_GET['filter']);
-        //      // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
-        // }
-        
+            
         $pagination         = $this->ciPagination($url, $totalData, $sgmnt, $showEntries);
         //echo $pagination; die;
         $data               = $this->user_function();
@@ -178,11 +170,7 @@ class Masterdata extends my_controller
             'perPage' => $pagination['per_page'],
             'page' => $pagination['page']
         );
-        $data['pagination'] = $this->pagination->create_links();
-        
-        //  if($this->input->get('filter') == 'filter' || $_GET['entries']!='')   ////filter start ////
-        // $data['result']          = $this->model_admin->filterMasterData($pagination['per_page'],$pagination['page'],$this->input->get());
-        //  else    
+        $data['pagination'] = $this->pagination->create_links();        
         $data['result'] = $this->model_admin->master_data($pagination['per_page'], $pagination['page']);
         
         // call permission fnctn

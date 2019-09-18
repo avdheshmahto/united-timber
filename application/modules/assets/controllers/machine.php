@@ -74,8 +74,11 @@ class machine extends my_controller
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
         } else {
             $this->Model_admin_login->insert_user($table_name, $dataall);
+            $lastId=$this->db->insert_id();
+            $this->software_log_insert($lastId, 'Machine Created');
         }
-        redirect("assets/machine/get_machine");
+        
+        //redirect("assets/machine/get_machine");
         //$this->load->view('assets/machine/get_machine');
         
     }
@@ -269,7 +272,7 @@ class machine extends my_controller
         
         
         $sesio = array(
-            'maker_id' => $this->session->userdata('user_id'),
+            'author_id' => $this->session->userdata('user_id'),
             'maker_id' => $this->session->userdata('user_id'),
             'comp_id' => $this->session->userdata('comp_id'),
             'divn_id' => $this->session->userdata('divn_id'),

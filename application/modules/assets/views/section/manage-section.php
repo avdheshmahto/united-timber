@@ -133,7 +133,7 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" style="display: none;">Select Section</label> 
                       <div class="col-sm-3" style="display: none;">
-                        <select class=" form-control" required name="selectCategory" id="selectCategory" style="width: 240px;">
+                        <select class=" form-control" name="selectCategory" id="selectCategory" style="width: 240px;">
                           <option value="0" class="listClass">Section</option>
                           <?php
                             foreach ($categorySelectbox as $key => $dt) { ?>
@@ -291,21 +291,12 @@
   //==============**********************========================
 </script>
 <script type="text/javascript">
-  //  function inputdisable(){
-  //    $('#formId')[0].reset(); 
-  // }
-  
-  
+
   function editRow(ths){
      var value  =  $('#'+ths).attr("arrt");
      var cat_id =  $('#'+ths).attr("cat_id");
-     //var type =  $('#'+ths).attr("typeid");
-    // var grade =  $('#'+ths).attr("grade");
-     //alert(cat_id);
       $('#selectCategory').val(cat_id).prop('selected', true);
       $('#category').val(value);
-     // $('#type').val(type).prop('selected', true);
-      //$('#grade').val(grade).prop('selected', true);
       $('#target').attr("submit_value","edit");
       $('#editvalue').val(ths);
   }

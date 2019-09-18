@@ -20,7 +20,7 @@ class model_issue extends CI_Model
         
         $qry = "select * from tbl_consum_issue_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -50,7 +50,7 @@ class model_issue extends CI_Model
         
         $qry = "select count(*) as countval from tbl_consum_issue_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -85,7 +85,7 @@ class model_issue extends CI_Model
         
         $qry = "select * from tbl_tools_issue_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -115,7 +115,7 @@ class model_issue extends CI_Model
         
         $qry = "select count(*) as countval from tbl_tools_issue_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -150,7 +150,7 @@ class model_issue extends CI_Model
         
         $qry = "select * from tbl_work_order_maintain where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -180,7 +180,7 @@ class model_issue extends CI_Model
         
         $qry = "select count(*) as countval from tbl_work_order_maintain where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";

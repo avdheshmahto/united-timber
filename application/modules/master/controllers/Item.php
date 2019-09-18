@@ -10,8 +10,6 @@ class Item extends my_controller
         parent::__construct();
         $this->load->library('pagination');
         $this->load->model('model_master');
-        // load Employee Model
-        //$this->load->model('Employee_model', 'employee');
     }
     
     function get_rack()
@@ -166,25 +164,18 @@ class Item extends my_controller
         
         if ($id != '') {
             
-            //print_r($data);
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
-            //print_r($qtyy);
-            //$a=sizeof($qtyy);
-            //$this->db->query("update tbl_product_serial set supp_name='$vendor_name',purchase_price='$unitprice_purchase' where product_id='$id' ");
-            
-            //$this->db->query("update tbl_product_serial_log set supp_name='$vendor_name',purchase_price='$unitprice_purchase' where product_id='$id' AND name_role='product opening stock' AND type='opening stock' ");
-            
             echo 2;
             
-        }
-        
-        else {
+        } else {
             
-            //$id="insert id=".$id;
             $dataall = array_merge($data, $sesio);
             $this->Model_admin_login->insert_user($table_name, $dataall);
             $lastproduct_id = $this->db->insert_id();
-            
+          
+            //$lastId=$this->db->insert_id();
+            $this->software_log_insert($lastproduct_id, 'Parts & Supplies Created');
+
             $a = sizeof($qtyy);
             
             for ($i = 0; $i < $a; $i++) {
@@ -196,8 +187,8 @@ class Item extends my_controller
                     
                     $sqlProdLoc1 = "insert into tbl_product_serial_log set product_id='$lastproduct_id',supp_name='$supp_name',quantity='$qtyy[$i]',purchase_price='$price',loc='$location[$i]',rack_id='$rack[$i]',module_status='$via_type',name_role='product opening stock',type='opening stock',maker_date=NOW(),author_date=now(),author_id='" . $this->session->userdata('user_id') . "', maker_id='" . $this->session->userdata('user_id') . "',divn_id='" . $this->session->userdata('divn_id') . "',comp_id='" . $this->session->userdata('comp_id') . "',zone_id='" . $this->session->userdata('zone_id') . "',brnh_id='" . $this->session->userdata('brnh_id') . "' ";
                     $this->db->query($sqlProdLoc1);
-                    
-                    $p_Q = $this->db->query("update tbl_product_stock set quantity=quantity+$qtyy[$i] where Product_id='$lastproduct_id' ");
+                        
+                    $this->db->query("update tbl_product_stock set quantity=quantity+$qtyy[$i] where Product_id='$lastproduct_id' ");
                     
                     
                 }
@@ -214,9 +205,6 @@ class Item extends my_controller
     public function ajax_viewItemData()
     {
         
-        // echo $this->input->post('id');
-        //$data['result'] = $this->model_master->mod_viewItem($this->input->post('id'));
-        //print_r($data['result']);
         $data = array(
             'id' => $this->input->post('id')
         );
@@ -357,7 +345,7 @@ class Item extends my_controller
         
         
         $sesio = array(
-            'maker_id' => $this->session->userdata('user_id'),
+            'author_id' => $this->session->userdata('user_id'),
             'maker_id' => $this->session->userdata('user_id'),
             'comp_id' => $this->session->userdata('comp_id'),
             'divn_id' => $this->session->userdata('divn_id'),

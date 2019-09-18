@@ -1359,29 +1359,31 @@ public function singlevalidation()
 	}
 						
 }  
+
+//============================software log===================================
  
 
-public function software_log_insert($log_id,$contact_id,$total,$type)
+public function software_log_insert($log_id,$log_type)
 {
 
 	$table_name='tbl_software_log';
 	date_default_timezone_set("Asia/Kolkata");
-	$dtTime = date('H:i:s');
+	$dtTime = date('Y-m-d G:i:s');
 
 		$data=array(
-			'log_id'     => $log_id,
-			'contact_id' => $contact_id,
-			'total'      => $total,
-			'type'       => $type,
-			'author_id'  => $dtTime
+			
+			'log_id'      => $log_id,
+			'log_type'    => $log_type,
+
 		);
 
 		$sess = array(
 					
 					'maker_id'    => $this->session->userdata('user_id'),
-					'maker_date'  => date('y-m-d'),
+					'maker_date'  => $dtTime,
 					'author_id'   => $this->session->userdata('user_id'),
-					'author_date' => date('y-m-d'),
+					'author_date' => date('Y-m-d'),
+					
 					'status'  => 'A',
 					'comp_id' => $this->session->userdata('comp_id'),
 					'zone_id' => $this->session->userdata('zone_id'),
@@ -1394,6 +1396,7 @@ public function software_log_insert($log_id,$contact_id,$total,$type)
 		return;
 
 }
+
 
 
 public function software_stock_log_insert($log_id,$log_type,$vendor_id,$product_id,$qty,$price)
@@ -1500,6 +1503,12 @@ public function add_software_cost_log($log_id,$log_type,$log_date,$section_id,$m
 		return;
 
 }
+
+
+
+//===============================================================
+
+
 
 
 } ?>

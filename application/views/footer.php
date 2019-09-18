@@ -1,6 +1,6 @@
 <!-- Footer -->
 <footer class="footer-main"> 
-Copyright &copy; <?php echo date(Y);?> <a target="_blank" href="http://www.techvyas.com/"> Tech Vyas Solutions Pvt Ltd.</a> All Rights Reserved.
+Copyright &copy; <?php echo date('Y');?> <a target="_blank" href="http://www.techvyas.com/"> Tech Vyas Solutions Pvt Ltd.</a> All Rights Reserved.
 </footer>	
 <!-- /footer -->
 </div>
@@ -369,7 +369,7 @@ function showRowtree(val)
 function ajex_loadListData()
 {
 
-  ur = "<?=base_url('assets/Section/ajex_loadListData');?>";
+  /*ur = "<?=base_url('assets/Section/ajex_loadListData');?>";
   $.ajax({
       url: ur,
       type: "POST",
@@ -379,7 +379,8 @@ function ajex_loadListData()
 
        
      }
-  });
+  });*/
+  window.location.reload();
 
 }
 

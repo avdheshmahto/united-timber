@@ -22,7 +22,7 @@ class model_stock_transfer extends CI_Model
         
         $qry = "select * from tbl_product_stock where status='A' and type='spare'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
             
@@ -52,7 +52,7 @@ class model_stock_transfer extends CI_Model
         
         $qry = "select count(*) as countval from tbl_product_stock where status='A' and status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
             

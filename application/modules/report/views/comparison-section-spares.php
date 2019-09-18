@@ -236,7 +236,7 @@
                   <th><?=$fetch_list->shift;?></th>
                   <th><?php echo $fetch_list->price ;?></th>
                   <th><?php echo $fetch_list->qty; ?></th>
-                  <th><?php echo $totalprice=$fetch_list->qty * $fetch_list->price; ?></th>
+                  <th><?php echo $totalprice=(int)$fetch_list->qty * (int)$fetch_list->price; ?></th>
                   <?php 
                     $lbr=$this->db->query("select *,SUM(total_spent) as labourcost from tbl_software_cost_log where log_type='Labour' AND section_id='".$_GET['sid']."' AND EXTRACT(MONTH FROM log_date)='".$_GET['month']."' AND EXTRACT(YEAR FROM log_date)='".$_GET['year']."' ");
                     $getLbr=$lbr->row();

@@ -43,7 +43,7 @@ class model_master extends CI_Model
         
         $qry = "select * from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
             
@@ -92,7 +92,7 @@ class model_master extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
             
@@ -156,7 +156,7 @@ class model_master extends CI_Model
         
         $qry = "select * from  tbl_contact_m where status = 'A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['first_namee'] != "")
                 $qry .= " AND first_name LIKE '%" . $get['first_namee'] . "%'";
@@ -192,7 +192,7 @@ class model_master extends CI_Model
     {
         $qry = "select count(*) as countval from $tableName where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['first_namee'] != "")
                 $qry .= " AND first_name LIKE '%" . $get['first_namee'] . "%'";
@@ -401,7 +401,7 @@ class model_master extends CI_Model
         
         $qry = "select count(*) as countval from $tableName where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
             

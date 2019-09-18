@@ -15,23 +15,27 @@ class model_master_section extends CI_Model
     function insert_value($post)
     {
         
-        $data = date("Y-m-d");
+        //print_r($post);die;
+        $data = date('Y-m-d');
         $sql  = "insert into tbl_category set name = ?,inside_cat = ?,create_on = ?";
-        return $this->db->query($sql, array(
+        $this->db->query($sql, array(
             $post['category'],
             $post['selectCategory'],
             $data
         ));
+
+        $lastId=$this->db->insert_id();
+        $this->software_log_insert($lastId, 'Section Created');
         
     }
     
     
     function tree_all()
     {
-        $data   = "";
+        $data   = array();
         $result = $this->db->query("SELECT  id, name,name as text, inside_cat as parent_id ,create_on FROM tbl_category where status = 1 Order by id ASC")->result_array();
         foreach ($result as $row) {
-            $data[] = $row;
+            $data = $row;
         }
         return $data;
     }
@@ -173,7 +177,44 @@ class model_master_section extends CI_Model
         return $query[0]['countval'];
     }
     
-    
+  
+public function software_log_insert($log_id,$log_type)
+{
+
+    $table_name='tbl_software_log';
+    date_default_timezone_set("Asia/Kolkata");
+    $dtTime = date('Y-m-d G:i:s');
+
+        $data=array(
+            
+            'log_id'      => $log_id,
+            'log_type'    => $log_type,
+
+        );
+
+        $sess = array(
+                    
+                    'maker_id'    => $this->session->userdata('user_id'),
+                    'maker_date'  => $dtTime,
+                    'author_id'   => $this->session->userdata('user_id'),
+                    'author_date' => date('Y-m-d'),
+                    
+                    'status'  => 'A',
+                    'comp_id' => $this->session->userdata('comp_id'),
+                    'zone_id' => $this->session->userdata('zone_id'),
+                    'brnh_id' => $this->session->userdata('brnh_id'),
+                    'divn_id' => $this->session->userdata('divn_id')
+        );
+
+        $data_merge = array_merge($data,$sess); 
+        $this->Model_admin_login->insert_user($table_name,$data_merge);
+        return;
+
+} 
+
+
+
+   
     
 } /// End Class ///
 ?>

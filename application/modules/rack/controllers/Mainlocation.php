@@ -132,9 +132,6 @@ class Mainlocation extends my_controller
             
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $dataall);
             redirect('/rack/Mainlocation/manage_main_location');
-            //echo "<script type='text/javascript'>";
-            //echo "window.close();";
-            //echo "window.opener.location.reload();";
             
         } else {
             
@@ -192,6 +189,8 @@ class Mainlocation extends my_controller
             echo "1";
         } else {
             $this->model_main_location->insert_user($table_name, $location);
+            $lastId=$this->db->insert_id();
+            $this->software_log_insert($lastId, 'Location Created');
             echo "0";
         }
         

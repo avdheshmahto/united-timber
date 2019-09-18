@@ -142,7 +142,15 @@
                   $prdName=$this->db->query("select * from tbl_software_cost_log where product_id IN ($prdID) group by product_id");
                   foreach($prdName->result() as $fetch_list) { 
 
-                  $slog=$this->db->query("select *,SUM(qty) as totalQty from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='".$_GET['mid']."' ");
+                  if($_GET['from_date'] && $_GET['to_date'] != '') 
+                  {
+                    $slog=$this->db->query("select SUM(qty) as totalQty from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='".$_GET['mid']."' AND log_date >='".$_GET['from_date']."' and log_date <='".$_GET['to_date']."' ");
+                  }
+                  else
+                  {
+                    $slog=$this->db->query("select SUM(qty) as totalQty from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='".$_GET['mid']."' "); 
+                  }
+
                   $getLogQty=$slog->row();
 
                   $prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->product_id'");

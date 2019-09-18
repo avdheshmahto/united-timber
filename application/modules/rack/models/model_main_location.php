@@ -17,7 +17,7 @@ class model_main_location extends CI_Model
         
         $qry = "select * from tbl_master_data where status='A' and param_id = '21'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['loc_name'] != "") {
                 
                 $unitQuery2 = $this->db->query("select * from  tbl_master_data where keyvalue like '%" . $get['loc_name'] . "%'");
@@ -41,7 +41,7 @@ class model_main_location extends CI_Model
         
         $qry = "select count(*) as countval from tbl_master_data where status='A' and param_id = '21'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['loc_name'] != "") {
                 
                 $unitQuery2 = $this->db->query("select * from  tbl_master_data where keyvalue like '%" . $get['loc_name'] . "%'");

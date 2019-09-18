@@ -24,7 +24,7 @@ class model_locationrack extends CI_Model
         
         $qry = "select * from tbl_location_rack where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['location_rack_id'] != "") {
                 
                 $unitQuery2 = $this->db->query("select * from  tbl_master_data where keyvalue ='" . $get['location_rack_id'] . "'");
@@ -52,7 +52,7 @@ class model_locationrack extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_location_rack where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['location_rack_id'] != "") {
                 
                 $unitQuery2 = $this->db->query("select * from  tbl_master_data where keyvalue ='" . $get['location_rack_id'] . "'");

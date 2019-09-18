@@ -92,7 +92,7 @@ class model_master_breakdown extends CI_Model
     function filterSchedule($last, $strat, $get)
     {
         $qry = "select * from tbl_work_order_maintain where status = 'A'";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";
@@ -155,7 +155,7 @@ class model_master_breakdown extends CI_Model
         $qry = "select count(*) as countval from tbl_work_order_maintain where status='A'";
         
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";

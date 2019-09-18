@@ -83,21 +83,21 @@ class Section extends my_controller
     {
         // Build array of item references:
         foreach ($result as $key => &$item) {
-            $itemsByReference[$item['id']] =& $item;
+            @$itemsByReference[$item['id']] =& $item;
             // Children array:
-            $itemsByReference[$item['id']]['children'] = array();
+            @$itemsByReference[$item['id']]['children'] = array();
             // Empty data class (so that json_encode adds "data: {}" )
-            $itemsByReference[$item['id']]['data']     = new StdClass();
+            @$itemsByReference[$item['id']]['data']     = new StdClass();
         }
         
         // Set items as children of the relevant parent item.
         foreach ($result as $key => &$item)
-            if ($item['parent_id'] && isset($itemsByReference[$item['parent_id']]))
-                $itemsByReference[$item['parent_id']]['children'][] =& $item;
+            if (@$item['parent_id'] && @isset($itemsByReference[$item['parent_id']]))
+                @$itemsByReference[$item['parent_id']]['children'][] =& $item;
         
         // Remove items that were added to parents elsewhere:
         foreach ($result as $key => &$item) {
-            if ($item['parent_id'] && isset($itemsByReference[$item['parent_id']]))
+            if (@$item['parent_id'] && @isset($itemsByReference[$item['parent_id']]))
                 unset($result[$key]);
         }
         
@@ -194,6 +194,9 @@ class Section extends my_controller
         $result          = $this->model_master_section->tree_all();
         $data1['result'] = $this->changeTreeFormat($result);
     }
+
+
+    
     
 }
 ?>

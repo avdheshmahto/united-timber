@@ -25,7 +25,7 @@ function filterListtool($perpage,$pages,$get)
  	
 	$qry ="select * from tbl_product_stock where type = 'tool' and status='A'";
 
-	if(sizeof($get) > 0)
+	if(sizeof($_GET) > 0)
 	{
 		if($get['sku_no'] != "")
 			$qry .= " AND sku_no LIKE '%".$get['sku_no']."%'";
@@ -84,7 +84,7 @@ function count_alltools($tableName,$status = 0,$get)
    
     $qry ="select count(*) as countval from tbl_product_stock where type = 'tool' and status='A'";
     
-		if(sizeof($get) > 0)
+		if(sizeof($_GET) > 0)
 		 {
 			  if($get['sku_no'] != "")
 			$qry .= " AND sku_no LIKE '%".$get['sku_no']."%'";
@@ -153,7 +153,7 @@ function filterContactList($perpage,$pages,$get)
 	
     $qry = "select * from  tbl_contact_m where status = 'A'";
 
-      if(sizeof($get) > 0)
+      if(sizeof($_GET) > 0)
 	  {
         
 		   if($get['first_namee'] != "")
@@ -192,7 +192,7 @@ function count_contact($tableName,$status = 0,$get)
     
     $qry ="select count(*) as countval from $tableName where status='A'";
     
-       if(sizeof($get) > 0)
+       if(sizeof($_GET) > 0)
 	   {
         
 		   if($get['first_namee'] != "")
@@ -378,7 +378,7 @@ function count_product($tableName,$status = 0,$get)
 
    $qry ="select count(*) as countval from $tableName where status='A'";
     
-		if(sizeof($get) > 0)
+		if(sizeof($_GET) > 0)
 		 {
 			   if($get['sku_no'] != "")
 			   		$qry .= " AND sku_no LIKE '%".$get['sku_no']."%'";

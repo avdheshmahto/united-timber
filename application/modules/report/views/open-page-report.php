@@ -205,6 +205,19 @@
                   </a>
                 </div>
               </div>
+              <div class="col-xs-12 col-sm-2"  style="padding:0px;">
+                <div class="step-item active">
+                  <a href="<?=base_url();?>report/Report/daily_entries_report">
+                    <div class="line"></div>
+                    <div class="step-item">
+                      <div class="number">
+                        <div class="inner">11</div>
+                      </div>
+                      <p>Daily Entries Report</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
               <?php } ?>
 
               <!-- <div class="col-xs-12 col-sm-2"  style="padding:0px;">

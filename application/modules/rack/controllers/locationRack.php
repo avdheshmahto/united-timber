@@ -137,6 +137,10 @@ class locationRack extends my_controller
         } else {
             
             $this->Model_admin_login->insert_user($table_name, $dataall);
+
+            $lastId=$this->db->insert_id();
+            $this->software_log_insert($lastId, 'Location Rack Created');
+
             echo "1";
             
         }

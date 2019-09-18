@@ -5,7 +5,7 @@ class model_report extends CI_Model
 {
     
     
-    //****************************************************************************************
+    //**************************************************************************************
     
     function product_type_get($last, $strat)
     {
@@ -22,7 +22,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_master_data where param_id='26'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['type'] != "")
                 $qry .= " AND serial_number ='" . $get['type'] . "'";
@@ -42,7 +42,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_master_data where param_id='26'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['type'] != "") {
                 
@@ -53,9 +53,7 @@ class model_report extends CI_Model
             
         }
         
-        $query = $this->db->query($qry, array(
-            $status
-        ))->result_array();
+        $query = $this->db->query($qry, array($status))->result_array();
         return $query[0]['countval'];
         
     }
@@ -77,7 +75,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -106,7 +104,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -146,7 +144,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -175,7 +173,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -217,7 +215,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_product_stock where quantity < min_re_order_level ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -246,7 +244,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_product_stock where quantity < min_re_order_level ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['code'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['code'] . "%'";
@@ -325,7 +323,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_bin_card_hdr H,tbl_bin_card_dtl D where H.rflhdrid=D.refillhdr ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_name'] != "") {
                 
@@ -380,7 +378,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_work_order_maintain where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             
             if ($get['date_range'] != '') {
@@ -423,7 +421,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_work_order_maintain where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             
             if ($get['date_range'] != '') {
@@ -483,7 +481,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_machine_breakdown where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             
             if ($get['m_type'] != "")
@@ -527,7 +525,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_machine_breakdown where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             
             if ($get['m_type'] != "")
@@ -585,7 +583,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_work_order_maintain where trigger_code!='' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "") {
                 $qry .= " AND m_type ='" . $get['m_type'] . "'";
@@ -628,7 +626,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_work_order_maintain where trigger_code!=''";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "") {
                 $qry .= " AND m_type ='" . $get['m_type'] . "'";
@@ -688,7 +686,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_vendor_spare_price_map V,tbl_contact_m C where V.vendor_id = C.contact_id AND V.status='A'  AND C.status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['v_name'] != "")
                 $qry .= " AND V.vendor_id='" . $get['v_name'] . "'";
@@ -726,7 +724,7 @@ class model_report extends CI_Model
     {
         $qry = "select count(*) as countval from $tableName V,tbl_contact_m C where V.vendor_id = C.contact_id AND V.status='A'  AND C.status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['v_name'] != "")
                 $qry .= " AND V.vendor_id='" . $get['v_name'] . "'";
@@ -787,7 +785,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_machine_spare_map where status='A' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_name'] != "")
                 $qry .= " AND machine_id = '" . $get['m_name'] . "'";
@@ -819,7 +817,7 @@ class model_report extends CI_Model
     {
         $qry = "select count(*) as countval from $tableName where status='A' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_name'] != "")
                 $qry .= " AND machine_id = '" . $get['m_name'] . "'";
@@ -871,7 +869,7 @@ class model_report extends CI_Model
         
         $qry = "select *,SUM(total_spent) from tbl_software_cost_log ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
         }
         
@@ -887,7 +885,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_software_cost_log GROUP BY section_id ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
         }
         
         //echo $qry;      
@@ -920,7 +918,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_spare_return_hdr H,tbl_spare_return_dtl D where H.rflhdrid=D.refillhdr ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['po_no'] != "")
                 $qry .= " AND po_no LIKE '%" . $get['po_no'] . "%'";
@@ -967,7 +965,7 @@ class model_report extends CI_Model
         $qry = "select count(*) as countval from tbl_spare_return_hdr H,tbl_spare_return_dtl D where H.rflhdrid=D.refillhdr ";
         
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['po_no'] != "")
                 $qry .= " AND po_no LIKE '%" . $get['po_no'] . "%'";
@@ -1026,7 +1024,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_spare_issue_hdr H,tbl_spare_issue_dtl D  where H.issue_id=D.issue_id_hdr ";
         
-        if (@$get['filter'] == 'filter') {
+        if (@$_GET['filter'] == 'filter') {
             
             if ($get['date_range'] != '') {
                 $daterage = explode("-", $_GET['date_range']);
@@ -1120,7 +1118,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_category where inside_cat='0' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "")
                 $qry .= " AND id='" . $get['m_type'] . "'";
@@ -1140,7 +1138,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_category where inside_cat='0' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "")
                 $qry .= " AND id='" . $get['m_type'] . "'";
@@ -1172,7 +1170,7 @@ class model_report extends CI_Model
         
         $qry = "select * from tbl_category where inside_cat='0' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "")
                 $qry .= " AND id='" . $get['m_type'] . "'";
@@ -1192,7 +1190,7 @@ class model_report extends CI_Model
         
         $qry = "select count(*) as countval from tbl_category where inside_cat='0' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['m_type'] != "")
                 $qry .= " AND id='" . $get['m_type'] . "'";
@@ -1230,7 +1228,88 @@ class model_report extends CI_Model
         }
         return $user_tree_array;
     }
+  
+
+    //===========================================================================
+
     
+
+    function get_softwareLog($last, $strat)
+    {           
+        $crDate=date('Y-m-d');    
+        $query    = ("select * from tbl_software_log where author_date='$crDate' Order by id DESC limit $strat,$last ");
+        $getQuery = $this->db->query($query);
+        return $result = $getQuery->result();
+        
+    }
+    
+    
+    function filterList_softwareLog($perpage, $pages, $get)
+    {
+        
+        $crDate=date('Y-m-d');
+
+        $qry = "select * from tbl_software_log where status='A'";
+        
+        if (sizeof($_GET) > 0) {
+            
+            if ($_GET['f_date'] && $_GET['t_date'] != '') {
+                
+                /*$t_date = explode("-", $get['t_date']);
+                
+                $f_date = explode("-", $get['f_date']);
+                
+                $t_date1 = $t_date[0] . "-" . $t_date[1] . "-" . $t_date[2];
+                $f_date1 = $f_date[0] . "-" . $f_date[1] . "-" . $f_date[2];*/
+                $qry .= " AND author_date >='".$_GET['f_date']."' and author_date <='".$_GET['t_date']."'";
+            }else{
+                $qry .=" AND author_date='$crDate'";
+            }
+            
+        }
+        
+
+        $qry .= "  Order by id DESC limit $pages,$perpage";
+        
+        $data = $this->db->query($qry)->result();
+        return $data;
+        
+    }
+    
+    
+    function count_softwareLog($tableName, $status = 0, $get)
+    {
+        
+        $crDate=date('Y-m-d');
+
+        $qry = "select count(*) as countval from tbl_software_log where status='A' ";
+        
+        if (sizeof($_GET) > 0) {
+            
+            if ($_GET['f_date'] && $_GET['t_date'] != '') {
+                
+                /*$t_date = explode("-", $get['t_date']);
+                
+                $f_date = explode("-", $get['f_date']);
+                
+                $t_date1 = $t_date[0] . "-" . $t_date[1] . "-" . $t_date[2];
+                $f_date1 = $f_date[0] . "-" . $f_date[1] . "-" . $f_date[2];*/
+                $qry .= " AND author_date >='".$_GET['f_date']."' and author_date <='".$_GET['t_date']."'";
+            }else{
+                $qry .=" AND author_date='$crDate'";
+            }
+
+            
+        }else{
+            $qry .=" AND author_date='$crDate'";
+        }
+        
+        $query = $this->db->query($qry, array($status))->result_array();
+        return $query[0]['countval'];
+        
+    }
+    
+
     
 }
 ?>

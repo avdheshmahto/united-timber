@@ -102,6 +102,7 @@
             <ul class="dropdown-menu">
               <li><a href="<?=base_url();?>report/Report/machine_spare_report">Machine To Spare Report</a></li>
               <li><a href="<?=base_url();?>report/Report/spare_machine_report">Spare To Machine Report</a></li>
+              <li><a href="<?=base_url();?>report/Report/daily_entries_report">Daily Entries Report</a></li>
             </ul>
           </li>
           <?php } ?>

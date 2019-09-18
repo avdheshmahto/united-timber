@@ -83,7 +83,7 @@ class model_master extends CI_Model
     function filterSchedule($last, $strat, $get)
     {
         $qry = "select * from tbl_schedule_maintain where status = 'A'";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";
@@ -146,7 +146,7 @@ class model_master extends CI_Model
         $qry = "select count(*) as countval from tbl_schedule_maintain where status='A'";
         
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['codee'] != "")
                 $qry .= " AND code LIKE '%" . $get['codee'] . "%'";
@@ -248,7 +248,7 @@ class model_master extends CI_Model
         
         $qry = "select * from tbl_workorder_labor_task where labor_type='S'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";
@@ -277,7 +277,7 @@ class model_master extends CI_Model
         
         $qry = "select count(*) as countval from tbl_workorder_labor_task where labor_type='S'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             // if($get['code'] != "")
             //     $qry .= " AND sku_no LIKE '%".$get['code']."%'";

@@ -246,6 +246,7 @@ $datas[]=$data;
  
 <div id="chartContainer1" style="height: 400px; width: 100%;"> </div>
 
+
 <!-- ==============================chart2======================================= -->
 
 <div class="row" style="margin-top: -70px;">
@@ -403,10 +404,10 @@ $macData[]=$secData;
         $from_time01 = strtotime($getJanuaryData->start_time);
         $to_time01 = strtotime($getJanuaryData->end_time);  
         $delta_01 = ($to_time01 - $from_time01);
-      	$diff01=$diff01 + $delta_01;
+      	$diff01=(int)$diff01 + (int)$delta_01;
       }
       
-      $tmins01 = $diff01/60;
+      $tmins01 = (int)$diff01/60;
       $hours01 = floor($tmins01/60);
       $mins01 = $tmins01%60;
       $janHours=$hours01.".".$mins01; 
@@ -419,10 +420,10 @@ $macData[]=$secData;
         $from_time02 = strtotime($getFebruaryData->start_time);
         $to_time02 = strtotime($getFebruaryData->end_time); 
         $delta_02 = ($to_time02 - $from_time02);
-      $diff02=$diff02 + $delta_02;
+      $diff02=(int)$diff02 + (int)$delta_02;
       }
       
-      $tmins02 = $diff02/60;
+      $tmins02 = (int)$diff02/60;
       $hours02 = floor($tmins02/60);
       $mins02 = $tmins02%60;
       
@@ -436,10 +437,10 @@ $macData[]=$secData;
         $from_time03 = strtotime($getMarchData->start_time);
         $to_time03 = strtotime($getMarchData->end_time);  
         $delta_03 = ($to_time03 - $from_time03);
-      	$diff03=$diff03 + $delta_03;
+      	$diff03=(int)$diff03 + (int)$delta_03;
       }
       
-      $tmins03 = $diff03/60;
+      $tmins03 = (int)$diff03/60;
       $hours03 = floor($tmins03/60);
       $mins03 = $tmins03%60;
 
@@ -453,10 +454,10 @@ $macData[]=$secData;
         $from_time4 = strtotime($getAprilData->start_time);
         $to_time4 = strtotime($getAprilData->end_time); 
         $delta_4 = ($to_time4 - $from_time4);
-      	$diff4=$diff4 + $delta_4;
+      	$diff4=(int)$diff4 + (int)$delta_4;
       }
       
-      $tmins4 = $diff4/60;
+      $tmins4 = (int)$diff4/60;
       $hours4 = floor($tmins4/60);
       $mins4 = $tmins4%60;
 
@@ -470,10 +471,10 @@ $macData[]=$secData;
         $from_time5 = strtotime($getMayData->start_time);
         $to_time5 = strtotime($getMayData->end_time); 
         $delta_5 = ($to_time5 - $from_time5);
-      	$diff5=$diff5 + $delta_5;
+      	$diff5=(int)$diff5 + (int)$delta_5;
       }
       
-      $tmins5 = $diff5/60;
+      $tmins5 = (int)$diff5/60;
       $hours5 = floor($tmins5/60);
       $mins5 = $tmins5%60;
         
@@ -486,10 +487,10 @@ $macData[]=$secData;
         $from_time6 = strtotime($getJuneData->start_time);
         $to_time6 = strtotime($getJuneData->end_time);  
         $delta_6 = ($to_time6 - $from_time6);
-      	$diff6=$diff6 + $delta_6;
+      	$diff6=(int)$diff6 + (int)$delta_6;
       }
       
-      $tmins6 = $diff6/60;
+      $tmins6 = (int)$diff6/60;
       $hours6 = floor($tmins6/60);
       $mins6 = $tmins6%60;
       
@@ -502,10 +503,10 @@ $macData[]=$secData;
         $from_time7 = strtotime($getJulyData->start_time);
         $to_time7 = strtotime($getJulyData->end_time);  
         $delta_7 = ($to_time7 - $from_time7);
-      	$diff7=$diff7 + $delta_7;
+      	$diff7=(int)$diff7 + (int)$delta_7;
       }
       
-      $tmins7 = $diff7/60;
+      $tmins7 = (int)$diff7/60;
       $hours7 = floor($tmins7/60);
       $mins7 = $tmins7%60;
       
@@ -518,10 +519,10 @@ $macData[]=$secData;
         $from_time8 = strtotime($getAugustData->start_time);
         $to_time8 = strtotime($getAugustData->end_time);  
         $delta_8 = ($to_time8 - $from_time8);
-      	$diff8=$diff8 + $delta_8;
+      	$diff8=(int)$diff8 + (int)$delta_8;
       }
       
-      $tmins8 = $diff8/60;
+      $tmins8 = (int)$diff8/60;
       $hours8 = floor($tmins8/60);
       $mins8 = $tmins8%60;
 
@@ -534,10 +535,10 @@ $macData[]=$secData;
         $from_time9 = strtotime($getSeptemberData->start_time);
         $to_time9 = strtotime($getSeptemberData->end_time); 
         $delta_9 = ($to_time9 - $from_time9);
-      	$diff9=$diff9 + $delta_9;
+      	$diff9=(int)$diff9 + (int)$delta_9;
       }
       
-      $tmins9 = $diff9/60;
+      $tmins9 = (int)$diff9/60;
       $hours9 = floor($tmins9/60);
       $mins9 = $tmins9%60;
 
@@ -550,10 +551,10 @@ $macData[]=$secData;
         $from_time10 = strtotime($getOctoberData->start_time);
         $to_time10 = strtotime($getOctoberData->end_time);  
         $delta_10 = ($to_time10 - $from_time10);
-      	$diff10=$diff10 + $delta_10;
+      	$diff10=(int)$diff10 + (int)$delta_10;
       }
       
-      $tmins10 = $diff10/60;
+      $tmins10 = (int)$diff10/60;
       $hours10 = floor($tmins10/60);
       $mins10 = $tmins10%60;
 
@@ -566,10 +567,10 @@ $macData[]=$secData;
         $from_time11 = strtotime($getNovemberData->start_time);
         $to_time11 = strtotime($getNovemberData->end_time); 
         $delta_11 = ($to_time11 - $from_time11);
-      	$diff11=$diff11 + $delta_11;
+      	$diff11=(int)$diff11 + (int)$delta_11;
       }
       
-      $tmins11 = $diff11/60;
+      $tmins11 = (int)$diff11/60;
       $hours11 = floor($tmins11/60);
       $mins11 = $tmins11%60;
 
@@ -582,10 +583,10 @@ $macData[]=$secData;
         $from_time12 = strtotime($getDecemberData->start_time);
         $to_time12 = strtotime($getDecemberData->end_time); 
         $delta_12 = ($to_time12 - $from_time12);
-      	$diff12=$diff12 + $delta_12;
+      	$diff12=(int)$diff12 + (int)$delta_12;
       }
       
-      $tmins12 = $diff12/60;
+      $tmins12 = (int)$diff12/60;
       $hours12 = floor($tmins12/60);
       $mins12 = $tmins12%60;
 
@@ -892,7 +893,7 @@ $typeSecName=$getSecs->name;
     foreach($machine->result() as $fetch_list) 
     { 
 
-      $prds='';
+      $prds;
       $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='$fetch_list->serial_number' ");
       foreach($prd->result() as $getPrd)
       {
@@ -1057,10 +1058,14 @@ $nameOfMachine=$getMchs->machine_name;
       $qry="select * from tbl_software_cost_log where machine_id='".$_GET['mid']."' ";
 
 
-      if($_GET['from_date3'] && $_GET['to_date3'] != '') 
+      if($_GET['from_date3'] != '' && $_GET['to_date3'] != '')
+      {
         $qry .= " AND log_date >='".$_GET['from_date3']."' and log_date <='".$_GET['to_date3']."'";
+      } 
       else
+      {
         $qry .=" AND EXTRACT(YEAR FROM log_date)='$crYr' ";
+      }
 
       if($_GET['spare_type'] != '')
       {
@@ -1113,11 +1118,19 @@ $nameOfMachine=$getMchs->machine_name;
       $prdID='9999999999';
     }
 
-  $prdName=$this->db->query("select * from tbl_software_cost_log where product_id IN ($prdID) group by product_id");
+  $prdName=$this->db->query("select * from tbl_software_cost_log where machine_id !='' AND product_id IN ($prdID) group by product_id");
   foreach($prdName->result() as $fetch_list) 
   { 
 
-    $slog=$this->db->query("select *,SUM(qty) as totalQty,SUM(total_spent) as spareAmt from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='$mchnId' ");
+    if($_GET['from_date3'] != '' && $_GET['to_date3'] != '')
+    {
+      $slog=$this->db->query("select *,SUM(qty) as totalQty,SUM(total_spent) as spareAmt from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='$mchnId' AND log_date >='".$_GET['from_date3']."' and log_date <='".$_GET['to_date3']."' ");
+    }
+    else
+    {
+      $slog=$this->db->query("select *,SUM(qty) as totalQty,SUM(total_spent) as spareAmt from tbl_software_cost_log where product_id='$fetch_list->product_id' AND machine_id='$mchnId' ");
+    }
+
     $getLogQty=$slog->row();
 
     $prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->product_id'");
