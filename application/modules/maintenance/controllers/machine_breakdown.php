@@ -93,12 +93,8 @@ class machine_breakdown extends my_controller
         $pri_col    = 'id';
         
         $table_name_break = 'tbl_machine_breakdown';
-        //$pri_col_break='code';    
         
         $id = $this->input->get('id');
-        //$code=$this->input->get('code');
-        
-        //echo $this->input->post('operator_id');die;
         
         $data = array(
             
@@ -120,7 +116,7 @@ class machine_breakdown extends my_controller
             'break_time' => $datetimepicker_mask,
             'machine_id' => $machine_name,
             'operator_id' => $operator_id
-            //'priority'               => $priority,
+            //'priority'  => $priority,
             
         );
         $sesio     = array(
@@ -140,16 +136,15 @@ class machine_breakdown extends my_controller
         
         if ($id != '') {
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
-            //$this->Model_admin_login->update_user($pri_col_break,$table_name_break,$code,$dataBreak);
             $this->db->query("update tbl_machine_breakdown set nature_of_breakdown='$maintyp', section='$m_type', break_time='$datetimepicker_mask', machine_id='$machine_name',operator_id='$operator_id' where code='$code' ");
         } else {
             $this->Model_admin_login->insert_user($table_name, $dataall);
             $lastId = $this->db->insert_id();
             $this->Model_admin_login->insert_user($table_name_break, $dataallBreak);
             $this->db->query("update tbl_machine_breakdown set workorder_id='$lastId' where code='$code' ");
+            $this->software_log_insert($lastId, 'Workorder Created');
         }
         redirect("maintenance/machine_breakdown/get_manage_machine_breakdown");
-        //$this->load->view('assets/machine/get_machine');
         
     }
     
@@ -174,9 +169,7 @@ class machine_breakdown extends my_controller
         $query    = $this->db->query("select * from tbl_work_order_maintain where status='A' and code='$id'");
         $getQuery = $query->num_rows();
         
-        echo $getQuery;
-        
-        //$this->load->view('assets/machine/validate-code-value',$data);
+        echo $getQuery;        
         
     }
     
@@ -188,7 +181,6 @@ class machine_breakdown extends my_controller
             'type' => $_GET['type'],
             'tri_code' => $_GET['triCode']
         );
-        //print_r($data);
         
         $this->load->view("schedule/edit-schedule-spare-map", $data);
         
@@ -216,8 +208,7 @@ class machine_breakdown extends my_controller
         
         @extract($_GET);
         $table_name = 'tbl_machine_reading';
-        //$this->db->delete('tbl_machine_spare_map', array('machine_id' => $machine_id)); 
-        //echo "fxgdgc".die;
+
         $data       = array(
             
             'machine_id' => $_GET['pri_id_meter'],
@@ -246,7 +237,6 @@ class machine_breakdown extends my_controller
         
         $this->Model_admin_login->insert_user($table_name, $dataall);
         
-        //redirect("maintenance/schedule/get_metering_trigger?id=".$_GET['pri_id_meter']);
         $this->load->view('get-current-metering', $data);
         
     }
@@ -331,7 +321,7 @@ class machine_breakdown extends my_controller
         $this->load->view('breakdown/get-breakdown-labor-tasks', $data);
     }
     
-    //==============Close All labor tasks functions========================================
+    //=======================Close All labor tasks functions============================
     
     //======================= Start All Spare Parts functions ===================================
     
@@ -339,8 +329,8 @@ class machine_breakdown extends my_controller
     {
         @extract($_POST);
         $table_name = 'tbl_workorder_spare_hdr';
-        
-        $rows = count($spareids);
+        $cnt[] = $spareids;
+        $rows = count($cnt);
         
         $maker_id    = $this->session->userdata('user_id');
         $author_id   = $this->session->userdata('user_id');
@@ -598,8 +588,7 @@ class machine_breakdown extends my_controller
         if ($_GET['entries'] != "" && $_GET['filter'] == "") {
             $url = site_url('maintenance/machine_breakdown/manage_break?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
-            $url = site_url('maintenance/machine_breakdown/manage_break?entries=' . $_GET['entries'] . '&codee=' . $_GET['codee'] . '&m_type=' . $_GET['m_type'] . '&machine_name=' . $_GET['machine_name'] . '&machine_description=' . $_GET['machine_description'] . '&capacity=' . $_GET['capacity'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+            $url = site_url('maintenance/machine_breakdown/manage_break?entries=' . $_GET['entries'] . '&codee=' . $_GET['codee'] . '&m_type=' . $_GET['m_type'] . '&machine_name=' . $_GET['machine_name'] . '&machine_description=' . $_GET['machine_description'] . '&capacity=' . $_GET['capacity'] . '&filter=' . $_GET['filter']);            
         }
         
         
@@ -659,10 +648,9 @@ class machine_breakdown extends my_controller
     
     public function insert_schedule_triggering()
     {
-        //echo "suwub".die;
+        
         @extract($_GET);
         $table_name = 'tbl_schedule_triggering';
-        //$this->db->delete('tbl_machine_spare_map', array('machine_id' => $machine_id)); 
         
         $data = array(
             
@@ -696,7 +684,6 @@ class machine_breakdown extends my_controller
         
         
         redirect("maintenance/schedule/get_schedule_trigger?id=" . $_GET['code']);
-        //$this->load->view('maintenance/schedule/get_schedule_trigger');
         
     }
     
@@ -740,9 +727,7 @@ class machine_breakdown extends my_controller
     {
         //echo "suwub".die;
         @extract($_GET);
-        $table_name = 'tbl_schedule_spare_hdr';
-        
-        //$this->db->delete('tbl_machine_spare_map', array('machine_id' => $machine_id)); 
+        $table_name = 'tbl_schedule_spare_hdr';        
         
         $data = array(
             
@@ -770,10 +755,7 @@ class machine_breakdown extends my_controller
         
         
         $this->Model_admin_login->insert_user($table_name, $dataall);
-        
-        
-        //redirect("maintenance/schedule/get_schedule_trigger?id=".$_GET['schedule_id']);
-        //$this->load->view('assets/machine/get_machine');
+                
         
     }
     
@@ -805,15 +787,11 @@ class machine_breakdown extends my_controller
             
         );
         
-        
-        
-        
-        
+                                
         $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
         
         
         redirect("maintenance/schedule/get_schedule_trigger?id=" . $_GET['pri_idd']);
-        //$this->load->view('assets/machine/get_machine');
         
     }
     
@@ -944,7 +922,6 @@ class machine_breakdown extends my_controller
         $trgid = $this->input->post('trgid');
         //print_r($_POST);
         $this->db->query("update tbl_workorder_spare_hdr set work_order_id='$wid' where trigger_id='$trgid'");
-        //echo "update tbl_workorder_spare_hdr set work_order_id='$wid' where trigger_id='$trgid'";
         
     }
     

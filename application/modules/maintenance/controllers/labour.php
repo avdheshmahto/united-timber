@@ -48,7 +48,6 @@ class labour extends my_controller
             $url = site_url('/maintenance/labour/manage_labor_task?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
             $url = site_url('/maintenance/labour/manage_labor_task?entries=' . $_GET['entries'] . '&location_rack_id=' . $_GET['location_rack_id'] . '&rack_name=' . $_GET['rack_name'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
         }
         
         $pagination         = $this->ciPagination($url, $totalData, $sgmnt, $showEntries);
@@ -75,8 +74,6 @@ class labour extends my_controller
     
     function insert_labour_task()
     {
-        
-        //@extract($_POST);
         
         //print_r($_POST);die;
         $table_name = 'tbl_workorder_labor_task';
@@ -116,6 +113,7 @@ class labour extends my_controller
         $this->Model_admin_login->insert_user($table_name, $dataall);
         $lastId = $this->db->insert_id();
         
+        $this->software_log_insert($lastId, 'Labour Task Added');
         $this->add_software_cost_log($lastId, 'Labour', $this->input->post('task_date'), $this->input->post('section'), '', '', '', '', '', $this->input->post('cost_spent'), '');
         
         echo 1;
@@ -132,6 +130,6 @@ class labour extends my_controller
     }
     
     
-    /*==============================================================================================*/
+    /*=================================================================================*/
 }
 ?>

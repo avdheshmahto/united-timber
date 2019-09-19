@@ -50,7 +50,7 @@ class binCard extends my_controller
             $url = site_url('/bincard/binCard/manage_bin_card?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
             $url = site_url('/bincard/binCard/manage_bin_card?entries=' . $_GET['entries'] . '&code=' . $_GET['code'] . '&bin_card_type=' . $_GET['bin_card_type'] . '&machine_id=' . $_GET['machine_id'] . '&vendor_id=' . $_GET['vendor_id'] . '&rdate=' . $_GET['rdate'] . '&grn_no=' . $_GET['grn_no'] . '&grn_date=' . $_GET['grn_date'] . '&remarks=' . $_GET['remarks'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+
         }
         
         
@@ -181,6 +181,8 @@ class binCard extends my_controller
                     'divn_id' => $this->session->userdata('divn_id')
                 );
                 
+                $this->software_log_insert($lastHdrId11, 'Receipt');
+
                 $this->software_stock_log_insert($lastHdrId11, $bin_card_type, $vendor_id, $product_id[$i], $new_quantity[$i], $purchase_price[$i]);
                 
                 $this->stock_refill_qty($new_quantity[$i], $product_id[$i], $main_loc[$i], $locs[$i], $rack_ids[$i], $bin_card_type, $vendor_id, $type[$i], $purchase_price[$i]);
@@ -217,7 +219,6 @@ class binCard extends my_controller
             
             if ($num > 0) {
                 
-                //$this->db->query("update tbl_product_serial_log set quantity = quantity+$qty where product_id='".$main_id."' and loc='".$loc."' and rack_id='".$rack_id."' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
                 
                 $this->db->query("update tbl_product_serial set quantity = quantity+$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price'");
                 
@@ -345,9 +346,6 @@ class binCard extends my_controller
         //print_r($array);die;
         $num   = $query->num_rows();
         
-        /*$rah = "select * from tbl_product_serial_log where product_id='$main_id' and location_id = '$main_loc' and loc = '$loc' and rack_id = '$rack_id'";
-        $num =$this->db->query($rah)->num_rows();
-        */
         
         if ($bin_card_type == 'Receipt') {
             if ($num > 0) {
@@ -433,16 +431,9 @@ class binCard extends my_controller
                 //echo $numCnt;
                 $sum           = $getData->quantity;
                 $abc           = $abc + $sum;
-                //echo "select * from tbl_product_serial where main_location_id='".$_GET['main_loc']."' and location_id='".$_GET['loc']."' and product_id='".$_GET['pri_id']."'";
-                //if($numCnt>0)
-                //{
+
                 echo "Rack Name Is:-" . $getLocation->rack_name . " and Qty is:-" . $sum . "<br>";
                 
-                //}
-                //else
-                //{
-                //echo "No Record found";    
-                //}
             }
             echo "Total Quantity Is :-" . $abc;
         } else {

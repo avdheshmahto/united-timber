@@ -49,7 +49,7 @@ class SpareIssue extends my_controller
             $url = site_url('/issue/SpareIssue/manage_spare_issue?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
             $url = site_url('/issue/SpareIssue/manage_spare_issue?entries=' . $_GET['entries'] . '&location_rack_id=' . $_GET['location_rack_id'] . '&rack_name=' . $_GET['rack_name'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+
         }
         
         
@@ -138,32 +138,6 @@ class SpareIssue extends my_controller
     }
     
     
-    /*function product_spare_issue()
-    {
-    
-    if($this->session->userdata('is_logged_in'))
-    {
-    $this->load->view('product-spare-issue');
-    }
-    else
-    {
-    redirect('index');
-    }
-    }
-    
-    function product_spare_sm_issue()
-    {
-    
-    if($this->session->userdata('is_logged_in'))
-    {
-    $this->load->view('product-spare-sm-issue');
-    }
-    else
-    {
-    redirect('index');
-    }
-    }*/
-    
     function getRack()
     {
         $data['id'] = $_GET['location_rack_id'];
@@ -194,16 +168,9 @@ class SpareIssue extends my_controller
                 //echo $numCnt;
                 $sum           = $getData->quantity;
                 $abc           = $abc + $sum;
-                //echo "select * from tbl_product_serial where main_location_id='".$_GET['main_loc']."' and location_id='".$_GET['loc']."' and product_id='".$_GET['pri_id']."'";
-                //if($numCnt>0)
-                //{
+
                 echo "Rack Name Is:-" . $getLocation->rack_name . " and Qty is:-" . $sum . "<br>";
-                
-                //}
-                //else
-                //{
-                //echo "No Record found";    
-                //}
+
             }
             echo "Total Quantity Is :-" . $abc;
         } else {
@@ -249,9 +216,7 @@ class SpareIssue extends my_controller
             $machine_id = '';
         }
         
-        
-        //$mac=$this->db->query("select * from tbl_machine where id='$machine_id' ");
-        //$getMac=$mac->row();
+    
         if ($getWorkid->m_type != '') {
             $section_id = $getWorkid->m_type;
         } else {
@@ -309,6 +274,8 @@ class SpareIssue extends my_controller
                     
                     $total_spent = $spare_qty[$i] * $purchase_price[$i];
                     
+                    $this->software_log_insert($lastId, 'Parts & Supplies Issue');
+                    
                     $this->add_software_cost_log($lastId, 'Spare', $issue_date, $section_id, $machine_id, $workordid, $spareids, $spare_qty[$i], $purchase_price[$i], $total_spent, $shift);
                     
                     $this->software_stock_log_insert($lastId, 'Parts & Supplies Issue', $vendor_id[$i], $spareids, $spare_qty[$i], $purchase_price[$i]);
@@ -351,9 +318,7 @@ class SpareIssue extends my_controller
             $this->db->query("update tbl_product_serial set quantity=quantity-$qty where product_id='$main_id' and module_status='$type' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
             
             $p_Q = $this->db->query("update tbl_product_stock set quantity=quantity-$qty where Product_id='$main_id' ");
-            
-            //$this->db->query("update tbl_product_serial_log set quantity=quantity-$qty where product_id='$main_id' and module_status='$type' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'  ");
-            
+             
             $sqlProdLoc1 = "insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='spare issue',name_role='workorder spare issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='" . $this->session->userdata('user_id') . "', maker_id='" . $this->session->userdata('user_id') . "', divn_id='" . $this->session->userdata('divn_id') . "', comp_id='" . $this->session->userdata('comp_id') . "', zone_id='" . $this->session->userdata('zone_id') . "', brnh_id='" . $this->session->userdata('brnh_id') . "' ";
             $this->db->query($sqlProdLoc1);
             
@@ -370,6 +335,6 @@ class SpareIssue extends my_controller
         $this->load->view('spare/load-product-issue', $data);
     }
     
-    /*==============================================================================================*/
+    /*=============================================================================*/
 }
 ?>

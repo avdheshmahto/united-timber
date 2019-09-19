@@ -17,7 +17,6 @@ class schedule extends my_controller
     {
         if ($this->session->userdata('is_logged_in')) {
             $data = $this->manageItemJoinfun();
-            //$data['result'] = $this->model_master->getMachineData();    
             $this->load->view('schedule/manage-schedule', $data);
         } else {
             redirect('index');
@@ -26,7 +25,6 @@ class schedule extends my_controller
     
     public function getschedulingspare()
     {
-        //@extract($_POST);
         
         $data       = $this->user_function(); // call permission fnctn
         $data['id'] = $_GET['ID'];
@@ -35,7 +33,6 @@ class schedule extends my_controller
     
     public function addlabortasksscheduling()
     {
-        //@extract($_POST);
         
         $data       = $this->user_function(); // call permission fnctn
         $data['id'] = $_GET['ID'];
@@ -126,7 +123,6 @@ class schedule extends my_controller
     
     public function vieworderspare()
     {
-        //@extract($_POST);
         
         $data       = $this->user_function(); // call permission fnctn
         $data['id'] = $_GET['ID'];
@@ -138,8 +134,6 @@ class schedule extends my_controller
     {
         if ($this->session->userdata('is_logged_in')) {
             $data = $this->manageItemJoinfun();
-            //$data=$this->user_function();// call permission fnctn
-            //$data['result'] = $this->model_master->getMachineData();    
             $this->load->view('schedule/get-schedule', $data);
         } else {
             redirect('index');
@@ -185,7 +179,10 @@ class schedule extends my_controller
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
         } else {
             $this->Model_admin_login->insert_user($table_name, $dataall);
+            $lastId=$this->db->insert_id();
+            $this->software_log_insert($lastId, 'Schedule Created');
         }
+
         redirect("maintenance/schedule/get_schedule");
         //$this->load->view('assets/machine/get_machine');
         
@@ -241,8 +238,8 @@ class schedule extends my_controller
         
         @extract($_POST);
         $table_name = 'tbl_schedule_spare_hdr';
-        
-        $rows = count($spareids);
+        $cnt[] = $spareids;
+        $rows = count($cnt);
         
         $maker_id    = $this->session->userdata('user_id');
         $author_id   = $this->session->userdata('user_id');
@@ -306,10 +303,10 @@ class schedule extends my_controller
     
     public function insert_spare_unit()
     {
+
         @extract($_GET);
         $table_name = 'tbl_machine_reading';
-        //$this->db->delete('tbl_machine_spare_map', array('machine_id' => $machine_id)); 
-        //echo "fxgdgc".die;
+
         $data       = array(
             'machine_id' => $_GET['pri_id_meter'],
             //'spare_id' => $_GET['code'],
@@ -336,8 +333,6 @@ class schedule extends my_controller
         
         $this->Model_admin_login->insert_user($table_name, $dataall);
         
-        
-        //redirect("maintenance/schedule/get_metering_trigger?id=".$_GET['pri_id_meter']);
         $this->load->view('get-current-metering', $data);
         
     }
@@ -381,14 +376,11 @@ class schedule extends my_controller
             $showEntries = 10;
         
         $totalData = $this->model_master->count_schedule($table_name, 'A', $this->input->get());
-        //$showEntries= $_GET['entries']?$_GET['entries']:'12';
-        
         
         if ($_GET['entries'] != "" && $_GET['filter'] == "") {
             $url = site_url('maintenance/schedule/manage_schedule?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
-            $url = site_url('maintenance/schedule/manage_schedule?entries=' . $_GET['entries'] . '&codee=' . $_GET['codee'] . '&m_type=' . $_GET['m_type'] . '&machine_name=' . $_GET['machine_name'] . '&machine_description=' . $_GET['machine_description'] . '&capacity=' . $_GET['capacity'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+            $url = site_url('maintenance/schedule/manage_schedule?entries=' . $_GET['entries'] . '&codee=' . $_GET['codee'] . '&m_type=' . $_GET['m_type'] . '&machine_name=' . $_GET['machine_name'] . '&machine_description=' . $_GET['machine_description'] . '&capacity=' . $_GET['capacity'] . '&filter=' . $_GET['filter']);            
         }
         
         
@@ -564,7 +556,6 @@ class schedule extends my_controller
         $tids = $this->input->post('tid');
         $sids = $this->input->post('sid');
         
-        //echo "select * from tbl_schedule_spare_hdr where trigger_code='$tids' and schedule_id='$sids'";die;
         $sqlquery = $this->db->query("select * from tbl_schedule_spare_hdr where trigger_code='$tids' and schedule_id='$sids'");
         $rw       = $sqlquery->num_rows();
         
@@ -648,12 +639,11 @@ class schedule extends my_controller
     
     public function insert_schedule_triggering_spare()
     {
+        
         //echo "suwub".die;
         @extract($_GET);
         $table_name = 'tbl_schedule_spare_hdr';
-        
-        //$this->db->delete('tbl_machine_spare_map', array('machine_id' => $machine_id)); 
-        
+                
         $data = array(
             
             'schedule_id' => $_GET['code'],
@@ -682,9 +672,6 @@ class schedule extends my_controller
         $this->Model_admin_login->insert_user($table_name, $dataall);
         
         
-        //redirect("maintenance/schedule/get_schedule_trigger?id=".$_GET['schedule_id']);
-        //$this->load->view('assets/machine/get_machine');
-        
     }
     
     
@@ -693,7 +680,7 @@ class schedule extends my_controller
     
     public function insert_schedule_triggering_edit()
     {
-        //echo "suwub".die;
+
         @extract($_GET);
         $table_name           = 'tbl_schedule_triggering';
         //$id = 'schedule_id';
@@ -701,10 +688,7 @@ class schedule extends my_controller
         $id                   = $id;
         $starting_reading     = $_GET['start_reading_meter'];
         $next_trigger_reading = $_GET['next_trigger_reading_meter'];
-        //echo $starting_reading;
-        //echo $next_trigger_reading;die;
-        //echo "uwh".$id;
-        
+
         
         $data = array(
             
@@ -720,10 +704,6 @@ class schedule extends my_controller
             'endby_reading' => $_GET['end_by_reading_meter']
             
         );
-        
-        
-        
-        
         
         
         $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);

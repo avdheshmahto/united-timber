@@ -48,7 +48,7 @@ class ConsumIssue extends my_controller
             $url = site_url('/issue/ConsumIssue/manage_consumable_issue?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
             $url = site_url('/issue/ConsumIssue/manage_consumable_issue?entries=' . $_GET['entries'] . '&location_rack_id=' . $_GET['location_rack_id'] . '&rack_name=' . $_GET['rack_name'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+
         }
         
         $pagination         = $this->ciPagination($url, $totalData, $sgmnt, $showEntries);
@@ -79,8 +79,8 @@ class ConsumIssue extends my_controller
         
         @extract($_POST);
         $table_name = 'tbl_consum_issue_hdr';
-        
-        $rows = count($spareids);
+        $cnt[] = $spareids;
+        $rows = count($cnt);
         
         $maker_id    = $this->session->userdata('user_id');
         $author_id   = $this->session->userdata('user_id');
@@ -94,22 +94,15 @@ class ConsumIssue extends my_controller
         
         $this->db->query("insert into tbl_consum_issue_hdr set section='$section',machine='$machineid',issue_date='$issue_date',shift='$shift',maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date='$author_date'");
         
-        $lastId = $this->db->insert_id();
-        
-        /*$mac=$this->db->query("select * from tbl_machine where m_type='$section' ");
-        $getMac=$mac->row();
-        
-        if(sizeof($mac->result_array()) > 0){
-        $machineid=$getMac->id;
-        }else{
-        $machineid='';
-        }*/
+        $lastId = $this->db->insert_id();        
         
         for ($i = 0; $i < $rows; $i++) {
             
             $this->db->query("insert into tbl_consum_issue_dtl set issue_id_hdr='$lastId',spare_id='$spareids[$i]',type='$via_types[$i]',location='$locs[$i]',rack='$racks[$i]',vendor='$vendors[$i]',price='$prices[$i]',qty='$qtyname[$i]', maker_id='$maker_id',author_id='$author_id',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id', brnh_id='$brnh_id', maker_date='$maker_date', author_date=NOW()");
             
             $total_spent = $qtyname[$i] * $prices[$i];
+
+            $this->software_log_insert($lastId, 'Consumable Issue');
             
             $this->add_software_cost_log($lastId, 'Consumable', $issue_date, $section, $machineid, '', $spareids[$i], $qtyname[$i], $prices[$i], $total_spent, $shift);
             
@@ -147,9 +140,7 @@ class ConsumIssue extends my_controller
             
             $this->db->query("update tbl_product_serial set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
             
-            $p_Q = $this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
-            
-            //$this->db->query("update tbl_product_serial_log set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock'");
+            $p_Q = $this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");        
             
             $sqlProdLoc1 = "insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='consumable issue',name_role='section consumable issue',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='" . $this->session->userdata('user_id') . "', maker_id='" . $this->session->userdata('user_id') . "', divn_id='" . $this->session->userdata('divn_id') . "', comp_id='" . $this->session->userdata('comp_id') . "', zone_id='" . $this->session->userdata('zone_id') . "', brnh_id='" . $this->session->userdata('brnh_id') . "' ";
             $this->db->query($sqlProdLoc1);

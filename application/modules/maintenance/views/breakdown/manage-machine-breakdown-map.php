@@ -100,12 +100,8 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#labour_task" data-toggle="tab">Labour Tasks</a></li>
               <li><a href="#spare" data-toggle="tab">Parts & Supplies</a></li>
-              <!-- <li><a href="#tools" data-toggle="tab">Tools</a></li> -->
-              <!-- <li><a href="#meterreading" data-toggle="tab">Meter Readings</a></li> 
-                <li><a href="#misccosts" data-toggle="tab">Misc Costs</a></li>-->
               <li><a href="#filesid" data-toggle="tab">Files</a></li>
               <li><a href="#break_down" data-toggle="tab">Breakdown Hours</a></li>
-              <!-- <li class=""><a href="#work_order" data-toggle="tab">Work Order Log</a></li> -->
             </ul>
             <div class="tab-content">
               <div class="tab-pane  active" id="labour_task">
@@ -326,11 +322,8 @@
                             $hours = floor($tmins/60);
                             
                             $mins = $tmins%60;
-                            
-                            
+                                                        
                             echo "<b>$hours</b> Hours | <b>$mins</b> Minutes</b>";
-                            
-                            
                             
                             ?>      
                           </td>
@@ -340,6 +333,7 @@
                           <td>
                             <button  class="btn btn-default" data-a="<?php echo $fetch_list->id;?>" href='#breakDownId'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' title="Add Breakdown Hours"><img src="<?=base_url();?>assets/images/plus.png" /></button>  
                           </td>
+                          <td>&nbsp;</td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
                         </tr>

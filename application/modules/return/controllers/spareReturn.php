@@ -45,7 +45,7 @@ class spareReturn extends my_controller
             $url = site_url('/return/spareReturn/manage_spare_return?entries=' . $_GET['entries']);
         } elseif ($_GET['filter'] != "") {
             $url = site_url('/return/spareReturn/manage_spare_return?entries=' . $_GET['entries'] . '&rflhdrid=' . $_GET['rflhdrid'] . '&return_date=' . $_GET['return_date'] . '&vendor_id=' . $_GET['vendor_id'] . '&po_no=' . $_GET['po_no'] . '&po_date=' . $_GET['po_date'] . '&filter=' . $_GET['filter']);
-            // sku_no=&category=&productname=Bearing+&usages_unit=&purchase_price=&filter=filter
+
         }
         
         
@@ -172,10 +172,12 @@ class spareReturn extends my_controller
                 
             );
             //print_r($data_dtl);die;
-            
+             $this->software_log_insert($lastHdrId11, 'Return');
+
             $this->software_stock_log_insert($lastHdrId11, 'Return', $vendor_id, $spareids[$i], $qtyname[$i], $prices[$i]);
             
             $this->stock_refill_qty($qtyname[$i], $spareids[$i], $locs[$i], $racks[$i], $vendor_id, $via_types[$i], $prices[$i]);
+            
             $this->Model_admin_login->insert_user($table_name_dtl, $data_dtl);
             
         }
@@ -206,7 +208,6 @@ class spareReturn extends my_controller
             
             $this->db->query("update tbl_product_serial set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' ");
             $p_Q = $this->db->query("update tbl_product_stock set quantity =quantity-$qty where Product_id='$main_id' ");
-            //$this->db->query("update tbl_product_serial_log set quantity =quantity-$qty where product_id='$main_id' and loc='$loc' and rack_id='$rack_id' and supp_name='$vendor_id' and purchase_price='$purchase_price' and type='opening stock' ");
             
             $sqlProdLoc1 = "insert into tbl_product_serial_log set quantity ='$qty',product_id='$main_id',loc='$loc',rack_id='$rack_id',type='stock return',name_role='bincard stock return',module_status='$type',supp_name='$vendor_id',purchase_price='$purchase_price', maker_date=NOW(), author_date=NOW(), author_id='" . $this->session->userdata('user_id') . "', maker_id='" . $this->session->userdata('user_id') . "', divn_id='" . $this->session->userdata('divn_id') . "', comp_id='" . $this->session->userdata('comp_id') . "', zone_id='" . $this->session->userdata('zone_id') . "', brnh_id='" . $this->session->userdata('brnh_id') . "' ";
             $this->db->query($sqlProdLoc1);
@@ -350,15 +351,9 @@ class spareReturn extends my_controller
                 
                 $sum = $getData->quantity;
                 $abc = $abc + $sum;
-                //echo "select * from tbl_product_serial where main_location_id='".$_GET['main_loc']."' and location_id='".$_GET['loc']."' and product_id='".$_GET['pri_id']."'";
-                //if($numCnt>0)
-                //{
+
                 echo "Rack Name Is:-" . $getLocation->rack_name . " and Qty is:-" . $sum . "<br>";
-                //}
-                //else
-                //{
-                //echo "No Record found";    
-                //}
+                
             }
             echo "Total Quantity Is :-" . $abc;
         } else {

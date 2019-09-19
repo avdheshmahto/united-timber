@@ -1,5 +1,7 @@
 <table class="table table-striped table-bordered table-hover">
   <?php 
+  if($pid != '')
+  {
     $z=0;
     $key=$this->db->query("select * from tbl_product_serial where product_id='$pid'");
     $cnt=$key->num_rows();
@@ -56,3 +58,5 @@
   </tr>
   <input type="hidden" name="cntVal" id="cntVal" value="<?=$cnt;?>" />
 </table>
+
+<?php } ?>

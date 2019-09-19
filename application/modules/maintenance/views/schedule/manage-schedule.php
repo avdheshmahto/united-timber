@@ -54,9 +54,7 @@
                         <option value="0" class="listClass">----------------Select----------------</option>
                         <?php
                           $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
-                             foreach($sql->result() as $getSql) {
-                          //foreach ($categorySelectbox as $key => $dt) { ?>
-                        <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+                             foreach($sql->result() as $getSql) { ?>                        
                         <option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
                         <?php } ?>
                       </select>
@@ -185,10 +183,7 @@
               <td></td>
               <td></td>
             </tr>
-            <?php  
-              /*echo "<pre>";
-              print_r($result);
-              echo "</pre>";*/
+            <?php
               
               $i=1;
               foreach($result as $fetch_list)
@@ -310,7 +305,7 @@
   function saveData()
   {
   	
-      var code         = document.getElementById("code").value;
+    var code         = document.getElementById("code").value;
   	var id           = document.getElementById("id").value;
   	var machine_name = document.getElementById("machine_name").value;
   	var wostatus  = document.getElementById("wostatus").value;
@@ -318,23 +313,25 @@
   	var priority     = document.getElementById("priority").value;
   	var m_type       = document.getElementById("m_type").value;
   
-  if(code=='')
-   {
+    if(code=='')
+    {
+    
+      document.getElementById("codemsg").innerHTML = "Please Enter Code";
+      return false;
+
+    }
   
-    document.getElementById("codemsg").innerHTML = "Please Enter Code";
-    return false;
-  }
-  
-   var xhttp = new XMLHttpRequest();
-   xhttp.open("GET", "insert_schedule?id="+id+"&code="+code+"&machine_name="+machine_name+"&priority="+priority+"&maintyp="+maintyp+"&m_type="+m_type+"&wostatus="+wostatus, false);
-   xhttp.send();
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "insert_schedule?id="+id+"&code="+code+"&machine_name="+machine_name+"&priority="+priority+"&maintyp="+maintyp+"&m_type="+m_type+"&wostatus="+wostatus, false);
+    xhttp.send();
   
   
-   $("resultareaschedule").html("Schedule Added Successfully !");
-   $("#modal-0 .close").click();	   
-   document.getElementById("loadData").innerHTML = xhttp.responseText;
-  
-   document.getElementById("code").value='';
+    $("resultareaschedule").html("Schedule Added Successfully !");
+    $("#modal-0 .close").click();	   
+
+    // document.getElementById("loadData").innerHTML = xhttp.responseText;
+    // document.getElementById("code").value='';
+    window.location.reload();
   	
   	
   }
@@ -342,7 +339,7 @@
   function editData()
   {
   	
-      //var code         = document.getElementById("code").value;
+    //var code         = document.getElementById("code").value;
   	var id           = document.getElementById("id").value;
   	var code           = document.getElementById("code").value;
   	var machine_name = document.getElementById("machine_name").value;
@@ -351,26 +348,26 @@
   	var priority     = document.getElementById("priority").value;
   	var m_type       = document.getElementById("m_type").value;
   	
-  if(wostatus=='')
-   {
+    if(wostatus=='')
+    {
+    
+      document.getElementById("codemsg").innerHTML = "Please Enter Status";
+      return false;
+
+    }
   
-    document.getElementById("codemsg").innerHTML = "Please Enter Status";
-    return false;
-  }
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "insert_schedule?id="+id+"&code="+code+"&machine_name="+machine_name+"&priority="+priority+"&maintyp="+maintyp+"&m_type="+m_type+"&wostatus="+wostatus, false);
+    xhttp.send();
+
+
+    $("resultareaschedule").html("Schedule Updated Successfully !");
+    $("#editItem .close").click();	   
   
-  
-  
-   var xhttp = new XMLHttpRequest();
-   xhttp.open("GET", "insert_schedule?id="+id+"&code="+code+"&machine_name="+machine_name+"&priority="+priority+"&maintyp="+maintyp+"&m_type="+m_type+"&wostatus="+wostatus, false);
-   xhttp.send();
-  
-  
-   $("resultareaschedule").html("Schedule Updated Successfully !");
-   $("#editItem .close").click();	   
-   document.getElementById("loadData").innerHTML = xhttp.responseText;
-  
-   document.getElementById("code").value='';
-   document.getElementById("id").value='';
+    // document.getElementById("loadData").innerHTML = xhttp.responseText;
+    // document.getElementById("code").value='';
+    // document.getElementById("id").value='';
+    window.location.reload();
   	
   	
   }

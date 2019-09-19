@@ -231,10 +231,10 @@
       	$usunit=$prod_Details1->keyvalue;		
       
       	$i++;
-      	$id='d'; 
+      	$id = 'd'; 
       
-      	$id.=$i; 
-      	$countid+= count($id);
+      	$id .= $i; 
+      	@$countid+= count($id);
       	//echo $arr->size;
       	$sqlunit=$this->db->query("select * from tbl_master_data where serial_number='$fetchsizeww->size'");
       	$fetchsize=$sqlunit->row();

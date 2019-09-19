@@ -48,9 +48,7 @@
                         <option value="0" class="listClass">-----Section-----</option>
                         <?php
                           $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
-                          foreach($sql->result() as $getSql) {
-                          //foreach ($categorySelectbox as $key => $dt) { ?>
-                        <!-- <option id="<?=$dt['id'];?>" value = "<?=$dt['id'];?>" class="<?=$dt['praent']==0 ? 'listClass':'';?>" > <?=$dt['name'];?></option> -->
+                          foreach($sql->result() as $getSql) { ?>
                         <option value="<?php echo $getSql->id;?>"><?php echo $getSql->name; ?></option>
                         <?php } ?>
                       </select>

@@ -3,7 +3,7 @@
   if($this->input->get('entries')!=""){
     $entries = $this->input->get('entries');
   }
-  ?>
+?>
 <style type="text/css">
   .select2-container--open {
   z-index: 99999999 !important;
@@ -405,19 +405,18 @@
    $("#resultareabreak").html("Breakdown Added Successfully !");
    $("#modal-0 .close").click();   
    $('#addbreakdownformid')[0].reset();   
-   document.getElementById("loadData").innerHTML = xhttp.responseText;
-  
-   document.getElementById("code").value='';
-  
-  
-  
+   
+    // document.getElementById("loadData").innerHTML = xhttp.responseText;
+    // document.getElementById("code").value='';
+    window.location.reload();
+    
     
   }
   
   function editData()
   {
     
-      var code         = document.getElementById("code").value;
+    var code         = document.getElementById("code").value;
     var id           = document.getElementById("id").value;
     var machine_name = document.getElementById("machine_name").value;
     var wostatus  = document.getElementById("wostatus").value;
@@ -428,7 +427,7 @@
     var datetimepicker_mask       = document.getElementById("datetimepicker_mask").value
     
   if(wostatus=='')
-   {
+  {
   
     document.getElementById("codemsg").innerHTML = "Please Enter Status";
     return false;
@@ -443,10 +442,12 @@
   
    $("#resultareabreak").html("Breakdown Updated Successfully !");
    $("#editItem .close").click();    
-   document.getElementById("loadData").innerHTML = xhttp.responseText;
-  
-   document.getElementById("code").value='';
-   document.getElementById("id").value='';
+   
+   // document.getElementById("loadData").innerHTML = xhttp.responseText;
+   // document.getElementById("code").value='';
+   // document.getElementById("id").value='';
+
+   window.location.reload();
     
     
   }
