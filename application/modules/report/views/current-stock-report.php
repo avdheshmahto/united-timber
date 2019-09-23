@@ -37,6 +37,8 @@
               <?php } ?>
             </select>
           </div>
+        </div>
+        <div class="form-group panel-body-to">
           <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button> 	
           <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" >
             <span>Search</span>

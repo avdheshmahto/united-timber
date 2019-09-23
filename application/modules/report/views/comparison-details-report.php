@@ -376,7 +376,7 @@
 <script type="text/javascript">
 
   window.onload = function() {
-      getmachinelist(<?=$_GET['mid']?>);
+      getmachinelist(<?=$_GET['sid']?>);
   };
   
   function getmachinelist(v)
