@@ -11,7 +11,9 @@
 <div class="main-content">
   <?php
     $this->load->view("reportheader");
-    
+    $sec=$this->db->query("select * from tbl_category where id='".$_GET['sid']."' ");
+    $getSec=$sec->row();
+
     $mac=$this->db->query("select * from tbl_machine where id='".$_GET['mid']."'");
     $fetch=$mac->row();
     ?>
@@ -19,7 +21,7 @@
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          <h4 class="panel-title">BREAKDOWN WORKORDER DETAILS( <?=$fetch->machine_name;?> )</h4>
+          <h4 class="panel-title">BREAKDOWN WORKORDER DETAILS ( <?=$getSec->name;?> )( <?=$fetch->machine_name;?> )</h4>
           <a href="<?=base_url();?>report/Report/breakdown_hours_details?sid=<?=$_GET['sid']?>&year=<?=$_GET['year']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
       <div class="panel-body panel-center">
@@ -37,6 +39,16 @@
             </select>
           </div>
         </div>
+        <div class="form-group panel-body-to">
+          <label class="col-sm-2 control-label">From Date</label> 
+            <div class="col-sm-3">
+              <input type="date" name="from_date" id='from_date' value="<?=$_GET['from_date']?>" class="form-control"> 
+            </div>
+          <label class="col-sm-2 control-label">To Date</label> 
+          <div class="col-sm-3">
+            <input type="date" name="to_date" id='to_date' value="<?=$_GET['to_date']?>" class="form-control"> 
+          </div>
+        </div> 
         <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
           <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
           <button type="submit" class="btn btn-sm pull-right" name="filter" value="filter" ><span>Search</span>
@@ -50,28 +62,43 @@
                 <tr>
                   <th>Workorder No.</th>
                   <th>Workorder Status</th>
+                  <th>Spare Name</th>
                   <th>Breakdown Hours</th>
                 </tr>
               </thead>
               <tbody id="getDataTable" >
                 <?php 
+                $wyear=date('Y');
+
                 if($_GET['filter'] == 'filter')
                 {
-                  if($_GET['wo_id']==2){
+                  
+                  $wo="select * from tbl_machine_breakdown where section='".$_GET['sid']."' AND machine_id='".$_GET['mid']."' ";
 
-                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' AND start_time='' AND end_time=''");
-                  }else{
-                    $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' AND start_time!='' AND end_time!='' ");
+                  if($_GET['wo_id']== 1){
+
+                    $wo .=" AND start_time !='' AND end_time !='' ";
                   }
+
+                  if($_GET['wo_id'] == 2){
+                    $wo .= "AND start_time ='' AND end_time ='' ";
+                  }
+
+                  if($_GET['from_date'] && $_GET['to_date'] != ''){
+                    $wo .=" AND maker_date >='".$_GET['from_date']."' AND maker_date <='".$_GET['to_date']."' ";
+                  }
+                  
+                  $query=$this->db->query($wo);
+
                 }
                 else
                 {
-                  $wo=$this->db->query("select * from tbl_machine_breakdown where machine_id='".$_GET['mid']."' ");
+                  $query=$this->db->query("select * from tbl_machine_breakdown where section='".$_GET['sid']."' AND machine_id='".$_GET['mid']."' AND EXTRACT(YEAR FROM maker_date)='$wyear' ");
                 }
                   
                   
                   $z=1;
-                  foreach($wo->result() as $getWo)
+                  foreach($query->result() as $getWo)
                   {
                   ?>
                 <tr class="gradeC record">
@@ -81,8 +108,23 @@
                     $getWm=$wm->row();
                     $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='".$getWm->wostatus."'");
                     $compRow = $sqlunit->row();
-                    echo $compRow->keyvalue;
-                    ?></th>
+                    echo $compRow->keyvalue; ?>
+                  </th>
+
+                  <th><?php
+                    $ws=$this->db->query("select * from tbl_workorder_spare_hdr where work_order_id='$getWo->workorder_id' ");
+                    $getWhdr=$ws->row();
+
+                    $wd=$this->db->query("select * from tbl_workorder_spare_dtl where spare_hdr_id='$getWhdr->spare_hdr_id' ");
+                    $getWdtl=$wd->row();
+
+                    $prd=$this->db->query("select * from tbl_product_stock where Product_id='$getWdtl->spare_id' ");
+                    $getPrd=$prd->row();
+
+                    echo $getPrd->productname;
+                  ?>
+                  </th>
+
                   <th><?php 
                     $from_time5 = strtotime($getWo->start_time);
                     $to_time5 = strtotime($getWo->end_time); 

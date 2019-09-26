@@ -90,8 +90,8 @@ public function dashboard()
 		{
 			
 			$this->session->set_userdata(@$sess_array);
-			redirect('master/Item/dashboar');
-			//redirect('dashboard');
+			//redirect('master/dashboar');
+			redirect('master/dashboard');
 
 		}else{
 			
@@ -107,7 +107,8 @@ function index()
 	
 	if($this->session->userdata('is_logged_in'))
 	{
-		redirect('master/dashboar');
+		//redirect('master/dashboar');
+		redirect('master/dashboard');
 	}	
 	else
 	{

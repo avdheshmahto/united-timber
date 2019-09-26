@@ -1,12 +1,11 @@
-﻿<?php $this->load->view("header.php");?>
+<?php $this->load->view("header.php");?>
 
 <!DOCTYPE HTML>
 <html>
 <head>
 
 <script type="text/javascript" src="<?=base_url();?>assets/newjs/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<?=base_url();?>assets/newjs/jquery.canvasjs.min.js">
-</script>
+<script type="text/javascript" src="<?=base_url();?>assets/newjs/jquery.canvasjs.min.js"></script>
 
 <style type="text/css">
 	.new-form{
@@ -26,24 +25,9 @@
 <!-- ==============================chart1======================================= -->
 
 <?php  
-$crYr=date('Y');
-if($_GET['fyear'] != '')
-{
-  $myear=$_GET['fyear'];
-}
-else
-{
-  $myear=$crYr;
-}
-
-if($_GET['hyear'] != '')
-{
-  $byear=$_GET['hyear'];
-}
-else
-{
-  $byear=$crYr;
-}
+  
+  $crYr=date('Y');
+  $myear=date('Y');
 
 ?>
 
@@ -51,12 +35,12 @@ else
 <div class="col-lg-12">
 <div class="panel panel-default new-form-default">
 <div class="panel-body panel-center new-form">
- <form class="form-horizontal" method="get" action="">
+ <form class="form-horizontal sectionexpense" method="get" action="">
     <div class="form-group panel-body-to">
        <label class="col-sm-2 control-label">Section</label> 
        <div class="col-sm-3">
           <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;">
-             <option value="" class="listClass">------Section-----</option>
+             <option value="" class="listClass">All Section</option>
              <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
@@ -68,49 +52,27 @@ else
         <div class="col-sm-3">
           <select name="fyear" id="fyear" class="select2 form-control">
             <option value="">----Select Year----</option>
-            <option value="2018" <?php if($_GET['fyear'] == '2018') { ?> selected <?php } ?> >2018</option>
-            <option value="2019" <?php if($_GET['fyear'] == '2019') { ?> selected <?php } ?> >2019</option>
-            <option value="2020" <?php if($_GET['fyear'] == '2020') { ?> selected <?php } ?> >2020</option>
-            <option value="2021" <?php if($_GET['fyear'] == '2021') { ?> selected <?php } ?> >2021</option>
-            <option value="2022" <?php if($_GET['fyear'] == '2022') { ?> selected <?php } ?> >2022</option>
-            <option value="2023" <?php if($_GET['fyear'] == '2023') { ?> selected <?php } ?> >2023</option>
-            <option value="2024" <?php if($_GET['fyear'] == '2024') { ?> selected <?php } ?> >2024</option>
-            <option value="2025" <?php if($_GET['fyear'] == '2025') { ?> selected <?php } ?> >2025</option>
+            <option value="2018" <?php if(date('Y')==2018) { ?> selected <?php } ?> >2018</option>
+            <option value="2019" <?php if(date('Y')==2019) { ?> selected <?php } ?> >2019</option>
+            <option value="2020" <?php if(date('Y')==2020) { ?> selected <?php } ?> >2020</option>
+            <option value="2021" <?php if(date('Y')==2021) { ?> selected <?php } ?> >2021</option>
+            <option value="2022" <?php if(date('Y')==2022) { ?> selected <?php } ?> >2022</option>
+            <option value="2023" <?php if(date('Y')==2023) { ?> selected <?php } ?> >2023</option>
+            <option value="2024" <?php if(date('Y')==2024) { ?> selected <?php } ?> >2024</option>
+            <option value="2025" <?php if(date('Y')==2025) { ?> selected <?php } ?> >2025</option>
           </select>
         </div>
-       <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px"> 
-          <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-          <button type="submit" class="btn btn-sm pull-right" name="filter1" value="filter1" ><span>Search</span>
-       </div>
     </div>
  </form>
-<h4 style="margin: -10px 0px 0px 440px;font-weight: 200;font-size: x-large;">
-	<?=$myear?>
-</h4>
 </div>
 </div>
 </div>
 </div>
 
 <?php
- if($_GET['filter1']=='filter1')
- {
-    
-    $query=("select * from tbl_software_cost_log where status='A'  ");
-    
-    if($_GET['m_type'] != '')
-       $query.=" AND section_id='".$_GET['m_type']."' ";
-  
-    if($_GET['fyear'] != '')
-       $query.=" AND EXTRACT(YEAR FROM log_date)='".$_GET['fyear']."'";
+ 
+  $query=("select * from tbl_software_cost_log where status='A' AND EXTRACT(YEAR FROM log_date)='$crYr' GROUP BY main_section ");  
 
-    $query .=" GROUP BY main_section ";
-
- }
- else
- {
-   $query=("select * from tbl_software_cost_log where status='A' AND EXTRACT(YEAR FROM log_date)='$crYr' GROUP BY main_section ");  
- }
  
  $result=$this->db->query($query)->result();
  //echo date('m');
@@ -246,48 +208,67 @@ $datas[]=$data;
  
 <div id="chartContainer1" style="height: 400px; width: 100%;"> </div>
 
+<script type="text/javascript">
+  
+  var options1 = {
+  animationEnabled: true,
+  title:{
+    text: "Section Expenses of United Timber"   
+  },
+  axisY:{
+    title:"Section (Expense In Rupees)"
+  },
+  toolTip: {
+    shared: true,
+    reversed: true
+  },
+  data: [
+  <?php foreach ($datas as $key => $value) {
+    $name=$value['name'];
+    $data=$value['dataPoints'];
+   ?>
+    {
+      type: "stackedColumn",
+      name: "<?=$name?>",
+      showInLegend: "true",
+      yValueFormatString: "#,##0 ",
+      dataPoints: [<?php foreach ($data as $keyss => $get) { 
+        $y=$get['y'];
+        $label=$get['label'];
+        ?>
+        { 
+          y: <?=$y?> , 
+          label: "<?=$label?>" 
+        },
+      <?php } ?>]
+    },
+  <?php } ?>
+  ]
+};
 
-<!-- ===============================chart4====================================== -->
+$("#chartContainer1").CanvasJSChart(options1);
+
+</script>
+
+<!-- ==============================chart4======================================= -->
 
 <?php 
-
-  if($_GET['sec_id'] != '')
-  {
-    $secIds=$_GET['sec_id'];
-  }
-  else
-  {
-    $secIds=1;
-  }
-
-  if($_GET['machineid'] != '')
-  {
-    $mach=$this->db->query("select * from tbl_machine where id='".$_GET['machineid']."' ");
-    $getMachhh=$mach->row();
-    $machnName=$getMachhh->machine_name;
-  }
-  else
-  {
-    $machnName="All Machine";
-  } 
-
-$secs=$this->db->query("select * from tbl_category where id='$secIds' ");
-$getSecs=$secs->row();
-$secName=$getSecs->name;
+  
+  $secIds=1;
 
 ?>
 <div class="row" style="margin-top: -70px;">
   <div class="col-lg-12">
     <div class="panel panel-default new-form-default">
       <div class="panel-body panel-center new-form">
-        <form class="form-horizontal" method="get" action="">
+        <form class="form-horizontal machine_expense" method="get" action="">
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">Section</label> 
             <div class="col-sm-3">
               <select name="sec_id" class="select2 form-control" id="sec_id" style="width:100%;" onchange="getmachinelist(this.value);">
-                <option value="1" class="listClass">------Section-----</option>
+                <option value="1" class="listClass">FINISHING SECTION</option>
                 <?php
-                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0' AND id != 1 ");
                   foreach($sql->result() as $getSql) {  ?>
                 <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['sec_id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                 <?php } ?>
@@ -296,28 +277,21 @@ $secName=$getSecs->name;
             <label class="col-sm-2 control-label">Machine</label> 
             <div class="col-sm-3">
               <select name="machineid" id="machineid" class="select2 form-control">
-                <option value="">----Machine----</option>
+                <option value="">All Machine</option>
               </select>
             </div>
           </div>
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">From Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="from_date" id='from_date' value="<?=$_GET['from_date'];?>" class="form-control"> 
+              <input type="date" name="from_date" id='from_date' class="form-control"> 
             </div>
             <label class="col-sm-2 control-label">To Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="to_date" id='to_date' value="<?=$_GET['to_date'];?>" class="form-control"> 
+              <input type="date" name="to_date" id='to_date' class="form-control"> 
             </div>
           </div>                    
-          <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
-            <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-            <button type="submit" class="btn btn-sm pull-right" name="filter4" value="filter4" ><span>Search</span>
-          </div>
         </form>
-        <h4 style="margin: -10px 0px 0px 300px;font-weight: 200;font-size: x-large;">
-        <?=$secName?>&nbsp;(<?=$machnName?>)
-        </h4>
       </div>
     </div>
   </div>
@@ -380,53 +354,61 @@ $secName=$getSecs->name;
   
     }  ?>
 
-<?php 
-//print_r(json_encode($spentData));
-?>
 <div id="chartContainer4" style="height: 300px; width: 100%;"></div>
 
+<script type="text/javascript">
+  
+  var options4 = {
+  title: {
+    text: "Machine Total Expenses"
+  },
+  data: [{
+      type: "pie",
+      startAngle: 45,
+      showInLegend: "true",
+      legendText: "{label}",
+      indexLabel: "{label} ({y})",
+      yValueFormatString:"#,##0.#"%"",
+      dataPoints: [
 
-<!-- ===============================chart5====================================== -->
+        <?php 
+
+          foreach ($machineSpent as $sKey => $mValue) 
+          {
+            $machine=$mValue['machin'];
+            $mspent=$mValue['tspent'];
+        ?>
+        
+        { label: "<?=$machine?>", y: <?=$mspent?> },
+
+        <?php } ?>         
+      ]
+  }]
+};
+
+$("#chartContainer4").CanvasJSChart(options4);
+
+</script>
+
+<!-- ==============================chart5======================================= -->
 
 <?php 
-
-  if($_GET['typeSec_id'] != '')
-  {
-    $typeSecIds=$_GET['typeSec_id'];
-  }
-  else
-  {
-    $typeSecIds=1;
-  }
-
-  if($_GET['typemachine'] != '')
-  {
-    $mach=$this->db->query("select * from tbl_machine where id='".$_GET['typemachine']."' ");
-    $getMachhh=$mach->row();
-    $machineType=$getMachhh->machine_name;
-  }
-  else
-  {
-    $machineType="All Machine";
-  } 
-
-$secs=$this->db->query("select * from tbl_category where id='$typeSecIds' ");
-$getSecs=$secs->row();
-$typeSecName=$getSecs->name;
+  
+  $typeSecIds=1;
 
 ?>
 <div class="row" style="margin-top: -70px;">
   <div class="col-lg-12">
     <div class="panel panel-default new-form-default">
       <div class="panel-body panel-center new-form">
-        <form class="form-horizontal" method="get" action="">
+        <form class="form-horizontal type_expense" method="get" action="">
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">Section</label> 
             <div class="col-sm-3">
               <select name="typeSec_id" class="select2 form-control" id="typeSec_id" style="width:100%;" onchange="setMachinelist(this.value);">
-                <option value="1" class="listClass">------Section-----</option>
+                <option value="1" class="listClass">FINISHING SECTION</option>
                 <?php
-                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0' AND id != 1 ");
                   foreach($sql->result() as $getSql) {  ?>
                 <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['typeSec_id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                 <?php } ?>
@@ -435,28 +417,21 @@ $typeSecName=$getSecs->name;
             <label class="col-sm-2 control-label">Machine</label> 
             <div class="col-sm-3">
               <select name="typemachine" id="typemachine" class="select2 form-control">
-                <option value="">----Machine----</option>
+                <option value="">All Machine</option>
               </select>
             </div>
           </div>
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">From Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="from_date1" id='from_date1' value="<?=$_GET['from_date1'];?>" class="form-control"> 
+              <input type="date" name="from_date1" id='from_date1' class="form-control"> 
             </div>
             <label class="col-sm-2 control-label">To Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="to_date1" id='to_date1' value="<?=$_GET['to_date1'];?>" class="form-control"> 
+              <input type="date" name="to_date1" id='to_date1' class="form-control"> 
             </div>
-          </div>                    
-          <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
-            <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-            <button type="submit" class="btn btn-sm pull-right" name="filter5" value="filter5" ><span>Search</span>
-          </div>
+          </div>                             
         </form>
-        <h4 style="margin: -10px 0px 0px 300px;font-weight: 200;font-size: x-large;">
-        <?=$typeSecName?>&nbsp;(<?=$machineType?>)
-        </h4>
       </div>
     </div>
   </div>
@@ -464,9 +439,9 @@ $typeSecName=$getSecs->name;
 
 <?php 
 
-    $machine=$this->db->query("select * from tbl_master_data where param_id='26' "); 
+    $typeQuery=$this->db->query("select * from tbl_master_data where param_id='26' "); 
   
-    foreach($machine->result() as $fetch_list) 
+    foreach($typeQuery->result() as $fetch_list) 
     { 
 
       $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='$fetch_list->serial_number' ");
@@ -484,41 +459,12 @@ $typeSecName=$getSecs->name;
         $prdIDs="99999999";
       }
 
-
-      $type=$fetch_list->keyvalue;
-
-      if($_GET['filter5'] == 'filter5')
-      {
-        
-        $qry="select SUM(total_spent) as totalamt from tbl_software_cost_log where status='A' ";
-
-        if($_GET['typeSec_id'] != '')
-          $qry .=" AND main_section='".$_GET['typeSec_id']."' ";
-
-        if($_GET['typemachine'] != '')
-          $qry .=" AND machine_id='".$_GET['typemachine']."' ";
-        
-        if($_GET['from_date1'] != '' && $_GET['to_date1'] != '')
-          $qry .="AND log_date >='".$_GET['from_date1']."' and log_date <='".$_GET['to_date1']."' ";
-        else
-          $qry .=" AND EXTRACT(YEAR FROM log_date)='$crYr' ";
-
-          $qry .=" AND product_id IN ($prdIDs)";
-
-        $spent=$this->db->query($qry);
-
-      }
-      else
-      {
-
-        $qry="select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(YEAR FROM log_date)='$crYr' AND main_section='$typeSecIds' AND product_id IN ($prdIDs) ";       
-        
-        $spent=$this->db->query($qry);
-
-      }
-
+      $qry="select SUM(total_spent) as totalamt from tbl_software_cost_log where EXTRACT(YEAR FROM log_date)='$crYr' AND main_section='$typeSecIds' AND product_id IN ($prdIDs) ";               
+      $spent=$this->db->query($qry);
       $totalSpent=$spent->row();
 
+      $type=$fetch_list->keyvalue;
+      
       if($totalSpent->totalamt != '')
       {
         $macSpent=round($totalSpent->totalamt,2);
@@ -541,65 +487,61 @@ $typeSecName=$getSecs->name;
       
     }  ?>
 
-<?php 
-//print_r(json_encode($spentData));
-?>
 <div id="chartContainer5" style="height: 300px; width: 100%;"></div>
 
-<!-- ====================================chart6==================== -->
+<script type="text/javascript">
+  
+  var options5 = {
+  title: {
+    text: "Type Wise Total Expenses"
+  },
+  data: [{
+      type: "pie",
+      startAngle: 45,
+      showInLegend: "true",
+      legendText: "{label}",
+      indexLabel: "{label} ({y})",
+      yValueFormatString:"#,##0.#"%"",
+      dataPoints: [
 
+        <?php 
+
+          foreach ($typeSpent as $sKey => $mValue) 
+          {
+            $type=$mValue['stype'];
+            $tspent1=$mValue['tspents'];
+        ?>
+        
+        { label: "<?=$type?>", y: <?=$tspent1?> },
+
+        <?php } ?>         
+      ]
+  }]
+};
+
+$("#chartContainer5").CanvasJSChart(options5);
+
+</script>
+
+<!-- ==============================chart6======================================= -->
 
 <?php 
-
-  if($_GET['spareSec_id'] != '')
-  {
-    $spSecId=$_GET['spareSec_id'];
-  }
-  else
-  {
-    $spSecId=1;
-  }
-
-  if($_GET['mid'] != '')
-  {
-    $mchnId=$_GET['mid'];
-  }
-  else
-  {
-    $mchnId='';
-  }
-
-  if($_GET['spare_type'] != '')
-  {
-    $mst=$this->db->query("select * from tbl_master_data where serial_number='".$_GET['spare_type']."' ");
-    $getMst=$mst->row();
-    $typeSpare=$getMst->keyvalue;
-  }
-  else
-  {
-    $typeSpare="All Type";
-  }  
-
-$ctg=$this->db->query("select * from tbl_category where id='$spSecId' ");
-$getCtg=$ctg->row();
-$nameOfSection=$getCtg->name;
-$mchs=$this->db->query("select * from tbl_machine where id='$mchnId' ");
-$getMchs=$mchs->row();
-$nameOfMachine=$getMchs->machine_name;
+  
+  $spSecId=1;
 
 ?>
 <div class="row" style="margin-top: -70px;">
   <div class="col-lg-12">
     <div class="panel panel-default new-form-default">
       <div class="panel-body panel-center new-form">
-        <form class="form-horizontal" method="get" action="">
+        <form class="form-horizontal spare_expense" method="get" action="">
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">Section</label> 
             <div class="col-sm-3">
               <select name="spareSec_id" class="select2 form-control" id="spareSec_id" style="width:100%;" onchange="putMachineList(this.value);">
-                <option value="1" class="listClass">------Section-----</option>
+                <option value="1" class="listClass">FINISHING SECTION</option>
                 <?php
-                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0' AND id != 1 ");
                   foreach($sql->result() as $getSql) {  ?>
                 <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['spareSec_id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                 <?php } ?>
@@ -608,15 +550,15 @@ $nameOfMachine=$getMchs->machine_name;
             <label class="col-sm-2 control-label">Machine</label> 
             <div class="col-sm-3">
               <select name="mid" class="select2 form-control" id="mid" style="width:100%;">
-                <option value="" class="listClass">------Machine-----</option>
+                <option value="" class="listClass">All Machine</option>                
               </select>
             </div>
           </div>
-          <div class="form-group panel-body-to">
+          <div class="form-group panel-body-to">            
             <label class="col-sm-2 control-label">Type Of Spare</label> 
             <div class="col-sm-3">
               <select name="spare_type" id="spare_type" class="select2 form-control">
-                <option value="">----Type----</option>
+                <option value="">All Type</option>
                 <?php
                   $sql=$this->db->query("select * from tbl_master_data where param_id='26'");
                   foreach($sql->result() as $getSql) {  ?>
@@ -628,87 +570,23 @@ $nameOfMachine=$getMchs->machine_name;
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">From Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="from_date3" id='from_date3' value="<?=$_GET['from_date3'];?>" class="form-control"> 
+              <input type="date" name="from_date3" id='from_date3' class="form-control"> 
             </div>
             <label class="col-sm-2 control-label">To Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="to_date3" id='to_date3' value="<?=$_GET['to_date3'];?>" class="form-control"> 
+              <input type="date" name="to_date3" id='to_date3' class="form-control"> 
             </div>
           </div>                    
-          <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
-            <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-            <button type="submit" class="btn btn-sm pull-right" name="filter6" value="filter6" ><span>Search</span>
-          </div>
         </form>
-        <h4 style="margin: -10px 0px 0px 305px;font-weight: 200;font-size: x-large;">
-         <?=$nameOfSection?>&nbsp;(<?=$nameOfMachine?>)&nbsp;(<?=$typeSpare?>)
-        </h4>
       </div>
     </div>
   </div>
 </div>
 
 <?php
-  if($_GET['filter6'] == 'filter6')
-  {
 
-    $qry="select * from tbl_software_cost_log where status='A'";
-
-      if($_GET['spareSec_id'] != '')
-      {
-        $qry .=" AND main_section='".$_GET['spareSec_id']."' ";        
-      }
-
-      if($_GET['mid'] != '')
-      {
-        $qry .=" AND machine_id='".$_GET['mid']."' ";
-      }
-
-      if($_GET['from_date3'] != '' && $_GET['to_date3'] != '')
-      {
-        $qry .= " AND log_date >='".$_GET['from_date3']."' and log_date <='".$_GET['to_date3']."'";
-      } 
-      else
-      {
-        $qry .=" AND EXTRACT(YEAR FROM log_date)='$crYr' ";
-      }
-
-      if($_GET['spare_type'] != '')
-      {
-
-        $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='".$_GET['spare_type']."' ");
-        foreach ($prd->result() as $key)
-        {
-          $idd[]=$key->Product_id;
-        }
-
-        if($idd != '')
-        {
-          $ids=implode(',', $idd);
-        }
-        else
-        {
-          $ids='99999';
-        }
-
-
-        $qry .=" AND product_id IN ($ids)";
-
-      }
-
-      $qry .= " group by product_id";
-
-    $ssftCstLog=$this->db->query($qry);
-
-  }
-  else
-  {
-   
     $qry="select * from tbl_software_cost_log where main_section='$spSecId' group by product_id";
-
     $ssftCstLog=$this->db->query($qry);
-
-  }
 
     foreach($ssftCstLog->result() as $getCostLog)
     {
@@ -724,31 +602,16 @@ $nameOfMachine=$getMchs->machine_name;
       $prdID='9999999999';
     }
 
-  $prdName=$this->db->query("select * from tbl_software_cost_log where product_id IN ($prdID) group by product_id");
+  $prdName=$this->db->query("select * from tbl_software_cost_log where machine_id !='' AND product_id IN ($prdID) group by product_id");
   foreach($prdName->result() as $fetch_list) 
   { 
 
-    $slog = "select *,SUM(qty) as totalQty,SUM(total_spent) as spareAmt from tbl_software_cost_log where product_id='$fetch_list->product_id'";
-
-    if($_GET['from_date3'] != '' && $_GET['to_date3'] != '')
-    {
-      $slog .=" AND log_date >='".$_GET['from_date3']."' and log_date <='".$_GET['to_date3']."' ";
-    }
-    if($spSecId != '')
-    {
-      $slog .=" AND main_section='$spSecId' ";
-    }
-
-    if($mchnId != '')
-    {
-      $slog .=" AND machine_id='$mchnId' "; 
-    }
-
-    $query=$this->db->query($slog);
-    $getLogQty=$query->row();
+    $slog=$this->db->query("select *,SUM(qty) as totalQty,SUM(total_spent) as spareAmt from tbl_software_cost_log where product_id='$fetch_list->product_id' AND main_section='$spSecId' ");
+    $getLogQty=$slog->row();
 
     $prd=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->product_id'");
     $getPrd=$prd->row();
+
     $prdnames=$getPrd->productname;
     $prdQtyss=$getLogQty->totalQty;
   
@@ -766,98 +629,59 @@ $nameOfMachine=$getMchs->machine_name;
 
 ?>
 
-<?php 
-//print_r(json_encode($spareData));
-?>
 <div id="chartContainer6" style="height: 300px; width: 100%;"></div>
 
-<!-- ==============================chart2======================================= -->
+<script type="text/javascript">
+  
+  var options6 = {
+  title: {
+    text: "Total Spare Consume"
+  },
+  data: [{
+      type: "pie",
+      startAngle: 45,
+      showInLegend: "true",
+      legendText: "{label}",
+      indexLabel: "{label} ({y})",
+      yValueFormatString:"#,##0.#"%"",
+      dataPoints: [
 
-<div class="row" style="margin-top: -70px;">
-<div class="col-lg-12">
-<div class="panel panel-default new-form-default">
-<div class="panel-body panel-center new-form">
- <form class="form-horizontal" method="get" action="">
-    <div class="form-group panel-body-to">
-       <label class="col-sm-2 control-label">Section</label> 
-       <div class="col-sm-3">
-          <select name="s_type" class="select2 form-control" id="s_type" style="width:100%;">
-             <option value="" class="listClass">------Section-----</option>
-             <?php
-                $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
-                foreach($sql->result() as $getSql) { ?>
-             <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['s_type']) { ?> selected <?php } ?> ><?=$getSql->name?></option>
-             <?php } ?>
-          </select>
-       </div>
-        <label class="col-sm-2 control-label">&nbsp;</label> 
-        <div class="col-sm-3"></div>
-       <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px"> 
-          <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-          <button type="submit" class="btn btn-sm pull-right" name="filter2" value="filter2" ><span>Search</span>
-       </div>
-    </div>
- </form>
-</h4>
-</div>
-</div>
-</div>
-</div>
+        <?php 
 
-<?php
+          foreach ($spareData as $sKey => $mValue) 
+          {
+            $sparenm=$mValue['spname'];
+            $spareQt=$mValue['spqtys'];
+        ?>
+        
+        { label: "<?=$sparenm?>", y: <?=$spareQt?> },
 
-if($_GET['filter2'] == 'filter2')
-{
+        <?php } ?>         
+      ]
+  }]
+};
 
-  $qry="select * from tbl_category where inside_cat='0' AND id='".$_GET['s_type']."'" ;
-    
-}
-else
-{
-  $qry="select * from tbl_category where inside_cat='0'" ;
-}
+$("#chartContainer6").CanvasJSChart(options6);
 
-$data = $this->db->query($qry);
-foreach($data->result() as $fetch) 
-{
-
-  $machine=$this->db->query("select COUNT(machine_name) as totalmachine from tbl_machine where m_type='$fetch->id' ");
-  $getMachine=$machine->row();
-
-  $section_name=$fetch->name;
-  $machine_total=$getMachine->totalmachine;
-
-
-
-$secData=array(
-
-    'section' => $section_name,
-    'mcount'=> $machine_total
-
-  );
-
-$macData[]=$secData;
-
-
-}
-
-?>
-
-<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-
+</script>
 
 <!-- ==============================chart3======================================= -->
 
+<?php
+
+  $byear=date('Y');
+
+?>
 <div class="row" style="margin-top: -70px;">
 <div class="col-lg-12">
 <div class="panel panel-default new-form-default">
 <div class="panel-body panel-center new-form">
- <form class="form-horizontal" method="get" action="">
+ <form class="form-horizontal breakdown_hours" method="get" action="">
     <div class="form-group panel-body-to">
        <label class="col-sm-2 control-label">Section</label> 
        <div class="col-sm-3">
           <select name="b_type" class="select2 form-control" id="b_type" style="width:100%;">
-             <option value="" class="listClass">------Section-----</option>
+             <option value="" class="listClass">All Section</option>
              <?php
                 $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
                 foreach($sql->result() as $getSql) { ?>
@@ -869,25 +693,18 @@ $macData[]=$secData;
         <div class="col-sm-3">
           <select name="hyear" id="hyear" class="select2 form-control">
             <option value="">----Select Year----</option>
-            <option value="2018" <?php if($_GET['hyear'] == '2018') { ?> selected <?php } ?> >2018</option>
-            <option value="2019" <?php if($_GET['hyear'] == '2019') { ?> selected <?php } ?> >2019</option>
-            <option value="2020" <?php if($_GET['hyear'] == '2020') { ?> selected <?php } ?> >2020</option>
-            <option value="2021" <?php if($_GET['hyear'] == '2021') { ?> selected <?php } ?> >2021</option>
-            <option value="2022" <?php if($_GET['hyear'] == '2022') { ?> selected <?php } ?> >2022</option>
-            <option value="2023" <?php if($_GET['hyear'] == '2023') { ?> selected <?php } ?> >2023</option>
-            <option value="2024" <?php if($_GET['hyear'] == '2024') { ?> selected <?php } ?> >2024</option>
-            <option value="2025" <?php if($_GET['hyear'] == '2025') { ?> selected <?php } ?> >2025</option>
+            <option value="2018" <?php if(date('Y') == '2018') { ?> selected <?php } ?> >2018</option>
+            <option value="2019" <?php if(date('Y') == '2019') { ?> selected <?php } ?> >2019</option>
+            <option value="2020" <?php if(date('Y') == '2020') { ?> selected <?php } ?> >2020</option>
+            <option value="2021" <?php if(date('Y') == '2021') { ?> selected <?php } ?> >2021</option>
+            <option value="2022" <?php if(date('Y') == '2022') { ?> selected <?php } ?> >2022</option>
+            <option value="2023" <?php if(date('Y') == '2023') { ?> selected <?php } ?> >2023</option>
+            <option value="2024" <?php if(date('Y') == '2024') { ?> selected <?php } ?> >2024</option>
+            <option value="2025" <?php if(date('Y') == '2025') { ?> selected <?php } ?> >2025</option>
           </select>
         </div>
-       <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px"> 
-          <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-          <button type="submit" class="btn btn-sm pull-right" name="filter3" value="filter3" ><span>Search</span>
-       </div>
     </div>
  </form>
-<h4 style="margin: -10px 0px 0px 440px;font-weight: 200;font-size: x-large;">
-  <?=$byear?>
-</h4>
 </div>
 </div>
 </div>
@@ -895,29 +712,14 @@ $macData[]=$secData;
 
 <?php
 
-  if($_GET['filter3'] == 'filter3')
-  {
-    $query="select * from tbl_machine_breakdown where status='A' ";
+  $query=("select * from tbl_machine_breakdown where status='A' AND EXTRACT(YEAR FROM breakdown_date)='$crYr' GROUP BY section ");
 
-    if($_GET['b_type'] != '')
-      $query.=" AND section='".$_GET['b_type']."'";
-    
-    if($_GET['hyear'] != '')
-      $query.=" AND EXTRACT(YEAR FROM breakdown_date)='".$_GET['hyear']."'";
-
-    $query .=" GROUP BY section ";
-  }
-  else
-  {
-    $query=("select * from tbl_machine_breakdown where status='A' AND EXTRACT(YEAR FROM breakdown_date)='$crYr' GROUP BY section ");
-  }
-  
   $result=$this->db->query($query)->result();
 
   foreach($result as $fetch) 
   { 
 
-  $sec=$this->db->query("select * from tbl_category where id='$fetch->section'");
+    $sec=$this->db->query("select * from tbl_category where id='$fetch->section'");
     $getSec=$sec->row();
     $bsection=$getSec->name;
 
@@ -971,7 +773,7 @@ $macData[]=$secData;
       $marchHours=$hours03.".".$mins03; 
     
 
-  $april=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=04 AND EXTRACT(YEAR FROM breakdown_date)='$byear' AND section='$fetch->section' "); 
+      $april=$this->db->query("select * from tbl_machine_breakdown where EXTRACT(MONTH FROM breakdown_date)=04 AND EXTRACT(YEAR FROM breakdown_date)='$byear' AND section='$fetch->section' "); 
       $diff4='';
       foreach($april->result() as $getAprilData)
       {
@@ -1116,7 +918,6 @@ $macData[]=$secData;
 
       $decHours=$hours12.".".$mins12;
 
-//echo $hours7.".".$mins7 ."<br>";
 //==========================Bar Chart Calculation======================
 
 $bJan=array(
@@ -1195,50 +996,69 @@ $breakData[]=$hoursData;
 
 <div id="chartContainer3" style="height: 300px; width: 100%;"></div>
 
+<script type="text/javascript">
+  
+  var options3 = {
+  animationEnabled: true,
+  title:{
+    text: "Section Machine Breakdown Hours"   
+  },
+  axisY:{
+    title:"Section (Breakdown Hours)"
+  },
+  toolTip: {
+    shared: true,
+    reversed: true
+  },
+  data: [
+  <?php foreach ($breakData as $key => $value) {
+    $name1=$value['sectioname'];
+    $data1=$value['dataPoints'];
+   ?>
+    {
+      type: "stackedColumn",
+      name: "<?=$name1?>",
+      showInLegend: "true",
+      yValueFormatString: "#,##0 ",
+      dataPoints: [<?php foreach ($data1 as $keyss => $get) { 
+        $y=$get['y'];
+        $label=$get['label'];
+        ?>
+        { 
+          y: <?=$y?> , 
+          label: "<?=$label?>" 
+        },
+      <?php } ?>]
+    },
+  <?php } ?>
+  ]
+};
+
+$("#chartContainer3").CanvasJSChart(options3);
+
+</script>
+
+
 <!-- ===============================chart7===================== -->
 
 <?php 
 
-  if($_GET['bsec_id'] != '')
-  {
-    $bsecIds=$_GET['bsec_id'];
-  }
-  else
-  {
-    $bsecIds=1;
-  }
-
-  if($_GET['bmachineid'] != '')
-  {
-    $mach1=$this->db->query("select * from tbl_machine where id='".$_GET['bmachineid']."' ");
-    $getMachhh1=$mach1->row();
-    $machnName1=$getMachhh1->machine_name;
-  }
-  else
-  {
-    $bmachId=26;
-    $mach1=$this->db->query("select * from tbl_machine where id='$bmachId' ");
-    $getMachhh1=$mach1->row();
-    $machnName1=$getMachhh1->machine_name;
-  } 
-
-$secs1=$this->db->query("select * from tbl_category where id='$bsecIds' ");
-$getSecs1=$secs1->row();
-$secName1=$getSecs1->name;
+  $bsecIds=1;
+  $wyear=date('Y');
 
 ?>
 <div class="row" style="margin-top: -70px;">
   <div class="col-lg-12">
     <div class="panel panel-default new-form-default">
       <div class="panel-body panel-center new-form">
-        <form class="form-horizontal" method="get" action="">
+        <form class="form-horizontal spares_hours" method="get" action="">
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">Section</label> 
             <div class="col-sm-3">
               <select name="bsec_id" class="select2 form-control" id="bsec_id" style="width:100%;" onchange="show_machineList(this.value);">
-                <option value="1" class="listClass">------Section-----</option>
+                <option value="1" class="listClass">FINISHING SECTION</option>
                 <?php
-                  $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
+                  $sql=$this->db->query("select * from tbl_category where inside_cat='0' AND id != 1 ");
                   foreach($sql->result() as $getSql) {  ?>
                 <option value="<?=$getSql->id?>" <?php if($getSql->id == $_GET['bsec_id'] ) { ?> selected <?php } ?> ><?=$getSql->name?></option>
                 <?php } ?>
@@ -1247,52 +1067,30 @@ $secName1=$getSecs1->name;
             <label class="col-sm-2 control-label">Machine</label> 
             <div class="col-sm-3">
               <select name="bmachineid" id="bmachineid" class="select2 form-control">
-                <option value="">----Machine----</option>
+                <option value="">All Machine</option>
               </select>
             </div>
           </div>
           <div class="form-group panel-body-to">
             <label class="col-sm-2 control-label">From Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="from_date7" id='from_date7' value="<?=$_GET['from_date7'];?>" class="form-control"> 
+              <input type="date" name="from_date7" id='from_date7' class="form-control"> 
             </div>
             <label class="col-sm-2 control-label">To Date</label> 
             <div class="col-sm-3">
-              <input type="date" name="to_date7" id='to_date7' value="<?=$_GET['to_date7'];?>" class="form-control"> 
+              <input type="date" name="to_date7" id='to_date7' class="form-control"> 
             </div>
           </div>                    
-          <div class="form-group panel-body-to" style="padding: 0px 14px 0px 0px"> 
-            <button class="btn btn-sm btn-default pull-right" type="reset" onclick="ResetLead();" style="margin: 0px 0px 0px 25px;">Reset</button>  
-            <button type="submit" class="btn btn-sm pull-right" name="filter7" value="filter7" ><span>Search</span>
-          </div>
         </form>
-        <h4 style="margin: -10px 0px 0px 300px;font-weight: 200;font-size: x-large;">
-        <?=$secName1?>&nbsp;(<?=$machnName1?>)
-        </h4>
       </div>
     </div>
   </div>
 </div>
 
 <?php 
-  if($_GET['filter7'] == 'filter7')
-  {
-      
-    $wo="select * from tbl_machine_breakdown where start_time !='' AND end_time !='' ";
-    if($_GET['bsec_id'] != '')
-      $wo .=" AND section='".$_GET['bsec_id']."' ";
-    if($_GET['bmachineid'] != '')
-      $wo .=" AND machine_id='".$_GET['bmachineid']."' ";
-    if($_GET['from_date7'] && $_GET['to_date7'] != '') 
-      $wo .=" AND maker_date >='".$_GET['from_date7']."' AND maker_date <='".$_GET['to_date7']."' ";
-    $query=$this->db->query($wo);
+ 
+  $query=$this->db->query("select * from tbl_machine_breakdown where start_time !='' AND end_time !='' AND section='$bsecIds' AND EXTRACT(YEAR FROM maker_date)='$wyear' ");
 
-  }
-  else
-  {
-    $query=$this->db->query("select * from tbl_machine_breakdown where start_time !='' AND end_time !='' AND section='$bsecIds' AND machine_id='$bmachId' ");
-  }
-    
   foreach($query->result() as $getWo)
   {
   
@@ -1333,236 +1131,6 @@ $secName1=$getSecs1->name;
 
 <div id="chartContainer7" style="height: 300px; width: 100%;"></div>
 
-</body>
-<!-- ==============================chart1======================================= -->
-<script type="text/javascript">
-	
-	var options1 = {
-	animationEnabled: true,
-	title:{
-		text: "Section Expenses of United Timber"   
-	},
-	axisY:{
-		title:"Section (Expense In Rupees)"
-	},
-	toolTip: {
-		shared: true,
-		reversed: true
-	},
-	data: [
-	<?php foreach ($datas as $key => $value) {
-		$name=$value['name'];
-		$data=$value['dataPoints'];
-	 ?>
-		{
-			type: "stackedColumn",
-			name: "<?=$name?>",
-			showInLegend: "true",
-			yValueFormatString: "#,##0 ",
-			dataPoints: [<?php foreach ($data as $keyss => $get) { 
-				$y=$get['y'];
-				$label=$get['label'];
-				?>
-				{ 
-					y: <?=$y?> , 
-					label: "<?=$label?>" 
-				},
-			<?php } ?>]
-		},
-	<?php } ?>
-	]
-};
-
-$("#chartContainer1").CanvasJSChart(options1);
-
-</script>
-
-
-
-<!-- ==============================chart2======================================= -->
-<script type="text/javascript">
-
-var options2 = {
-	title: {
-		text: "Section Total Machine"
-	},
-	data: [{
-			type: "pie",
-			startAngle: 45,
-			showInLegend: "true",
-			legendText: "{label}",
-			indexLabel: "{label} ({y})",
-			yValueFormatString:"#,##0.#"%"",
-			dataPoints: [
-
-				<?php 
-
-					foreach ($macData as $sKey => $mValue) 
-					{
-						$section=$mValue['section'];
-						$mtotal=$mValue['mcount'];
-				?>
-				
-				{ label: "<?=$section?>", y: <?=$mtotal?> },
-
-				<?php } ?>				 
-			]
-	}]
-};
-$("#chartContainer2").CanvasJSChart(options2);
-</script>
-
-
-<!-- ==============================chart3======================================= -->
-<script type="text/javascript">
-	
-	var options3 = {
-	animationEnabled: true,
-	title:{
-		text: "Section Machine Breakdown Hours"   
-	},
-	axisY:{
-		title:"Section (Breakdown Hours)"
-	},
-	toolTip: {
-		shared: true,
-		reversed: true
-	},
-	data: [
-	<?php foreach ($breakData as $key => $value) {
-		$name1=$value['sectioname'];
-		$data1=$value['dataPoints'];
-	 ?>
-		{
-			type: "stackedColumn",
-			name: "<?=$name1?>",
-			showInLegend: "true",
-			yValueFormatString: "#,##0 ",
-			dataPoints: [<?php foreach ($data1 as $keyss => $get) { 
-				$y=$get['y'];
-				$label=$get['label'];
-				?>
-				{ 
-					y: <?=$y?> , 
-					label: "<?=$label?>" 
-				},
-			<?php } ?>]
-		},
-	<?php } ?>
-	]
-};
-
-$("#chartContainer3").CanvasJSChart(options3);
-
-</script>
-
-<!-- ==============================chart4======================================= -->
-<script type="text/javascript">
-  
-  var options4 = {
-  title: {
-    text: "Machine Total Expenses"
-  },
-  data: [{
-      type: "pie",
-      startAngle: 45,
-      showInLegend: "true",
-      legendText: "{label}",
-      indexLabel: "{label} ({y})",
-      yValueFormatString:"#,##0.#"%"",
-      dataPoints: [
-
-        <?php 
-
-          foreach ($machineSpent as $sKey => $mValue) 
-          {
-            $machine=$mValue['machin'];
-            $mspent=$mValue['tspent'];
-        ?>
-        
-        { label: "<?=$machine?>", y: <?=$mspent?> },
-
-        <?php } ?>         
-      ]
-  }]
-};
-
-$("#chartContainer4").CanvasJSChart(options4);
-
-</script>
-
-
-<!-- ==============================chart5======================================= -->
-<script type="text/javascript">
-  
-  var options5 = {
-  title: {
-    text: "Type Wise Total Expenses"
-  },
-  data: [{
-      type: "pie",
-      startAngle: 45,
-      showInLegend: "true",
-      legendText: "{label}",
-      indexLabel: "{label} ({y})",
-      yValueFormatString:"#,##0.#"%"",
-      dataPoints: [
-
-        <?php 
-
-          foreach ($typeSpent as $sKey => $mValue) 
-          {
-            $type=$mValue['stype'];
-            $tspent1=$mValue['tspents'];
-        ?>
-        
-        { label: "<?=$type?>", y: <?=$tspent1?> },
-
-        <?php } ?>         
-      ]
-  }]
-};
-
-$("#chartContainer5").CanvasJSChart(options5);
-
-</script>
-
-<!-- ==============================chart6======================================= -->
-<script type="text/javascript">
-  
-  var options6 = {
-  title: {
-    text: "Spare Total Expenses"
-  },
-  data: [{
-      type: "pie",
-      startAngle: 45,
-      showInLegend: "true",
-      legendText: "{label}",
-      indexLabel: "{label} ({y})",
-      yValueFormatString:"#,##0.#"%"",
-      dataPoints: [
-
-        <?php 
-
-          foreach ($spareData as $sKey => $mValue) 
-          {
-            $sparenm=$mValue['spname'];
-            $spareQt=$mValue['spqtys'];
-        ?>
-        
-        { label: "<?=$sparenm?>", y: <?=$spareQt?> },
-
-        <?php } ?>         
-      ]
-  }]
-};
-
-$("#chartContainer6").CanvasJSChart(options6);
-
-</script>
-
-<!-- ==============================chart7======================================= -->
 <script type="text/javascript">
   
   var options7 = {
@@ -1597,31 +1165,27 @@ $("#chartContainer7").CanvasJSChart(options7);
 
 </script>
 
+  <!-- ================================================================= -->
 
+</body>
 <br>
 <br>
 </html>
 
 
-
 <?php $this->load->view("footer.php");?>
-
-<script>
-
-   function ResetLead()
-   {
-     location.href="<?=base_url('/master/Item/dashboar');?>";
-   }
-   
-</script>
 
 <script type="text/javascript">
 
 window.onload = function() {
-      getmachinelist(<?=$_GET['sec_id']?>);
-      setMachinelist(<?=$_GET['typeSec_id']?>);
-      show_machineList(<?=$_GET['bsec_id']?>);
-      putMachineList(<?=$_GET['spareSec_id']?>);
+      var a = $("#sec_id").val();
+      var b = $("#typeSec_id").val();
+      var c = $("#bsec_id").val();
+      var d = $("#spareSec_id").val();
+      getmachinelist(a);
+      setMachinelist(b);
+      show_machineList(c);
+      putMachineList(d);
   };
 
   function getmachinelist(v)
@@ -1642,10 +1206,12 @@ window.onload = function() {
           {
             $("#machineid").empty().append(data);
           }
+
         }
     })
   
   }
+
 
   function setMachinelist(v)
   {
@@ -1669,7 +1235,6 @@ window.onload = function() {
     })
   
   }
-
 
   function show_machineList(v)
   {
@@ -1716,5 +1281,164 @@ window.onload = function() {
     })
   
   }
+
+</script>
+
+
+<script type="text/javascript">
+  
+$( ".sectionexpense" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterSectionExpense",
+    type   : "POST",
+    data   : {
+
+            'section' : $("#m_type").val(),
+            'year'    : $("#fyear").val(),
+        },
+
+    success:function(data){
+
+      $("#chartContainer1").html(data);
+
+    }
+
+  });
+
+});
+
+
+
+$( ".machine_expense" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterMachineExpense",
+    type   : "POST",
+    data   : {
+
+            'section' : $("#sec_id").val(),
+            'machine' : $("#machineid").val(),
+            'fromdate': $("#from_date").val(),
+            'todate'  : $("#to_date").val(),
+        },
+
+    success:function(data){
+
+      //alert(data);
+      $("#chartContainer4").html(data);
+
+    }
+
+  });
+
+});
+
+
+$( ".type_expense" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterTypeExpense",
+    type   : "POST",
+    data   : {
+
+            'section1' : $("#typeSec_id").val(),
+            'machine1' : $("#typemachine").val(),
+            'fromdate1': $("#from_date1").val(),
+            'todate1'  : $("#to_date1").val(),
+        },
+
+    success:function(data){
+
+      //alert(data);
+      $("#chartContainer5").html(data);
+
+    }
+
+  });
+
+});
+
+
+
+$( ".spare_expense" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterSpareExpense",
+    type   : "POST",
+    data   : {
+
+            'spsection' : $("#spareSec_id").val(),
+            'machineid' : $("#mid").val(),
+            'sparetype' : $("#spare_type").val(),
+            'date_from' : $("#from_date3").val(),
+            'date_to'   : $("#to_date3").val(),
+        },
+
+    success:function(data){
+
+      //alert(data);
+      $("#chartContainer6").html(data);
+
+    }
+
+  });
+
+});
+
+
+$( ".breakdown_hours" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterBreakdownHours",
+    type   : "POST",
+    data   : {
+
+            'bsection' : $("#b_type").val(),
+            'bkdnyear' : $("#hyear").val(),
+
+        },
+
+    success:function(data){
+
+      //alert(data);
+      $("#chartContainer3").html(data);
+
+    }
+
+  });
+
+});
+
+
+$( ".spares_hours" ).change(function() {
+  
+  $.ajax({
+
+    url    : "filterSparesHours",
+    type   : "POST",
+    data   : {
+
+            'section'   : $("#bsec_id").val(),
+            'machine'   : $("#bmachineid").val(),
+            'date_from' : $("#from_date7").val(),
+            'date_to'   : $("#to_date7").val(),
+        },
+
+    success:function(data){
+
+      //alert(data);
+      $("#chartContainer7").html(data);
+
+    }
+
+  });
+
+});
 
 </script>

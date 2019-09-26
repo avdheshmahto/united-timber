@@ -1,10 +1,6 @@
 <div class="main-header row">
   <div class="col-sm-4 col-xs-4"></div>
   <div class="col-sm-4 col-xs-4">
-    <!-- <div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="icon-cancel"></i></span></button>
-      <strong>Well done! &nbsp; uihuihuhyu</strong> 
-      </div> -->
   </div>
   <div class="col-sm-4 col-xs-4">
     <div class="pull-right">
@@ -59,15 +55,13 @@
   <div class="side-to">
     <!-- Site header  -->
     <header class="site-header">
-      <div class="site-logo"><a href="<?php echo base_url(); ?>master/Item/dashboar"><img src="<?=base_url();?>assets/images/logo.png" alt="ERP" title="ERP" style="margin-top:10px"></a></div>
+      <div class="site-logo"><a href="<?php echo base_url(); ?>master/dashboard"><img src="<?=base_url();?>assets/images/logo.png" alt="ERP" title="ERP" style="margin-top:10px"></a></div>
       <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu" style="margin: 10px -15px 5px 15px;"></i></a></div>
       <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu" style="margin: 10px -15px 5px 15px;"></i></a></div>
     </header>
     <!-- /site header -->
     <!-- Main navigation -->
     <ul id="side-nav" class="main-menu navbar-collapse collapse">
-      <!--<li class="active"><a href="<?php echo base_url();?>master/Item/dashboar"><i class="icon-gauge"></i><span class="title">Dashboard</span></a></li>
-        -->
       <?php
         @session_start();
         @$main=$_session['main'];

@@ -87,7 +87,6 @@
               <th>S. No.</th>
               <th>Date</th>
               <th>Type</th>
-              <th>Log Id</th>
             </tr>
           </thead>
           <tbody id="getDataTable" >
@@ -103,9 +102,21 @@
             <tr class="gradeC record">
               <th><?php echo $i++;  ?></th>
               <th><?php echo $fetch->maker_date; ?></th>
-              <th><?php echo $fetch->log_type;  ?></th>
-              <th><?php echo $fetch->log_id; ?></th>
+              <th>
+                <?php if($fetch->log_type == 'Receipt'){ ?>
+                  <a href="<?=base_url()?>bincard/binCard/edit_bin_card?id=<?=$fetch->log_id?>" target="_blank"><?=$fetch->log_type;?></a>
+                <?php } else if($fetch->log_type == 'Consumable Issue') { ?>
+                  <a href="<?=base_url()?>issue/ConsumIssue/view_consumable_issue?id=<?=$fetch->log_id?>" target="_blank"><?=$fetch->log_type;?></a>
+                <?php } else if($fetch->log_type == 'Parts & Supplies Issue') { 
+                  
+                  $wshdr=$this->db->query("select * from tbl_spare_issue_hdr where issue_id='$fetch->log_id'");
+                  $getHdr=$wshdr->row();
 
+                  ?> 
+
+                  <a href="<?=base_url()?>issue/SpareIssue/add_spare_issue?id=<?=$getHdr->workorder_id?>" target="_blank"><?=$fetch->log_type;?></a>            
+                <?php } ?>    
+              </th>
             </tr>
             <?php  }  ?>
           </tbody>
