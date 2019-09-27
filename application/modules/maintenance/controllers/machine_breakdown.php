@@ -619,14 +619,14 @@ class machine_breakdown extends my_controller
         
         $mcchine = $this->input->get('locs');
         $queryPo = $this->db->query("select * from tbl_machine where m_type='$mcchine'");
-        echo '<select>';
-        echo '<option>----select----</option>';
+        //echo '<select>';
+        echo '<option value="">----select----</option>';
         foreach ($queryPo->result() as $getPO) {
             
             echo '<option value=' . $getPO->id . '>' . $getPO->machine_name . '</option>';
             
         }
-        echo '</select>';
+        //echo '</select>';
         
     }
     

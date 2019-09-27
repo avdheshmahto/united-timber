@@ -11,7 +11,7 @@
 <div class="main-content">
 <?php
   $this->load->view("reportheader");
-  ?>
+?>
 <div class="row">
 <div class="col-lg-12">
   <div class="panel panel-default">
@@ -24,21 +24,15 @@
     <div class="panel-body panel-center">
       <form class="form-horizontal" method="get" action="">
         <div class="form-group panel-body-to">
-          <label class="col-sm-2 control-label">Section</label> 
+          <label class="col-sm-2 control-label">Type Of Spare</label> 
           <div class="col-sm-3">
-            <select name="m_type" class="select2 form-control" id="m_type" style="width:100%;" onchange="getmachinelist(this.value);" required="">
-              <option value="0" class="listClass">------Section-----</option>
-              <?php
-                $sql=$this->db->query("select * from tbl_category where inside_cat='0'");
-                foreach($sql->result() as $getSql) { ?>
-              <option value="<?=$getSql->id?>"><?=$getSql->name?></option>
+            <select name="spare_type" class="select2 form-control" id="spare_type" style="width:100%;">
+              <option value="">--select--</option>
+              <?php $getProductName=$this->db->query("select * from tbl_master_data where param_id='26'");
+                $ProductName=$getProductName->result();
+                foreach($ProductName as $p) { ?>
+              <option value="<?=$p->serial_number?>"  <?php if($_GET['spare_type'] == $p->serial_number) { ?> selected <?php } ?> ><?=$p->keyvalue?></option>
               <?php } ?>
-            </select>
-          </div>
-          <label class="col-sm-2 control-label" style="display: none;">Machine</label> 
-          <div class="col-sm-3" style="display: none;">
-            <select name="machineid" id="machineid" class="select2 form-control">
-              <option value="">----Machine----</option>
             </select>
           </div>
           <div class="form-group panel-body-to" style="padding: 8px 14px 0px 0px">
@@ -100,16 +94,33 @@
               $z=1;
               foreach($result as $fetch) 
               {
-              
-              $product=$this->db->query("select * from tbl_software_cost_log where main_section='$fetch->id' group by product_id ");
+
+              $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='$fetch->serial_number' ");
+              foreach ($prd->result() as $key) 
+              {
+                $prds[]=$key->Product_id;
+              }
+
+              if($prds != '')
+              {
+                $prodctId=implode(',', $prds);
+              }
+              else
+              {
+                $prodctId="999999";
+              }
+
+              $product=$this->db->query("select * from tbl_software_cost_log where product_id IN ($prodctId) group by product_id ");
               $count=$product->num_rows();
+
               ?>
             <tr class="gradeC record">
               <th><?php echo $z++; ?></th>
-              <th><a href="<?=base_url();?>report/Report/spare_machine_details?sid=<?=$fetch->id?>"><?php echo $fetch->name; ?></a></th>
+              <th>
+              <a href="<?=base_url();?>report/Report/spare_machine_details?tid=<?=$fetch->serial_number?>"><?php echo $fetch->keyvalue; ?></a></th>
               <th><?php echo $count; ?></th>
             </tr>
-            <?php  }  ?>
+            <?php  unset($prds); }  ?>
           </tbody>
         </table>
       </div>

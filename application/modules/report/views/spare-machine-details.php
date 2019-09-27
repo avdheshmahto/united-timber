@@ -12,14 +12,14 @@
   <?php
     $this->load->view("reportheader");
     
-    $cat=$this->db->query("select * from tbl_category where id='".$_GET['sid']."' ");
+    $cat=$this->db->query("select * from tbl_master_data where serial_number='".$_GET['tid']."' ");
     $fetch=$cat->row();
     ?>
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          <h4 class="panel-title">SPARE TO MACHINE DETAILS REPORT ( <?=$fetch->name;?> )</h4>
+          <h4 class="panel-title">SPARE TO MACHINE DETAILS REPORT ( <?=$fetch->keyvalue;?> )</h4>
             <a href="<?=base_url();?>report/Report/spare_machine_report" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
         </div>
       <div class="panel-body panel-center">
@@ -27,7 +27,7 @@
           <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">From Date</label> 
           <div class="col-sm-3">
-            <input type="hidden" name="sid" value="<?php echo $_GET['sid'];?>"> 
+            <input type="hidden" name="tid" value="<?php echo $_GET['tid'];?>"> 
             <input type="date" name="from_date" id='from_date' value="<?=$_GET['from_date'];?>" class="form-control"> 
           </div>
           <label class="col-sm-2 control-label">To Date</label> 
@@ -38,12 +38,12 @@
           <div class="form-group panel-body-to">
           <label class="col-sm-2 control-label">Type Of Spare</label> 
           <div class="col-sm-3">
-            <select name="spare_type" class="select2 form-control" id="spare_type" style="width:100%;" onchange="getSpareList(this.value);">
+            <select name="spare_type" class="select2 form-control" id="spare_type" style="width:100%;" onchange="getSpareList(this.value);" disabled="">
               <option value="">--select--</option>
               <?php $getProductName=$this->db->query("select * from tbl_master_data where param_id='26'");
                 $ProductName=$getProductName->result();
                 foreach($ProductName as $p) { ?>
-              <option value="<?=$p->serial_number?>"  <?php if($_GET['spare_type'] == $p->serial_number) { ?> selected <?php } ?> ><?=$p->keyvalue?></option>
+              <option value="<?=$p->serial_number?>"  <?php if($_GET['tid'] == $p->serial_number) { ?> selected <?php } ?> ><?=$p->keyvalue?></option>
               <?php } ?>
             </select>
           </div>
@@ -73,10 +73,27 @@
               </thead>
               <tbody id="getDataTable" >
                 <?php 
+                  
+                  $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='".$_GET['tid']."' ");
+                  foreach ($prd->result() as $key) 
+                  {
+                    $prds[]=$key->Product_id;
+                  }
+
+                  if($prds != '')
+                  {
+                    $prodctId=implode(',', $prds);
+                  }
+                  else
+                  {
+                    $prodctId="999999";
+                  }
+
+
                   if($_GET['filter'] == 'filter')
                   {
 
-                    $qry="select * from tbl_software_cost_log where main_section='".$_GET['sid']."' ";
+                    $qry="select * from tbl_software_cost_log where product_id IN ($prodctId) ";
                     
                     if($_GET['from_date'] && $_GET['to_date'] != '') 
                     {
@@ -88,7 +105,7 @@
                       $qry .= " AND log_date >='".$_GET['from_date']."' and log_date <='".$_GET['to_date']."'";
                     }
                     
-                    if($_GET['spare_type'] != '')
+                    /*if($_GET['spare_type'] != '')
                     {
 
                       $prd=$this->db->query("select * from tbl_product_stock where type_of_spare='".$_GET['spare_type']."' ");
@@ -109,7 +126,7 @@
 
                       $qry .=" AND product_id IN ($ids)";
                        
-                    }
+                    }*/
 
 
                     if($_GET['spare_id'] != '')  
@@ -121,9 +138,9 @@
 
                   }
                   else
-                  {
+                  {                    
 
-                    $qry="select * from tbl_software_cost_log where main_section='".$_GET['sid']."' GROUP BY product_id "; 
+                    $qry="select * from tbl_software_cost_log where product_id IN ($prodctId) GROUP BY product_id "; 
 
                     $spare=$this->db->query($qry);
 
@@ -142,10 +159,10 @@
                 <tr class="gradeC record">
                   <th><?php echo $z++; ?></th>
                   <th><?php echo $getKey->keyvalue; ?></th>
-                  <th><a href="<?=base_url();?>report/Report/spares_machine_log?sid=<?=$getSpare->main_section?>&pid=<?=$getSpare->product_id?>"> <?php echo $getPrd->productname;?> </a>
+                  <th><a href="<?=base_url();?>report/Report/spares_machine_log?tid=<?=$_GET['tid']?>&pid=<?=$getSpare->product_id?>"> <?php echo $getPrd->productname;?> </a>
                   </th>
                   <?php 
-                    $ssftCstLog=$this->db->query("select product_id,machine_id from tbl_software_cost_log where main_section='".$_GET['sid']."' AND product_id='$getSpare->product_id' AND machine_id !='' group by machine_id");
+                    $ssftCstLog=$this->db->query("select product_id,machine_id from tbl_software_cost_log where product_id='$getSpare->product_id' AND machine_id !='' group by machine_id");
                     $getCostLog=$ssftCstLog->row();
                     $count=$ssftCstLog->num_rows();
                     //echo $count;
@@ -195,10 +212,10 @@
 
   function ResetLead()
   {
-    location.href="<?=base_url('/report/Report/spare_machine_details?sid=');?><?=$_GET['sid']?>";
+    location.href="<?=base_url('/report/Report/spare_machine_details?tid=');?><?=$_GET['tid']?>";
   }
 
    window.onload = function() {
-      getSpareList(<?=$_GET['spare_type']?>);
+      getSpareList(<?=$_GET['tid']?>);
   };
 </script>

@@ -1291,7 +1291,7 @@ $( ".sectionexpense" ).change(function() {
   
   $.ajax({
 
-    url    : "filterSectionExpense",
+    url    : "<?=base_url();?>master/filterSectionExpense",
     type   : "POST",
     data   : {
 
@@ -1315,7 +1315,7 @@ $( ".machine_expense" ).change(function() {
   
   $.ajax({
 
-    url    : "filterMachineExpense",
+    url    : "<?=base_url();?>master/filterMachineExpense",
     type   : "POST",
     data   : {
 
@@ -1341,7 +1341,7 @@ $( ".type_expense" ).change(function() {
   
   $.ajax({
 
-    url    : "filterTypeExpense",
+    url    : "<?=base_url();?>master/filterTypeExpense",
     type   : "POST",
     data   : {
 
@@ -1368,7 +1368,7 @@ $( ".spare_expense" ).change(function() {
   
   $.ajax({
 
-    url    : "filterSpareExpense",
+    url    : "<?=base_url();?>master/filterSpareExpense",
     type   : "POST",
     data   : {
 
@@ -1395,7 +1395,7 @@ $( ".breakdown_hours" ).change(function() {
   
   $.ajax({
 
-    url    : "filterBreakdownHours",
+    url    : "<?=base_url();?>master/filterBreakdownHours",
     type   : "POST",
     data   : {
 
@@ -1420,7 +1420,7 @@ $( ".spares_hours" ).change(function() {
   
   $.ajax({
 
-    url    : "filterSparesHours",
+    url    : "<?=base_url();?>master/filterSparesHours",
     type   : "POST",
     data   : {
 

@@ -1194,7 +1194,7 @@ class Report extends my_controller
     public function manageSpareMachineJoin()
     {
         
-        $table_name     = 'tbl_category';
+        $table_name     = 'tbl_master_data';
         $data['result'] = "";
         ////Pagination start ///
         $url            = site_url('/report/Report/spare_machine_report?');
@@ -1206,7 +1206,7 @@ class Report extends my_controller
             $showEntries = 10;
         
         
-        $totalData = $this->model_report->count_mspare($table_name, 'A', $this->input->get());
+        $totalData = $this->model_report->count_sparem($table_name, 'A', $this->input->get());
         
         
         if ($_GET['entries'] != "" && $_GET['filter'] != 'filter') {
@@ -1234,10 +1234,10 @@ class Report extends my_controller
         $data['pagination'] = $this->pagination->create_links();
         
         if ($this->input->get('filter') == 'filter' || $_GET['entries'] != '') ////filter start ////
-            $data['result'] = $this->model_report->filterList_mspare($pagination['per_page'], $pagination['page'], $this->input->get());
+            $data['result'] = $this->model_report->filterList_sparem($pagination['per_page'], $pagination['page'], $this->input->get());
         
         else
-            $data['result'] = $this->model_report->machine_spare($pagination['per_page'], $pagination['page']);
+            $data['result'] = $this->model_report->spare_machine($pagination['per_page'], $pagination['page']);
         
         // call permission fnctn
         $data['categorySelectbox'] = $this->model_report->categorySelectbox();

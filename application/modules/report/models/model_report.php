@@ -1310,6 +1310,60 @@ class model_report extends CI_Model
     }
     
 
+
+//
+
+//=========================spare machine=======================
+    
+    function spare_machine($last, $strat)
+    {
+        
+        $query    = ("select * from tbl_master_data where param_id=26 Order by serial_number ASC limit $strat,$last ");
+        $getQuery = $this->db->query($query);
+        return $result = $getQuery->result();
+        
+    }
+    
+    
+    
+    function filterList_sparem($perpage, $pages, $get)
+    {
+        
+        $qry = "select * from tbl_master_data where param_id=26 ";
+        
+        if (sizeof($_GET) > 0) {
+            
+            if ($get['spare_type'] != "")
+                $qry .= " AND serial_number='" . $get['spare_type'] . "'";
+            
+        }
+        
+        $qry .= "  Order by serial_number ASC limit $pages,$perpage";
+        
+        $data = $this->db->query($qry)->result();
+        return $data;
+        
+    }
+    
+    
+    function count_sparem($tableName, $status = 0, $get)
+    {
+        
+        $qry = "select count(*) as countval from tbl_master_data where param_id=26 ";
+        
+        if (sizeof($_GET) > 0) {
+            
+            if ($get['spare_type'] != "")
+                $qry .= " AND serial_number='" . $get['spare_type'] . "'";
+            
+        }
+        
+        $query = $this->db->query($qry, array(
+            $status
+        ))->result_array();
+        return $query[0]['countval'];
+        
+    }    
     
 }
 ?>
